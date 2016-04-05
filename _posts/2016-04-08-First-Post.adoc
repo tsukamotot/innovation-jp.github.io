@@ -2,7 +2,7 @@
 :published_at: 2016-04-08
 :hp-alt-title: FirstPost
 :hp-tags: FirstPost,Tsukamoto,Microservice,Architecture
-:hp-image: https://www.oreilly.co.jp/books/images/picture_large978-4-87311-760-7.jpeg
+:hp-image: microservice-book.jpg
 
 
 ## 最初に
