@@ -1,0 +1,11 @@
+= Microservice Casual Talks いってきました
+:published_at: 2016-04-16
+:hp-alt-title: GoogleAppScript
+:hp-tags: FirstPost,Kato,GoogleAppScript,GoogleAnalytics
+:hp-image: kato/1/1.gif
+
+
+
+
+
+
