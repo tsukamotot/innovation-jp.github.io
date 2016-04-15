@@ -125,7 +125,7 @@ function updateGaData(){
   sheet.getRange(13, 1, 100, 4).setValue('');
   
   //データが１件以上取得できていた場合、A13(13,1)を起点に、Google Analyticsから取得したデータを上書き
-  //Analyticsのデータをそのまま
+  //Analyticsのデータをそのまま使える！
   if(ga_data && ga_data.length >= 1){
     var range = sheet.getRange(13, 1, ga_data.length, ga_data[0].length);
     range.setValues(ga_data);
