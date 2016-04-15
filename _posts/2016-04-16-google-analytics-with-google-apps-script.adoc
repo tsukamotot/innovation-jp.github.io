@@ -56,7 +56,7 @@ image::kato/1/2.gif[]
 
 === ３．Google Apps Script編集画面を表示
 
-スプレッドシートのメニューから「スクリプトエディタ」を選択すると、Google App Script編集画面が開きます。
+スプレッドシートのメニューから「スクリプトエディタ」を選択すると、Google Apps Script編集画面が開きます。
 
 
 
