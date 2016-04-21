@@ -1,4 +1,4 @@
-= Google Apps Scriptを使ってGoogle Analyticsのデータを取り込んでみる
+= Google Apps Scriptを使ってGoogle Analyticsのデータを取り込んでみる2
 :published_at: 2016-04-16
 :hp-alt-title: google-analytics-with-google-apps-script2
 :hp-tags: FirstPost,Kato,GoogleAppsScript,GoogleAnalytics,Javascript
