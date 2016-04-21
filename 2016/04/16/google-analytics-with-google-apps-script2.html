@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Google Apps Scriptを使ってGoogle Analyticsのデータを取り込んでみる - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Google Apps Scriptを使ってGoogle Analyticsのデータを取り込んでみる">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Google Apps Scriptを使ってGoogle Analyticsのデータを取り込んでみる">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2016/04/16/google-analytics-with-google-apps-script2.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Google Apps Scriptを使ってGoogle Analyticsのデータを取り込んでみる" />
+    <meta property="og:description" content="弊社イノベーションのエンジニアブログも第３弾となりました。 こんにちは。 Dockerの実験のために、NUCを４台も買ってしまった加藤と 申します。 メモリ合計48GB、4台で1000円/月ぐらいの電気代で運用出来てます。 なので、お得感あります。後悔はしていませ・・・んんん！ 今回はDockerの話ではなく、 「Google Apps Scriptを使ってGoogle Analytics(以下GA)のデータをスプレッドシートに取り込んでみる」 という軽めな題材で行きます！ 目標 今回の目標は、 Google Apps Scriptで、GAのデータをス..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2016/04/16/google-analytics-with-google-apps-script2.html" />
+    <meta property="article:published_time" content="2016-04-15T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-04-21T00:28:48.194Z" />
+    <meta property="article:tag" content="FirstPost" />
+    <meta property="article:tag" content="Kato" />
+    <meta property="article:tag" content="GoogleAppsScript" />
+    <meta property="article:tag" content="GoogleAnalytics" />
+    <meta property="article:tag" content="Javascript" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Google Apps Scriptを使ってGoogle Analyticsのデータを取り込んでみる" />
+    <meta name="twitter:description" content="弊社イノベーションのエンジニアブログも第３弾となりました。 こんにちは。 Dockerの実験のために、NUCを４台も買ってしまった加藤と 申します。 メモリ合計48GB、4台で1000円/月ぐらいの電気代で運用出来てます。 なので、お得感あります。後悔はしていませ・・・んんん！ 今回はDockerの話ではなく、 「Google Apps Scriptを使ってGoogle Analytics(以下GA)のデータをスプレッドシートに取り込んでみる」 という軽めな題材で行きます！ 目標 今回の目標は、 Google Apps Scriptで、GAのデータをス..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2016/04/16/google-analytics-with-google-apps-script2.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "katoK",
+        "image": "https://avatars.githubusercontent.com/u/70055?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Google Apps Scriptを使ってGoogle Analyticsのデータを取り込んでみる",
+    "url": "http://tech.innovation.co.jp/2016/04/16/google-analytics-with-google-apps-script2.html",
+    "datePublished": "2016-04-15T15:00:00.000Z",
+    "dateModified": "2016-04-21T00:28:48.194Z",
+    "keywords": "FirstPost, Kato, GoogleAppsScript, GoogleAnalytics, Javascript",
+    "description": "弊社イノベーションのエンジニアブログも第３弾となりました。 こんにちは。 Dockerの実験のために、NUCを４台も買ってしまった加藤と 申します。 メモリ合計48GB、4台で1000円/月ぐらいの電気代で運用出来てます。 なので、お得感あります。後悔はしていませ・・・んんん！ 今回はDockerの話ではなく、 「Google Apps Scriptを使ってGoogle Analytics(以下GA)のデータをスプレッドシートに取り込んでみる」 という軽めな題材で行きます！ 目標 今回の目標は、 Google Apps Scriptで、GAのデータをス..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-First-Post tag-Kato tag-Google-Apps-Script tag-Google-Analytics tag-Javascript no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="16 Apr 2016" class="post-meta__date date">16 Apr 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/First-Post">FirstPost</a>, <a href="http://tech.innovation.co.jp/tag/Kato">Kato</a>, <a href="http://tech.innovation.co.jp/tag/Google-Apps-Script">GoogleAppsScript</a>, <a href="http://tech.innovation.co.jp/tag/Google-Analytics">GoogleAnalytics</a>, <a href="http://tech.innovation.co.jp/tag/Javascript">Javascript</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/70055?v=3" alt="profile image for katoK" class="avatar post-meta__avatar" /> by katoK</span>
+      </div>
+      <h1 class="post-title">Google Apps Scriptを使ってGoogle Analyticsのデータを取り込んでみる</h1>
+    </header>
+
+    <section class="post tag-First-Post tag-Kato tag-Google-Apps-Script tag-Google-Analytics tag-Javascript">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>弊社イノベーションのエンジニアブログも第３弾となりました。</p>
+</div>
+<div class="paragraph">
+<p>こんにちは。<br>
+Dockerの実験のために、NUCを４台も買ってしまった加藤と 申します。<br>
+メモリ合計48GB、4台で1000円/月ぐらいの電気代で運用出来てます。<br>
+なので、お得感あります。後悔はしていませ・・・んんん！<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/1/1.gif" alt="1.gif">
+</div>
+</div>
+<div class="paragraph">
+<p>今回はDockerの話ではなく、<br>
+「Google Apps Scriptを使ってGoogle Analytics(以下GA)のデータをスプレッドシートに取り込んでみる」<br>
+という軽めな題材で行きます！<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">目標</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回の目標は、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Google Apps Scriptで、GAのデータをスプレッドシートに取り込めるようにする</strong></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>です。</p>
+</div>
+<div class="sect2">
+<h3 id="___2">１．環境用意</h3>
+<div class="paragraph">
+<p>新規にスプレッドシートを用意して、シート名を「GAデータ」としておきます。<br>
+これがないと始まらない！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__ga">２．GAデータの取得条件を用意</h3>
+<div class="paragraph">
+<p>GAデータの取得条件を後から変更できるよう、下記の様な項目を用意します。</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1〜9行目のB列</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GAの取得条件</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12行目〜</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">取得したGAデータが入る場所</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>取得条件は、Googleが用意している「Query Explorer」で確認すると便利です。<br>
+<a href="https://ga-dev-tools.appspot.com/query-explorer/" class="bare">https://ga-dev-tools.appspot.com/query-explorer/</a></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/1/2.gif" alt="2.gif">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__google_apps_script">３．Google Apps Script編集画面を表示</h3>
+<div class="paragraph">
+<p>スプレッドシートのメニューから「スクリプトエディタ」を選択すると、Google Apps Script編集画面が開きます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/1/3.gif" alt="3.gif">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__analytics_api">４．Analytics APIを有効化を有効にする</h3>
+<div class="paragraph">
+<p>Google Apps Scriptエディタのメニューから、<br>
+「Developers Console プロジェクト」を選択し、Analyticsライブラリを有効にします。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/1/4.gif" alt="4.gif">
+</div>
+</div>
+<div class="paragraph">
+<p>また、「Google デベロッパーコンソール」でも有効になっていることを確認しておきます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/1/5.gif" alt="5.gif">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__google_apps_script_2">５．Google Apps Script を編集</h3>
+<div class="paragraph">
+<p>下記のスクリプトをコピペっ！して、<br>
+GAのデータ構造とスプレッドシートのデータ構造が一致しているとかGoogleのAPIは良く出来てるな〜と感心しながら、<br>
+Ctrl＋Sで保存します。</p>
+</div>
+<div class="paragraph">
+<p>Google Apps Scriptは、みんさんお馴染みのjavascriptです。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-javascript" data-lang="javascript">/**
+ * GAのデータを取得する
+ */
+function updateGaData(){
+  //シート名「GAデータ」を取得
+  var sheet = SpreadsheetApp.getActive().getSheetByName('GAデータ');
+
+  //各パラメータをスプレッドシートから取得
+  var start_date    = sheet.getRange('B1').getValue();
+  var end_date      = sheet.getRange('B2').getValue();
+  var ga_view_id    = sheet.getRange('B4').getValue();
+  var metrics       = sheet.getRange('B5').getValue();
+  var dimensions    = sheet.getRange('B6').getValue();
+  var filters       = sheet.getRange('B7').getValue();
+  var sort          = sheet.getRange('B8').getValue();
+  var samplingLevel = sheet.getRange('B9').getValue();
+
+  var options = {};
+  if(dimensions != '')   { options['dimensions']    = dimensions;}
+  if(filters != '')      { options['filters']       = filters;}
+  if(sort != '')         { options['sort']          = sort;}
+  if(samplingLevel != ''){ options['samplingLevel'] = samplingLevel;}
+
+  //Google Analyticsからデータを取得
+  var ga_data = Analytics.Data.Ga.get(
+    ga_view_id,
+    Utilities.formatDate(start_date, Session.getScriptTimeZone(),'yyyy-MM-dd'),
+    Utilities.formatDate(end_date,   Session.getScriptTimeZone(),'yyyy-MM-dd'),
+    metrics,
+    options
+  ).getRows();
+
+  //A13(13,1)を起点に、既存のデータを削除
+  sheet.getRange(13, 1, 100, 4).setValue('');
+
+  //データが１件以上取得できていた場合、A13(13,1)を起点に、Google Analyticsから取得したデータを上書き
+  //Analyticsのデータをそのまま使える！
+  if(ga_data &amp;&amp; ga_data.length &gt;= 1){
+    var range = sheet.getRange(13, 1, ga_data.length, ga_data[0].length);
+    range.setValues(ga_data);
+  }
+}
+
+
+/**
+ * スプレッドシートを開いた際に実行
+ * - 「GAデータ更新」メニューを追加
+ */
+function onOpen() {
+  SpreadsheetApp.getActive().addMenu('Analytics接続', [
+    {name: 'GAデータ更新', functionName: 'updateGaData'}
+  ]);
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">６．トリガ設定</h3>
+<div class="paragraph">
+<p>スプレッドシートを開いた時にメニューが追加されるよう、トリガを設定します。<br>
+「現在のプロジェクトのトリガー」で、スプレッドシート起動時に、onOpenが実行されるようにします。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/1/6.gif" alt="6.gif">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/1/7.gif" alt="7.gif">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___4">７．試してみよう</h3>
+<div class="paragraph">
+<p>スプレッドシートに戻って、ページのリロードをすると、メニューに「Analytics接続」が追加されます。<br>
+そこから「GAデータ更新」選択すると、GAのデータがスプレッドシートに反映されます。</p>
+</div>
+<div class="paragraph">
+<p>あとは、このデータを好きなように加工すればOKです。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___5">８．まとめ</h3>
+<div class="paragraph">
+<p>Google Apps Scriptを使うと、GAから簡単にデータを取得することが出来ました。</p>
+</div>
+<div class="paragraph">
+<p>プログラムも非常にシンプルですし、Googleのインフラ上で動作するので環境構築も不要なので、「誰でも出来そう！」って感じて頂ければ幸いです。</p>
+</div>
+<div class="paragraph">
+<p>ちなみに、この方法を弊社のマーケティングチームに話してみたところ、<br>
+30分後には、自力でGAからデータを取得して、簡単なKPIをつくって、自動更新できるようになっていました。</p>
+</div>
+<div class="paragraph">
+<p>「やりたい事があるのに、開発リソースが足りない！！！」</p>
+</div>
+<div class="paragraph">
+<p>という悩みをお持ちを企業様は多いと思います。<br>
+弊社も、まだまだエンジニアの数が少なく、社内や社外からの要望に対応しきれていない状態です。</p>
+</div>
+<div class="paragraph">
+<p>なので、<br>
+今回の様な簡単なツールであれば自分たちで作れるようになってもらったり、<br>
+プログラムを触ってもらって開発者が何をやっているのか理解してもらったり、<br>
+少しずつ社内の人たちを巻き込んで行くことで、<br>
+エンジニアはより良い環境で、より多くの時間を開発に割くことが出来き、ハッピーになるのではないかなーと考えています。</p>
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
