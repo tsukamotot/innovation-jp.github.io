@@ -41,7 +41,7 @@
 ├── wp-content/
 │   ├── languages/
 │   ├── plugins/
-│   │   └── membership/ ← ここにDIR作成
+│   │   └── inno_membership/ ← ここにDIR作成
 │   ├── themes/
 │   └── uploads/
 └── wp-includes/
@@ -49,14 +49,14 @@
 
 wordpressでは上記のようなDIR構成になっていると思いますので、wp-content配下のplugins内に好きなDIRを作成しましょう。
 
-今回は「membership」にしてみました。
+今回は「inno_membership」にしてみました。
 こんな感じのDIR構成にしてみます。
 
 ```
-./membership/
+./inno_membership/
 ├── css/
 ├── js/
-├── membership.php ← ここはDIRと同じ名称にしておく
+├── inno_membership.php ← ここはDIRと同じ名称にしておく
 └── templates/
     ├── favorite.php
     ├── login.php
@@ -71,7 +71,7 @@ wordpressでは上記のようなDIR構成になっていると思いますの�
 
 **あくまでもプラグインで使うものはプラグインDIRに納めましょう。**
 
-membership.phpには以下のような書式でコメントを書いておきましょう。
+inno_membership.phpには以下のような書式でコメントを書いておきましょう。
 
 
 [source, php]
@@ -84,9 +84,10 @@ Version: 0.0.1
 Author: Nakamura
 */
 ----
-この状態で管理画面へログインすると、プラグインとして認識してくれます。へ〜簡単！
+この状態で管理画面へログインすると、プラグインとして認識してくれます。 +
+なんだかいい感じ！
 
-
+image::wp_plugin_image.png[]
 
 
 んで、ここからが本題。
@@ -96,10 +97,11 @@ Author: Nakamura
 通常は固定ページを作る場合にはWordPressの管理画面から登録を行っていきますが、今回はプラグイン側で制御させます。
 
 以下の2つのURLルールを追加していきます。
-> /member/favorite/　⇒　./templates/favorite.php
-> /member/login/　⇒　./templates/login.php
 
-まずはルーティングを追加する関数を作成しましょう。
+* /member/favorite/　⇒　./templates/favorite.php
+* /member/login/　⇒　./templates/login.php
+
+まずはルーティングを追加する関数を作成しましょう。 +
 関数名はバッティングしないように「inno_」から始まるようにしてみます。
 
 
