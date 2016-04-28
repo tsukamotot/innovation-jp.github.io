@@ -82,7 +82,7 @@ membership.phpには以下のような書式でコメントを書いておきま
 Plugin Name: 会員機能
 Description: ブログ用に会員機能のプラグインを作ってみる
 Version: 0.0.1
-Author: Mizuki Nakamura
+Author: Nakamura
 */
 ----
 この状態で管理画面へログインすると、プラグインとして認識してくれます。へ〜簡単！
@@ -200,7 +200,7 @@ register_activation_hook( __FILE__, 'inno_add_rule' );
 Plugin Name: 会員機能
 Description: ブログ用に会員機能のプラグインを作ってみる
 Version: 0.0.1
-Author: Mizuki Nakamura
+Author: Nakamura
 */
 
 //必要な情報の受け渡しが出来るようquery_varsを追加
