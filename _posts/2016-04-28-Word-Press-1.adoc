@@ -1,0 +1,5 @@
+= WordPressでプラグインを作ってみた　その1
+:published_at: 2016-04-28
+:hp-alt-title: 
+:hp-tags: FirstPost,WordPress,Plugin,Nakamura
+
