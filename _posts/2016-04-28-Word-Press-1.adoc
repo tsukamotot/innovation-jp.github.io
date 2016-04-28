@@ -18,6 +18,7 @@
 
 今回は先日WordPressで会員機能プラグインを作ってみたお話をしてみようと思います。
 
+
 image::wordpress_logo.png[]
 
 
