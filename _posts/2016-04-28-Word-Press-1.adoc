@@ -22,9 +22,9 @@
 
 ==== やりたいこと
 
-> - WordPressに会員機能を追加する
-> - 会員は投稿記事をお気に入りに追加でき、一覧で見れるようにする
-> - 会員データは**自社サービスのDB**へ保存させる
+ - WordPressに会員機能を追加する
+ - 会員は投稿記事をお気に入りに追加でき、一覧で見れるようにする
+ - 会員データは**自社サービスのDB**へ保存させる
 
 こんな感じ。 +
 （最終的には全ページSSL化とか色々増えちゃいましたが）
@@ -70,7 +70,10 @@ wordpressでは上記のようなDIR構成になっていると思いますの�
 **あくまでもプラグインで使うものはプラグインDIRに納めましょう。**
 
 membership.phpには以下のような書式でコメントを書いておきましょう。
-```
+
+
+[source, php]
+----
 <?php
 /*
 Plugin Name: 会員機能
@@ -78,7 +81,7 @@ Description: ブログ用に会員機能のプラグインを作ってみる
 Version: 0.0.1
 Author: Mizuki Nakamura
 */
-```
+----
 この状態で管理画面へログインすると、プラグインとして認識してくれます。へ〜簡単！
 
 
@@ -97,7 +100,9 @@ Author: Mizuki Nakamura
 まずはルーティングを追加する関数を作成しましょう。
 関数名はバッティングしないように「inno_」から始まるようにしてみます。
 
-```
+
+[source, php]
+----
 /*
 * rewrite_ruleの追加
 */
@@ -105,17 +110,28 @@ function inno_add_rule() {
     add_rewrite_rule( '^member/([^/]+)/?', 'index.php?action=$matches[1]', 'top' );
     flush_rewrite_rules();
 }
-```
+----
+
 **add_rewrite_rule()** でルーティングの追加を行い、**flush_rewrite_rules()** で初期化を行います。
 
+
 **$action** 変数で受け取りテンプレートを切り替えたいのですが、ここで
-```
+
+
+[source, php]
+----
 $action = $_GET['action'];
-```
+----
+
+
 と記述しても受け取れないので注意！
 
 まずはquery_varsに受け渡しを行う変数名を追加し…
-```
+
+
+
+[source, php]
+----
 /*
 * $actionパラメータを受け取る準備
 */
@@ -123,11 +139,14 @@ function inno_add_query_vars( $vars ) {
     $vars[] = 'action';
     return $vars;
 }
-```
+----
 
 
 次にget_query_var()で値を取得する必要があります。（ちなみにハマりました）
-```
+
+
+[source, php]
+----
 /*
 * パラメータによりファイルを切り替える
 */
@@ -145,7 +164,9 @@ function inno_front_controller() {
             break;
     }
 }
-```
+----
+
+
 後はURLを判定し、条件に合えばファイルをincludeして終了させます。
 
 === 実行タイミング
@@ -168,7 +189,8 @@ register_activation_hook( __FILE__, 'inno_add_rule' );
 
 とりあえずここまでのコードをまとめておきます。
 
-[source,php]
+
+[source, php]
 ----
 <?php
 /*
