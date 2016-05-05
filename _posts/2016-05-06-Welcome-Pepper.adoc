@@ -1,6 +1,6 @@
 = Pepperがやってきた！ヤァ!ヤァ!ヤァ!
 :published_at: 2016-05-06
-:hp-alt-title: 
+:hp-alt-title: WelcomePepper
 :hp-tags: Pepper,Yagasaki,AMI,Vi
 
 こんばんは。矢ヶ崎です。 +
