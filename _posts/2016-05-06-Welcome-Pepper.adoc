@@ -16,102 +16,102 @@
 ===== さあ、AMIちゃん、感動の対面
 image::yagasaki/pp1/1.jpg[]
 image::yagasaki/pp1/2.jpg[]
-
+　 +
 
 ===== でた〜！！！
 image::yagasaki/pp1/3.jpg[]
-
+　 +
 
 ===== さあ出してみましょう
 image::yagasaki/pp1/4.jpg[]
-
+　 +
 
 ===== あれ？重い・・・
 image::yagasaki/pp1/5.jpg[]
-
+　 +
 
 ===== あれれれ？
 image::yagasaki/pp1/6.jpg[]
-
+　 +
 
 ===== 誰か手伝ってください〜(笑)
 image::yagasaki/pp1/7.jpg[]
-
+　 +
 
 ===== 弊社CTO見習いのozが協力して、よいしょ！
 image::yagasaki/pp1/8.jpg[]
-
+　 +
 
 ===== でた〜！！！
 ===== と思ったら、首が座っていない！
 ===== ０歳児をあつかうがごとく、首を支える優しいAMIちゃん
 image::yagasaki/pp1/9.jpg[]
-
+　 +
 
 ===== 今度こそでた〜！
 ===== どうだ！
 image::yagasaki/pp1/10.jpg[]
-
+　 +
 
 ===== 新しいお友達！
 image::yagasaki/pp1/11.jpg[]
-
+　 +
 
 ===== しかし、ものすごいポーズだけど大丈夫なのだろうか・・・
 image::yagasaki/pp1/12.jpg[]
-
+　 +
 
 ===== それはさておきとりあえず、お約束(？)の「捕獲された宇宙人」のポーズ
 image::yagasaki/pp1/13.jpg[]
-
+　 +
 
 ここで、弊社ブログエディタのViちゃん登場 +
 AMIちゃんとViちゃん二人で、Pepperに魂を授けます！
 
 ===== いよいよ魂投入！
 image::yagasaki/pp1/14.jpg[]
-
+　 +
 
 ===== と思ったら、ボタンはどこだ？(笑)
 image::yagasaki/pp1/15.jpg[]
-
+　 +
 
 ===== あ、なんか光った！
-===== リアクションがすばらしい(笑)
+===== 二人のリアクションがすばらしい(笑)
 image::yagasaki/pp1/16.jpg[]
-
+　 +
 
 ===== お〜いぺっぱ〜！
 ===== 気が早いViちゃん(笑)
 image::yagasaki/pp1/17.jpg[]
-
+　 +
 
 ===== う〜ん。長い・・・
-===== 正座しはじめちゃうAMIちゃん
+===== 正座してお行儀よく待ちはじめちゃうAMIちゃん
 image::yagasaki/pp1/18.jpg[]
-
+　 +
 
 ===== 長い・・・
 ===== でも楽しい・・・
 ===== ギャラリーも増えちゃいました。
 image::yagasaki/pp1/19.jpg[]
-
+　 +
 
 ===== あ！いよいよ！
 image::yagasaki/pp1/20.jpg[]
-
+　 +
 
 ===== 起動した〜！！！
 ===== けど、Pepper曰く。
 ===== なんだか調子悪いから再起動してくれとのこと・・・
 ===== う〜〜〜ん。
 image::yagasaki/pp1/21.jpg[]
-
+　 +
 
 インフラエンジニアには特になじみ深いと思われるお名前の*AMI*と*Vi*のコンビは、この後どうなってしまうのか？！ +
 そして、このエントリはPepperを開けただけで、あまりに内容が無いようですが大丈夫なのか？！
 
-to be continued...
+*to be continued...*
 
 ==== 緊急連絡
 
