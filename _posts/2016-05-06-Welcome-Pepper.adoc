@@ -6,7 +6,7 @@
 こんばんは。矢ヶ崎です。 +
  +
 弊社に、新しいお友達がやってまいりました。 +
-世の中的にはもはや、目新しくないかもれませんが、Pepperが弊社にもやってきました！ +
+世の中的には、もはや目新しくないかもしれませんが、Pepperが弊社にもやってきました！ +
  +
 そんなこんなで、せっかくなので最初のアレをレポートしたいと思います！ +
  +
@@ -14,83 +14,83 @@
  +
  
 ===== さあ、AMIちゃん、感動の対面
-image::1.jpg[]
-image::2.jpg[]
+image::yagasaki/pp1/1.jpg[]
+image::yagasaki/pp1/2.jpg[]
 
 ===== でた〜！！！
-image::3.jpg[]
+image::yagasaki/pp1/3.jpg[]
 
 ===== さあ出してみましょう
-image::4.jpg[]
+image::yagasaki/pp1/4.jpg[]
 
 ===== あれ？重い・・・
-image::5.jpg[]
+image::yagasaki/pp1/5.jpg[]
 
 ===== あれれれ？
-image::6.jpg[]
+image::yagasaki/pp1/6.jpg[]
 
 ===== 誰か手伝ってください〜(笑)
-image::7.jpg[]
+image::yagasaki/pp1/7.jpg[]
 
 ===== 弊社CTO見習いのozが協力して、よいしょ！
-image::8.jpg[]
+image::yagasaki/pp1/8.jpg[]
 
 ===== でた〜！！！
 ===== と思ったら、首が座っていない！
 ===== ０歳児をあつかうがごとく、首を支える優しいAMIちゃん
-image::9.jpg[]
+image::yagasaki/pp1/9.jpg[]
 
 ===== 今度こそでた〜！
 ===== どうだ！
-image::10.jpg[]
+image::yagasaki/pp1/10.jpg[]
 
 ===== 新しいお友達！
-image::11.jpg[]
+image::yagasaki/pp1/11.jpg[]
 
 ===== しかし、ものすごいポーズだけど大丈夫なのだろうか・・・
-image::12.jpg[]
+image::yagasaki/pp1/12.jpg[]
 
 ===== それはさておきとりあえず、お約束(？)の「捕獲された宇宙人」のポーズ
-image::13.jpg[]
+image::yagasaki/pp1/13.jpg[]
 
 ここで、弊社ブログエディタのViちゃん登場 +
 AMIちゃんとViちゃん二人で、Pepperに魂を授けます！
 
 ===== いよいよ魂投入！
-image::14.jpg[]
+image::yagasaki/pp1/14.jpg[]
 
 ===== と思ったら、ボタンはどこだ？(笑)
-image::15.jpg[]
+image::yagasaki/pp1/15.jpg[]
 
 ===== あ、なんか光った！
 ===== リアクションがすばらしい(笑)
-image::16.jpg[]
+image::yagasaki/pp1/16.jpg[]
 
 ===== お〜いぺっぱ〜！
 ===== 気が早いViちゃん(笑)
-image::17.jpg[]
+image::yagasaki/pp1/17.jpg[]
 
 ===== う〜ん。長い・・・
 ===== 正座しはじめちゃうAMIちゃん
-image::18.jpg[]
+image::yagasaki/pp1/18.jpg[]
 
 ===== 長い・・・
 ===== でも楽しい・・・
 ===== ギャラリーも増えちゃいました。
-image::19.jpg[]
+image::yagasaki/pp1/19.jpg[]
 
 ===== あ！いよいよ！
-image::20.jpg[]
+image::yagasaki/pp1/20.jpg[]
 
 ===== 起動した〜！！！
 ===== けど、Pepper曰く。
 ===== なんだか調子悪いから再起動してくれとのこと・・・
 ===== う〜〜〜ん。
-image::21.jpg[]
+image::yagasaki/pp1/21.jpg[]
 
-インフラエンジニアには特に非常になじみ深いと思われるお名前の*AMI*と*Vi*のコンビは、今後どうなってしまうのか？！
+インフラエンジニアには特になじみ深いと思われるお名前の*AMI*と*Vi*のコンビは、この後どうなってしまうのか？！
 
-*to be continued...*
+to be continued...
 
 ==== 緊急連絡
 
@@ -111,8 +111,8 @@ Pepperの自律はクラウドAIの機能を利用しており、一般販売モ
 == orz
 
 こんなことで負けてられない。 +
-乞うご期待！！！ +
+乞うご期待！！！
 
-コメント等々もしありましたら、
+もしコメント等々ありましたら、
 https://twitter.com/Yaggytter[@Yaggytter]
 までお願いいたします！
