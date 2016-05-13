@@ -4,7 +4,6 @@
 :hp-tags: Tsukamoto,Engineer,CareerPath
 :hp-image: careerpath.png
 
-image::careerpath.png[Career Path Img]
 
 定期的にネットで上がってくる「エンジニア35歳定年説」という説があります。
 
@@ -16,6 +15,7 @@ image::careerpath.png[Career Path Img]
 
 Health Orientedエンジニアとしては、これに尽きてしまうので、ここで終了でもよいくらいなのですが、ボツ原稿になるでしょうからもう少しだけ。
 
+image::careerpath.png[Career Path Img]
 
 
 ## 前提知識
