@@ -2,6 +2,9 @@
 :published_at: 2016-5-13
 :hp-alt-title: EngineerCareerPath
 :hp-tags: Tsukamoto,Engineer,CareerPath
+:hp-image: careerpath.png
+
+image::careerpath.png[Career Path Img]
 
 定期的にネットで上がってくる「エンジニア35歳定年説」という説があります。
 
