@@ -1684,3 +1684,5 @@ input[type="tel"] {
     display: block;
     margin-bottom: .4em; } }
 .line-through { text-decoration: line-through; }
+.tip { background-color: rgba(255, 255, 0, 0.3); }
+.important { background-color: rgba(255, 0, 0, 0.3); }
