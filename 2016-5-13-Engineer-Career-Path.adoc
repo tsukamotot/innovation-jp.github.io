@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>エンジニアキャリアパス問題 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="エンジニアキャリアパス問題">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="エンジニアキャリアパス問題">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp2016-5-13-Engineer-Career-Path.adoc" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="エンジニアキャリアパス問題" />
+    <meta property="og:description" content="定期的にネットで上がってくる「エンジニア35歳定年説」という説があります。 ちょうどヒットする世代の塚本です。こんにちは。 まあ、若手だった層も時が経てば年齢が繰り上がってくる以上、循環的に話題に上る現象も当然なのかもしれません。 そして、ここ数日またこの説に関して話題に上がっているのを読み、思うところあったので、私も中堅を過ぎたエンジニアのキャリアパスについて所感を書いてみます。 （決して会社の見解ではございません） まずこちらの記事 「健康は命より大事。」 Health Orientedエンジニアとしては、これに尽きてしまうので、ここで終了でもよい..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp2016-5-13-Engineer-Career-Path.adoc" />
+    <meta property="og:image" content="http://tech.innovation.co.jp/images/careerpath.png" />
+    <meta property="article:published_time" content="2016-05-12T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-05-13T08:04:12.455Z" />
+    <meta property="article:tag" content="Tsukamoto" />
+    <meta property="article:tag" content="Engineer" />
+    <meta property="article:tag" content="CareerPath" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="エンジニアキャリアパス問題" />
+    <meta name="twitter:description" content="定期的にネットで上がってくる「エンジニア35歳定年説」という説があります。 ちょうどヒットする世代の塚本です。こんにちは。 まあ、若手だった層も時が経てば年齢が繰り上がってくる以上、循環的に話題に上る現象も当然なのかもしれません。 そして、ここ数日またこの説に関して話題に上がっているのを読み、思うところあったので、私も中堅を過ぎたエンジニアのキャリアパスについて所感を書いてみます。 （決して会社の見解ではございません） まずこちらの記事 「健康は命より大事。」 Health Orientedエンジニアとしては、これに尽きてしまうので、ここで終了でもよい..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp2016-5-13-Engineer-Career-Path.adoc" />
+    <meta name="twitter:image:src" content="http://tech.innovation.co.jp/images/careerpath.png" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "Hisahiro Tsukamoto",
+        "image": "https://avatars.githubusercontent.com/u/2120249?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": "http://d.hatena.ne.jp/hi-hats/"
+    },
+    "headline": "エンジニアキャリアパス問題",
+    "url": "http://tech.innovation.co.jp2016-5-13-Engineer-Career-Path.adoc",
+    "datePublished": "2016-05-12T15:00:00.000Z",
+    "dateModified": "2016-05-13T08:04:12.455Z",
+    "image": "http://tech.innovation.co.jp/images/careerpath.png",
+    "keywords": "Tsukamoto, Engineer, CareerPath",
+    "description": "定期的にネットで上がってくる「エンジニア35歳定年説」という説があります。 ちょうどヒットする世代の塚本です。こんにちは。 まあ、若手だった層も時が経てば年齢が繰り上がってくる以上、循環的に話題に上る現象も当然なのかもしれません。 そして、ここ数日またこの説に関して話題に上がっているのを読み、思うところあったので、私も中堅を過ぎたエンジニアのキャリアパスについて所感を書いてみます。 （決して会社の見解ではございません） まずこちらの記事 「健康は命より大事。」 Health Orientedエンジニアとしては、これに尽きてしまうので、ここで終了でもよい..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Tsukamoto tag-Engineer tag-Career-Path no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="13 May 2016" class="post-meta__date date">13 May 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Tsukamoto">Tsukamoto</a>, <a href="http://tech.innovation.co.jp/tag/Engineer">Engineer</a>, <a href="http://tech.innovation.co.jp/tag/Career-Path">CareerPath</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/2120249?v=3" alt="profile image for Hisahiro Tsukamoto" class="avatar post-meta__avatar" /> by Hisahiro Tsukamoto</span>
+      </div>
+      <h1 class="post-title">エンジニアキャリアパス問題</h1>
+    </header>
+
+    <section class="post tag-Tsukamoto tag-Engineer tag-Career-Path">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>定期的にネットで上がってくる「エンジニア35歳定年説」という説があります。
+ちょうどヒットする世代の塚本です。こんにちは。</p>
+</div>
+<div class="paragraph">
+<p>まあ、若手だった層も時が経てば年齢が繰り上がってくる以上、循環的に話題に上る現象も当然なのかもしれません。
+そして、ここ数日またこの説に関して話題に上がっているのを読み、思うところあったので、私も中堅を過ぎたエンジニアのキャリアパスについて所感を書いてみます。
+（決して会社の見解ではございません）</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/careerpath.png" alt="Career Path Img">
+</div>
+</div>
+<div class="paragraph">
+<p>まずこちらの記事 <a href="http://kwappa.hatenablog.com/entry/2016/05/10/115017">「健康は命より大事。」</a></p>
+</div>
+<div class="paragraph">
+<p>Health Orientedエンジニアとしては、これに尽きてしまうので、ここで終了でもよいくらいなのですが、ボツ原稿になるでしょうからもう少しだけ。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">前提知識</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>（特に他職種の方だと）知らない方もいらっしゃるかと思いますので説明しますと、</p>
+</div>
+<div class="paragraph">
+<p>SIerや過当競争下にある人員不足のスタートアップ企業などでは</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>納期に追われ精神的に追い詰められることによる心身への負荷が高い</p>
+</li>
+<li>
+<p>管理職にならないと給料が上がらない（詳しくは <a href="http://www.ryuzee.com/contents/blog/7089">Ryuzee.com</a>にて）</p>
+</li>
+<li>
+<p>技術の流れが早く継続的な学習が必須であるが、加齢とともに学習能力（というか記憶力？）が落ちていく</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>などの理由から、35歳くらいが限界じゃないかと叫ばれている説です。
+自分がエンジニアになった頃から言われているような記憶があります。</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>余談ですが、弊社は元々「仕事の効率化」を目的としていることもあり、私の直近残業時間は0（極限値）です。</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___2">がしかし、一般化できていない</h3>
+<div class="paragraph">
+<p>既にお気づきかと思いますが、個人差、会社差に依存するため千差万別とも言え、いわゆる<strong>主語が大きい</strong>言説になってしまっています。
+そもそも「エンジニア（元はプログラマ）」という括り（機械エンジニアからソフトウェアエンジニアまで含む）が大雑把すぎる時点で、発議するほどでもないテーマであり、
+時代の移り変わりもある中で、ネタと化してきている側面もあります。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">その上で</h3>
+<div class="paragraph">
+<p>個人的に言えば、当てはまる部分もあるので、自分なりの対処法も含め、以下にまとめてみました。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">合致する部分</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="___5">ライフスタイルの変化</h3>
+<div class="paragraph">
+<p>上のリンク先でRyuzeeパイセンも述べておられますが、30代にもなると結婚する人の割合が増えてくるのは確かです。
+（35歳以上だと男女ともに半数を超える： <a href="http://www.stat.go.jp/data/kokusei/2010/kihon1/pdf/gaiyou1.pdf#page=23">総務省統計局HP</a>）</p>
+</div>
+<div class="paragraph">
+<p>家庭をもつと勉強時間の確保は難しくなります。若いころ培った知識や業務経験の積み重ねでやっていける職種と比べれば、
+単純に技術を追求するキャリアの継続が難しい点はあります。</p>
+</div>
+<div class="paragraph">
+<p>ただ、時間の使い方や「何に投資すべきで何に投資すべきでないか」といった判断力は確実についているかと思いますし、
+チーム全体を効率化して自分の仕事を減らすなど、
+日常や仕事の中での無駄を省くなり効率化してうまく時間を捻出することができます。</p>
+</div>
+<div class="paragraph">
+<p>これこそがエンジニアリングです。</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>余談ですが、弊社開発部門はセルフタイムマネジメントにより、私の直近残業時間は0（極限値）かつ週2で保育園のお迎えに行っております。</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___6">学習能力問題</h3>
+<div class="paragraph">
+<p>新人の頃と比べると、覚えれる量及び速度が減ったような気がしています。
+よく考えると、それこそ当時は何もないスポンジのような段階だからこその吸収力だった気もするし、自分の感覚なんて曖昧なものです。</p>
+</div>
+<div class="paragraph">
+<p>新しい技術も例えば、新しくDockerのことを学ぼうとしたとき、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Linuxコンテナを理解している</p>
+</li>
+<li>
+<p>AWSのAMIのイメージに近い</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>といった既存技術との接点知識があるだけで、自分の頭の中を補完するだけで済み、随分と勉強することは楽でした。</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>どのような技術やソフトウェアも、開発された理由や経緯があるので、歴史のピースを埋めていく作業</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>と捉えると学習しやすく、まあ結論、<strong>歳をとってもプラマイゼロ</strong>かなと。</p>
+</div>
+<div class="paragraph">
+<p><strong>「教えてもらえる環境かどうか」</strong>というのは要素としてとても大きいですが、これも会社依存の問題なのでここでは置いておきます。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___7">キャリアパス問題</h3>
+<div class="paragraph">
+<p>エンジニアという人種は比較的報酬に無頓着とまでは言わないけども、”いいモノを作る”原理主義のようなところがある。（あくまで周辺観測です）</p>
+</div>
+<div class="paragraph">
+<p>”いいモノを作る”エンジニアが会社に目に見える利益を生むのであれば、何も問題はないでしょうが、
+そう単純に正比例するわけでもないのが現実です。（そもそも”いいモノ”に対する価値観が一致していない）</p>
+</div>
+<div class="paragraph">
+<p>また、目に見えない”いいモノ”を評価できる組織なのかという問題もあります。</p>
+</div>
+<div class="paragraph">
+<p>上述のライフスタイルの変化とも関連してきて、家庭をもつようになれば、そこそこの給料が必要になってくる。
+「さぁどうしよう」お恥ずかしい話ですが以前は自分もざっくりこんな感じでした。</p>
+</div>
+<div class="paragraph">
+<p>そして私も一時、マネージメント寄りになったことがありますが、正直向いてるとは感じませんでした。
+やれないことはないし、そのほうが会社のためになるのであればやるけども、エンジニアリングで解決している手応えが欲しくなってしまう。</p>
+</div>
+<div class="paragraph">
+<p>自分の力で出来ることは限られてくるし、色々と逡巡した結果、ひとつ導き出した選択として</p>
+</div>
+<div class="paragraph">
+<p><strong>この会社に貢献すれば、”いいモノ作り”に繋がっていく</strong> と思える会社に入ること</p>
+</div>
+<div class="paragraph">
+<p>そういった現場であれば、自分に向いていなさそうなことでも、自己実現の目的のために力を発揮できそうだし、好きなようにモノを作らせてもらって評価してもらえるなら尚ハッピーかと思います。</p>
+</div>
+<div class="paragraph">
+<p>思ったことを連々と書いていったらこんなにもまとまりがなくなってしまいましたので、本日はこのへんで。</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です。</p>
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
