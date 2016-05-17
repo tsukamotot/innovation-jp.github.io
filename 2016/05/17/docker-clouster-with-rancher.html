@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Rancher OSとRancherでDockerクラスタを組んでみた - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Rancher OSとRancherでDockerクラスタを組んでみた">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Rancher OSとRancherでDockerクラスタを組んでみた">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2016/05/17/docker-clouster-with-rancher.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Rancher OSとRancherでDockerクラスタを組んでみた" />
+    <meta property="og:description" content="こんにちは！加藤です。 勢いで買ったNUC４台と、RancherOS + Rancherで、 Dockerのクラスタを組んでみます。 これです！！！ Rancher OSとRancherについて Rancher OSとは？ http://rancher.com/rancher-os/ RancherOSは、Docker専用のOSで、主な特徴は、 OSのサイズが小さい 　→v0.4.5時点で32.5MB(ただしSYSTEM DOCKER部分は含まれません) 5〜10秒程度で起動 オープンソース ntpd, syslog, consoleなど、Linuxカ..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2016/05/17/docker-clouster-with-rancher.html" />
+    <meta property="article:published_time" content="2016-05-16T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-05-17T08:40:18.551Z" />
+    <meta property="article:tag" content="SecondPost" />
+    <meta property="article:tag" content="KatoK" />
+    <meta property="article:tag" content="Docker" />
+    <meta property="article:tag" content="Rancher" />
+    <meta property="article:tag" content="RancherOS" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Rancher OSとRancherでDockerクラスタを組んでみた" />
+    <meta name="twitter:description" content="こんにちは！加藤です。 勢いで買ったNUC４台と、RancherOS + Rancherで、 Dockerのクラスタを組んでみます。 これです！！！ Rancher OSとRancherについて Rancher OSとは？ http://rancher.com/rancher-os/ RancherOSは、Docker専用のOSで、主な特徴は、 OSのサイズが小さい 　→v0.4.5時点で32.5MB(ただしSYSTEM DOCKER部分は含まれません) 5〜10秒程度で起動 オープンソース ntpd, syslog, consoleなど、Linuxカ..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2016/05/17/docker-clouster-with-rancher.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "katoK",
+        "image": "https://avatars.githubusercontent.com/u/70055?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Rancher OSとRancherでDockerクラスタを組んでみた",
+    "url": "http://tech.innovation.co.jp/2016/05/17/docker-clouster-with-rancher.html",
+    "datePublished": "2016-05-16T15:00:00.000Z",
+    "dateModified": "2016-05-17T08:40:18.551Z",
+    "keywords": "SecondPost, KatoK, Docker, Rancher, RancherOS",
+    "description": "こんにちは！加藤です。 勢いで買ったNUC４台と、RancherOS + Rancherで、 Dockerのクラスタを組んでみます。 これです！！！ Rancher OSとRancherについて Rancher OSとは？ http://rancher.com/rancher-os/ RancherOSは、Docker専用のOSで、主な特徴は、 OSのサイズが小さい 　→v0.4.5時点で32.5MB(ただしSYSTEM DOCKER部分は含まれません) 5〜10秒程度で起動 オープンソース ntpd, syslog, consoleなど、Linuxカ..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Second-Post tag-Kato-K tag-Docker tag-Rancher tag-Rancher-O-S no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="17 May 2016" class="post-meta__date date">17 May 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Second-Post">SecondPost</a>, <a href="http://tech.innovation.co.jp/tag/Kato-K">KatoK</a>, <a href="http://tech.innovation.co.jp/tag/Docker">Docker</a>, <a href="http://tech.innovation.co.jp/tag/Rancher">Rancher</a>, <a href="http://tech.innovation.co.jp/tag/Rancher-O-S">RancherOS</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/70055?v=3" alt="profile image for katoK" class="avatar post-meta__avatar" /> by katoK</span>
+      </div>
+      <h1 class="post-title">Rancher OSとRancherでDockerクラスタを組んでみた</h1>
+    </header>
+
+    <section class="post tag-Second-Post tag-Kato-K tag-Docker tag-Rancher tag-Rancher-O-S">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは！加藤です。</p>
+</div>
+<div class="paragraph">
+<p>勢いで買ったNUC４台と、RancherOS + Rancherで、
+Dockerのクラスタを組んでみます。</p>
+</div>
+<div class="paragraph">
+<p>これです！！！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/01.gif" alt="01.gif">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_rancher_os_rancher">Rancher OSとRancherについて</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_rancher_os">Rancher OSとは？</h3>
+<div class="paragraph">
+<p><a href="http://rancher.com/rancher-os/" class="bare">http://rancher.com/rancher-os/</a></p>
+</div>
+<div class="paragraph">
+<p>RancherOSは、Docker専用のOSで、主な特徴は、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>OSのサイズが小さい<br>
+　→v0.4.5時点で32.5MB(ただしSYSTEM DOCKER部分は含まれません)</p>
+</li>
+<li>
+<p>5〜10秒程度で起動</p>
+</li>
+<li>
+<p>オープンソース</p>
+</li>
+<li>
+<p>ntpd, syslog, consoleなど、Linuxカーネル以外の部分は出来るだけコンテナで動かすコンセプト</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>となっています。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/02.gif" alt="02.gif">
+</div>
+</div>
+<div class="paragraph">
+<p><em>出典: <a href="http://rancher.com/rancher-os/" class="bare">http://rancher.com/rancher-os/</a></em></p>
+</div>
+<div class="paragraph">
+<p>Docker専用コンテナといえば「CoreOS」が有名ですが、<br>
+CoreOSは、etcdやfleet等のクラスタを組むためのプログラムが内包されている関係上、<br>
+RancherOSに比べ、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>初期インストール時の容量大きい</p>
+</li>
+<li>
+<p>起動時間が少し長い</p>
+</li>
+<li>
+<p><span class="red">Intel NUC Kitと相性が悪く、起動しない・・・</span></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>などあり、今回はRancher OSを選択しました。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rancher">Rancherとは？</h3>
+<div class="paragraph">
+<p><a href="http://rancher.com/rancher/" class="bare">http://rancher.com/rancher/</a></p>
+</div>
+<div class="paragraph">
+<p>Rancherは、Dockerのコンテナとして配布されている、コンテナやクラスタを管理するツールです。<br>
+2016年3月29日にバージョン1.0に到達し、プロダクション環境でも使えるよ！というアナウンスが有りました。<br>
+主な特徴は、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>オープンソース</p>
+</li>
+<li>
+<p>LDAPログインなど、エンタープライズでの利用を想定</p>
+</li>
+<li>
+<p>わかりやすいWebUIでコンテナ管理が出来る<br></p>
+</li>
+<li>
+<p>各クラウドプロバイダに対し、のWebUI上でコンテナ操作〜クラスタ作成まで可能
+　Amazon EC2、Azure、DigitalOcean、exoscale、packet、rackspace、ubiquity hosting、vSphereに対応</p>
+</li>
+<li>
+<p>Cattle, Kubernetes,Swarm,Mesos(v1.1.0-dev)などのクラスタ管理環境に対応</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>となっています。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/03.png" alt="03.png">
+</div>
+</div>
+<div class="paragraph">
+<p><em>出典： <a href="http://rancher.com/announcing-rancher-1-0-ga/" class="bare">http://rancher.com/announcing-rancher-1-0-ga/</a></em></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/04.png" alt="04.png">
+</div>
+</div>
+<div class="paragraph">
+<p>Amazon EC2ホストを追加する画面</p>
+</div>
+<div class="paragraph">
+<p>特に、WebUIがとても良く出来ていて、<br>
+作成したコンテナ構成をグラフィカルに表示したり、<br>
+設定ファイルの表示ができるので、勉強に役立ちます。<br></p>
+</div>
+<div class="paragraph">
+<p>例えば、4種類のコンテナで構成されている環境を作成した場合、
+image::kato/2/05.gif[]</p>
+</div>
+<div class="paragraph">
+<p>リンクの状態を見ることが出来たり、
+image::kato/2/06.png[]</p>
+</div>
+<div class="paragraph">
+<p>docker-conpose.ymlを出力できます。
+めっちゃ便利！！！
+image::kato/2/07.gif[]</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">クラスタ構築</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="___2">インフラの俯瞰図</h3>
+<div class="paragraph">
+<p>Intel NUC Kit4台あり、それぞれ、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>IPは、192.168.1.201〜192.168.1.204<br>
+　→ルーターのDHCPで設定(ルーターの、MACアドレスとIPを紐付ける機能を使用)</p>
+</li>
+<li>
+<p>ホスト名は、rancher1〜rancher4</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>としました。</p>
+</div>
+<div class="paragraph">
+<p>また、ストレージの容量や、メモリの容量などのlabelを設定しておき、<br>
+コンテナの特性によりどのホストで起動させるかを指定出来るようにしておきます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/08.png" alt="08.png">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rancher_os_2">Rancher OSのインストール</h3>
+<div class="paragraph">
+<p>では、早速RancherOSをインストールします。<br>
+4台のマシン全てで行ないます。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>ISOのダウンロード
+下記からISOファイルをダウンロードし、USBやCDのブードメディアを用意しておきます。<br>
+<a href="https://github.com/rancher/os" class="bare">https://github.com/rancher/os</a></p>
+</li>
+<li>
+<p>1で作成したメディアで起動します。</p>
+</li>
+<li>
+<p>起動後、手元のマシンからssh経由でログインします。<br>
+ユーザー名、パスワード共に、「rancher」が設定されています。</p>
+</li>
+<li>
+<p>設定ファイルcloud-config.ymlを作成し、ホスト名と公開鍵を指定します。<br>
+先頭行の「#cloud-confg」も必要なので、気をつけて下さい。</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>vi cloud-config.yml
+[source]
+#cloud-config
+hostname: rancher3
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3……..</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>rosコマンドで、OSのインストール</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo ros install -c cloud-config.yml -d /dev/sda</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>再起動</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo reboot</code></pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>簡単！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rancher_2">Rancherのインストール</h3>
+<div class="paragraph">
+<p>今回、Rancherのコンテナは、rancher1(192.168.1.201)で動かすことにします。</p>
+</div>
+<div class="paragraph">
+<p>rancher1(192.168.1.201)にsshで接続し、ranche/serverコンテナを起動します。<br>
+コンテナ起動後しばらくすると、http://192.168.1.201:8080/ でWebUIにアクセスできます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo docker run --name rancher-server -d --restart=always -p 8080:8080 rancher/server</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>簡単！！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rancher_3">Rancherエージェントを設定</h3>
+<div class="paragraph">
+<p>各マシン上でRancherエージェントコンテナを起動することで、WebUIで管理できるようになります。<br>
+WebUIのホスト追加画面で、各種パラメータを指定して生成されたコマンドを各マシン(rancher1〜rancher4)で実行します。<br>
+(rancher/serverをインストールしたマシンでは、4. のIP指定は必須です)</p>
+</div>
+<div class="paragraph">
+<p>なお、Default Enviromentは、コンテナ管理環境がCattleになっています。<br>
+Kubernetes環境などのEnviromentに切り替えた後にエージェント用コンテナを起動することで、他のコンテナ管理環境になります。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/09.png" alt="09.png">
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>sudo docker run -e CATTLE_AGENT_IP="192.168.1.201"  -e CATTLE_HOST_LABELS='name=rancher1&amp;type=storage'  -d --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher rancher/agent:v1.0.1 http://192.168.1.201:18080/v1/scripts/1F5EAD35E6A71F……</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>簡単！！！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">もし、最初からやり直したい場合は？</h3>
+<div class="paragraph">
+<p>下記のコマンドで、不要になったDockerコンテナやイメージを削除出来ます</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>docker rm -f `docker ps -a -q`
+docker rmi `docker images -q`</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_wordpress">Wordpressの環境を作ってみる</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>では早速、構築した環境でWebアプリケーションを動かしてみます。
+とは言え、CATALOGでwordpressを選んで「Lanch」するだけで終わりです。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/10.png" alt="10.png">
+</div>
+</div>
+<div class="paragraph">
+<p>すべてのコンテナが、Activeになれば完了です。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/11.png" alt="11.png">
+</div>
+</div>
+<div class="paragraph">
+<p>wordpressの行の右側のポート番号(80)部分のリンクをクリックすると、wordpressが動作していることが確認できます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/12.png" alt="12.png">
+</div>
+</div>
+<div class="paragraph">
+<p>動作してますね〜！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/13.png" alt="13.png">
+</div>
+</div>
+<div class="paragraph">
+<p>折角なので、Wordpressのコンテナを1つから4つにスケールしてみます。<br>
+wordpressの右の( i )をクリックすると、設定が表示されますので、Scale数を4変更します。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/14.png" alt="14.png">
+</div>
+</div>
+<div class="paragraph">
+<p>しばらくすると、4コンテナにスケールしました。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/15.png" alt="15.png">
+</div>
+</div>
+<div class="paragraph">
+<p>また、展開するマシンも適切に分散している事が確認できます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/2/16.png" alt="16.png">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">まとめ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Rancher OSやRancherを使うことで、簡単にDockerのクラスタを組むことが出来ました。<br>
+慣れれば、OSのインストールから作業を開始しても、30分程度で環境構築が出来そうなほど簡単でした。</p>
+</div>
+<div class="paragraph">
+<p>また、KubernetesやMesos、Swarmなどの環境もWebUIから簡単に環境構築が出来ますので、<br>
+ちょっと試してみたいという人にRancherは良い選択肢ではないかと思います。</p>
+</div>
+<div class="paragraph">
+<p>ぜひ、お試しあれ！</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
