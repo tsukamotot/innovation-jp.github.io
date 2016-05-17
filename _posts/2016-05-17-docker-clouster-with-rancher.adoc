@@ -214,10 +214,10 @@ image::kato/2/16.png[]
 
 == まとめ
 
-Rancher OSやRancherを使うことで、簡単にDockerのクラスタを組むことが出来ました。 +
+Rancher OSやRancherを使うことで、簡単にDockerのクラスタを組むことが出来ました。
 慣れれば、OSのインストールから作業を開始しても、30分程度で環境構築が出来そうなほど簡単でした。
 
-また、KubernetesやMesos、Swarmなどの環境もWebUIから簡単に環境構築が出来ますので、 +
+また、KubernetesやMesos、Swarmなどの環境もWebUIから簡単に環境構築が出来ますので、
 ちょっと試してみたいという人にRancherは良い選択肢ではないかと思います。
 
 ぜひ、お試しあれ！
