@@ -4,4 +4,221 @@
 :hp-tags: SecondPost,KatoK,Docker,Rancher,RancherOS
 
 
-test
+こんにちは！加藤です。
+
+勢いで買ったNUC４台と、RancherOS + Rancherで、
+Dockerのクラスタを組んでみます。
+
+これです！！！
+
+image::kato/2/01.gif[]
+
+
+== Rancher OSとRancherについて
+
+=== Rancher OSとは？
+
+http://rancher.com/rancher-os/
+
+RancherOSは、Docker専用のOSで、主な特徴は、
+
+* OSのサイズが小さい +
+　→v0.4.5時点で32.5MB(ただしSYSTEM DOCKER部分は含まれません)
+* 5〜10秒程度で起動
+* オープンソース
+* ntpd, syslog, consoleなど、Linuxカーネル以外の部分は出来るだけコンテナで動かすコンセプト
+
+となっています。
+
+image::kato/2/02.gif[]
+____
+出典: http://rancher.com/rancher-os/
+____
+
+Docker専用コンテナといえば「CoreOS」が有名ですが、 +
+CoreOSは、etcdやfleet等のクラスタを組むためのプログラムが内包されている関係上、 +
+RancherOSに比べ、
+
+* 初期インストール時の容量大きい
+* 起動時間が少し長い
+* [red]#Intel NUC Kitと相性が悪く、起動しない・・・#
+
+などあり、今回はRancher OSを選択しました。
+
+=== Rancherとは？
+
+http://rancher.com/rancher/
+
+Rancherは、Dockerのコンテナとして配布されている、コンテナやクラスタを管理するツールです。 +
+2016年3月29日にバージョン1.0に到達し、プロダクション環境でも使えるよ！というアナウンスが有りました。 +
+主な特徴は、
+
+* オープンソース
+* LDAPログインなど、エンタープライズでの利用を想定
+* わかりやすいWebUIでコンテナ管理が出来る +
+* 各クラウドプロバイダに対し、のWebUI上でコンテナ操作〜クラスタ作成まで可能
+　Amazon EC2、Azure、DigitalOcean、exoscale、packet、rackspace、ubiquity hosting、vSphereに対応
+* Cattle, Kubernetes,Swarm,Mesos(v1.1.0-dev)などのクラスタ管理環境に対応
+
+となっています。
+
+image::kato/2/03.png[]
+____
+出典：http://rancher.com/announcing-rancher-1-0-ga/
+____
+
+image::kato/2/04.png[]
+Amazon EC2ホストを追加する画面
+
+
+特に、WebUIがとても良く出来ていて、 +
+作成したコンテナ構成をグラフィカルに表示したり、 +
+設定ファイルの表示ができるので、勉強に役立ちます。 +
+
+例えば、4種類のコンテナで構成されている環境を作成した場合、
+image::kato/2/05.gif[]
+
+
+リンクの状態を見ることが出来たり、
+image::kato/2/06.png[]
+
+
+docker-conpose.ymlを出力できます。
+めっちゃ便利！！！
+image::kato/2/07.gif[]
+
+
+
+
+== クラスタ構築
+
+
+=== インフラの俯瞰図
+
+Intel NUC Kit4台あり、それぞれ、
+
+* IPは、192.168.1.201〜192.168.1.204 +
+　→ルーターのDHCPで設定(ルーターの、MACアドレスとIPを紐付ける機能を使用)
+* ホスト名は、rancher1〜rancher4
+
+としました。
+
+また、ストレージの容量や、メモリの容量などのlabelを設定しておき、 +
+コンテナの特性によりどのホストで起動させるかを指定出来るようにしておきます。
+
+image::kato/2/08.png[]
+
+
+=== Rancher OSのインストール
+
+では、早速RancherOSをインストールします。 +
+4台のマシン全てで行ないます。
+
+1.  ISOのダウンロード
+下記からISOファイルをダウンロードし、USBやCDのブードメディアを用意しておきます。 +
+https://github.com/rancher/os
+2. 1で作成したメディアで起動します。
+3. 起動後、手元のマシンからssh経由でログインします。 +
+  ユーザー名、パスワード共に、「rancher」が設定されています。
+4. 設定ファイルcloud-config.ymlを作成し、ホスト名と公開鍵を指定します。 +
+  先頭行の「#cloud-confg」も必要なので、気をつけて下さい。
+[source]
+vi cloud-config.yml
+[source]
+#cloud-config
+hostname: rancher3
+ssh_authorized_keys:
+  - ssh-rsa AAAAB3……..
+5. rosコマンドで、OSのインストール
+[source]
+sudo ros install -c cloud-config.yml -d /dev/sda
+6. 再起動
+[source]
+sudo reboot
+
+簡単！
+
+
+=== Rancherのインストール
+
+今回、Rancherのコンテナは、rancher1(192.168.1.201)で動かすことにします。
+
+rancher1(192.168.1.201)にsshで接続し、ranche/serverコンテナを起動します。 +
+コンテナ起動後しばらくすると、http://192.168.1.201:8080/ でWebUIにアクセスできます。
+[source]
+sudo docker run --name rancher-server -d --restart=always -p 8080:8080 rancher/server
+
+簡単！！
+
+
+=== Rancherエージェントを設定
+
+各マシン上でRancherエージェントコンテナを起動することで、WebUIで管理できるようになります。 +
+WebUIのホスト追加画面で、各種パラメータを指定して生成されたコマンドを各マシン(rancher1〜rancher4)で実行します。 +
+(rancher/serverをインストールしたマシンでは、4. のIP指定は必須です)
+
+なお、Default Enviromentは、コンテナ管理環境がCattleになっています。 +
+Kubernetes環境などのEnviromentに切り替えた後にエージェント用コンテナを起動することで、他のコンテナ管理環境になります。
+
+image::kato/2/09.png[]
+
+[source]
+sudo docker run -e CATTLE_AGENT_IP="192.168.1.201"  -e CATTLE_HOST_LABELS='name=rancher1&type=storage'  -d --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher rancher/agent:v1.0.1 http://192.168.1.201:18080/v1/scripts/1F5EAD35E6A71F……
+
+簡単！！！
+
+
+=== もし、最初からやり直したい場合は？
+
+下記のコマンドで、不要になったDockerコンテナやイメージを削除出来ます
+[source]
+docker rm -f `docker ps -a -q`
+docker rmi `docker images -q`
+
+
+
+== Wordpressの環境を作ってみる
+
+では早速、構築した環境でWebアプリケーションを動かしてみます。
+とは言え、CATALOGでwordpressを選んで「Lanch」するだけで終わりです。
+
+image::kato/2/10.png[]
+
+
+すべてのコンテナが、Activeになれば完了です。
+
+image::kato/2/11.png[]
+
+
+wordpressの行の右側のポート番号(80)部分のリンクをクリックすると、wordpressが動作していることが確認できます。
+
+image::kato/2/12.png[]
+
+動作してますね〜！
+
+image::kato/2/13.png[]
+
+
+折角なので、Wordpressのコンテナを1つから4つにスケールしてみます。 +
+wordpressの右の( i )をクリックすると、設定が表示されますので、Scale数を4変更します。
+
+image::kato/2/14.png[]
+
+しばらくすると、4コンテナにスケールしました。
+
+image::kato/2/15.png[]
+
+また、展開するマシンも適切に分散している事が確認できます。
+
+image::kato/2/16.png[]
+
+
+== まとめ
+
+Rancher OSやRancherを使うことで、簡単にDockerのクラスタを組むことが出来ました。 +
+慣れれば、OSのインストールから作業を開始しても、30分程度で環境構築が出来そうなほど簡単でした。
+
+また、KubernetesやMesos、Swarmなどの環境もWebUIから簡単に環境構築が出来ますので、 +
+ちょっと試してみたいという人にRancherは良い選択肢ではないかと思います。
+
+ぜひ、お試しあれ！
