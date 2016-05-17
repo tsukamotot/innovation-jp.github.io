@@ -63,8 +63,8 @@ Rancherは、Dockerのコンテナとして配布されている、コンテナ�
 image::kato/2/03.png[]
 _出典： http://rancher.com/announcing-rancher-1-0-ga/_
 
-image::kato/2/04.png[]
-Amazon EC2ホストを追加する画面
+image::kato/2/04.gif[]
+_Amazon EC2ホストを追加する画面_
 
 
 特に、WebUIがとても良く出来ていて、 +
