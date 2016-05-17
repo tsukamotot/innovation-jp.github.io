@@ -73,18 +73,18 @@ _Amazon EC2ホストを追加する画面_
 
 例えば、4種類のコンテナで構成されている環境を作成した場合、
 
-image::kato/2/05.gif[]
+image::kato/2/05.png[]
 
 
 リンクの状態を見ることが出来たり、
 
-image::kato/2/06.png[]
+image::kato/2/06.gif[]
 
 
 docker-conpose.ymlを出力できます。 +
 めっちゃ便利！！！
 
-image::kato/2/07.gif[]
+image::kato/2/07.png[]
 
 
 
