@@ -1,0 +1,7 @@
+= Rancher OSとRancherでDockerクラスタを組んでみた
+:published_at: 2016-05-17
+:hp-alt-title: docker-clouster-with-rancher
+:hp-tags: SecondPost,KatoK,Docker,Rancher,RancherOS
+
+
+test
