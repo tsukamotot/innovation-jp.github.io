@@ -1,4 +1,4 @@
-= WordPressサイトのhttps化した時のお話など
+= WordPressサイトのhttps化をした時のお話など
 :published_at: 2016-05-26
 :hp-alt-title: Such-as-the-story-of-when-he-turned-into-https-of-Wordpress-site
 :hp-tags: SecondPost,Oz,https,WordPress
