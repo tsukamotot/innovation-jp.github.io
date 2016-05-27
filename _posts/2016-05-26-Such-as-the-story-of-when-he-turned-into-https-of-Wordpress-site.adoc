@@ -1,4 +1,4 @@
-= Wordpressサイトのhttps化した時のお話など
+= WordPressサイトのhttps化した時のお話など
 :published_at: 2016-05-26
 :hp-alt-title: Such-as-the-story-of-when-he-turned-into-https-of-Wordpress-site
 :hp-tags: SecondPost,Oz,https,WordPress
@@ -6,11 +6,11 @@
 こんにちは。  
 弊社エンジニアグループでは**もう**一番若手ではなくなったの3年目エンジニア小笹です。 
 
-先日弊社で運営しているBtoBマーケティングブログをhttps化したのですが、 +
+先日弊社で運営している https://www.innovation.co.jp/b2blog/[BtoBマーケティングイノベーション] をhttps化したのですが、 +
 その時考えたり感じたりしたお話をさせていただればと思います。
 
 ## 前提
-BtoBマーケティングブログとさらっと書きましたが、 +
+https://www.innovation.co.jp/b2blog/[BtoBマーケティングイノベーション] とさらっと書きましたが、 +
 弊社が運営しているBtoBマーケティングの情報発信用ブログのことです。
 
 社内のメンバーが個々人の得意なことや調べたことを記事にまとめたものや、 +
@@ -137,7 +137,7 @@ function is_ssl() {
 port443でELBにきてるのがインスタンスに行くときにはport80で行ってしまうため、
 $_SERVER[‘HTTPS’]がonにならず、リダイレクトループに突入する感じです。
 
-公式でも触れられているのですが、見つけるのが大変でした。。。
+公式でも触れられているのですが、見つけるのが大変でした。。。 +
 https://codex.wordpress.org/Function_Reference/is_ssl
 
 [source, rust]
@@ -177,7 +177,7 @@ ____
 しかし企業がリスクを取りたくないためソフトウェアをクローズに保有してしまう、 +
 WordPressはオープンソースだからこそあるべき姿を純粋に追い続けることができたりするのかもしれません。
 
-なお、同氏はオープンソースについて +
+さらに、同氏はオープンソースについて +
 イシン株式会社出版のTECH TSUSHINの4月号において +
 「_オープンソースはセキュリティが高く、信用でき、機能的で_」
 あると述べています。 +
