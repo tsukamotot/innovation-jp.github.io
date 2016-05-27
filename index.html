@@ -45,106 +45,6 @@ var _trackingid = 'LFT-10003-1';
 })();
 </script>
 
-<style>
-.social-area-syncer {
-	width: 100% ;
-	min-height: 190px ;
-	background: #F5F1E9 ;	/* 背景色 */
-	padding: 1.5em 0 ;
-}
-
-/* デスクトップPCでは高さを拡張する */
-@media screen and ( min-width:480px ) {
-	.social-area-syncer {
-		min-height: 119px ;
-	}
-}
-
-/* スマホ */
-ul.social-button-syncer {
-	width: 238px ;
-	margin: 24px auto ;
-	padding: 0 ;
-	border: none ;
-	list-style-type: none ;
-}
-
-/* デスクトップ */
-@media screen and ( min-width:480px ) {
-	ul.social-button-syncer {
-		width: 410px ;
-	}
-}
-
-ul.social-button-syncer li {
-	float: left ;
-	text-align: center ;
-	height: 71px ;
-	margin: 0 8px ;
-	padding:0 ;
-}
-
-/* [Twitter] */
-.sc-tw {
-	width: 71px ;
-}
-
-.sc-tw svg {
-	width: 30px ;
-	height: 30px ;
- }
-
-.sc-tw a {
-	height: 56px ;
-	margin: 0 auto ;
-	padding-top: 6px ;
-	display: block ;
-	background: #1B95E0 ;
-	font-size: 12px ;
-	color: #fff ;
-	font-weight: 700 ;
-	text-decoration: none ;
-	letter-spacing: .5px ;
-	border-radius: 2px ;
-}
-
-.sc-tw a:hover {
-	color: #fff ;
-	background: #0c7abf ;
-}
-
-.sc-tw span:before {
-	white-space: pre ;
-	content: '\A' ;
-}
-
-/* [Facebook] */
-.sc-fb {
-	z-index: 99 ;
-	width: 69px ;
-}
-
-/* [LINE] */
-.sc-li {
-	width: 50px ;
-}
-
-.sc-li-img {
-	border: none ;
-	margin: 0 auto ;
-	padding:0 ;
-	width: 36px ;
-	height: 60px ;
-}
-
-/* デスクトップPCではLINEボタンを表示しない */
-@media screen and ( min-width:480px ) {
-	.sc-li {
-		display: none ;
-	}
-}    
-</style>
-
     <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
 
     <link rel="canonical" href="http://tech.innovation.co.jp" />
@@ -209,33 +109,41 @@ ul.social-button-syncer li {
     </header>
 
     <div class="content-wrapper">
-        
-        <div class="social-area-syncer">
-        	<ul class="social-button-syncer">
-        		<!-- Twitter ([Tweet]の部分を[ツイート]にすると日本語にできます) -->
-        		<li class="sc-tw"><a data-url="https://syncer.jp" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-count="vertical" data-dnt="true" target="_blank"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M16 3.038c-.59.26-1.22.437-1.885.517.677-.407 1.198-1.05 1.443-1.816-.634.375-1.337.648-2.085.795-.598-.638-1.45-1.036-2.396-1.036-1.812 0-3.282 1.468-3.282 3.28 0 .258.03.51.085.75C5.152 5.39 2.733 4.084 1.114 2.1.83 2.583.67 3.147.67 3.75c0 1.14.58 2.143 1.46 2.732-.538-.017-1.045-.165-1.487-.41v.04c0 1.59 1.13 2.918 2.633 3.22-.276.074-.566.114-.865.114-.21 0-.416-.02-.617-.058.418 1.304 1.63 2.253 3.067 2.28-1.124.88-2.54 1.404-4.077 1.404-.265 0-.526-.015-.783-.045 1.453.93 3.178 1.474 5.032 1.474 6.038 0 9.34-5 9.34-9.338 0-.143-.004-.284-.01-.425.64-.463 1.198-1.04 1.638-1.7z" fill="#fff" fill-rule="nonzero"/></svg><span>Tweet</span></a></li>
-        
-        		<!-- Facebook -->
-        		<li class="sc-fb"><div class="fb-like" data-href="https://syncer.jp" data-layout="box_count" data-action="like" data-show-faces="true" data-share="false"></div></li>
-        
-        		<!-- Google+ -->
-        		<li><div data-href="https://syncer.jp" class="g-plusone" data-size="tall"></div></li>
-        
-        		<!-- はてなブックマーク -->
-        		<li><a href="http://b.hatena.ne.jp/entry/https://syncer.jp" class="hatena-bookmark-button" data-hatena-bookmark-layout="vertical-balloon" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border:none;" /></a></li>
-        
-        		<!-- pocket -->
-        		<li><a data-save-url="https://syncer.jp" data-pocket-label="pocket" data-pocket-count="vertical" class="pocket-btn" data-lang="en"></a></li>
-        
-        		<!-- LINE [画像は公式ウェブサイトからダウンロードして下さい] -->
-        		<li class="sc-li"><a href="http://line.me/R/msg/text/?https://syncer.jp"><img src="./linebutton_36x60.png" width="36" height="60" alt="LINEに送る" class="sc-li-img"></a></li>
-        	</ul>
-        
-            <!-- Facebook用 -->
+        <div class="social-buttons">
+            
+            <!-- facebook script -->
             <div id="fb-root"></div>
-        
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+            
+            <div align="right" id="sbuttons">
+            <!-- google -->
+            <!-- Place this tag where you want the +1 button to render. -->
+            <div class="g-plusone" data-size="medium"></div>
+            <!-- Place this tag after the last +1 button tag. -->
+            <script type="text/javascript">
+              window.___gcfg = {lang: 'ja'};
+            
+              (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/platform.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+              })();
+            </script>
+            <!-- line -->
+            <span>
+            <script type="text/javascript" src="//media.line.me/js/line-button.js?v=20140127" ></script>
+            <script type="text/javascript">
+            new media_line_me.LineButton({"pc":false,"lang":"ja","type":"a"});
+            </script>
+            </span>
+
         </div>
-        
         <div class="content-wrapper__inner">
             
   <div class="main-post-list">
@@ -287,12 +195,6 @@ ul.social-button-syncer li {
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2016/04/08/Micro-Service-Casual-Talk.html" title="link to Microservice Casual Talks いってきました">Microservice Casual Talks いってきました</a></h2>
         <p class="excerpt">最初に 弊社エンジニアブログ第二弾を努めます、塚本（@hihats）と申します。 大分、時期を逸した感がありますが、去るホワイトデーの日に MicroService Casual Talkという高倍率イベントに何とか滑り込み参加してきましたので、そこでの雑感を記事とさせていただきます。 イベントの内容については、既に とてもいい感じにまとめられていますので、 ここでは、あくまで弊社のケースと一般論を照らし合わせた上での独自解釈という色で進めます。 そもそもの経緯 「2000年代中盤あたりに作られて、そろそろサービスインから10年前後経つけれど、当時から同じフレームワークのまま何とか機能追加を継ぎ接ぎしながらやってきた結果、そこそこ巨大かつモノリシックなアーキテクチャになってしまった(ﾉ∀`&hellip;</p>
         <div class="post-list__meta"><time datetime="08 Apr 2016" class="post-list__meta--date date">08 Apr 2016</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/First-Post">FirstPost</a>, <a href="http://tech.innovation.co.jp/tag/Tsukamoto">Tsukamoto</a>, <a href="http://tech.innovation.co.jp/tag/Microservice">Microservice</a>, <a href="http://tech.innovation.co.jp/tag/Architecture">Architecture</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2016/04/01/First-Post.html" title="link to イノベーションエンジニアブログはじめました">イノベーションエンジニアブログはじめました</a></h2>
-        <p class="excerpt">はじめまして！ 株式会社イノベーションの矢ヶ崎と申します。 弊社でも、とうとうエンジニアブログをはじめました！ いままで、弊社ではエンジニア自体が少なく、少ない個々のエンジニアがプロダクトを必死になって作るというカタチでした。 しかし！技術的にやりたいことがドンドン増えて行き、そしてエンジニアの人数もちょっとづつ増え、晴れてこの４月からエンジニアの組織というものが出来ました！これからは、個々ではなくチームでガンガン開発・運用などなどしていきます！ そこで、エンジニアがエンジニアであり続けるため、また社外のエンジニアの方々に、株式会社イノベーションっていう会社は何をやっている(創っている)会社なのかを少しでもわかっていただけるように、エンジニアブログをはじめさせていただきたいと存じます。 初&hellip;</p>
-        <div class="post-list__meta"><time datetime="01 Apr 2016" class="post-list__meta--date date">01 Apr 2016</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/First-Post">FirstPost</a>, <a href="http://tech.innovation.co.jp/tag/Y-A-G-A-S-A-K-I">YAGASAKI</a>, <a href="http://tech.innovation.co.jp/tag/C-O-B-O-L">COBOL</a>, <a href="http://tech.innovation.co.jp/tag/Z-U-N-D-O-K-O">ZUNDOKO</a></span></div>
         <hr class="post-list__divider" />
       </li>
     </ol>
