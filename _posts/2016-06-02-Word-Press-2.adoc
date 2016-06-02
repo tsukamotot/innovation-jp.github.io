@@ -10,7 +10,9 @@
 目指せ一人40個！ +
  +
  
-今回は次回に引き続きWordPressでプラグイン作ってみた話をします！
+今回も次回に引き続きWordPressでプラグイン作ってみた話をします！
+
+image::wordpress_logo.png[]
 
 ## おさらい
 
@@ -42,19 +44,23 @@
 とても難しそうに感じますが、超簡単です。 +
 本当です。
 
+```
 $another_db = new wpdb( ユーザー名, パスワード, DB名, ホスト名 );
+```
 
-これだけです。
+これだけです。 +
 もともとWordpressでMySQLのconnectionを行っている記述と同じものに、
 ユーザー名などの接続情報を変えるだけです。
 
-※$wpdbはそのまま使えるように、別途用意しましょう！
-※MySQLを外部から接続させる設定を行う必要があります
+※$wpdbはそのまま使えるように、別途用意しましょう！ +
+※MySQLを外部から接続させる設定を行う必要がありますよ
 
 
 ちなみに
 
+```
 $another_db = mysql_connect("localhost", "root", "");
+```
 
 などで接続してしまうと、もともと接続していたwordpressのデータベースの接続が
 切れてしまうのでオススメしません！
@@ -66,19 +72,21 @@ PHPのコード的にも、Wordpressになるべく合わせて記述したほ�
 
 ## Select
 
+```
 $users = $another_db->get_results($another_db->prepare("
 	SELECT * 
 	FROM users 
 	WHERE id = %d 
 	LIMIT 1
 ", $user_id));
+```
 
-ほとんどSQLのまんまですねー。
+ほとんどSQLのまんまですねー。 +
 SQLインジェクション対策のために、「prepare」は必ず使ってください。
 
 
 ## INSERT
-
+```
 $another_db->insert('users',
 	array(
 		'name' => $name,
@@ -93,8 +101,9 @@ $another_db->insert('users',
 		'%s'
 	)
 );
+```
 
-こちらも見たまんまですねｗ
+こちらも見たまんまですねｗ +
 現在時刻を入れたい場合に、「current_time('mysql')」と指定するようです。
 
 UPDATE文もほぼ同じなので、割愛します。
@@ -105,14 +114,17 @@ UPDATE文もほぼ同じなので、割愛します。
 「query(好きなSQL)」が書けます。
 トランザクションなんかに使ってました。
 
+```
 $another_db->query('START TRANSACTION');
 $another_db->query('COMMIT');
+```
 
-
-以上です。
+ 
+以上です。 +
 思った以上に簡単に他DBのデータとの連携が可能なので、
-ぜひ皆さんもお試しあれ。
-
+ぜひ皆さんもお試しあれ。 +
+ +
+ こちらからは以上です！
 
 
 
