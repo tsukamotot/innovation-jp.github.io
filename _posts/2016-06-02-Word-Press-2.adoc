@@ -1,0 +1,119 @@
+= WordPressでプラグインを作ってみた　その2
+:published_at: 2016-06-02
+:hp-alt-title: 
+:hp-tags: FirstPost,WordPress,Plugin,Nakamura
+
+おひさしぶりです。中村です。 +
+ +
+最近暑いですね！ +
+ということで、この後餃子を食べに行ってきます。 +
+目指せ一人40個！ +
+ +
+ 
+今回は次回に引き続きWordPressでプラグイン作ってみた話をします！
+
+## おさらい
+
+ - WPに会員登録機能を追加する
+ - 会員データは自社サービスのDBへ保存させる
+ - 投稿記事をお気に入りに追加でき、一覧でみれるようにする
+
+今回は「**別DBへの参照方法について**」詳しく紹介していきます。
+
+
+## Wordpress以外のデータを扱う
+
+
+今回会員データはWordpressのDBとは異なるDBで管理します。
+データ連携するには。。。
+
+①API連携 +
+②外部のDBへ直接接続 +
+
+この2点になると思います。 +
+
+今回は既存システム側に使えそうなAPIが無く作成するのが
+めんどくさかったので、②の方法を採用しました。
+
+※ちなみに自社サービスのDBもMySQL
+
+## 別DBとの接続方法
+
+とても難しそうに感じますが、超簡単です。 +
+本当です。
+
+$another_db = new wpdb( ユーザー名, パスワード, DB名, ホスト名 );
+
+これだけです。
+もともとWordpressでMySQLのconnectionを行っている記述と同じものに、
+ユーザー名などの接続情報を変えるだけです。
+
+※$wpdbはそのまま使えるように、別途用意しましょう！
+※MySQLを外部から接続させる設定を行う必要があります
+
+
+ちなみに
+
+$another_db = mysql_connect("localhost", "root", "");
+
+などで接続してしまうと、もともと接続していたwordpressのデータベースの接続が
+切れてしまうのでオススメしません！
+
+PHPのコード的にも、Wordpressになるべく合わせて記述したほうが良いと思います。
+
+
+以下簡単に使い方をご紹介〜
+
+## Select
+
+$users = $another_db->get_results($another_db->prepare("
+	SELECT * 
+	FROM users 
+	WHERE id = %d 
+	LIMIT 1
+", $user_id));
+
+ほとんどSQLのまんまですねー。
+SQLインジェクション対策のために、「prepare」は必ず使ってください。
+
+
+## INSERT
+
+$another_db->insert('users',
+	array(
+		'name' => $name,
+		'mail' => $mail,
+		'age' => $age,
+		'created_at' => current_time('mysql')
+	),
+	array(
+		'%s',
+		'%s',
+		'%d',
+		'%s'
+	)
+);
+
+こちらも見たまんまですねｗ
+現在時刻を入れたい場合に、「current_time('mysql')」と指定するようです。
+
+UPDATE文もほぼ同じなので、割愛します。
+
+
+## その他
+
+「query(好きなSQL)」が書けます。
+トランザクションなんかに使ってました。
+
+$another_db->query('START TRANSACTION');
+$another_db->query('COMMIT');
+
+
+以上です。
+思った以上に簡単に他DBのデータとの連携が可能なので、
+ぜひ皆さんもお試しあれ。
+
+
+
+
+
