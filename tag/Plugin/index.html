@@ -109,6 +109,41 @@ var _trackingid = 'LFT-10003-1';
     </header>
 
     <div class="content-wrapper">
+        <div class="social-buttons">
+            
+            <!-- facebook script -->
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+            
+            <div align="right" id="sbuttons">
+            <!-- google -->
+            <!-- Place this tag where you want the +1 button to render. -->
+            <div class="g-plusone" data-size="medium"></div>
+            <!-- Place this tag after the last +1 button tag. -->
+            <script type="text/javascript">
+              window.___gcfg = {lang: 'ja'};
+            
+              (function() {
+                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+                po.src = 'https://apis.google.com/js/platform.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+              })();
+            </script>
+            <!-- line -->
+            <span>
+            <script type="text/javascript" src="//media.line.me/js/line-button.js?v=20140127" ></script>
+            <script type="text/javascript">
+            new media_line_me.LineButton({"pc":false,"lang":"ja","type":"a"});
+            </script>
+            </span>
+
+        </div>
         <div class="content-wrapper__inner">
             
   <h1 class="archive-title">Tag: Plugin</h1>
@@ -118,6 +153,15 @@ var _trackingid = 'LFT-10003-1';
   <div class="main-post-list">
 
     <ol class="post-list">
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2016/06/02/Word-Press-2.html" title="link to WordPressでプラグインを作ってみた　その2">WordPressでプラグインを作ってみた　その2</a></h2>
+        <p class="excerpt">おひさしぶりです。中村です。 最近暑いですね！ ということで、昨日餃子を食べに行ってきました。 一人40個！ デブではないと思ってます。 今回も次回に引き続きWordPressでプラグイン作ってみた話をします！ おさらい WPに会員登録機能を追加する 会員データは自社サービスのDBへ保存させる 投稿記事をお気に入りに追加でき、一覧でみれるようにする ちなみに前回のブログで「次回はClass化します！」と書きましたが、書いててつまらないものになってしまったので飛ばします。 今回は「別DBへの参照方法について」詳しく紹介していきます。 Wordpress以外のデータを扱う 今回会員データはWordpressのDBとは異なるDBで管理します。 データ連携するには。。。 ①API連携 ②外部のDB&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="02 Jun 2016" class="post-list__meta--date date">02 Jun 2016</time> &#8226;
+            <span class="post-list__meta--tags tags"><a href="#blog" title="WordPress">WordPress</a>, <a href="#blog" title="Plugin">Plugin</a>, <a href="#blog" title="Gyo-za">Gyo-za</a>, <a href="#blog" title="Nakamura">Nakamura</a></span>
+        </div>
+        <hr class="post-list__divider" />
+      </li>
       <li>
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2016/04/28/Word-Press-1.html" title="link to WordPressでプラグインを作ってみた　その1">WordPressでプラグインを作ってみた　その1</a></h2>
         <p class="excerpt">おはこんばんわ、中村と申します。 普段は自社サービスの開発に携わっております。 皆さんGW目前となり浮き足立っている方も多いのではないでしょうか？ 仙台に行ってきます（笑） 今回は先日WordPressで会員機能プラグインを作ってみたお話をしてみようと思います。 要件 WordPressに会員機能を追加する 会員は投稿記事をお気に入りに追加でき、一覧で見れるようにする 会員データは自社サービスのDBへ保存させる こんな感じ。 （最終的には全ページSSL化とか色々増えちゃいましたが） 自社サービスとの連携が必要なので、単純にプラグインを探してきてなんとかするのは難しく、エンジニアに依頼が来たという訳です。 今回はプラグイン作成〜ルーティング設定までを紹介していきます。 プラグインの構成 ├─&hellip;</p>
