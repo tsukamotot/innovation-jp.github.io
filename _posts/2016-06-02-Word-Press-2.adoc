@@ -1,7 +1,7 @@
 = WordPressでプラグインを作ってみた　その2
 :published_at: 2016-06-02
 :hp-alt-title: 
-:hp-tags: FirstPost,WordPress,Plugin,Nakamura
+:hp-tags: WordPress,Plugin,Gyo-za,Nakamura
 
 おひさしぶりです。中村です。 +
  +
