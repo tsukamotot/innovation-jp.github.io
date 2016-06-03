@@ -45,7 +45,6 @@ image::wordpress_logo.png[]
 ## 別DBとの接続方法
 
 とても難しそうに感じますが、超簡単です。 +
-本当です。
 
 ```
 $another_db = new wpdb( ユーザー名, パスワード, DB名, ホスト名 );
@@ -65,10 +64,15 @@ $another_db = new wpdb( ユーザー名, パスワード, DB名, ホスト名 );
 $another_db = mysql_connect("localhost", "root", "");
 ```
 
-などで接続してしまうと、もともと接続していたwordpressのデータベースの接続が
-切れてしまうのでオススメしません！
+などと記述しても接続できるのですが、もともと接続していたwordpressのデータベースの接続が
+切れてしまい、投稿情報などが取得できなくなってしまいます。
 
-PHPのコード的にも、Wordpressになるべく合わせて記述したほうが良いと思います。
+※footer.phpで再度接続させるという方もいらっしゃるようです
+http://blog.serverkurabe.com/wordpress-another-d
+
+
+
+個人的にはPHPのコードも他と同じように記述できますし、Wordpressになるべく合わせたほうが良いと思います。
 
 
 以下簡単に使い方をご紹介〜
