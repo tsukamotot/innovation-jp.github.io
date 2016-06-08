@@ -55,7 +55,7 @@ var _trackingid = 'LFT-10003-1';
     <meta property="og:description" content="おひさしぶりです。中村です。 最近暑いですね！ ということで、昨日餃子を食べに行ってきました。 一人40個！ デブではないと思ってます。 今回も次回に引き続きWordPressでプラグイン作ってみた話をします！ おさらい WPに会員登録機能を追加する 会員データは自社サービスのDBへ保存させる 投稿記事をお気に入りに追加でき、一覧でみれるようにする ちなみに前回のブログで「次回はClass化します！」と書きましたが、書いててつまらないものになってしまったので飛ばします。 今回は「別DBへの参照方法について」詳しく紹介していきます。 Wordpress以..." />
     <meta property="og:url" content="http://tech.innovation.co.jp/2016/06/02/Word-Press-2.html" />
     <meta property="article:published_time" content="2016-06-01T15:00:00.000Z" />
-    <meta property="article:modified_time" content="2016-06-03T01:45:17.724Z" />
+    <meta property="article:modified_time" content="2016-06-08T11:41:19.132Z" />
     <meta property="article:tag" content="WordPress" />
     <meta property="article:tag" content="Plugin" />
     <meta property="article:tag" content="Gyo-za" />
@@ -73,15 +73,15 @@ var _trackingid = 'LFT-10003-1';
     "publisher": "イノベーション　エンジニアブログ",
     "author": {
         "@type": "Person",
-        "name": "m_nakamura",
-        "image": "https://avatars.githubusercontent.com/u/7381448?v=3",
+        "name": "Akihiro YAGASAKI",
+        "image": "https://avatars.githubusercontent.com/u/13131599?v=3",
         "url": "undefined/author/undefined",
         "sameAs": null
     },
     "headline": "WordPressでプラグインを作ってみた　その2",
     "url": "http://tech.innovation.co.jp/2016/06/02/Word-Press-2.html",
     "datePublished": "2016-06-01T15:00:00.000Z",
-    "dateModified": "2016-06-03T01:45:17.724Z",
+    "dateModified": "2016-06-08T11:41:19.132Z",
     "keywords": "WordPress, Plugin, Gyo-za, Nakamura",
     "description": "おひさしぶりです。中村です。 最近暑いですね！ ということで、昨日餃子を食べに行ってきました。 一人40個！ デブではないと思ってます。 今回も次回に引き続きWordPressでプラグイン作ってみた話をします！ おさらい WPに会員登録機能を追加する 会員データは自社サービスのDBへ保存させる 投稿記事をお気に入りに追加でき、一覧でみれるようにする ちなみに前回のブログで「次回はClass化します！」と書きましたが、書いててつまらないものになってしまったので飛ばします。 今回は「別DBへの参照方法について」詳しく紹介していきます。 Wordpress以..."
 }
@@ -148,41 +148,99 @@ var _trackingid = 'LFT-10003-1';
     </header>
 
     <div class="content-wrapper">
-        <div class="social-buttons">
-            
-            <!-- facebook script -->
-            <div id="fb-root"></div>
-            <script>(function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
-            
-            <div align="right" id="sbuttons">
-            <!-- google -->
-            <!-- Place this tag where you want the +1 button to render. -->
-            <div class="g-plusone" data-size="medium"></div>
-            <!-- Place this tag after the last +1 button tag. -->
-            <script type="text/javascript">
-              window.___gcfg = {lang: 'ja'};
-            
-              (function() {
-                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                po.src = 'https://apis.google.com/js/platform.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-              })();
-            </script>
-            <!-- line -->
-            <span>
-            <script type="text/javascript" src="//media.line.me/js/line-button.js?v=20140127" ></script>
-            <script type="text/javascript">
-            new media_line_me.LineButton({"pc":false,"lang":"ja","type":"a"});
-            </script>
-            </span>
-
-        </div>
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+    				style="border: none; overflow: hidden; height: 90px;"
+    				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/v2.0/plugins/like.php?href=" + url + "&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=90&amp;appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
         <div class="content-wrapper__inner">
             
 
@@ -191,7 +249,7 @@ var _trackingid = 'LFT-10003-1';
     <header class="post-header">
       <div class="post-meta">
         <time datetime="02 Jun 2016" class="post-meta__date date">02 Jun 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Word-Press">WordPress</a>, <a href="http://tech.innovation.co.jp/tag/Plugin">Plugin</a>, <a href="http://tech.innovation.co.jp/tag/Gyo-za">Gyo-za</a>, <a href="http://tech.innovation.co.jp/tag/Nakamura">Nakamura</a></span>
-        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/7381448?v=3" alt="profile image for m_nakamura" class="avatar post-meta__avatar" /> by m_nakamura</span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/13131599?v=3" alt="profile image for Akihiro YAGASAKI" class="avatar post-meta__avatar" /> by Akihiro YAGASAKI</span>
       </div>
       <h1 class="post-title">WordPressでプラグインを作ってみた　その2</h1>
     </header>
