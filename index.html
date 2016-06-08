@@ -109,41 +109,99 @@ var _trackingid = 'LFT-10003-1';
     </header>
 
     <div class="content-wrapper">
-        <div class="social-buttons">
-            
-            <!-- facebook script -->
-            <div id="fb-root"></div>
-            <script>(function(d, s, id) {
-              var js, fjs = d.getElementsByTagName(s)[0];
-              if (d.getElementById(id)) return;
-              js = d.createElement(s); js.id = id;
-              js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
-              fjs.parentNode.insertBefore(js, fjs);
-            }(document, 'script', 'facebook-jssdk'));</script>
-            
-            <div align="right" id="sbuttons">
-            <!-- google -->
-            <!-- Place this tag where you want the +1 button to render. -->
-            <div class="g-plusone" data-size="medium"></div>
-            <!-- Place this tag after the last +1 button tag. -->
-            <script type="text/javascript">
-              window.___gcfg = {lang: 'ja'};
-            
-              (function() {
-                var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                po.src = 'https://apis.google.com/js/platform.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-              })();
-            </script>
-            <!-- line -->
-            <span>
-            <script type="text/javascript" src="//media.line.me/js/line-button.js?v=20140127" ></script>
-            <script type="text/javascript">
-            new media_line_me.LineButton({"pc":false,"lang":"ja","type":"a"});
-            </script>
-            </span>
-
-        </div>
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+    				style="border: none; overflow: hidden; height: 90px;"
+    				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/v2.0/plugins/like.php?href=" + url + "&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=90&amp;appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
         <div class="content-wrapper__inner">
             
   <div class="main-post-list">
@@ -171,12 +229,6 @@ var _trackingid = 'LFT-10003-1';
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2016/05/13/Engineer-Career-Path.html" title="link to エンジニアキャリアパス問題">エンジニアキャリアパス問題</a></h2>
         <p class="excerpt">定期的にネットで上がってくる「エンジニア35歳定年説」という説があります。 既に定年を迎えたことになる塚本です。こんにちは。 まあ、若手だった層も時が経てば年齢が繰り上がってくる以上、循環的に話題に上る現象も当然なのかもしれません。 そして、ここ数日またこの説に関して話題に上がっているのを読み、思うところあったので、私も中堅を過ぎたエンジニアのキャリアパスについて所感を書いてみます。 （決して会社の見解ではございません） まずこちらの記事 「健康は命より大事。」 Health Orientedエンジニアとしては、これに尽きてしまうので、ここで終了でもよいくらいなのですが、ボツ原稿になるでしょうからもう少しだけ。 前提知識 （特に他職種の方だと）知らない方もいらっしゃるかと思いますので説明し&hellip;</p>
         <div class="post-list__meta"><time datetime="13 May 2016" class="post-list__meta--date date">13 May 2016</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Tsukamoto">Tsukamoto</a>, <a href="http://tech.innovation.co.jp/tag/Engineer">Engineer</a>, <a href="http://tech.innovation.co.jp/tag/Career-Path">CareerPath</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2016/05/06/Welcome-Pepper.html" title="link to Pepperがやってきた！ヤァ！ヤァ！ヤァ！">Pepperがやってきた！ヤァ！ヤァ！ヤァ！</a></h2>
-        <p class="excerpt">こんばんは。矢ヶ崎です。 弊社に、新しいお友達がやってまいりました。 世の中的にはもはや目新しくないかもしれませんが、Pepperが弊社にもやってきました！ そんなこんなで、せっかくなので最初のアレをレポートしたいと思います！ まず開けてくれたのは、弊社見習いエンジニアのAMIちゃん。 さあ、AMIちゃん、感動の対面 　 でた〜！！！ 　 さあ出してみましょう 　 あれ？重い・・・ 　 あれれれ？ 　 誰か手伝ってください〜(笑) 　 弊社CTO見習いのozが協力して、よいしょ！ 　 でた〜！！！ と思ったら、首が座っていない！ ０歳児をあつかうがごとく、首を支える優しいAMIちゃん 　 今度こそでた〜！ どうだ！ 　 新しいお友達！ 　 しかし、ものすごいポーズだけど大丈夫なのだろうか・&hellip;</p>
-        <div class="post-list__meta"><time datetime="06 May 2016" class="post-list__meta--date date">06 May 2016</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Pepper">Pepper</a>, <a href="http://tech.innovation.co.jp/tag/Yagasaki">Yagasaki</a>, <a href="http://tech.innovation.co.jp/tag/A-M-I">AMI</a>, <a href="http://tech.innovation.co.jp/tag/Vi">Vi</a></span></div>
         <hr class="post-list__divider" />
       </li>
       <li>
