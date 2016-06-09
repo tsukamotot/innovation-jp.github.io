@@ -1,7 +1,7 @@
 = 文系男子がフィリピンにアプリを作りに行ったお話
 :published_at:2016-06-10
 :hp-alt-title: IPhoneAPPinPhilippines
-:hp-tags: FirstPost,Objectivec,kohe,IPhone
+:hp-tags: FirstPost,Objective-c,kohe,IPhone
 
 近藤康平:マクドナルドで３年、雀荘で３年バイトを経験。雀荘内のランキング１位まで上り詰める。スマホを改造してビジコン入賞。19歳から株式トレードの勉強を始め、株式の塾に入る。マレーシアで新規マーケティング事業立ち上げ。フィリピンでプログラミングを学び、アプリを作ったりしている。プログラミングと株式トレードの勉強と実践を主に行っている。現在はイノベーションのエンジニアである。
 
