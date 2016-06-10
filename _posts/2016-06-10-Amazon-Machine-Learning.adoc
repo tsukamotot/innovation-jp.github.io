@@ -1,0 +1,4 @@
+= Amazon Machine Learningで株価予測(もどき)をしてみたが惨敗でした
+
+を書く予定
+矢ヶ崎
