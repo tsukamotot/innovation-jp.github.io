@@ -1,0 +1,4 @@
+= AWSインスタンスたちのステータスダッシュボードもどきを、CloudWatch+GoogleAppsScriptで作っちゃう
+
+を書く予定
+矢ヶ崎
