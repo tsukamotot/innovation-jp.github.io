@@ -1,4 +1,3 @@
-
 = エンジニアの卵が分かりやすいと感じているおすすめのプログラミング学習サイト
 :published_at: 2016-06-10
 :hp-alt-title: studysite
