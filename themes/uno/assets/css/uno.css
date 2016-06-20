@@ -1687,8 +1687,9 @@ input[type="tel"] {
 .line-through { text-decoration: line-through; }
 .admonitionblock {
    margin: 10px;
-   padding: 5px;
+   padding: 10px;
    border: 1px;
+   font-size: 150%;
 }
 .tip { background-color: rgba(255, 255, 0, 0.3); }
 .important { background-color: rgba(255, 0, 0, 0.1); }
