@@ -156,7 +156,7 @@ http://www.geocities.jp/zattouka/GarageHouse/micon/Arduino/LCD/I2CLCD.htm
 //(未完成)プログラムをここに書く
 ```
 
-//(未完成)結果画像を個々に掲載
+(未完成)結果画像を個々に掲載
 
 
 
