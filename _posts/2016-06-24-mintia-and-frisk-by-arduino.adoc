@@ -145,12 +145,14 @@ http://qiita.com/arigadget/items/0c0a0c3ce4f0555c66a5
 ### arduinoでプログラムを書き込む
 
 arduinoのプログラムは、下記のようになります。
+プログラムは、文字コード「shift_jis」で保存しないと、カタカナが文字化けするので注意して下さい。
 
-なお、I2C液晶の表示には下記のライブラリ(skI2CLCDlib)を利用しています。
+I2C液晶の表示には下記のライブラリ(skI2CLCDlib)を利用させていただきました。
 http://www.geocities.jp/zattouka/GarageHouse/micon/Arduino/LCD/I2CLCD.htm
 
 
-[source,c++]
+
+[source,c]
 ----
 #include <Arduino.h>
 #include <Wire.h>
@@ -158,9 +160,11 @@ http://www.geocities.jp/zattouka/GarageHouse/micon/Arduino/LCD/I2CLCD.htm
 #include <skI2CLCDlib.h>
 
 //WiFiの接続情報
-const char* ssid     = "2dzxt5frqkms";
-const char* password = "g4wduxre9zqb";
-const char* host     = "kato.it-trend.jp";
+const char* ssid     = "WiFiのssidを指定";
+const char* password = "WiFiのパスワードを指定";
+
+//接続するサーバ
+const char* host     = "サーバーのホスト名を指定";
 
 //サーバー接続設定
 WiFiClient client;
@@ -306,15 +310,30 @@ void loop() {
   }
 
 }
----
+----
+
+
 
 ### 動作確認
 
-ボタンを押すと、１行目のメニューが入れ替わり、 +
-ボタンを長押しすると指定したURLに接続するようなっています。 +
+起動すると、一行目に、アクションが表示されます。 +
+ボタンを短い時間押すと、１行目が入れ替わります。
 
+image::kato/3/5.png[]
 
-(未完成)結果画像をここに掲載
+ボタンを長押しすると2行目の「.」が増えていき、
+右まで「.」が埋まってからボタンを話すと、
+
+image::kato/3/6.png[]
+
+サーバーに接続します。
+
+image::kato/3/7.png[]
+
+接続が完了すると、「カンリョウ」と表示されます。
+
+image::kato/3/8.png[]
+
 
 
 いい感じですね！ +
