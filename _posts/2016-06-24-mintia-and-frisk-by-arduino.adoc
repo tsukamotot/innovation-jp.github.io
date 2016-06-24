@@ -161,6 +161,10 @@ http://www.geocities.jp/zattouka/GarageHouse/micon/Arduino/LCD/I2CLCD.htm
 (未完成)結果画像を個々に掲載
 
 
+いい感じですね！
+次回は、ESP-WROOM-02をMINTIAのケースに格納します。
+
+お楽しみに！
 
 
 
