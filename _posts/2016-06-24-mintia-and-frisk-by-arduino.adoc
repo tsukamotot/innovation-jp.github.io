@@ -4,8 +4,7 @@
 :hp-tags: mintia,frisk,arduino,esp-wroom-02
 
 
-
-（注意）電子工作を初めて１ヶ月弱の素人が試行錯誤しながら書いた記事になりますので、
+（注意）電子工作を初めて１ヶ月弱の素人が試行錯誤しながら書いた記事になりますので、 +
 間違い等あるかもしれませんので、温かい目で見守っていただけると幸いです。
 
     最高のデザインであれば、その存在を忘れるほど、日常に溶けこむものである。
@@ -55,11 +54,13 @@ ESP-WROOM-02は、ワンコインで購入できるWi-Fiモジュールですが
 ありがとうございます。
 
 *ESP-WROOM-02 で、モバイル物理スイッチを作る*
+
 http://qiita.com/ie4/items/ae850cdb2c617f3fd6af
 
 →元ネタ
 
 *ESP-WROOM-02 の Arduino 環境で I2C 制御*
+
 http://qiita.com/ikesato/items/92f4cb143e7aeb5e0f9b
 
 →配線図が参考になります
@@ -87,7 +88,7 @@ https://www.switch-science.com/catalog/2652/
   電圧を3.3Vに調整する配線が必要ですが、この開発ボードには +
   それら全てが搭載されており、すぐに動作を試すことが出来ます。
 * 初心者や初めてESP-WROOM-02を使う人は迷わずコレを選びましょう
-* 秋葉原の、千石電商２Fで売っています
+* 秋葉原の、千石電商２Fで売っています +
    http://www.sengoku.co.jp/mod/sgk_cart/detail.php?code=EEHD-4WED
  
  
@@ -111,6 +112,7 @@ http://akizukidenshi.com/catalog/g/gP-05156/
 
 
 *ブレッドボード・ジャンパーワイヤ　ＥＩＣ－Ｊ－Ｓ*
+
 http://akizukidenshi.com/catalog/g/gP-02315/
 
 
@@ -151,10 +153,10 @@ http://www.geocities.jp/zattouka/GarageHouse/micon/Arduino/LCD/I2CLCD.htm
 
 
 ```
-//プログラムをここに書く
+//(未完成)プログラムをここに書く
 ```
 
-//結果画像を個々に掲載
+//(未完成)結果画像を個々に掲載
 
 
 
