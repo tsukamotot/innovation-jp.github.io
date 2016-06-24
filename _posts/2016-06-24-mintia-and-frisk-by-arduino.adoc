@@ -29,6 +29,7 @@
 
 イメージは、こんな感じです。
 
+image::kato/3/1.png[]
 
 
 なお、本記事はシリーズ3部構成となります。
@@ -70,9 +71,8 @@ http://qiita.com/ikesato/items/92f4cb143e7aeb5e0f9b
 下記のような構成を目標にします。 +
 本記事では、ミンディアボタンのプロトタイプを作ります。
 
-[画像]
+image::kato/3/2.png[]
 
- 
 
 
 
@@ -123,6 +123,10 @@ http://akizukidenshi.com/catalog/g/gP-02315/
 SCL → IO14 +
 SDA →IO12 +
 ボタンはIO13ピンに接続します。
+
+image::kato/3/3.png[]
+
+image::kato/3/4.png[]
 
 
 ### arduino環境を用意
