@@ -150,9 +150,163 @@ arduinoのプログラムは、下記のようになります。
 http://www.geocities.jp/zattouka/GarageHouse/micon/Arduino/LCD/I2CLCD.htm
 
 
-```
-//(未完成)プログラムをここに書く
-```
+[source,c++]
+----
+#include <Arduino.h>
+#include <Wire.h>
+#include <ESP8266WiFi.h>
+#include <skI2CLCDlib.h>
+
+//WiFiの接続情報
+const char* ssid     = "2dzxt5frqkms";
+const char* password = "g4wduxre9zqb";
+const char* host     = "kato.it-trend.jp";
+
+//サーバー接続設定
+WiFiClient client;
+const int httpPort = 80;
+
+//ボタン
+const int btn = 13;
+const int btn_short_time = 5;
+const int btn_long_time = 40;
+
+//ＬＣＤのアドレス、画面カラム数８文字
+skI2CLCDlib LCD(0x3E,8) ;
+
+//アクションリスト
+char* actions[]={
+  "ﾋﾟｻﾞ ﾃﾞﾏｴ",
+  "ﾆﾜ ﾐｽﾞﾏｷ",
+  "ｼｭｯｼｬ   ",
+  "ﾀｲｼｬ    "
+};
+
+//ボタンが押されている時間
+int push_state_count = 0;
+
+//表示中のアクション
+int current_action   = 0;
+
+
+void setup() {
+  Serial.begin(115200);
+  delay(10);
+
+  //ボタン
+  pinMode(btn, INPUT_PULLUP);
+
+  //I2Cキャラクタ初期化
+  LCD.Init(LCD_NOT_ICON,32,LCD_VDD3V) ;
+  LCD.Init(0,32,1);
+  LCD.PageSet(0);
+
+  //Serial.print("Connecting to ");
+  //Serial.println(ssid);
+
+  LCD.SetCursor(0,0);
+  LCD.Puts("Conn..");
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+  }
+
+  LCD.Puts("OK!");
+  Serial.println(WiFi.localIP());
+
+  delay(200);
+
+  //1番目のアクションを表示
+  LCD.SetCursor(0,0);
+  LCD.Puts(actions[current_action]);
+
+}
+
+
+void loop() {
+  delay(50);
+  int state = digitalRead(btn);
+  int pushing_display = -1;
+
+
+  //カウントアップ
+  if(!state){
+    push_state_count++;
+
+    //2行目に、「...」を表示させる。
+    if(push_state_count<=btn_long_time  ){
+      if(pushing_display != (int)floor(8 * push_state_count / btn_long_time)){
+        pushing_display = (int)floor(8 * push_state_count / btn_long_time);
+        LCD.SetCursor(pushing_display, 1);
+        LCD.Puts(".");
+      }
+    }
+  }
+  else{
+    if(push_state_count>0){
+      if(push_state_count < btn_short_time){
+
+        //実行するアクション切り替え
+        current_action++;
+        current_action = current_action % sizeof(current_action);
+        LCD.SetCursor(0,0);
+
+        //現在のアクションをキャラクタ表示
+        LCD.Puts(actions[current_action]);
+      }
+      else if(push_state_count>btn_long_time){
+        //実行
+        if (!client.connect(host, httpPort)) {
+          Serial.println("connection failed");
+          return;
+        }
+
+        String url = "?action=" + String(current_action);
+        client.print(String("GET ") + url + " HTTP/1.1¥r¥n" +
+                     "Host: " + host + "¥r¥n" +
+                     "Connection: close¥r¥n¥r¥n");
+
+        delay(100);
+
+        //2行目を初期化
+        LCD.SetCursor(0, 1);
+        LCD.Puts("ｼﾞｯｺｳﾁｭｳ");
+
+        // サーバーからの応答
+        while(true){
+          //レスポンスを待つ
+          if (client.available()) {
+            String line = client.readStringUntil('¥r');
+            Serial.print(line);
+          }
+          else{
+            delay(20);
+          }
+          if (!client.connected()) {
+            Serial.println("\r\ndisconnecting.");
+            client.stop();
+            break;
+          }
+        }
+
+        LCD.SetCursor(0, 1);
+        LCD.Puts("ｶﾝﾘｮｳ!  ");
+        delay(1000);
+
+      }
+      push_state_count=0;
+      int pushing_display = -1;
+      //2行目を初期化
+      LCD.SetCursor(0, 1);
+      LCD.Puts("        ");
+
+    }
+  }
+
+}
+---
 
 ### 動作確認
 
