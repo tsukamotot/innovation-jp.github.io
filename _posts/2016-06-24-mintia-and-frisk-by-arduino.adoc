@@ -160,10 +160,10 @@ http://www.geocities.jp/zattouka/GarageHouse/micon/Arduino/LCD/I2CLCD.htm
 ボタンを長押しすると指定したURLに接続するようなっています。 +
 
 
-(未完成)結果画像を個々に掲載
+(未完成)結果画像をここに掲載
 
 
-いい感じですね！
+いい感じですね！ +
 次回は、ESP-WROOM-02をMINTIAのケースに格納します。
 
 お楽しみに！
