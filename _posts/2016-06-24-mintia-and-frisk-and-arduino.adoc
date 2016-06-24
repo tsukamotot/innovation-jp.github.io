@@ -1,6 +1,6 @@
 = 第１回 MINTIAとFRISKで作る、マルチIoTボタン(全３回)
 :published_at: 2016-06-24
-:hp-alt-title: mintia-and-frisk-by-arduino
+:hp-alt-title: mintia-and-frisk-and-arduino
 :hp-tags: mintia,frisk,arduino,esp-wroom-02
 
 
