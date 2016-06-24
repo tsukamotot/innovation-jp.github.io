@@ -1,14 +1,13 @@
-= MINTIAとFRISKで作る、マルチIoTボタン 第１回(全３回)
+= 第１回 MINTIAとFRISKで作る、マルチIoTボタン(全３回)
 :published_at: 2016-06-24
 :hp-alt-title: mintia-and-frisk-by-arduino
 :hp-tags: mintia,frisk,arduino,esp-wroom-02
 
 
+（注意）電子工作を初めて１ヶ月弱の素人が試行錯誤しながら書いた記事になりますので、 +
+間違いが含まれる可能性がありますが、温かい目で見守っていただけると幸いです。
 
-（注意）電子工作を初めて１ヶ月弱の素人が試行錯誤しながら書いた記事になりますので、
-間違い等あるかもしれませんので、温かい目で見守っていただけると幸いです。
-
-    最高のデザインであれば、その存在を忘れるほど、日常に溶けこむものである。
+    最高のデザインとは、その存在を忘れるほど、日常に溶けこむものである。
 
 
 偉そうな事を言ってみました。  +
@@ -29,13 +28,16 @@
 
 イメージは、こんな感じです。
 
+image::kato/3/1.png[]
+
+違和感なく、日常に溶け込んでますねー！！！
 
 
 なお、本記事はシリーズ3部構成となります。
 
 * 第１回 ESP-WROOM-02でIoTボタンのプロトタイプを作る
 * 第２回 プロトタイプをMINTIAのケースに格納する
-* 第３回 Intel EdisonでIoTボタンからの処理を受ける
+* 第３回 Intel EdisonでIoTボタン(MINTIA)からの処理を受ける
 
 今回は第1回目の「ESP-WROOM-02でIoTボタンのプロトタイプを作る」をご説明いたします。
 
@@ -54,11 +56,13 @@ ESP-WROOM-02は、ワンコインで購入できるWi-Fiモジュールですが
 ありがとうございます。
 
 *ESP-WROOM-02 で、モバイル物理スイッチを作る*
+
 http://qiita.com/ie4/items/ae850cdb2c617f3fd6af
 
 →元ネタ
 
 *ESP-WROOM-02 の Arduino 環境で I2C 制御*
+
 http://qiita.com/ikesato/items/92f4cb143e7aeb5e0f9b
 
 →配線図が参考になります
@@ -70,9 +74,8 @@ http://qiita.com/ikesato/items/92f4cb143e7aeb5e0f9b
 下記のような構成を目標にします。 +
 本記事では、ミンディアボタンのプロトタイプを作ります。
 
-[画像]
+image::kato/3/2.png[]
 
- 
 
 
 
@@ -87,7 +90,7 @@ https://www.switch-science.com/catalog/2652/
   電圧を3.3Vに調整する配線が必要ですが、この開発ボードには +
   それら全てが搭載されており、すぐに動作を試すことが出来ます。
 * 初心者や初めてESP-WROOM-02を使う人は迷わずコレを選びましょう
-* 秋葉原の、千石電商２Fで売っています
+* 秋葉原の、千石電商２Fで売っています +
    http://www.sengoku.co.jp/mod/sgk_cart/detail.php?code=EEHD-4WED
  
  
@@ -111,6 +114,7 @@ http://akizukidenshi.com/catalog/g/gP-05156/
 
 
 *ブレッドボード・ジャンパーワイヤ　ＥＩＣ－Ｊ－Ｓ*
+
 http://akizukidenshi.com/catalog/g/gP-02315/
 
 
@@ -124,6 +128,10 @@ SCL → IO14 +
 SDA →IO12 +
 ボタンはIO13ピンに接続します。
 
+image::kato/3/3.png[]
+
+image::kato/3/4.png[]
+
 
 ### arduino環境を用意
 
@@ -136,19 +144,184 @@ http://qiita.com/arigadget/items/0c0a0c3ce4f0555c66a5
 
 ### arduinoでプログラムを書き込む
 
-ボタンを押すと、１行目のメニューが入れ替わり、 +
-ボタンを長押しすると指定したURLに接続するようなっています。 +
-プログラムは、下記です。
-
+arduinoのプログラムは、下記のようになります。
 
 なお、I2C液晶の表示には下記のライブラリ(skI2CLCDlib)を利用しています。
 http://www.geocities.jp/zattouka/GarageHouse/micon/Arduino/LCD/I2CLCD.htm
 
 
+[source,c++]
+----
+#include <Arduino.h>
+#include <Wire.h>
+#include <ESP8266WiFi.h>
+#include <skI2CLCDlib.h>
 
-```
-//プログラムをここに書く
-```
+//WiFiの接続情報
+const char* ssid     = "2dzxt5frqkms";
+const char* password = "g4wduxre9zqb";
+const char* host     = "kato.it-trend.jp";
+
+//サーバー接続設定
+WiFiClient client;
+const int httpPort = 80;
+
+//ボタン
+const int btn = 13;
+const int btn_short_time = 5;
+const int btn_long_time = 40;
+
+//ＬＣＤのアドレス、画面カラム数８文字
+skI2CLCDlib LCD(0x3E,8) ;
+
+//アクションリスト
+char* actions[]={
+  "ﾋﾟｻﾞ ﾃﾞﾏｴ",
+  "ﾆﾜ ﾐｽﾞﾏｷ",
+  "ｼｭｯｼｬ   ",
+  "ﾀｲｼｬ    "
+};
+
+//ボタンが押されている時間
+int push_state_count = 0;
+
+//表示中のアクション
+int current_action   = 0;
+
+
+void setup() {
+  Serial.begin(115200);
+  delay(10);
+
+  //ボタン
+  pinMode(btn, INPUT_PULLUP);
+
+  //I2Cキャラクタ初期化
+  LCD.Init(LCD_NOT_ICON,32,LCD_VDD3V) ;
+  LCD.Init(0,32,1);
+  LCD.PageSet(0);
+
+  //Serial.print("Connecting to ");
+  //Serial.println(ssid);
+
+  LCD.SetCursor(0,0);
+  LCD.Puts("Conn..");
+
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+  }
+
+  LCD.Puts("OK!");
+  Serial.println(WiFi.localIP());
+
+  delay(200);
+
+  //1番目のアクションを表示
+  LCD.SetCursor(0,0);
+  LCD.Puts(actions[current_action]);
+
+}
+
+
+void loop() {
+  delay(50);
+  int state = digitalRead(btn);
+  int pushing_display = -1;
+
+
+  //カウントアップ
+  if(!state){
+    push_state_count++;
+
+    //2行目に、「...」を表示させる。
+    if(push_state_count<=btn_long_time  ){
+      if(pushing_display != (int)floor(8 * push_state_count / btn_long_time)){
+        pushing_display = (int)floor(8 * push_state_count / btn_long_time);
+        LCD.SetCursor(pushing_display, 1);
+        LCD.Puts(".");
+      }
+    }
+  }
+  else{
+    if(push_state_count>0){
+      if(push_state_count < btn_short_time){
+
+        //実行するアクション切り替え
+        current_action++;
+        current_action = current_action % sizeof(current_action);
+        LCD.SetCursor(0,0);
+
+        //現在のアクションをキャラクタ表示
+        LCD.Puts(actions[current_action]);
+      }
+      else if(push_state_count>btn_long_time){
+        //実行
+        if (!client.connect(host, httpPort)) {
+          Serial.println("connection failed");
+          return;
+        }
+
+        String url = "?action=" + String(current_action);
+        client.print(String("GET ") + url + " HTTP/1.1¥r¥n" +
+                     "Host: " + host + "¥r¥n" +
+                     "Connection: close¥r¥n¥r¥n");
+
+        delay(100);
+
+        //2行目を初期化
+        LCD.SetCursor(0, 1);
+        LCD.Puts("ｼﾞｯｺｳﾁｭｳ");
+
+        // サーバーからの応答
+        while(true){
+          //レスポンスを待つ
+          if (client.available()) {
+            String line = client.readStringUntil('¥r');
+            Serial.print(line);
+          }
+          else{
+            delay(20);
+          }
+          if (!client.connected()) {
+            Serial.println("\r\ndisconnecting.");
+            client.stop();
+            break;
+          }
+        }
+
+        LCD.SetCursor(0, 1);
+        LCD.Puts("ｶﾝﾘｮｳ!  ");
+        delay(1000);
+
+      }
+      push_state_count=0;
+      int pushing_display = -1;
+      //2行目を初期化
+      LCD.SetCursor(0, 1);
+      LCD.Puts("        ");
+
+    }
+  }
+
+}
+---
+
+### 動作確認
+
+ボタンを押すと、１行目のメニューが入れ替わり、 +
+ボタンを長押しすると指定したURLに接続するようなっています。 +
+
+
+(未完成)結果画像をここに掲載
+
+
+いい感じですね！ +
+次回は、ESP-WROOM-02をMINTIAのケースに格納します。
+
+お楽しみに！
+
 
 
 
