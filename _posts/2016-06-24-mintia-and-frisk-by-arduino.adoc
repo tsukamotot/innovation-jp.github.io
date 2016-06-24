@@ -225,7 +225,6 @@ void setup() {
   //1番目のアクションを表示
   LCD.SetCursor(0,0);
   LCD.Puts(actions[current_action]);
-
 }
 
 
@@ -308,7 +307,6 @@ void loop() {
 
     }
   }
-
 }
 ----
 
