@@ -1,4 +1,4 @@
-= neural-styleを使って名画のテイストを拝借して遊んでみた
+= neural-styleを使い、名画のテイストを拝借して遊んでみた
 :published_at: 2016-06-30
 :hp-alt-title: By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste
 :hp-tags: thirdPost,Oz,neural-style,Art
