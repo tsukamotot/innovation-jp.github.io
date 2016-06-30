@@ -185,7 +185,8 @@ image::https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by
 
 image::http://tech.innovation.co.jp/images/ozasa/monami.png[]
 
-面白い！！けど微妙！！難しい！！！
+面白い！！けど微妙！！難しい！！！ +
+スタイル自体に際立った特徴がないと拝借しきれない感がありますね。
 
 
 それなら
