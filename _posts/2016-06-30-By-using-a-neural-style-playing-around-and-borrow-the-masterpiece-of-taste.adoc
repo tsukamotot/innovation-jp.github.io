@@ -1,0 +1,219 @@
+= neural-styleを使って名画のテイストを拝借して遊んでみた
+:published_at: 2016-06-30
+:hp-alt-title: By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste
+:hp-tags: thirdPost,Oz,neural-style,Art
+
+こんにちは。 +
+なんちゃってファスティングに挑戦し、 +
+復食のタイミングを見失いかけたオザサです。
+
+今回はタイトルの通り、 +
+jcjohnsonさんが公開している https://github.com/jcjohnson/neural-style[neural-style]を使って +
+自分で撮った写真に名画のテイストを加えてみたいと思います。
+
+
+
+## neural-styleとは
+Torchというニューラルネットワーク技術に特化したフレームワークを用いて
+http://arxiv.org/abs/1508.06576["A Neural Algorithm of Artistic Style"]という論文のアルゴリズムを実装したものになります。
+
+ざっくり言ってしまえば、名画にある特徴的なスタイル(筆運び?)を別の画像に付加することができるようになるのです。
+
+これさえあれば絵心のないかもしれない僕でも画家になれてしまうかも？ +
+なんて甘い考えのもと、今回はこれで遊んでみようと決めました。
+
+## 環境構築
+今回はAWSを使います。
+
+実はすでに諸々の環境構築までやってくれているamiがあったようなのですが、
+僕はそれに気がつきませんで、チクチク環境構築しながら進めていきました。 +
+
+手順
+
+. サーバの立ち上げ +
+. インストール諸々
+. 画像のアップロード
+. neural-styleの実行
+
+#### 1.サーバの立ち上げ
+今回は豪華にc3.8xlargeを使ってみました。 +
+管理画面からぽちぽちと選択していくだけでサーバが立ち上がるなんてすごい世の中です。
+
+#### 2.インストール諸々
+neural-styleのGithubにやり方は書いてあるので
+https://github.com/jcjohnson/neural-style/blob/master/INSTALL.md[それ]を元に作っていきましょう。
+
+機械学習とかっていうとGPUインスタンスを使うのが普通とは思うのですが、
+NVIDIAドライバをインストールしたり色々するのは面倒なんじゃないか説や、
+その割にNVIDIAが公開しているamiが微妙なんじゃないか説などがあり、
+ちょっと試してみたいし急いでいるわけでないのでさっくりCPUモードで実行することと相成りました。
+
+ので、具体的には今回はSTEP3までやっています。
+
+#### 3.画像のアップロード
+
+自分が京都に行った時に撮った社員にゴッホの『星月夜』のスタイルを乗っけてみたいと思います。
+
+元画像(kyoto.jpg)
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto.jpg[]
+
+
+スタイル画像(starry_night.jpg)
+
+image::https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/VanGogh-starry_night.jpg/250px-VanGogh-starry_night.jpg[]
+
+
+Cyberduckなどを使ってサーバにポン！っと上げてしまいましょう。
+
+#### 4.eural-styleの実行
+基本は
+
+[source, rust]
+----
+th neural_style.lua -style_image <image.jpg> -content_image <image.jpg>
+----
+
+って感じなので
+
+[source, rust]
+----
+th neural_style.lua -style_image ../starry_night.jpg -content_image ../kyoto.jpg -output_image kyoto_starry_night.png -gpu -1 -image_size 512
+----
+
+というように、オプションなどはまだ慣れがないので、そんなにつけずシンプルにいってみます。 +
+gpuオプションを-1にしているのはCPUモードで実行するためです。
+
+だいたいこれで一時間くらい放置する感じですかね。 +
+イテレーションが1000回で、100回ごとに画像が生成されるようになっております。 +
+CPUモードなのでのらりくらりやっているのもありますね、
+次回やる時はGPUの環境作ってサクサクやりつつオプション試していく感じがいいですね。
+
+## 制作物
+
+### イテレーション過程
+
+100回
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_100.png[]
+
+200回
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_200.png[]
+
+300回
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_300.png[]
+
+400回
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_400.png[]
+
+500回
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_500.png[]
+
+600回
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_600.png[]
+
+700回
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_700.png[]
+
+800回
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_800.png[]
+
+900回
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_900.png[]
+
+完成
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night.png[]
+
+思ったよりいい感じでビビりますね。 +
+元の写真をそれっぽいものにしたとはいえ、このクオリティがこんな簡単にできてしまうとは。。。
+
+**面白！！**
+
+### 試しに
+
+試しにもう一回、回してみます。
+
+完成
+
+image::http://tech.innovation.co.jp/images/ozasa/test.png[]
+
+なるほど、学習のプロセスを理解仕切れていないのですが、
+同じものが出来上がるわけではないということがわかります。 +
+ある意味でアウラ感があっていいですね(?)。
+
+gifも用意してみました。
+
+gif版
+
+image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night.gif[]
+
+### まとめ
+今回はneural-styleで色々と遊んでみました。 +
+いかがでしたでしょうか？
+
+僕は結構面白かったのですが、 +
+ここまで簡単に、そして何より中身を理解しないで手軽に使えてしまうことに
+本当にびっくりしました。
+
+今も自分たちの周りにはなぜ動いているかわからないもので溢れてきていますが、機械学習がもたらす結果は、より**中身を隠蔽しつつも自然な形で表現**されていくような気がします。
+
+再度そっちの分野に興味がわいてきました。 +
+またちょこちょこ遊んでいきます。
+
+### おまけのような本題
+弊社のアイドルamiさんに素材になっていただきました。 +
+スタイルはあの『モナリザ』です。
+
+可愛らしい元画像
+
+image::http://tech.innovation.co.jp/images/ozasa/ami3.jpg[]
+
+可愛くはないスタイル画像
+
+image::https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg[]
+
+完成
+
+image::http://tech.innovation.co.jp/images/ozasa/monami.png[]
+
+面白い！！けど微妙！！難しい！！！
+
+
+それなら
+
+あれだ！！
+
+これだ！！
+
+image::http://tech.innovation.co.jp/images/ozasa/amink.png[]
+
+いい感じ！！
+
+ってか顔がすごい！！
+
+**顔がすごい！！**
+
+もはや顔だけで元ネタわかる気もしますね。
+
+
+はい、という感じでした。 +
+他の色々なサイトで、このneural-styleを使って画像を作っている人がいましたが、構図をあらかじめ真似ておき、その人物を逆にスタイル元の絵画の中に埋め込むようなアプローチをしている人はいなかったように思うので、
+このやり方は僕発祥だったりしませんか？しませんかね？
+まぁなんでもいいんですが。
+
+楽しかったので良し。
+
+こちらからは以上です。
+
+
+#### 追伸
+僕の『ITエンジニアのための機械学習の本』を本棚から持ち出した人は僕に返してください……
