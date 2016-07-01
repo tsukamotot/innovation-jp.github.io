@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>neural-styleを使い、名画のテイストを拝借して遊んでみた - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="neural-styleを使い、名画のテイストを拝借して遊んでみた">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="neural-styleを使い、名画のテイストを拝借して遊んでみた">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2016/06/30/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="neural-styleを使い、名画のテイストを拝借して遊んでみた" />
+    <meta property="og:description" content="こんにちは。 なんちゃってファスティングに挑戦し、 復食のタイミングを見失いかけたオザサです。 今回はタイトルの通り、 jcjohnsonさんが公開している neural-styleを使って 自分で撮った写真に名画のテイストを加えてみたいと思います。 neural-styleとは Torchというニューラルネットワーク技術に特化したフレームワークを用いて &quot;A Neural Algorithm of Artistic Style&quot;という論文のアルゴリズムを実装したものになります。 ざっくり言ってしまえば、名画にある特徴的なスタイル(筆運び?)を別の画像..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2016/06/30/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste.html" />
+    <meta property="article:published_time" content="2016-06-29T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-07-01T08:49:06.565Z" />
+    <meta property="article:tag" content="thirdPost" />
+    <meta property="article:tag" content="Oz" />
+    <meta property="article:tag" content="neural-style" />
+    <meta property="article:tag" content="Art" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="neural-styleを使い、名画のテイストを拝借して遊んでみた" />
+    <meta name="twitter:description" content="こんにちは。 なんちゃってファスティングに挑戦し、 復食のタイミングを見失いかけたオザサです。 今回はタイトルの通り、 jcjohnsonさんが公開している neural-styleを使って 自分で撮った写真に名画のテイストを加えてみたいと思います。 neural-styleとは Torchというニューラルネットワーク技術に特化したフレームワークを用いて &quot;A Neural Algorithm of Artistic Style&quot;という論文のアルゴリズムを実装したものになります。 ざっくり言ってしまえば、名画にある特徴的なスタイル(筆運び?)を別の画像..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2016/06/30/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "yuki ozasa",
+        "image": "https://avatars.githubusercontent.com/u/8304640?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "neural-styleを使い、名画のテイストを拝借して遊んでみた",
+    "url": "http://tech.innovation.co.jp/2016/06/30/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste.html",
+    "datePublished": "2016-06-29T15:00:00.000Z",
+    "dateModified": "2016-07-01T08:49:06.565Z",
+    "keywords": "thirdPost, Oz, neural-style, Art",
+    "description": "こんにちは。 なんちゃってファスティングに挑戦し、 復食のタイミングを見失いかけたオザサです。 今回はタイトルの通り、 jcjohnsonさんが公開している neural-styleを使って 自分で撮った写真に名画のテイストを加えてみたいと思います。 neural-styleとは Torchというニューラルネットワーク技術に特化したフレームワークを用いて &quot;A Neural Algorithm of Artistic Style&quot;という論文のアルゴリズムを実装したものになります。 ざっくり言ってしまえば、名画にある特徴的なスタイル(筆運び?)を別の画像..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-third-Post tag-Oz tag-neural-style tag-Art no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="30 Jun 2016" class="post-meta__date date">30 Jun 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/third-Post">thirdPost</a>, <a href="http://tech.innovation.co.jp/tag/Oz">Oz</a>, <a href="http://tech.innovation.co.jp/tag/neural-style">neural-style</a>, <a href="http://tech.innovation.co.jp/tag/Art">Art</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/8304640?v=3" alt="profile image for yuki ozasa" class="avatar post-meta__avatar" /> by yuki ozasa</span>
+      </div>
+      <h1 class="post-title">neural-styleを使い、名画のテイストを拝借して遊んでみた</h1>
+    </header>
+
+    <section class="post tag-third-Post tag-Oz tag-neural-style tag-Art">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは。<br>
+なんちゃってファスティングに挑戦し、<br>
+復食のタイミングを見失いかけたオザサです。</p>
+</div>
+<div class="paragraph">
+<p>今回はタイトルの通り、<br>
+jcjohnsonさんが公開している <a href="https://github.com/jcjohnson/neural-style">neural-style</a>を使って<br>
+自分で撮った写真に名画のテイストを加えてみたいと思います。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_neural_style">neural-styleとは</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Torchというニューラルネットワーク技術に特化したフレームワークを用いて
+<a href="http://arxiv.org/abs/1508.06576">"A Neural Algorithm of Artistic Style"</a>という論文のアルゴリズムを実装したものになります。</p>
+</div>
+<div class="paragraph">
+<p>ざっくり言ってしまえば、名画にある特徴的なスタイル(筆運び?)を別の画像に付加することができるようになるのです。</p>
+</div>
+<div class="paragraph">
+<p>これさえあれば絵心のないかもしれない僕でも画家になれてしまうかも？<br>
+なんて甘い考えのもと、今回はこれで遊んでみようと決めました。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">環境構築</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回はAWSを使います。</p>
+</div>
+<div class="paragraph">
+<p>実はすでに諸々の環境構築までやってくれているamiがあったようなのですが、
+僕はそれに気がつきませんで、チクチク環境構築しながら進めていきました。</p>
+</div>
+<div class="paragraph">
+<p>手順</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>サーバの立ち上げ</p>
+</li>
+<li>
+<p>インストール諸々</p>
+</li>
+<li>
+<p>画像のアップロード</p>
+</li>
+<li>
+<p>neural-styleの実行</p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_1">1.サーバの立ち上げ</h4>
+<div class="paragraph">
+<p>今回は豪華にc3.8xlargeを使ってみました。<br>
+管理画面からぽちぽちと選択していくだけでサーバが立ち上がるなんてすごい世の中です。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_2">2.インストール諸々</h4>
+<div class="paragraph">
+<p>neural-styleのGithubにやり方は書いてあるので
+<a href="https://github.com/jcjohnson/neural-style/blob/master/INSTALL.md">それ</a>を元に作っていきましょう。</p>
+</div>
+<div class="paragraph">
+<p>機械学習とかっていうとGPUインスタンスを使うのが普通とは思うのですが、
+NVIDIAドライバをインストールしたり色々するのは面倒なんじゃないか説や、
+その割にNVIDIAが公開しているAMIが微妙なんじゃないか説などがあり、ちょっと試してみたいだけなのでさっくりCPUモードで実行することと相成りました。</p>
+</div>
+<div class="paragraph">
+<p>ので、具体的には今回はSTEP3までやっています。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3">3.画像のアップロード</h4>
+<div class="paragraph">
+<p>自分が京都に行った時に撮った写真にゴッホの『星月夜』のスタイルを乗っけてみたいと思います。</p>
+</div>
+<div class="paragraph">
+<p>元画像(kyoto.jpg)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto.jpg" alt="kyoto.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>スタイル画像(starry_night.jpg)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/VanGogh-starry_night.jpg/250px-VanGogh-starry_night.jpg" alt="250px VanGogh starry night.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>Cyberduckなどを使ってサーバにポン！っと上げてしまいましょう。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_4_neural_style">4.neural-styleの実行</h4>
+<div class="paragraph">
+<p>基本は</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-rust" data-lang="rust">th neural_style.lua -style_image &lt;image.jpg&gt; -content_image &lt;image.jpg&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>って感じなので</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-rust" data-lang="rust">th neural_style.lua -style_image ../starry_night.jpg -content_image ../kyoto.jpg -output_image kyoto_starry_night.png -gpu -1 -image_size 512</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>というように、オプションなどはまだ慣れがないので、そんなにつけずシンプルにいってみます。<br>
+gpuオプションを-1にしているのはCPUモードで実行するためです。</p>
+</div>
+<div class="paragraph">
+<p>だいたいこれで一時間くらい放置する感じですかね。<br>
+イテレーションはデフォルトが1000回までで、100回ごとに画像が生成されるようになっております。<br>
+CPUモードなのでのらりくらりやっていたので、
+次回やる時はGPUの環境作ってサクサクやりつつオプション試していく感じがいいですね。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">制作物</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="___3">イテレーション過程</h3>
+<div class="paragraph">
+<p>100回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_100.png" alt="kyoto starry night 100.png">
+</div>
+</div>
+<div class="paragraph">
+<p>200回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_200.png" alt="kyoto starry night 200.png">
+</div>
+</div>
+<div class="paragraph">
+<p>300回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_300.png" alt="kyoto starry night 300.png">
+</div>
+</div>
+<div class="paragraph">
+<p>400回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_400.png" alt="kyoto starry night 400.png">
+</div>
+</div>
+<div class="paragraph">
+<p>500回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_500.png" alt="kyoto starry night 500.png">
+</div>
+</div>
+<div class="paragraph">
+<p>600回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_600.png" alt="kyoto starry night 600.png">
+</div>
+</div>
+<div class="paragraph">
+<p>700回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_700.png" alt="kyoto starry night 700.png">
+</div>
+</div>
+<div class="paragraph">
+<p>800回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_800.png" alt="kyoto starry night 800.png">
+</div>
+</div>
+<div class="paragraph">
+<p>900回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night_900.png" alt="kyoto starry night 900.png">
+</div>
+</div>
+<div class="paragraph">
+<p>完成</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night.png" alt="kyoto starry night.png">
+</div>
+</div>
+<div class="paragraph">
+<p>思ったよりいい感じでビビりますね。<br>
+元の写真をそれっぽいものにしたとはいえ、このクオリティがこんな簡単にできてしまうとは。。。</p>
+</div>
+<div class="paragraph">
+<p><strong>面白！！</strong></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___4">試しに</h3>
+<div class="paragraph">
+<p>試しにもう一回、回してみます。</p>
+</div>
+<div class="paragraph">
+<p>完成</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/test.png" alt="test.png">
+</div>
+</div>
+<div class="paragraph">
+<p>なるほど、学習のプロセスを理解仕切れていないのですが、
+同じものが出来上がるわけではないということがわかります。<br>
+ある意味でアウラ感があっていいですね(?)。</p>
+</div>
+<div class="paragraph">
+<p>gifも用意してみました。</p>
+</div>
+<div class="paragraph">
+<p>gif版</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night.gif" alt="kyoto starry night.gif">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___5">まとめ</h3>
+<div class="paragraph">
+<p>今回はneural-styleで色々と遊んでみました。<br>
+いかがでしたでしょうか？</p>
+</div>
+<div class="paragraph">
+<p>僕は結構面白かったのですが、<br>
+ここまで簡単に、そして何より中身を理解しないで手軽に使えてしまうことに
+本当にびっくりしました。</p>
+</div>
+<div class="paragraph">
+<p>今も自分たちの周りにはなぜ動いているかわからないもので溢れてきていますが、機械学習がもたらす結果は、より<strong>中身を隠蔽しつつも自然な形で表現</strong>されていくような気がします。</p>
+</div>
+<div class="paragraph">
+<p>再度そっちの分野に興味がわいてきました。<br>
+またちょこちょこ遊んでいきます。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___6">おまけのような本編</h3>
+<div class="paragraph">
+<p>さて毎回恒例(?)<br>
+弊社のアイドルエンジニアAMIさんに素材になっていただきました。<br>
+スタイルはあの『モナリザ』です。</p>
+</div>
+<div class="paragraph">
+<p>可愛らしい元画像</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/ami3.jpg" alt="ami3.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>可愛くはないスタイル画像</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg" alt="800px Mona Lisa%2C by Leonardo da Vinci%2C from C2RMF retouched.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>完成</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/monami.png" alt="monami.png">
+</div>
+</div>
+<div class="paragraph">
+<p>面白い！！けど微妙！！難しい！！！<br>
+スタイル自体に際立った特徴がないと拝借しきれない感がありますね。</p>
+</div>
+<div class="paragraph">
+<p>う〜む</p>
+</div>
+<div class="paragraph">
+<p>それなら</p>
+</div>
+<div class="paragraph">
+<p>あれだ！！</p>
+</div>
+<div class="paragraph">
+<p>これだ！！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/amink.png" alt="amink.png">
+</div>
+</div>
+<div class="paragraph">
+<p>いい感じ！！</p>
+</div>
+<div class="paragraph">
+<p>ってか顔がすごい！！</p>
+</div>
+<div class="paragraph">
+<p><strong>顔がすごい！！</strong></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/aminkkao.png" alt="aminkkao.png">
+</div>
+</div>
+<div class="paragraph">
+<p>もはや顔だけで元ネタわかる気もしますね。</p>
+</div>
+<div class="paragraph">
+<p>はい、という感じでした。<br>
+他の色々なサイトで、このneural-styleを使って画像を作っている人がいましたが、構図をあらかじめ真似ておき、その人物を逆にスタイル元の絵画の中に埋め込むようなアプローチをしている人はいなかったように思うので、このやり方は僕発祥だったりしませんか？しませんかね？まぁなんでもいいんですが。</p>
+</div>
+<div class="paragraph">
+<p>楽しかったので良し。</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です。</p>
+</div>
+<div class="sect3">
+<h4 id="___7">追私信</h4>
+<div class="paragraph">
+<p>僕の『ITエンジニアのための機械学習の本』を本棚から持ち出した人は僕に返してください……</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
