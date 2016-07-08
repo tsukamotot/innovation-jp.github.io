@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>WordPressでプラグインを作ってみた　その3 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="WordPressでプラグインを作ってみた　その3">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="WordPressでプラグインを作ってみた　その3">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2016/07/08/Word-Press-3.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="WordPressでプラグインを作ってみた　その3" />
+    <meta property="og:description" content="おひさしぶりです。中村です。 最近暑かったり涼しかったり。。。 体調崩していませんか？ そんな時こそ、モリモリ餃子を食べて元気になりましょう。 先日池袋で食べた餃子がとても美味しかったです。 その名も肉汁餃子！ もちろんお土産20個買いました。 今回も次回に引き続きWordPressでプラグイン作ってみた話をします！ おさらい WPに会員登録機能を追加する 会員データは自社サービスのDBへ保存させる 投稿記事をお気に入りに追加でき、一覧でみれるようにする 今回は「お気に入り一覧の作成方法」について詳しく紹介していきます。 お気に入り一覧の作り方 パッと..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2016/07/08/Word-Press-3.html" />
+    <meta property="article:published_time" content="2016-07-07T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-07-08T09:25:01.904Z" />
+    <meta property="article:tag" content="WordPress" />
+    <meta property="article:tag" content="Plugin" />
+    <meta property="article:tag" content="Gyo-za" />
+    <meta property="article:tag" content="Nakamura" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="WordPressでプラグインを作ってみた　その3" />
+    <meta name="twitter:description" content="おひさしぶりです。中村です。 最近暑かったり涼しかったり。。。 体調崩していませんか？ そんな時こそ、モリモリ餃子を食べて元気になりましょう。 先日池袋で食べた餃子がとても美味しかったです。 その名も肉汁餃子！ もちろんお土産20個買いました。 今回も次回に引き続きWordPressでプラグイン作ってみた話をします！ おさらい WPに会員登録機能を追加する 会員データは自社サービスのDBへ保存させる 投稿記事をお気に入りに追加でき、一覧でみれるようにする 今回は「お気に入り一覧の作成方法」について詳しく紹介していきます。 お気に入り一覧の作り方 パッと..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2016/07/08/Word-Press-3.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "m_nakamura",
+        "image": "https://avatars.githubusercontent.com/u/7381448?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "WordPressでプラグインを作ってみた　その3",
+    "url": "http://tech.innovation.co.jp/2016/07/08/Word-Press-3.html",
+    "datePublished": "2016-07-07T15:00:00.000Z",
+    "dateModified": "2016-07-08T09:25:01.904Z",
+    "keywords": "WordPress, Plugin, Gyo-za, Nakamura",
+    "description": "おひさしぶりです。中村です。 最近暑かったり涼しかったり。。。 体調崩していませんか？ そんな時こそ、モリモリ餃子を食べて元気になりましょう。 先日池袋で食べた餃子がとても美味しかったです。 その名も肉汁餃子！ もちろんお土産20個買いました。 今回も次回に引き続きWordPressでプラグイン作ってみた話をします！ おさらい WPに会員登録機能を追加する 会員データは自社サービスのDBへ保存させる 投稿記事をお気に入りに追加でき、一覧でみれるようにする 今回は「お気に入り一覧の作成方法」について詳しく紹介していきます。 お気に入り一覧の作り方 パッと..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Word-Press tag-Plugin tag-Gyo-za tag-Nakamura no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="08 Jul 2016" class="post-meta__date date">08 Jul 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Word-Press">WordPress</a>, <a href="http://tech.innovation.co.jp/tag/Plugin">Plugin</a>, <a href="http://tech.innovation.co.jp/tag/Gyo-za">Gyo-za</a>, <a href="http://tech.innovation.co.jp/tag/Nakamura">Nakamura</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/7381448?v=3" alt="profile image for m_nakamura" class="avatar post-meta__avatar" /> by m_nakamura</span>
+      </div>
+      <h1 class="post-title">WordPressでプラグインを作ってみた　その3</h1>
+    </header>
+
+    <section class="post tag-Word-Press tag-Plugin tag-Gyo-za tag-Nakamura">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>おひさしぶりです。中村です。<br>
+<br>
+最近暑かったり涼しかったり。。。<br>
+体調崩していませんか？<br>
+そんな時こそ、モリモリ餃子を食べて元気になりましょう。<br></p>
+</div>
+<div class="paragraph">
+<p>先日池袋で食べた餃子がとても美味しかったです。<br>
+その名も肉汁餃子！<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/gyo-za_nikujiru.jpg" alt="gyo za nikujiru.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>もちろんお土産20個買いました。<br></p>
+</div>
+<div class="paragraph">
+<p>今回も次回に引き続きWordPressでプラグイン作ってみた話をします！<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/wordpress_logo.png" alt="wordpress logo.png">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">おさらい</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>WPに会員登録機能を追加する</p>
+</li>
+<li>
+<p>会員データは自社サービスのDBへ保存させる</p>
+</li>
+<li>
+<p>投稿記事をお気に入りに追加でき、一覧でみれるようにする</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>今回は「<strong>お気に入り一覧の作成方法</strong>」について詳しく紹介していきます。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">お気に入り一覧の作り方</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>パッと思いついた手法としては</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>テーブルを結合する</p>
+</li>
+<li>
+<p>記事のループ内で判定させる<br>
+（記事IDを指定してお気に入りでなければ非表示にするとか）</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>この2点でしたが、</p>
+</div>
+<div class="sect4">
+<h5 id="___3">お気に入りページの並び順は追加順（降順）がいいな！</h5>
+<div class="paragraph">
+<p>とご要望いただいたので、テーブル結合する方向となりました。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">新規テーブルの作成方法</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回は以下のようなtableを追加したいと思います。<br></p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 40%;">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int(11)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">post_id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int(11)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user_id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int(11)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">created_at</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">datetime</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>まずは上記テーブルを作成する関数を作成します。<br>
+マイグレーション的なアレです。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>/*
+  * プラグインを有効化した場合にテーブルを作成する
+  */
+public function create_favorite_table() {
+global $wpdb;
+
+$table_name = $wpdb-&gt;prefix . 'favorite';
+$charset_collate = $wpdb-&gt;get_charset_collate();
+
+$sql = "CREATE TABLE $table_name (
+id int(11) NOT NULL AUTO_INCREMENT,
+post_id int(11) NOT NULL,
+user_id int(11) NOT NULL,
+created_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+UNIQUE KEY id (id),
+INDEX idx_trend_user_id (trend_user_id)
+) $charset_collate;";
+
+require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+dbDelta( $sql );
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ほぼSQLそのまま記述する感じですね。<br>
+ちなみに結構インデントなどでハマることも多いそうなのでご注意を。。。<br></p>
+</div>
+<div class="paragraph">
+<p>次にプラグインを有効化した場合に実行されるように記述します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>//プラグインを有効化した場合にテーブルを作成する
+register_activation_hook( __FILE__, array($this, 'create_favorite_table') );</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これでプラグインを有効化するだけで、今回必要なテーブルが自動的に作成することができます。<br>
+少しはプラグインっぽい感じですかね！</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___5">記事テーブルと結合してみる</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>いよいよwp_postデータと結合してデータ取得するようにしてみます。<br></p>
+</div>
+<div class="paragraph">
+<p>記事データを取ってくる処理を変更する訳にはいかないのですが、<br>
+SQLを修正することができる<strong>フィルターフック</strong>というものがあるのでそちらを利用します。</p>
+</div>
+<div class="paragraph">
+<p>今回は以下2つを使いました。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>posts_join_paged（JOINを追加できる）</p>
+</li>
+<li>
+<p>posts_orderby（ORDER BYを追加できる）</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>まずはテーブルを結合と並び替えの関数を作成し。。。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>/*
+  * 「お気に入りに追加した投稿記事のみ」の条件を追加する関数
+  * (/inc/favorite.php)
+  */
+public function favorite_posts_join_paged() {
+  $join_paged_statement = "INNER JOIN wp_favorite fav ON fav.post_id = wp_posts.ID AND  fav.trend_user_id = " . intval($this-&gt;user_id);
+  return $join_paged_statement;
+}
+
+/*
+  * 「お気に入りに追加した投稿記事のみ」の並び順を変更する関数
+  * (/inc/favorite.php)
+  */
+public function favorite_posts_orderby() {
+  $orderby_statement = "fav.created_at DESC";
+  return $orderby_statement;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>お気に入りページ（固定ページ：作り方はその1参照）にてフィルターを追加！</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>add_filter('posts_orderby', array($membership, 'favorite_posts_orderby'));
+add_filter('posts_join_paged', array($membership, 'favorite_posts_join_paged'));</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/it-trend-labo-favorite.png" alt="it trend labo favorite.png">
+</div>
+</div>
+<div class="paragraph">
+<p>おお！いい感じです！<br>
+その他にもフィルターフックはたくさんあるようなので、機能拡張が簡単にできそうですね。<br>
+さすがWordPress!</p>
+</div>
+<div class="paragraph">
+<p>3回に渡りWordPress情報をお届けしましたが、いかがでしたでしょうか。<br>
+今回の内容などは3ヶ月くらい前のことなので既に忘れかけていましたが、何とか書けてホッとしてますｗ <br></p>
+</div>
+<div class="paragraph">
+<p>WordPressプラグイン作成のハードルが少しでも下がれば幸いです。<br></p>
+</div>
+<div class="paragraph">
+<p>最後になりますが、今回プラグイン作成〜導入した自社サイトのご紹介です。<br>
+お気に入り機能、ぜひ試してみてください！</p>
+</div>
+<div class="paragraph">
+<p>ITトレンドLabo　<a href="https://it-trend.jp/labo/" class="bare">https://it-trend.jp/labo/</a></p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です！</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
