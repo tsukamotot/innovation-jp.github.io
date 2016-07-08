@@ -46,7 +46,7 @@ image::wordpress_logo.png[]
 とご要望いただいたので、結合する方向となりました。
 
 
-## テーブルの追加方法
+## 新規テーブルの作成方法
 
 今回は以下のようなtableを追加したいと思います。 +
 
@@ -61,82 +61,105 @@ image::wordpress_logo.png[]
 |===
 
 
-
-
-これをプラグインを有効にした際にCreateTableしてくれる書き方がこちら。 +
-
+まずは上記テーブルを作成する関数を作成します。 +
+マイグレーション的なアレです。
 
 
 ```
+/*
+  * プラグインを有効かした場合にテーブルを作成する
+  */
+public function create_favorite_table() {
+global $wpdb;
+
+$table_name = $wpdb->prefix . 'favorite';
+$charset_collate = $wpdb->get_charset_collate();
+
+$sql = "CREATE TABLE $table_name (
+id int(11) NOT NULL AUTO_INCREMENT,
+post_id int(11) NOT NULL,
+user_id int(11) NOT NULL,
+created datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+UNIQUE KEY id (id),
+INDEX idx_trend_user_id (trend_user_id)
+) $charset_collate;";
+
+require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+dbDelta( $sql );
+}
 
 ```
 
-などと記述しても接続できるのですが、もともと接続していたwordpressのデータベースの接続が
-切れてしまい、投稿情報などが取得できなくなってしまいます。
-
-※footer.phpで再度接続させるという方もいらっしゃるようです
-http://blog.serverkurabe.com/wordpress-another-d
+ほぼSQLそのまま記述する感じですね。 +
+ちなみに結構インデントなどでハマることも多いそうなのでご注意を。。。 +
 
 
 
-個人的にはPHPのコードも他と同じように記述できますし、Wordpressになるべく合わせたほうが良いと思います。
+次にプラグインを有効かした場合に実行されるように記述します。
 
-
-以下簡単に使い方をご紹介〜
-
-## Select
 
 ```
-$users = $another_db->get_results($another_db->prepare("
-	SELECT * 
-	FROM users 
-	WHERE id = %d 
-	LIMIT 1
-", $user_id));
+//プラグインを有効化した場合にテーブルを作成する
+register_activation_hook( __FILE__, array($this, 'create_favorite_table') );
 ```
 
-ほとんどSQLのまんまですねー。 +
-SQLインジェクション対策のために、「prepare」は必ず使ってください。
+これでプラグインを有効化するだけで、今回必要なテーブルが自動的に作成することができます。 +
+少しはプラグインっぽい感じですかね！
 
 
-## INSERT
-```
-$another_db->insert('users',
-	array(
-		'name' => $name,
-		'mail' => $mail,
-		'age' => $age,
-		'created_at' => current_time('mysql')
-	),
-	array(
-		'%s',
-		'%s',
-		'%d',
-		'%s'
-	)
-);
-```
 
-こちらも見たまんまですねｗ +
-現在時刻を入れたい場合に、「current_time('mysql')」と指定するようです。
+## 記事テーブルと結合してみる
 
-UPDATE文もほぼ同じなので、割愛します。
+いよいよwp_postデータと結合してデータ取得するようにしてみます。 +
 
 
-## その他
+記事データを取ってくる処理を変更する訳にはいかないのですが、 +
+SQLを修正することができる**フィルターフック**というものがあるのでそちらを利用します。
 
-「query(好きなSQL)」が書けます。
-トランザクションなんかに使ってました。
+今回は以下2つを使いました。
+
+- posts_join_paged（JOINを追加できる）
+- posts_orderby（ORDER BYを追加できる）
+
+
+まずはテーブルを結合と並び替えの関数を作成し。。。
 
 ```
-$another_db->query('START TRANSACTION');
-$another_db->query('COMMIT');
+/*
+  * 「お気に入りに追加した投稿記事のみ」の条件を追加する関数
+  * (/inc/favorite.php)
+  */
+public function favorite_posts_join_paged() {
+  $join_paged_statement = "INNER JOIN wp_favorite fav ON fav.post_id = wp_posts.ID AND  fav.trend_user_id = " . intval($this->user_id);
+  return $join_paged_statement;
+}
+
+/*
+  * 「お気に入りに追加した投稿記事のみ」の並び順を変更する関数
+  * (/inc/favorite.php)
+  */
+public function favorite_posts_orderby() {
+  $orderby_statement = "fav.created DESC";
+  return $orderby_statement;
+}
 ```
 
- 
-以上です。 +
-思った以上に簡単に他DBのデータとの連携が可能なので、
-ぜひ皆さんもお試しあれ。 +
+お気に入りページ（固定ページ：作り方はその1参照）にてフィルターを追加！
+
+```
+add_filter('posts_orderby', array($membership, 'favorite_posts_orderby'));
+add_filter('posts_join_paged', array($membership, 'favorite_posts_join_paged'));
+
+```
+
+image::it-trend-labo-favorite.jpg[]
+
+おお！いい感じです！ +
+その他にもフィルターフックはたくさんあるようなので、機能拡張が簡単にできそうですね。 +
+さすがWP!
+
+
+
  +
  こちらからは以上です！
 
