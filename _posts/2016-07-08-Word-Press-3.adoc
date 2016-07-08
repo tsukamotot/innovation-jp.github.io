@@ -152,7 +152,7 @@ add_filter('posts_join_paged', array($membership, 'favorite_posts_join_paged'));
 
 ```
 
-image::it-trend-labo-favorite.jpg[]
+image::it-trend-labo-favorite.png[]
 
 おお！いい感じです！ +
 その他にもフィルターフックはたくさんあるようなので、機能拡張が簡単にできそうですね。 +
