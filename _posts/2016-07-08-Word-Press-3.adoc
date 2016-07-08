@@ -1,0 +1,145 @@
+= WordPressでプラグインを作ってみた　その3
+:published_at: 2016-07-08
+:hp-alt-title: 
+:hp-tags: WordPress,Plugin,Gyo-za,Nakamura
+
+おひさしぶりです。中村です。 +
+ +
+最近暑かったり涼しかったり。。。 +
+体調崩していませんか？ +
+そんな時こそ、餃子を食べて元気になりましょう。 +
+
+先日池袋で食べた餃子がとても美味しかったです。 +
+その名も肉汁餃子！ +
+
+image::gyo-za_nikujiru.jpg[]
+
+もちろんお土産20個買いました。 +
+ 
+今回も次回に引き続きWordPressでプラグイン作ってみた話をします！ +
+
+image::wordpress_logo.png[]
+
+## おさらい
+
+ - WPに会員登録機能を追加する
+ - 会員データは自社サービスのDBへ保存させる
+ - 投稿記事をお気に入りに追加でき、一覧でみれるようにする
+
+
+
+今回は「**お気に入り一覧の作成方法**」について詳しく紹介していきます。
+
+
+## お気に入り一覧の作り方
+
+パッと思いついた手法としては
+
+- tableを結合する
+- 記事のループ無いで判定させる +
+（記事IDを指定してお気に入りでなければ非表示にする）
+
+この2点でしたが、
+
+##### お気に入りページの並び順は追加順（降順）がいいな！
+
+とご要望いただいたので、結合する方向となりました。
+
+
+## テーブルの追加方法
+
+今回は以下のようなtableを追加したいと思います。 +
+
+[width="40%"]
+|===
+|Field|Type
+
+|id        |int(11)
+|post_id|int(11)   
+|user_id|int(11)   
+|created_at|datetime
+|===
+
+
+
+
+これをプラグインを有効にした際にCreateTableしてくれる書き方がこちら。 +
+
+
+
+```
+
+```
+
+などと記述しても接続できるのですが、もともと接続していたwordpressのデータベースの接続が
+切れてしまい、投稿情報などが取得できなくなってしまいます。
+
+※footer.phpで再度接続させるという方もいらっしゃるようです
+http://blog.serverkurabe.com/wordpress-another-d
+
+
+
+個人的にはPHPのコードも他と同じように記述できますし、Wordpressになるべく合わせたほうが良いと思います。
+
+
+以下簡単に使い方をご紹介〜
+
+## Select
+
+```
+$users = $another_db->get_results($another_db->prepare("
+	SELECT * 
+	FROM users 
+	WHERE id = %d 
+	LIMIT 1
+", $user_id));
+```
+
+ほとんどSQLのまんまですねー。 +
+SQLインジェクション対策のために、「prepare」は必ず使ってください。
+
+
+## INSERT
+```
+$another_db->insert('users',
+	array(
+		'name' => $name,
+		'mail' => $mail,
+		'age' => $age,
+		'created_at' => current_time('mysql')
+	),
+	array(
+		'%s',
+		'%s',
+		'%d',
+		'%s'
+	)
+);
+```
+
+こちらも見たまんまですねｗ +
+現在時刻を入れたい場合に、「current_time('mysql')」と指定するようです。
+
+UPDATE文もほぼ同じなので、割愛します。
+
+
+## その他
+
+「query(好きなSQL)」が書けます。
+トランザクションなんかに使ってました。
+
+```
+$another_db->query('START TRANSACTION');
+$another_db->query('COMMIT');
+```
+
+ 
+以上です。 +
+思った以上に簡単に他DBのデータとの連携が可能なので、
+ぜひ皆さんもお試しあれ。 +
+ +
+ こちらからは以上です！
+
+
+
+
