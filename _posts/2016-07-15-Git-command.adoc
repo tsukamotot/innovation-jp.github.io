@@ -1,5 +1,5 @@
 = Gitを覚えたての新人がよく使うコマンドまとめ
-:published_at: 2016-07-13
+:published_at: 2016-07-15
 :hp-alt-title: Git-command
 :hp-tags: oyaizu,Git,Beginner
 
@@ -17,6 +17,7 @@
 
 image::oyaizu/IMG_7240.JPG[]
 
+ちなみに画像は前日MINTIAの記事を投稿した先輩エンジニアです。 +
 
 今回は鉄は熱いうちに鍛えよと言わんばかりにGitを覚えたての新人が軽い解説を交えながら、よく使うコマンドを紹介していきます。 +
 
