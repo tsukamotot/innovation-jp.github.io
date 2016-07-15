@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Gitを覚えたての新人がよく使うコマンドまとめ - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Gitを覚えたての新人がよく使うコマンドまとめ">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Gitを覚えたての新人がよく使うコマンドまとめ">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2016/07/15/Git-command.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Gitを覚えたての新人がよく使うコマンドまとめ" />
+    <meta property="og:description" content="こんにちは！両腕を広げると192cmになる新人エンジニアの小柳津です。 今週、会社帰りにVRゲームを体験してきました！  いやぁ〜世の中でVRについて大盛り上がりしているだけあって、本当にすごいですね！！ ホラーゲームでは人目もはばからず大声で叫んでしまったり、スキーのゲームでは急斜面を下り、ものすごい風を感じた気になったりしました。 簡単に手に入るようになれば、おそらくVRの世界から中々戻ってこられない人が続出するような気がします&amp;#8230;&amp;#8203; 最近では様々なVR体験イベントがあると思うので、ぜひ一度行って見てください！とても楽しいです..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2016/07/15/Git-command.html" />
+    <meta property="article:published_time" content="2016-07-14T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-07-15T08:58:54.999Z" />
+    <meta property="article:tag" content="oyaizu" />
+    <meta property="article:tag" content="Git" />
+    <meta property="article:tag" content="Beginner" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Gitを覚えたての新人がよく使うコマンドまとめ" />
+    <meta name="twitter:description" content="こんにちは！両腕を広げると192cmになる新人エンジニアの小柳津です。 今週、会社帰りにVRゲームを体験してきました！  いやぁ〜世の中でVRについて大盛り上がりしているだけあって、本当にすごいですね！！ ホラーゲームでは人目もはばからず大声で叫んでしまったり、スキーのゲームでは急斜面を下り、ものすごい風を感じた気になったりしました。 簡単に手に入るようになれば、おそらくVRの世界から中々戻ってこられない人が続出するような気がします&amp;#8230;&amp;#8203; 最近では様々なVR体験イベントがあると思うので、ぜひ一度行って見てください！とても楽しいです..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2016/07/15/Git-command.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars.githubusercontent.com/u/16201452?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Gitを覚えたての新人がよく使うコマンドまとめ",
+    "url": "http://tech.innovation.co.jp/2016/07/15/Git-command.html",
+    "datePublished": "2016-07-14T15:00:00.000Z",
+    "dateModified": "2016-07-15T08:58:54.999Z",
+    "keywords": "oyaizu, Git, Beginner",
+    "description": "こんにちは！両腕を広げると192cmになる新人エンジニアの小柳津です。 今週、会社帰りにVRゲームを体験してきました！  いやぁ〜世の中でVRについて大盛り上がりしているだけあって、本当にすごいですね！！ ホラーゲームでは人目もはばからず大声で叫んでしまったり、スキーのゲームでは急斜面を下り、ものすごい風を感じた気になったりしました。 簡単に手に入るようになれば、おそらくVRの世界から中々戻ってこられない人が続出するような気がします&amp;#8230;&amp;#8203; 最近では様々なVR体験イベントがあると思うので、ぜひ一度行って見てください！とても楽しいです..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-oyaizu tag-Git tag-Beginner no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="15 Jul 2016" class="post-meta__date date">15 Jul 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/oyaizu">oyaizu</a>, <a href="http://tech.innovation.co.jp/tag/Git">Git</a>, <a href="http://tech.innovation.co.jp/tag/Beginner">Beginner</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/16201452?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">Gitを覚えたての新人がよく使うコマンドまとめ</h1>
+    </header>
+
+    <section class="post tag-oyaizu tag-Git tag-Beginner">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは！両腕を広げると192cmになる新人エンジニアの小柳津です。<br></p>
+</div>
+<div class="paragraph">
+<p>今週、会社帰りにVRゲームを体験してきました！ <br>
+いやぁ〜世の中でVRについて大盛り上がりしているだけあって、本当にすごいですね！！<br>
+ホラーゲームでは人目もはばからず大声で叫んでしまったり、スキーのゲームでは急斜面を下り、ものすごい風を感じた気になったりしました。<br></p>
+</div>
+<div class="paragraph">
+<p>簡単に手に入るようになれば、おそらくVRの世界から中々戻ってこられない人が続出するような気がします&#8230;&#8203;<br></p>
+</div>
+<div class="paragraph">
+<p>最近では様々なVR体験イベントがあると思うので、ぜひ一度行って見てください！とても楽しいですよ！<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/IMG_7240.JPG" alt="IMG 7240.JPG">
+</div>
+</div>
+<div class="paragraph">
+<p>ちなみに画像は前日MINTIAの記事を投稿した先輩エンジニアです。<br></p>
+</div>
+<div class="paragraph">
+<p>今回は鉄は熱いうちに鍛えよと言わんばかりにGitを覚えたての新人が軽い解説を交えながら、よく使うコマンドを紹介していきます。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_git">Gitコマンドの紹介</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>それでは私がよく使うGitのコマンドを紹介します。<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>作業ディレクトリからステージングエリアへと移動させる</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$	git add &lt;path&gt;
+$	git add .</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>作業ディレクトリで修正したファイルなどをステージングエリアへと移動させるコマンドは<code>git add</code>を使います。ファイル単体で移動させたい時はファイルやディレクトリをパス指定します。<br>
+この中でも特によく使うのが<code>git add .</code>です。修正を加えたファイルを全て自動で指定し、ステージングエリアへと移動させてくれます。<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ファイルの差分を確認する</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$	git diff &lt;path&gt;
+$	git diff &lt;branch_name&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ファイルを編集した時に、「そういやあの修正できてったっけ？」「どこをどんなふうに修正したかな？」と思うことがありますよね。<br>
+そんな時は<code>git diff &lt;path&gt;</code>で修正したファイルなど指定すると修正した内容を手軽に確認できます。<br>
+また<code>git diff &lt;branch_name&gt;</code>でブランチ名を指定し、現在いるブランチと指定したブランチを比較して、どのファイルのどこに差分があるのかが分かります。<br>
+修正の内容が消去された内容は<strong class="red">赤</strong>、追記された内容は<strong class="green">緑</strong>で分かりやすく示されるため、どんな修正をしたのか一発で分かります。Gitってすごい！</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ログを閲覧する</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$	git log
+$	git log --oneline
+$	git log -p
+$	git log --stat</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>コミットの履歴(ログ)を閲覧するには<code>git log</code>を使います。<br>
+このコマンドを使うと以下のような情報を取得できます。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>ハッシュ値</p>
+</li>
+<li>
+<p>いつコミットされたか</p>
+</li>
+<li>
+<p>誰がコミットしたか</p>
+</li>
+<li>
+<p>コミットメッセージ</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>また、コミットの回数が多くなるとログも必然的に多くなります。まとめてログを見たい！という時には<code>git log --oneline</code>を使うことで、ログ情報を簡略化してくれます。<br>
+逆に、もっと細かくログが見たいなぁという場合は<code>git log -p</code>を使うことで先ほど紹介した<code>git diff</code>で得られる情報をログに追加してくれます。<br>
+また、<code>git log --stat</code>ではログと変更されたファイルと何行変更があったかを表示してくれます。<br>
+情報量で言えば<code>git log --oneline</code> &lt; <code>git log</code> &lt; <code>git log --stat</code> &lt; <code>git log -p</code> といったような順番になります。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>コミット</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$	git commit
+$	git commit -m "コミットメッセージ"</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ステージングエリアからリポジトリに移動させるのには<code>git commit</code>、このコマンドの後コミットメッセージを求められ、エディターに移動します。<code>git add</code>して<code>git commit</code>してコミットメッセージ&#8230;&#8203;Gitってまどろっこしい！<br>
+そんな方には<code>git commit -m "コミットメッセージ"</code>がオススメです。直接コミットメッセージを打ち込むので、エディターに移動はスキップしてくれます。<br></p>
+</div>
+<div class="paragraph">
+<p>*過去のバージョンに遡る</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$	git reset --hard &lt;hash&gt;
+$	git reset --hard HEAD
+$	git reset --hard HEAD^
+$	git reset --hard ORIG_HEAD</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>過去のバージョンを遡るには上記の<code>git reset --hard &lt;hash&gt;</code>を使います。<code>git log</code>でログを見るとcommitの文字の横にやたらと長い文字列がありますよね。これはハッシュ値と言われ、これを指定することでこのコミットをして時点の状態に戻ることができます。ちなみにハッシュ値の値は一意であれば良いので大体7-10文字ほどで良いそうです！<br>
+<code>git reset --hard HEAD</code>はハッシュ値を指定しなくとも、直前のバージョンに戻ることができます。そこから<code>git reset --hard HEAD^</code>と打てばもう一つ前のバージョンに戻れます。<br>
+戻りすぎちゃった&#8230;&#8203;という場合には<code>git reset --hard ORIG_HEAD</code>とすれば、一つ進んだバージョンにしてくれます。<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ブランチの作成</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$	git branch &lt;new_branch_name&gt;
+$	git checkout -b &lt;new_branch_name&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>git branch &lt;new_branch_name&gt;</code>で新しくブランチを作成できるのですが、その後<code>git checkout</code>するのってめんどくさいですよね。<code>git checkout -b &lt;new_branch_name&gt;</code>ではそんな面倒くさい作業をこれ一回で！！<code>-b</code>というオプションはbranchの略なんでしょうか。覚えやすくて素敵です。<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>エイリアスの設定</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$	git config --global alias.[alias_name] [command]
+$	git config --global --unset alias.[alias_name]
+$	git config</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>エイリアスとは別名という意味になります。これまで紹介してきたコマンドに別名をつけることができます。例えば<code>git config --global alias.co commit</code>とし、<code>git co</code>とすればコミットが行えます。Gitで管理しているとコマンドを何回も入力すると思うのですが、ジャンジャン省略して、入力作業を楽にしちゃいましょう！<br></p>
+</div>
+<div class="paragraph">
+<p>以上でGitを覚えたての新人がよく使うコマンドのご紹介でした！Gitってホント便利ですね〜<br>
+調べている限りではもうここでは紹介しきれないほど様々なオプションがあったりするので、よくあるケースで使えそうな場合は、ぜひ覚えておくと良いでしょう。<br></p>
+</div>
+<div class="paragraph">
+<p>今回はここで失礼します。</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
