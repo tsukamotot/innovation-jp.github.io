@@ -50,7 +50,7 @@ vim便利機能！
 :set number
 
 
-image::<filename>[kohe/vim.ong]
+image::kohe/vim.png[]
 
 
 開いているファイルの内容が更新されてるから、もう一度同じファイルを読み込んで表示したい！
