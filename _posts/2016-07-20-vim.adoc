@@ -1,7 +1,7 @@
 = 「本当にvimerになりたくて」
 :published_at:2016-07-20
 :hp-alt-title: vim
-:hp-tags: FirstPost,vi,vim,study
+:hp-tags: FirstPost,vi,vim,study,kohe,kondo
 皆様こんにちは。
 イノベーションのvimerの卵のこへです。
 今までsublimetextを使っていたのですが、
