@@ -60,8 +60,7 @@ vim便利機能！
 
 	:set number
 
-
-image::kohe/vim.png[]
+image::kohe/vimdog.png[]
  　
 
 
