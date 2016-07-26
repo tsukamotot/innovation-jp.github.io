@@ -1,4 +1,4 @@
-= AWSインスタンスたちのステータスダッシュボードもどきを、CloudWatch+GoogleAppsScriptで作っちゃう
+= AWSインスタンスたちのステータスダッシュボードもどきを、CloudWatch+draw.ioで作っちゃう
 
 を書く予定
 矢ヶ崎
