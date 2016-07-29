@@ -41,7 +41,7 @@ image::http://tech.innovation.co.jp/images/ami/nigaoe.png[]
 
 image::http://tech.innovation.co.jp/images/ami/syogasan.png[]
 
-イラレソフトで並べて、切り取り線（パス）をつけます +
+イラレソフトで画像を並べて、切り取り線（パス）をつけます +
 
 image::http://tech.innovation.co.jp/images/ami/kaihatsu.jpg[]
 
@@ -61,7 +61,7 @@ image::http://tech.innovation.co.jp/images/ami/after.png[]
 ・シールのサイズは、もう一回り小さくてもよかった +
 ・データをもっと詰めて作ればもっとシール1枚に対するコストを抑えられた +
 ・スケスケのシールのため、下の色が透けて見えてしまう。白のシートでも良かったかもしれない。 +
-・全然似てないシールがある +
+・しょがさんが全然似てない。 +
  +
 シール作成にあたり、ご協力いただいた皆様、ありがとうございました。 +
 （特にイラレで画像を並べてパスを付けるという一番大変な工程を協力いただいたY氏には頭が上がりません） +
