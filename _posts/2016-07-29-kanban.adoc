@@ -66,4 +66,4 @@ image::http://tech.innovation.co.jp/images/ami/after.png[]
  +
 以上、開発部門での初仕事の報告でした。 +
 
-image::http://tech.innovation.co.jp/images/ami/finish.png[]
+image::http://tech.innovation.co.jp/images/ami/finished.png[]
