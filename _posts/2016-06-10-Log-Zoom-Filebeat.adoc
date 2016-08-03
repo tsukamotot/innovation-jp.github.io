@@ -5,8 +5,13 @@
 矢ヶ崎です。
 みなさんいかがお過ごしでしょうか？
 
+ポケモンGOやってます？
 
-Pepperの続編は次回！ということで、Go言語社内エバンジェリスト(自称)のわたくしが、Go言語に関わることを一切書いていないことに気が付きましたので、今回はGo言語にかすってることを書きたいと思います。
+いや〜
+
+Goは最高ですよね！
+
+そんなこんなで、Pepperの続編は次回！ということで、Go言語社内エバンジェリスト(自称)のわたくしが、Go言語に関わることを一切書いていないことに気が付きましたので、今回はGo言語にかすってることを書きたいと思います。
 
 Go言語、みなさん使っておりますでしょうか？
 
@@ -16,9 +21,9 @@ Go言語、みなさん使っておりますでしょうか？
 
 == オートスケールなどなど
 
-クラウドの時代って、ほんと便利ですよね〜。サーバも簡単にオートスケールなどで構成できて、簡単ポンですよね。
+クラウドの時代って、ほんと便利ですよね〜。サーバも簡単にオートスケールなどで構成できて、負荷に応じてサーバが勝手に増えたり減ったりしてくれる夢の様な構成も簡単ポンですよね。
 
-でも、あるあるで、「スケールインした時にログ消えちゃうじゃん！」問題とか、「リアルタイムでログ集計したいんだけども・・・」問題とかよく聞きますよね！
+でも、あるあるですが、「スケールインした時にログ消えちゃうじゃん！」問題とか、「リアルタイムでログ集計したいんだけども・・・」問題とかよく聞きますよね！
 
 == だとすれば、ログ収集
 
@@ -77,27 +82,138 @@ $ export GOPATH=$HOME/go
 
 ==== go get で取ってくる
 
-
-
-
-
+go get コマンドを使って、ほしいソースとか依存ファイルとかを一気に取ってこれます。たとえば、上記のLogZoomを取ってくる場合は、
 
 ```
-$ go get -u [URL]
+$ go get -u github.com/packetzoom/logzoom
 ```
+
+==== go install で実行可能ファイルを作成
+
+実行可能ファイルを作りたいプロジェクトのフォルダに行って、go install コマンドを叩くと、実行可能なバイナリファイルができます。
+
+今回のLogZoomの場合は、
+```
+$ cd $GOPATH/src/github.com/packetzoom/logzoom/
+$ go install
+```
+で、$GOPATH/bin に logzoom というバイナリができます。
+
+う〜ん。めっちゃ簡単だし、わかりやすいし、よく出来てる〜！最高ですねGo。
+
+=== いよいよ設定してみる
+
+そんな能書きをタレたところで、設定をしてみましょう！
+
+=== Filebeatの設定
+
+設定ファイルをこんな感じで書きます。
+
+```
+filebeat:
+  prospectors:
+    -
+      paths:
+        - /var/log/httpd/access_log
+        - /var/log/httpd/ssl_access_log
+      input_type: log
+      document_type: httpd_access
+
+  registry_file: /var/lib/filebeat/registry
+
+output:
+  logstash:
+    hosts: ["localhost:5044"]
+    tls:
+      certificate_authorities: ["/etc/filebeat/log.crt"]
+      certificate: "/etc/filebeat/log.crt"
+      certificate_key: "/etc/filebeat/log.key"
+```
+
+たとえば、filebeat.ymlとかで保存しておきましょう。
+
+見ていただくとすぐわかるかと思いますが、inputの部分は同じログの種類をまとめて指定できます。
+
+outputのところは、LogZoomの待受ポートに投げつけるのでLogZoomと合わせるのと、証明書設定の部分はよくある「オレオレSSL証明書の作り方」を検索して出てきた方法で十分なので、証明書とか鍵とかを作ってそのパスを指定します。
+
+そして！
+```
+$ sudo /path/filebeat -c /path/filebeat.yml
+```
+みたいな感じで、起動できます！当然ですが、 path の部分はみなさんのご都合に合わせて書き換えてください。
+
+=== いよいよLogZoomの設定
+
+設定ファイルをこんな感じで書きます。
+
+```
+inputs:
+  - filebeat_httpd_access:
+      filebeat:
+        host: 0.0.0.0:5044
+        ssl_key: "/etc/filebeat/log.key"
+        ssl_crt: "/etc/filebeat/log.crt"
+
+outputs:
+  - s3_httpd_access:
+      s3:
+        aws_key_id_loc: /etc/filebeat/s3.key
+        aws_sec_key_loc: /etc/filebeat/s3.seckey
+        aws_s3_bucket: bucketname
+        aws_s3_region: ap-northeast-1とか
+        local_path: "/tmp"
+        s3_path: "/logs/production/httpd_access"
+        time_slice_format: "%Y-%m-%d/%H%M"
+        aws_s3_output_key: "%{path}/%{timeSlice}/%{hostname}_%{uuid}.gz"
+
+routes:
+  - route1:
+      input: filebeat_httpd_access
+      output: s3_httpd_access
+```
+
+inputsのところは、filebeatに合わせて設定します。当然複数書けます！
+
+outputsのところは、たとえばS3に出力する場合はこんな感じです。S3にアクセスできるIAMユーザのキーをファイルに書いて設定しましょう。
+
+そして、どのinputをどのoutputに出すかの設定ができます。いろんなログを読み込んで、これはS3のこことElasticSearchにとか、いろいろ組み合わせられます。これは便利！！！
+
+そして、いよいよ！
+
+```
+$ sudo /path/logzoom -config=/path/logzoom.yml
+```
+
+で起動します。
+
+=== LogZoomをちょっとイジる
+
+S3に吐かれるログが、こま切れすぎて使いづらい・・・
+
+などなどあるかと思います。しかし、Goなら読みやすく、コンパイルも簡単なので、ちょろっとイジることも簡単ですたぶん。
+
+例えば、このログの出力間隔などを調整したいのであれば、
+
+$GOPATH/src/github.com/packetzoom/logzoom/output/s3/s3.go の
+
+```
+const (
+	s3FlushInterval        = 10
+	recvBuffer             = 100
+	maxSimultaneousUploads = 8
+)
+```
+
+このあたりの数字をイジって go install すればいい感じになりますし、ほかの調整も簡単でしょうたぶん。
+
+※イジるものによっては、ライセンスには注意しましょう
+
+う〜ん素敵。
 
 === 幸せなログ生活
 
 そんなこんなで、今では弊社の某プロダクトで幸せなログ生活が送れております。
 
+軽い！！！！！
 
-
-
-
-
-
-
-軽い！
-
-を書く予定
-矢ヶ崎
+ログゲットだぜ！！！
