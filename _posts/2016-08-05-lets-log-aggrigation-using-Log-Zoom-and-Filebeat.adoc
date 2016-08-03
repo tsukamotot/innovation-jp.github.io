@@ -1,5 +1,9 @@
-
 = LogZoomとFilebeatでログ収集！
+
+:published_at: 2016-08-05
+:hp-alt-title: let's log aggrigation using LogZoom and Filebeat
+:hp-tags: Yagasaki,Go,Golang,Log,LogZoom,Filebeat
+
 
 さてこんばんは。
 矢ヶ崎です。
