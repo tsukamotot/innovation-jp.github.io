@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>LogZoomとFilebeatでログ収集！ - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="LogZoomとFilebeatでログ収集！">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="LogZoomとFilebeatでログ収集！">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2016/08/04/lets-log-aggrigation-using-Log-Zoom-and-Filebeat.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="LogZoomとFilebeatでログ収集！" />
+    <meta property="og:description" content="さてこんばんは。 矢ヶ崎です。 みなさんいかがお過ごしでしょうか？ ポケモンGOやってます？ いや〜 Goは最高ですよね！ そんなこんなで、Pepperの続編は次回！ということで、Go言語社内エバンジェリスト(自称)のわたくしが、Go言語に関わることを一切書いていないことに気が付きましたので、今回はGo言語にかすってることを書きたいと思います。 Go言語、みなさん使っておりますでしょうか？ わたしの場合は、社内のイベントで使うプログラムは全てGoで書くようにしております。まだまだGo言語社内エバンジェリスト力が弱いわたくし程度では、弊社のプロダクトには..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2016/08/04/lets-log-aggrigation-using-Log-Zoom-and-Filebeat.html" />
+    <meta property="article:published_time" content="2016-08-03T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-08-04T04:00:22.732Z" />
+    <meta property="article:tag" content="Yagasaki" />
+    <meta property="article:tag" content="Go" />
+    <meta property="article:tag" content="Golang" />
+    <meta property="article:tag" content="Log" />
+    <meta property="article:tag" content="LogZoom" />
+    <meta property="article:tag" content="Filebeat" />
+    <meta property="article:tag" content="Fluentd" />
+    <meta property="article:tag" content="Logstash" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="LogZoomとFilebeatでログ収集！" />
+    <meta name="twitter:description" content="さてこんばんは。 矢ヶ崎です。 みなさんいかがお過ごしでしょうか？ ポケモンGOやってます？ いや〜 Goは最高ですよね！ そんなこんなで、Pepperの続編は次回！ということで、Go言語社内エバンジェリスト(自称)のわたくしが、Go言語に関わることを一切書いていないことに気が付きましたので、今回はGo言語にかすってることを書きたいと思います。 Go言語、みなさん使っておりますでしょうか？ わたしの場合は、社内のイベントで使うプログラムは全てGoで書くようにしております。まだまだGo言語社内エバンジェリスト力が弱いわたくし程度では、弊社のプロダクトには..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2016/08/04/lets-log-aggrigation-using-Log-Zoom-and-Filebeat.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "Akihiro YAGASAKI",
+        "image": "https://avatars.githubusercontent.com/u/13131599?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "LogZoomとFilebeatでログ収集！",
+    "url": "http://tech.innovation.co.jp/2016/08/04/lets-log-aggrigation-using-Log-Zoom-and-Filebeat.html",
+    "datePublished": "2016-08-03T15:00:00.000Z",
+    "dateModified": "2016-08-04T04:00:22.732Z",
+    "keywords": "Yagasaki, Go, Golang, Log, LogZoom, Filebeat, Fluentd, Logstash",
+    "description": "さてこんばんは。 矢ヶ崎です。 みなさんいかがお過ごしでしょうか？ ポケモンGOやってます？ いや〜 Goは最高ですよね！ そんなこんなで、Pepperの続編は次回！ということで、Go言語社内エバンジェリスト(自称)のわたくしが、Go言語に関わることを一切書いていないことに気が付きましたので、今回はGo言語にかすってることを書きたいと思います。 Go言語、みなさん使っておりますでしょうか？ わたしの場合は、社内のイベントで使うプログラムは全てGoで書くようにしております。まだまだGo言語社内エバンジェリスト力が弱いわたくし程度では、弊社のプロダクトには..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Yagasaki tag-Go tag-Golang tag-Log tag-Log-Zoom tag-Filebeat tag-Fluentd tag-Logstash no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="04 Aug 2016" class="post-meta__date date">04 Aug 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Yagasaki">Yagasaki</a>, <a href="http://tech.innovation.co.jp/tag/Go">Go</a>, <a href="http://tech.innovation.co.jp/tag/Golang">Golang</a>, <a href="http://tech.innovation.co.jp/tag/Log">Log</a>, <a href="http://tech.innovation.co.jp/tag/Log-Zoom">LogZoom</a>, <a href="http://tech.innovation.co.jp/tag/Filebeat">Filebeat</a>, <a href="http://tech.innovation.co.jp/tag/Fluentd">Fluentd</a>, <a href="http://tech.innovation.co.jp/tag/Logstash">Logstash</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/13131599?v=3" alt="profile image for Akihiro YAGASAKI" class="avatar post-meta__avatar" /> by Akihiro YAGASAKI</span>
+      </div>
+      <h1 class="post-title">LogZoomとFilebeatでログ収集！</h1>
+    </header>
+
+    <section class="post tag-Yagasaki tag-Go tag-Golang tag-Log tag-Log-Zoom tag-Filebeat tag-Fluentd tag-Logstash">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>さてこんばんは。
+矢ヶ崎です。
+みなさんいかがお過ごしでしょうか？</p>
+</div>
+<div class="paragraph">
+<p>ポケモンGOやってます？</p>
+</div>
+<div class="paragraph">
+<p>いや〜</p>
+</div>
+<div class="paragraph">
+<p>Goは最高ですよね！</p>
+</div>
+<div class="paragraph">
+<p>そんなこんなで、Pepperの続編は次回！ということで、Go言語社内エバンジェリスト(自称)のわたくしが、Go言語に関わることを一切書いていないことに気が付きましたので、今回はGo言語にかすってることを書きたいと思います。</p>
+</div>
+<div class="paragraph">
+<p>Go言語、みなさん使っておりますでしょうか？</p>
+</div>
+<div class="paragraph">
+<p>わたしの場合は、社内のイベントで使うプログラムは全てGoで書くようにしております。まだまだGo言語社内エバンジェリスト力が弱いわたくし程度では、弊社のプロダクトにはなかなか採用できていないのですが、それでもなんとかGoに関わっているようにしている次第でございます。</p>
+</div>
+<div class="paragraph">
+<p>そこで、今回は <a href="https://www.innovation.co.jp/service/">弊社の一部プロダクト</a> で採用している数少ない事例として、Go言語にかすっているものをご紹介いたします。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">オートスケールなどなど</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>クラウドの時代って、ほんと便利ですよね〜。サーバも簡単にオートスケールなどで構成できて、負荷に応じてサーバが勝手に増えたり減ったりしてくれる夢の様な構成も簡単ポンですよね。</p>
+</div>
+<div class="paragraph">
+<p>でも、あるあるですが、「スケールインした時にログ消えちゃうじゃん！」問題とか、「リアルタイムでログ集計したいんだけども・・・」問題とかよく聞きますよね！</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">だとすれば、ログ収集</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>そこで！みなさんログ収集＆保存しているかと思います。日本のWeb系では、たぶんFluentdとかがとっても有名で、こちらを利用してログ収集していたり、Logstash使っていたり、rsyslogでがんばっていたりするかと思います。</p>
+</div>
+<div class="paragraph">
+<p>しかし！LogstashやFluentdは、個人的には重い！！！</p>
+</div>
+<div class="paragraph">
+<p>rsyslogやsyslog-ngは、シンプルすぎちゃってつらい！</p>
+</div>
+<div class="paragraph">
+<p>そんなお悩みをかかえていらっしゃるかと思いますみなさん。</p>
+</div>
+<div class="paragraph">
+<p>そこで逆に、「Goのやつって速いっていうじゃん〜」とかっていう安易なキーワードがあると思うので、それに便乗させていただき、Goで書かれたログ収集ツールを利用することにしました！</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_logzoom">LogZoom登場</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>LogZoomというログ収集するツールがあるではないですか！</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/packetzoom/logzoom" class="bare">https://github.com/packetzoom/logzoom</a></p>
+</div>
+<div class="paragraph">
+<p>Outputsのところを見ると、ElasticSearchとかS3とかあっていい感じ〜</p>
+</div>
+<div class="paragraph">
+<p>しかし！Inputsのところを見ると、FilebeatとRedisしかない！いわゆるログファイルは読めないのか？読めるのか？読めないのか？</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_filebeat">Filebeat登場！</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>そこで、Filebeatが登場します。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/elastic/beats" class="bare">https://github.com/elastic/beats</a></p>
+</div>
+<div class="paragraph">
+<p>Logstashと同じくElastic社のプロダクトなのですが、また、これもGoで書かれています。</p>
+</div>
+<div class="sect2">
+<h3 id="___3">くぁ〜〜〜</h3>
+<div class="paragraph">
+<p>これはたまらんです。そして、ログファイルを読んで、LogZoomにLumberjackというプロトコルで送れるようです！ほんとはLogstash用にできているとしても！</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_go">Goで書かれたプロダクトの簡単さ！</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>あんまりGoを使っていない方のために、ちょ〜いい加減かつ簡単にGoで書かれたプロダクトを動かすためにやることを書いておきます。これが、またGoのすごいところなんですよ！</p>
+</div>
+<div class="sect3">
+<h4 id="_go_2">Goをインストールする</h4>
+<div class="paragraph">
+<p>ここからダウンロードするか、brewとかyumとかでインストールしてください。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://golang.org/" class="bare">https://golang.org/</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_gopath">GOPATHを設定する</h4>
+<div class="paragraph">
+<p>Goのソース一式などなどを入れておく場所を指定するものとして、GOPATHという環境変数を設定します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ mkdir $HOME/go
+$ export GOPATH=$HOME/go</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>今後、このGOPATHに、いろいろなファイルが入ってきます。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_go_get">go get で取ってくる</h4>
+<div class="paragraph">
+<p>go get コマンドを使って、ほしいソースとか依存ファイルとかを一気に取ってこれます。たとえば、上記のLogZoomを取ってくる場合は、</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ go get -u github.com/packetzoom/logzoom</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_go_install">go install で実行可能ファイルを作成</h4>
+<div class="paragraph">
+<p>実行可能ファイルを作りたいプロジェクトのフォルダに行って、go install コマンドを叩くと、実行可能なバイナリファイルができます。</p>
+</div>
+<div class="paragraph">
+<p>今回のLogZoomの場合は、</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ cd $GOPATH/src/github.com/packetzoom/logzoom/
+$ go install</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>で、$GOPATH/bin に logzoom というバイナリができます。</p>
+</div>
+<div class="paragraph">
+<p>う〜ん。めっちゃ簡単だし、わかりやすいし、よく出来てる〜！最高ですねGo。</p>
+</div>
+<div class="paragraph">
+<p>もっとちゃんと正しい情報を知りたい方は、ぜひぜひ公式系のところを読んでみてください〜！</p>
+</div>
+<div class="paragraph">
+<p><a href="http://golang-jp.org/doc/code.html" class="bare">http://golang-jp.org/doc/code.html</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___4">いよいよ設定してみる</h3>
+<div class="paragraph">
+<p>そんな能書きをタレたところで、設定をしてみましょう！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_filebeat_2">Filebeatの設定</h3>
+<div class="paragraph">
+<p>設定ファイルをこんな感じで書きます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>filebeat:
+  prospectors:
+    -
+      paths:
+        - /var/log/httpd/access_log
+        - /var/log/httpd/ssl_access_log
+      input_type: log
+      document_type: httpd_access
+
+  registry_file: /var/lib/filebeat/registry
+
+output:
+  logstash:
+    hosts: ["localhost:5044"]
+    tls:
+      certificate_authorities: ["/etc/filebeat/log.crt"]
+      certificate: "/etc/filebeat/log.crt"
+      certificate_key: "/etc/filebeat/log.key"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>たとえば、filebeat.ymlとかで保存しておきましょう。</p>
+</div>
+<div class="paragraph">
+<p>見ていただくとすぐわかるかと思いますが、inputの部分は同じログの種類をまとめて指定できます。</p>
+</div>
+<div class="paragraph">
+<p>outputのところは、LogZoomの待受ポートに投げつけるのでLogZoomと合わせるのと、証明書設定の部分はよくある「オレオレSSL証明書の作り方」を検索して出てきた方法で十分なので、証明書とか鍵とかを作ってそのパスを指定します。</p>
+</div>
+<div class="paragraph">
+<p>そして！</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ sudo /path/filebeat -c /path/filebeat.yml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>みたいな感じで、起動できます！当然ですが、 path の部分はみなさんのご都合に合わせて書き換えてください。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__logzoom">いよいよLogZoomの設定</h3>
+<div class="paragraph">
+<p>設定ファイルをこんな感じで書きます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>inputs:
+  - filebeat_httpd_access:
+      filebeat:
+        host: 0.0.0.0:5044
+        ssl_key: "/etc/filebeat/log.key"
+        ssl_crt: "/etc/filebeat/log.crt"
+
+outputs:
+  - s3_httpd_access:
+      s3:
+        aws_key_id_loc: /etc/filebeat/s3.key
+        aws_sec_key_loc: /etc/filebeat/s3.seckey
+        aws_s3_bucket: bucketname
+        aws_s3_region: ap-northeast-1とか
+        local_path: "/tmp"
+        s3_path: "/logs/production/httpd_access"
+        time_slice_format: "%Y-%m-%d/%H%M"
+        aws_s3_output_key: "%{path}/%{timeSlice}/%{hostname}_%{uuid}.gz"
+
+routes:
+  - route1:
+      input: filebeat_httpd_access
+      output: s3_httpd_access</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>inputsのところは、filebeatに合わせて設定します。当然複数書けます！</p>
+</div>
+<div class="paragraph">
+<p>outputsのところは、たとえばS3に出力する場合はこんな感じです。S3にアクセスできるIAMユーザのキーをファイルに書いて設定しましょう。</p>
+</div>
+<div class="paragraph">
+<p>そして、どのinputをどのoutputに出すかの設定ができます。いろんなログを読み込んで、これはS3のこことElasticSearchにとか、いろいろ組み合わせられます。これは便利！！！</p>
+</div>
+<div class="paragraph">
+<p>そして、いよいよ！</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ sudo /path/logzoom -config=/path/logzoom.yml</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>で起動します。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_logzoom_2">LogZoomをちょっとイジる</h3>
+<div class="paragraph">
+<p>S3に吐かれるログが、こま切れすぎて使いづらい・・・</p>
+</div>
+<div class="paragraph">
+<p>などなどあるかと思います。しかし、Goなら読みやすく、コンパイルも簡単なので、ちょろっとイジることも簡単ですたぶん。</p>
+</div>
+<div class="paragraph">
+<p>例えば、このログの出力間隔などを調整したいのであれば、</p>
+</div>
+<div class="paragraph">
+<p>$GOPATH/src/github.com/packetzoom/logzoom/output/s3/s3.go の</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>const (
+	s3FlushInterval        = 10
+	recvBuffer             = 100
+	maxSimultaneousUploads = 8
+)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このあたりの数字をイジって go install すればいい感じになりますし、ほかの調整も簡単でしょうたぶん。</p>
+</div>
+<div class="paragraph">
+<p>※イジるものによっては、ライセンスには注意しましょう</p>
+</div>
+<div class="paragraph">
+<p>う〜ん素敵。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___5">幸せなログ生活</h3>
+<div class="paragraph">
+<p>軽い！！！！！</p>
+</div>
+<div class="paragraph">
+<p>そんなこんなで、今では弊社の某プロダクトで幸せなログ生活が送れております。</p>
+</div>
+<div class="paragraph">
+<p>Let it go! ありのままで行きましょう。</p>
+</div>
+<div class="paragraph">
+<p>ログゲットだぜ！！！</p>
+</div>
+<div class="sect3">
+<h4 id="___6">以上！</h4>
+
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
