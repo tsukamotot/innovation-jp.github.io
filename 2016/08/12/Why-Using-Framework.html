@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>なぜフレームワークを使うのか - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="なぜフレームワークを使うのか">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="なぜフレームワークを使うのか">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2016/08/12/Why-Using-Framework.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="なぜフレームワークを使うのか" />
+    <meta property="og:description" content="こんにちは、日々メダリストたちの勇姿をみて「まだまだ鍛え方が足りないな」と決意を新たにしている塚本です。残暑お見舞い申し上げます。 今回はフレームワークのお話です。 Webアプリケーション開発においてのサーバサイドフレームワークの話です。 サービスを作る際に、なんの言語を使い、どのフレームワークを用いるか という議論は避けて通ることはないテーマかと思います。 調べればそれぞれのメリット・デメリットは出てきますが、そこそこ使われているフレームワークたちはおおよその機能はカバーしており、目に見える差がなくなってきています。 なので、（[APIのみ作るのでマ..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2016/08/12/Why-Using-Framework.html" />
+    <meta property="og:image" content="http://tech.innovation.co.jp/images/MVC-Process.svg.png" />
+    <meta property="article:published_time" content="2016-08-11T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-08-12T10:49:45.727Z" />
+    <meta property="article:tag" content="Tsukamoto" />
+    <meta property="article:tag" content="Engineer" />
+    <meta property="article:tag" content="Framework" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="なぜフレームワークを使うのか" />
+    <meta name="twitter:description" content="こんにちは、日々メダリストたちの勇姿をみて「まだまだ鍛え方が足りないな」と決意を新たにしている塚本です。残暑お見舞い申し上げます。 今回はフレームワークのお話です。 Webアプリケーション開発においてのサーバサイドフレームワークの話です。 サービスを作る際に、なんの言語を使い、どのフレームワークを用いるか という議論は避けて通ることはないテーマかと思います。 調べればそれぞれのメリット・デメリットは出てきますが、そこそこ使われているフレームワークたちはおおよその機能はカバーしており、目に見える差がなくなってきています。 なので、（[APIのみ作るのでマ..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2016/08/12/Why-Using-Framework.html" />
+    <meta name="twitter:image:src" content="http://tech.innovation.co.jp/images/MVC-Process.svg.png" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "Hisahiro Tsukamoto",
+        "image": "https://avatars.githubusercontent.com/u/2120249?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": "http://d.hatena.ne.jp/hi-hats/"
+    },
+    "headline": "なぜフレームワークを使うのか",
+    "url": "http://tech.innovation.co.jp/2016/08/12/Why-Using-Framework.html",
+    "datePublished": "2016-08-11T15:00:00.000Z",
+    "dateModified": "2016-08-12T10:49:45.727Z",
+    "image": "http://tech.innovation.co.jp/images/MVC-Process.svg.png",
+    "keywords": "Tsukamoto, Engineer, Framework",
+    "description": "こんにちは、日々メダリストたちの勇姿をみて「まだまだ鍛え方が足りないな」と決意を新たにしている塚本です。残暑お見舞い申し上げます。 今回はフレームワークのお話です。 Webアプリケーション開発においてのサーバサイドフレームワークの話です。 サービスを作る際に、なんの言語を使い、どのフレームワークを用いるか という議論は避けて通ることはないテーマかと思います。 調べればそれぞれのメリット・デメリットは出てきますが、そこそこ使われているフレームワークたちはおおよその機能はカバーしており、目に見える差がなくなってきています。 なので、（[APIのみ作るのでマ..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Tsukamoto tag-Engineer tag-Framework no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="12 Aug 2016" class="post-meta__date date">12 Aug 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Tsukamoto">Tsukamoto</a>, <a href="http://tech.innovation.co.jp/tag/Engineer">Engineer</a>, <a href="http://tech.innovation.co.jp/tag/Framework">Framework</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/2120249?v=3" alt="profile image for Hisahiro Tsukamoto" class="avatar post-meta__avatar" /> by Hisahiro Tsukamoto</span>
+      </div>
+      <h1 class="post-title">なぜフレームワークを使うのか</h1>
+    </header>
+
+    <section class="post tag-Tsukamoto tag-Engineer tag-Framework">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは、日々メダリストたちの勇姿をみて「まだまだ鍛え方が足りないな」と決意を新たにしている塚本です。残暑お見舞い申し上げます。</p>
+</div>
+<div class="paragraph">
+<p>今回はフレームワークのお話です。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Webアプリケーション開発においてのサーバサイドフレームワークの話です。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>サービスを作る際に、なんの言語を使い、どのフレームワークを用いるか
+という議論は避けて通ることはないテーマかと思います。</p>
+</div>
+<div class="paragraph">
+<p>調べればそれぞれのメリット・デメリットは出てきますが、そこそこ使われているフレームワークたちはおおよその機能はカバーしており、目に見える差がなくなってきています。
+なので、（[APIのみ作るのでマイクロフレームワーク]というようなピンポイントのケースを除き）使ったことがない人にとっては、世の情報が判断材料になり得ないケースが見られます。</p>
+</div>
+<div class="paragraph">
+<p>ここで、「その前になぜ私たちはフレームワークを使用するのか」から考えてみましょう。</p>
+</div>
+<div class="paragraph">
+<p>Webにおけるアプリケーション開発とは、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>URLにアクセスしてリクエストされたデータをデータベースから取得し、そのレスポンスをブラウザ上で表現する</p>
+</li>
+<li>
+<p>二者間通信はHTTPプロトコルベース</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>というざっくり概念の上で行われます。</p>
+</div>
+<div class="paragraph">
+<p>この概念に実装を載せるにあたり、上のフローを粒度細かく分割し、それぞれの役割を担当するコンポーネントを集めて機能するようにしたのがフレームワークであり、
+誤解を恐れずに言うと、<strong>"それらの再開発を避けて、これから作るシステムのビジネスロジックに集中できるようにするため"</strong> フレームワークを使います。</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>例えば、POSTリクエストの扱いであったり、ルーティングの振り分け、レスポンスのボディをHTML形式に変換したりは、ドメインレベルに関係なく共通に行われる処理です。</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>こういった部分の実装は、フレームワークに任せてしまおうという理由が一般的には大きな理由です。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+さらに、それらのコンポーネントがパッケージとしてOSS上でアップデートされているものならば、自分たちの運用コストも減ります。
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+また、それぞれのフレームワークにはソフトウェア設計に対する思想が乗っかっており、考え方がカチッとはまるのであればその思想に身を委ねてしまうほうが楽であります。
+（大方のフレームワークには、ジェネレーター的なコマンドが用意されており、それを使って内部アーキテクチャを構築してほしいという願いが垣間見えます）
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>と挙げていけばキリがないほどに理由があるわけですが、当然 <strong>"使わないことと比べてのデメリット or 使わないケースのメリット"</strong> もまたキリがないほどあり（ここでは割愛しますが）、
+その双方を天秤にかけた結果、
+「使ったほうが生産性が高い &amp;&amp; その他もろもろ」という判断がなされ使用に至ります。</p>
+</div>
+<div class="paragraph">
+<p>大した前段構えた割にはありきたりな結論ですが、フレームワークを使う理由は大まかには以上な感じです。</p>
+</div>
+<div class="paragraph">
+<p>しかし、後々大きな意味を持ち始めるものでありながら、議論の的から外すべきでないポイントが有ります。
+先述のフレームワーク作者の思想にも関係してきますが、結果的にそれはチームや開発者の今後の方向性や指向性を大きく左右するものです。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">フレームワークの自由度</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>世に出ているOSSのフレームワークには程度の差こそあれ、独自の文法みたいなものが存在します。</p>
+</div>
+<div class="paragraph">
+<p>例を挙げてみましょう。
+Webフレームワークと言えば代表の一つがRuby on Railsで、RoRと言えばConvention over Configuration（設定より規約）です。
+要は書き方であったり、設計パターンを決めてしまい、「こういうときはこう書くんですよ」とルールにしてしまえば、ただでさえ考える事が多いのを少しは減らすことができます。
+Railsはこれがキッチリ固まっている代表格でありフレームワークとしての自由度は低いです。
+PHPのような元の言語の規約自体が緩い場合、同じI/Oをもつメソッドでも色んな書き方ができるため、「どれがよいかなー」と考えることに時間を取られるよりもフレームワークに決めてもらったほうがよかったりします。</p>
+</div>
+<div class="paragraph">
+<p>そしてその規約が緩いほど「自由に書いていいよ」という思想の現れなのですが、ある程度チームメンバーのスキルが一定の水準に達していれば、自由度が高いほうが好まれる傾向があります。
+また逆に、規約でガチガチに縛ってもらったほうが、バラつかなくて良いという人もいます。</p>
+</div>
+<div class="paragraph">
+<p>このように使い始めの段階としては、好みの問題で自由度の話はでてきます。</p>
+</div>
+<div class="paragraph">
+<p>けれど、この自由度の部分は使い続けていくほどに、開発者がどこに時間を使うことになるのか、何の腕を磨くことになるのか、といった部分にしぶとく影響していくため、
+"（フルスタックではないけれど）何でもできるようになりたいと思っていた"人の意向に実はそぐっていなかった。
+といった事態にもなりえます。</p>
+</div>
+<div class="paragraph">
+<p>ここが自分たちを苦しめもするし、楽にもするので、後々「好みの問題っていうほど軽くなかった」となることがありました。</p>
+</div>
+<div class="paragraph">
+<p>つまり、「自分たちがどういう技術者集団であるか」という観点でこの自由度の部分を議論しておくべきだと思います。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">定義が曖昧であることを捉える</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Web開発の歴史を浅いと捉えるか、そこそこ歴史が積み重なってきたと捉えるかは人それぞれでありますが、未だに言葉の使い方使われ方、定義やイメージが固まりきっていないため
+「なんか話が噛み合ってなかった」といったツライ思いをすることがあります。</p>
+</div>
+<div class="sect2">
+<h3 id="__mvc">例えばMVC</h3>
+<div class="imageblock">
+<div class="content">
+<img src="/images/MVC-Process.svg.png" alt="Web Framework Img">
+</div>
+</div>
+<div class="paragraph">
+<p>（解釈に幅があるとしても）多くの開発者に馴染みがあって、理解もしやすいアーキテクチャパターンであるからして、MVCを当然として採用するのが私のキャリアの中での通念でした。
+しかし、プロダクトの中身が示すようにモデルの役割とは余りに幅広く曖昧すぎて、もはや何であるかわからないことがよくありました。</p>
+</div>
+<div class="paragraph">
+<p>「もっと違う言葉で、具体的に定義して、MVC自体を考えなおそう」</p>
+</div>
+<div class="paragraph">
+<p>なんとなく近年はそういう流れがきているように感じます。
+（むしろフレームワークのほうからDDDへアプローチしていっているようにも見えますが、みなさんいかがでしょうか？）</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+このように、多くの人に使われるようになることで、解釈の拡大が進み、言葉が生み出された当初の意図とかけ離れていく
+という現象はフレームワーク界隈でも多く見られます。このことを意識しながら情報をキャッチしていかないといけないという面倒さと向き合いましょう。
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">余談</h3>
+<div class="paragraph">
+<p>直近のプロジェクトでPHPのLaravelを使用しておりまして、LaravelはいつからかMVCを謳わなくなったそうです。
+<a href="https://kore1server.com/310/">LaravelとMVC</a></p>
+</div>
+<div class="paragraph">
+<p>ここでもMVCをなんと捉えるかによって、LaravelはMVCであるとも言えるし、そうでないとも言えると言及されています。</p>
+</div>
+<div class="paragraph">
+<p>「Eloquent＝モデルみたいな誤った理解が広がっていくのを止めたかった。だからModelsを無くした」というのはすごくワカル。
+そもそもコントローラーでEloquentモデルを利用することは密結合ですしね。</p>
+</div>
+<div class="paragraph">
+<p>このように理解が異なる言葉を前提に進めることは明らかにリスクのほうが大きいように思えます。</p>
+</div>
+<div class="paragraph">
+<p>とはいえ、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Webの世界では「関心の分離」はすべき</p>
+</li>
+<li>
+<p>コントローラー的な役割の必要性は変わらないと言える</p>
+</li>
+<li>
+<p>問題はMの部分でORMとごっちゃにしている人が多い</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>（流れ上、誤解されそうなので釈明しておくと）だから、MVC的なパターンは変わらず指針としてあるべきで、モデルの定義が曖昧なままで良いわけでもなく、正解はその現場のチームが持っているはずのドメインモデルです。</p>
+</div>
+<div class="paragraph">
+<p>という持論です。（余談ここまで）</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">まとめ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>長々とまとまりのないことを書きましたが、個人的意見と言いつつ断定してしまえば、</p>
+</div>
+<div class="paragraph">
+<p>チーム開発で最も重視するのは、</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+ソースコードの再利用性とテスト可能性、プラス可読性
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>です。</p>
+</div>
+<div class="paragraph">
+<p>フレームワークを利用することはこれが担保されやすい。</p>
+</div>
+<div class="paragraph">
+<p>さらにそれよりも、チーム開発においては、個々のスキルやビジネス理解の不均一があるため、共通言語を構築する作業が必要であり、
+それにフレームワークを利用するという手があります。デザインパターンの話を合わせるのにも使えますし、上記の「モデルとは？」みたいな話にも持っていきやすいかと思います。</p>
+</div>
+<div class="paragraph">
+<p>気が向いたらどれを利用するのかについての話もいつか書きます。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___5">追記</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="__or">テスト書かない問題 OR 書けない問題</h3>
+<div class="paragraph">
+<p>別途諸々ありますが、せっかくなので書きたいですよね @twadaさんお呼びするとかですかね。</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です。</p>
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
