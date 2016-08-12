@@ -2,15 +2,13 @@
 :published_at: 2016-08-12
 :hp-alt-title: WhyUsingFramework
 :hp-tags: Tsukamoto,Engineer,Framework
-:hp-image: webframeworks.jpg
+:hp-image: MVC-Process.svg.png
 
 こんにちは、日々メダリストたちの勇姿をみて「まだまだ鍛え方が足りないな」と決意を新たにしている塚本です。残暑お見舞い申し上げます。
 
 今回はフレームワークのお話です。
 
 TIP: Webアプリケーション開発においてのサーバサイドフレームワークの話です。
-
-image::webframeworks.jpg[Web Framework Img]
 
 サービスを作る際に、なんの言語を使い、どのフレームワークを用いるか
 という議論は避けて通ることはないテーマかと思います。
@@ -84,6 +82,7 @@ Web開発の歴史を浅いと捉えるか、そこそこ歴史が積み重な�
 「なんか話が噛み合ってなかった」といったツライ思いをすることがあります。
 
 ### 例えばMVC
+image::MVC-Process.svg.png[Web Framework Img]
 
 （解釈に幅があるとしても）多くの開発者に馴染みがあって、理解もしやすいアーキテクチャパターンであるからして、MVCを当然として採用するのが私のキャリアの中での通念でした。
 しかし、プロダクトの中身が示すようにモデルの役割とは余りに幅広く曖昧すぎて、もはや何であるかわからないことがよくありました。
