@@ -1,8 +1,9 @@
 = なぜフレームワークを使うのか
 :published_at: 2016-08-12
 :hp-alt-title: WhyUsingFramework
-:hp-tags: Tsukamoto,Engineer,Framework
+:hp-tags: Tsukamoto,Framework,MVC,Rails,laravel
 :hp-image: MVC-Process.svg.png
+
 
 こんにちは、日々メダリストたちの勇姿をみて「まだまだ鍛え方が足りないな」と決意を新たにしている塚本です。残暑お見舞い申し上げます。
 
