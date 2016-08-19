@@ -33,8 +33,14 @@ https://pusher.com/ +
 
 を選択します。 +
 
+
+image::kato/4/1.png[]
+
+
 作成後、OverviewページのApp Keysを控えておきます。
 
+
+image::kato/4/2.png[]
 
 
 === Laravel側の準備
