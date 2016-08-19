@@ -4,5 +4,215 @@
 :hp-tags: kato,laravel,pusher
 
 
-
 こんにちは！
+
+最近猛暑が続いていますが、いかがお過ごしでしょうか？
+
+昼休みは、新たなポケモンをGET!すべく歩き回っているため、 +
+一人汗だくの状態で午後の業務が始まる加藤と申します。 +
+(会社から徒歩10分、渋谷駅近くの宮下公園にピカチュウが出現するのです！)
+
+
+本日はLaravelとPusherを組み合わせ、ブラウザへのリアルタイム通知を試してみます。 +
+Laravelは、バージョン5.2を使用しています。
+
+
+=== Pusherの導入
+Pusherは、JavascripやiOS、Androidに対応し、手軽にWebSocketを扱うことのできるサービスです。
+
+==== プロジェクトの作成
+
+Pusherでプロジェクトを作ります。 +
+ログイン後、新規プロジェクトを作成します。 +
+https://pusher.com/ +
+
+今回は、
+
+  フロントエンド：jQuery
+  バックエンド  ：Laravel
+
+を選択します。 +
+
+作成後、OverviewページのApp Keysを控えておきます。
+
+
+
+=== Laravel側の準備
+
+LaravelでPusherを使う場合、追加のライブラリが必要です。 +
+Composerで、ライブラリを追加します。
+
+```
+composer require pusher/pusher-php-server ~2.0
+```
+
+次に、Laravelの設定ファイルの修正を行ないます。
+
+config/broadcasting.phpに、clusterの項目を追加します。 +
+(私が選択したClusterのap1(ap-southeast-1)場合、clusterの指定が無いと動作しませんでした)
+
+
+```
+<?php
+return [
+    'default' => env('BROADCAST_DRIVER', 'pusher'),
+    'connections' => [
+        'pusher' => [
+            'driver' => 'pusher',
+            'key'    => env('PUSHER_KEY'),
+            'secret' => env('PUSHER_SECRET'),
+            'app_id' => env('PUSHER_APP_ID'),
+            'options' => [
+                'cluster' => env('PUSHER_CLUSTER'),
+            ],
+        ],
+    ],
+];
+```
+
+/.envファイルに、下記を追加します。
+
+```
+BROADCAST_DRIVER = pusher
+PUSHER_APP_ID    = [Puserのapp_id]
+PUSHER_KEY       = [Puserのkey]
+PUSHER_SECRET    = [Puserのsecret]
+PUSHER_CLUSTER   = [Puserのcluster]
+```
+
+これで、pusherを使う準備が出来ました。
+
+
+=== イベントの送受信
+
+今回はシンプルにLaravelのイベントでメッセージを送信し、受信をしてみます。
+
+
+==== Broadcastingに対応したイベントを用意する
+
+LaravelのEventファイルを作成します。
+
+下記は、シンプルにメッセージ($message)を送信するイベントクラスです。 +
+クラスのpublic権限のプロパティーが、pusherを通じて送信されます。 +
+また、broadcastOn関数内で、送信先のチャンネルを指定します。
+
+
+app/Events/Test.php
+
+```
+<?php
+
+namespace App\Events;
+
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+
+
+class Test extends Event implements ShouldBroadcast
+{
+    use SerializesModels;
+
+    public $message;
+
+    /**
+     * コンストラクタ
+     * public権限のプロパティーが送信される
+     * @return void
+     */
+    public function __construct($message)
+    {
+        $this->message = $message;
+    }
+
+
+    /**
+     * 送信先のチャンネル
+     * @return array
+     */
+    public function broadcastOn()
+    {
+        return ['test_channel'];
+    }
+
+
+    /**
+     * イベント名
+     * @return string
+     */
+    public function broadcastAs()
+    {
+        return 'test_event';
+    }
+}
+```
+
+
+==== イベント送信ページの用意
+
+
+ブラウザで「/send_event」にアクセスした場合、先に用意したイベントが発火するようにしました。 +
+ファサードを使う場合event()内にイベントクラスのインスタンスを指定します。
+
+app/Http/routes.php
+```
+Route::get('/sent', function(){
+    event(new \App\Events\Test('テストメッセージ'));
+});
+```
+
+
+==== イベント受信ページの用意
+
+app/Http/routes.phpに受信ページを追記します。
+
+```
+Route::get('/recieve', function(){
+return <<<HTML
+
+<!DOCTYPE html>
+<head>
+  <title>Pusher Test</title>
+  <script src="https://js.pusher.com/3.2/pusher.min.js"></script>
+  <script>
+    
+    //ログを有効にする
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('[Pusherのkeyを指定]', {
+      cluster  : 'ap1',
+      encrypted: true
+    });
+    
+    //購読するチャンネルを指定
+    this.pusherChannel = this.pusher.subscribe('test_channel');
+    
+    //イベントを受信したら、alertする
+    this.pusherChannel.bind('test_event', function(data) {
+        alert(data.message);
+    });
+
+  </script>
+</head>
+
+HTML;
+});
+```
+
+
+=== 動作確認と感想
+
+ブラウザで「/recieve」のページを表示しておきます。 +
+その後、「/sent」ページにアクセスすると、 +
+「/recieve」のブラウザで「テストメッセージ」とアラートが発生することが確認できます。
+
+Pusherを使うと、今まで憧れていたブラウザへのリアルタイム通知が、 +
+とても簡単に実装できることがわかりました。
+
+
+すごいPusher! +
+
+以上です！
+
+
+
+
