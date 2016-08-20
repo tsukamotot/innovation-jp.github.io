@@ -190,10 +190,10 @@ return <<<HTML
     });
     
     //購読するチャンネルを指定
-    this.pusherChannel = this.pusher.subscribe('test_channel');
+    var pusherChannel = pusher.subscribe('test_channel');
     
     //イベントを受信したら、alertする
-    this.pusherChannel.bind('test_event', function(data) {
+    pusherChannel.bind('test_event', function(data) {
         alert(data.message);
     });
 
