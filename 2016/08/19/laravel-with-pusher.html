@@ -55,7 +55,7 @@ var _trackingid = 'LFT-10003-1';
     <meta property="og:description" content="こんにちは！ 最近猛暑が続いていますが、いかがお過ごしでしょうか？ 昼休みは、新たなポケモンをGET!すべく歩き回っているため、 一人汗だくの状態で午後の業務が始まる加藤と申します。 (会社から徒歩10分、渋谷駅近くの宮下公園にピカチュウが出現するのです！) 本日はLaravelとPusherを組み合わせ、ブラウザへのリアルタイム通知を試してみます。 Laravelは、バージョン5.2を使用しています。 Pusherの導入 Pusherは、JavascripやiOS、Androidに対応し、手軽にWebSocketを扱うことのできるサービスです。 プロ..." />
     <meta property="og:url" content="http://tech.innovation.co.jp/2016/08/19/laravel-with-pusher.html" />
     <meta property="article:published_time" content="2016-08-18T15:00:00.000Z" />
-    <meta property="article:modified_time" content="2016-08-19T11:14:54.347Z" />
+    <meta property="article:modified_time" content="2016-08-20T04:30:52.090Z" />
     <meta property="article:tag" content="kato" />
     <meta property="article:tag" content="laravel" />
     <meta property="article:tag" content="pusher" />
@@ -80,7 +80,7 @@ var _trackingid = 'LFT-10003-1';
     "headline": "LaravelとPusherでリアルタイム通知を試す",
     "url": "http://tech.innovation.co.jp/2016/08/19/laravel-with-pusher.html",
     "datePublished": "2016-08-18T15:00:00.000Z",
-    "dateModified": "2016-08-19T11:14:54.347Z",
+    "dateModified": "2016-08-20T04:30:52.090Z",
     "keywords": "kato, laravel, pusher",
     "description": "こんにちは！ 最近猛暑が続いていますが、いかがお過ごしでしょうか？ 昼休みは、新たなポケモンをGET!すべく歩き回っているため、 一人汗だくの状態で午後の業務が始まる加藤と申します。 (会社から徒歩10分、渋谷駅近くの宮下公園にピカチュウが出現するのです！) 本日はLaravelとPusherを組み合わせ、ブラウザへのリアルタイム通知を試してみます。 Laravelは、バージョン5.2を使用しています。 Pusherの導入 Pusherは、JavascripやiOS、Androidに対応し、手軽にWebSocketを扱うことのできるサービスです。 プロ..."
 }
@@ -475,10 +475,10 @@ return &lt;&lt;&lt;HTML
     });
 
     //購読するチャンネルを指定
-    this.pusherChannel = this.pusher.subscribe('test_channel');
+    var pusherChannel = pusher.subscribe('test_channel');
 
     //イベントを受信したら、alertする
-    this.pusherChannel.bind('test_event', function(data) {
+    pusherChannel.bind('test_event', function(data) {
         alert(data.message);
     });
 
