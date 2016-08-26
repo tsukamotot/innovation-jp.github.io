@@ -4,7 +4,7 @@
 :hp-tags: 4thPost,Ozasa,GoogleAppsScript,Guidelines,Javascript,Slack
 
 どうも。Linuxと同い年のオザサです。 +
-最近は一層朝が辛いんですが、朝会について書いてみます。
+最近は一層朝が辛いんですが、朝会ネタについて書いてみます。
 
 ## 朝会など
 弊社ではスクラム風の開発に取り組んでいるので、 +
