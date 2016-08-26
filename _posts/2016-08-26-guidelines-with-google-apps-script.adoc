@@ -11,7 +11,7 @@
 毎朝デイリーミーティングをホワイトボードの前で立って行っています。
 
 そのミーティングの後に二点ほど各担当者が小噺をすることになっています。 +  
-その二点とは、
+その2点とは、
 
 1. 技術系話の共有
 2. エンジニア行動指針に対する自分の考えや行動について
@@ -61,6 +61,8 @@ Slackで通知が来るようになっています。
 ### 当番表の作成
 まずGoogleスプレッドシートで当番表を作成いたします。
 
+image::http://tech.innovation.co.jp/images/ozasa/no10.png[当番表]
+
 こんな感じで、内容メモ欄も何となくつけておきます。
 
 
@@ -97,23 +99,25 @@ var slack = {
 function myFunction() {
 
   var today = Utilities.formatDate(new Date(), "Asia/Tokyo", "yyyy/MM/dd");
+  //日付の欄を取得します
   var data = sheet.getRange(2,1,63).getValues();
   var cnt = 0; 
   var rawnum = 0;
   data.forEach(function(value){
     if (value == today) {
+      //超微妙な実装ですが行番号の取得
       rawnum = cnt + 2;
-      Logger.log(rawnum);
     }
     cnt++;
   });
   
   if (rawnum != 0) {
+  　//担当者と発表する内容、ユーザネームを行番号指定で取得
     var member  = sheet.getRange(rawnum, 2).getValue();
     var guide   = sheet.getRange(rawnum, 3).getValue();
     var mention = '@' + sheet.getRange(rawnum, 4).getValue();
 
-    //Slackにメッセージを送る
+    //slackにメッセージを送ります
     var slackApp = SlackApp.create(slack["token"]);
     var Message = slackApp.postMessage(
       slack["ChannelId"], mention + ":本日の発表者は" + member + "さんで、内容は「" + guide　+ "」です", {
@@ -126,7 +130,17 @@ function myFunction() {
 }
 ----
 
+GASのリソースタブからトリガーを設定しましょう！！
+
+image::http://tech.innovation.co.jp/images/ozasa/trigger.png[trigger]
+
+朝会用なので早い時間に設定しました。
+
 ### 完成
+
+image::http://tech.innovation.co.jp/images/ozasa/syogasan.png[syogasan]
+
+※最後やっとこさ成功してますね。
 
 link_namesを指定しないとメンション飛ばないってところがつまりましたが、 +
 それ以外はかなりサックサクでした。
