@@ -14,17 +14,29 @@ image::kohe/swift_tuple1.png[]
 
 ということで、本題のTupleに入ろうと思います。
 
+image::kohe/swift_tuple2.png[]
+
+
 こーんなかんじで、複数の値を１つの変数に代入することが出来る。
 表示も簡単で　print(tuple.1)　でok。今回の場合は 22 が出力される。
+
+image::kohe/swift_tuple3.png[]
+
 
 ラベルをつけて、その名前でアクセスすることもできる。
 print(tuplable.str) だと 2 になる。
 
 ※tuplable.int + tuplable.str はエラーになる。
 
+image::kohe/swift_tuple4.png[]
+
 
 ラベルの混合も可！
 print(tuplabel.1)　で koheを出力。
+
+image::kohe/swift_tuple5.png[]
+
+
 こんな感じで、まとめて変数宣言みたいなこともできちゃう。
 「_ 」で指定したところは取得しないので注意。
 
@@ -48,9 +60,14 @@ tpl.append(“add”)
 
 色々調べて見た結果、メソッドの「返り値」として使うことが多いらしいですね。
 
+image::kohe/swift_tuple6.png[]
+
 
 補足：
 値の入れ替え便利！！
+
+image::kohe/swift_tuple7.png[]
+
 
 ではでは、またSwiftについての記事を書いていこうと思います:)
 
