@@ -42,7 +42,8 @@ image::kohe/swift_tuple4.png[]
 
 ラベルの混合も可！
 
-	print(tuplabel2.1)　
+ print(tuplabel2.1)
+
 
 で koheを出力。
 
