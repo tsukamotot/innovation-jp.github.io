@@ -15,6 +15,8 @@ image::kohe/swift_tuple1.png[]
 
 ということで、本題のTupleに入ろうと思います。
 
+### TUPLEとはタプルは、複数の値を一組にしたもの。
+
 image::kohe/swift_tuple2.png[]
 
 
