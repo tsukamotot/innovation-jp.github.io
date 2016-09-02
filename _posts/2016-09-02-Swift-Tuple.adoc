@@ -10,7 +10,7 @@ objective-cからswiftに絶賛乗り換え中でございます。
 
 image::kohe/swift_tuple1.png[]
 
-コード書くと同時に右側で評価してくる。
+コード書くと同時に右側で評価してくれる。
 なんて便利！
 
 ということで、本題のTupleに入ろうと思います。
@@ -38,7 +38,7 @@ image::kohe/swift_tuple4.png[]
 
 ラベルの混合も可！
 
-	print(tuplabel.1)　
+	print(tuplabel2.1)　
 
 で koheを出力。
 
@@ -54,7 +54,7 @@ image::kohe/swift_tuple5.png[]
 
 では配列と何が違うの？
 
-##### すでにお気づきの方もいると思いますが、「型の異なる値」を入れれるのです。
+##### すでにお気づきの方もいると思いますが、「型の異なる値」を入れられるのです。
 
 	var tpl = (name: "kohe",age: 10, flag: true)
 	tpl.name = 1 ←　エラーになる
