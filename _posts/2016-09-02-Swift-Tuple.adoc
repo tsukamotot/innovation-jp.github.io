@@ -7,7 +7,7 @@
 
 みなさんこんばんはこへです。
 
-*唐突ですが!今、objective-cからswiftに絶賛乗り換え中でございます！。*
+*唐突ですが今、objective-cからswiftに絶賛乗り換え中でございます！。*
 
 
 image::kohe/swift_tuple1.png[]
