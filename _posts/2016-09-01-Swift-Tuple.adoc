@@ -3,8 +3,11 @@
 :hp-alt-title:SwiftTuple 	
 :hp-tags: Swift,kohe,IPhone
 
+
+みなさんこんばんはこへです。
 objective-cからswiftに絶賛乗り換え中でございます。
 
+image::kohe/swift_tuple1.png[]
 
 コード書くと同時に右側で評価してくる。
 なんて便利！
