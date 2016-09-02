@@ -1,7 +1,8 @@
 = Swift学習:Tupleってなんぞや！
-:published_at:2016-09-02
-:hp-alt-title:SwiftTuple 	
-:hp-tags: Swift,kohe,IPhone
+:published_at: 2016-09-02
+:hp-alt-title: SwiftTuple
+:hp-tags: Swift,Kohe,IPhone,Tuple
+
 
 
 みなさんこんばんはこへです。
@@ -64,8 +65,7 @@ tpl.append(“add”)
 image::kohe/swift_tuple6.png[]
 
 
-補足：
-値の入れ替え便利！！
+##### 補足：値の入れ替え便利！！
 
 image::kohe/swift_tuple7.png[]
 
