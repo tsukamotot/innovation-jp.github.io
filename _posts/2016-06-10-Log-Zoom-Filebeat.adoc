@@ -1,7 +1,0 @@
-= LogZoomとFilebeatでログ収集！
-
-LogstashやFluentdもとっても素敵なのですが、、、
-軽い！
-
-を書く予定
-矢ヶ崎

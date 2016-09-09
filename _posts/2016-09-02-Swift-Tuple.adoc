@@ -1,0 +1,101 @@
+= Swift学習:Tupleってなんぞや！
+:published_at: 2016-09-02
+:hp-alt-title: SwiftTuple
+:hp-tags: Swift,Kohe,iPhone,Tuple
+
+
+
+みなさんこんばんは、[red]#こへ#です。
+
+*唐突ですが今、objective-cからswiftに絶賛乗り換え中でございます！。*
+
+ということで、今回はswiftのお話をしていこうと思います。
+
+image::kohe/swift_tuple1.png[]
+
+コードを書くと同時に右側で評価してくれる。
+なんて便利！
+
+swiftを勉強していくうちに、tupleというものが出てきた。
+配列とどう違うの？など色々思うことがあったので、今回この記事を書くことにしました。
+
+ということで、本題のSwiftのTupleに入ろうと思います。
+
+*[red]#TUPLEとは、複数の値を一組にしたもの#*
+
+では実際にやってみます。
+
+image::kohe/swift_tuple2.png[]
+
+
+こーんなかんじで、複数の値を１つの変数に代入することが出来る。
+表示も簡単で　
+
+	print(tuple.1)
+    
+でok。今回の場合は 22 が出力される。
+
+image::kohe/swift_tuple3.png[]
+
+
+ラベルをつけて、その名前でアクセスすることもできる。
+
+	print(tuplable.str) だと 2 になる。
+	※tuplable.int + tuplable.str はエラーになる。
+
+image::kohe/swift_tuple4.png[]
+
+
+ラベルの混合も可！
+
+print(tuplabel2.1)
+
+
+で koheを出力。
+
+image::kohe/swift_tuple5.png[]
+
+
+こんな感じで、まとめて変数宣言みたいなこともできちゃう。
+「_ 」で指定したところは取得しないので注意。
+
+
+
+##### では配列と何が違うの？
+*私は最初、配列っぽく見えてしまいました。*
+
+*すでにお気づきの方もいると思いますが、「型の異なる値」を入れられるのです。*
+
+	var tpl = (name: "kohe",age: 10, flag: true)
+	tpl.name = 1 ←　エラーになる
+	tpl.name = “1” ←　ok
+
+##### データの追加、削除ができない！
+
+	tpl.append(“add”)
+
+こういうことはできないのだ。
+
+色々調べて見た結果、メソッドの[red]#「複数の返り値を取得」#するときに使うことが多いらしいですね。
+
+image::kohe/swift_tuple6.png[]
+
+
+##### 補足：値の入れ替え便利！！
+
+image::kohe/swift_tuple7.png[]
+
+
+* *まとめ*
+** *データの追加、削除ができない。*
+** *どんな型も入る便利な箱のようなもの*
+** *touple.0 touple.nameでアクセス可能*
+** *メソッドの返り値などわざわざ専用のクラスを使ったり、配列で返す必要なし！*
+
+
+
+
+ではでは、またSwiftについての記事を書いていこうと思います:)
+
+
+

@@ -1,0 +1,175 @@
+= GoogleAppsScriptで朝会唱和(?)の当番表をSlackに通知できるようにしてみた話
+:published_at: 2016-08-26
+:hp-alt-title: guidelines-with-google-apps-script
+:hp-tags: 4thPost,Ozasa,GoogleAppsScript,Guidelines,Javascript,Slack
+
+どうも。Linuxと同い年のオザサです。 +
+最近は一層朝が辛いんですが、朝会ネタについて書いてみます。
+
+## 朝会
+弊社ではスクラム風の開発に取り組んでいるので、 +
+毎朝デイリーミーティングをホワイトボードの前で立って行っています。
+
+そのミーティングの後に2点ほど各担当者が小噺をすることになっています。 +  
+その2点とは、
+
+1. 技術系話の共有
+2. エンジニア行動指針に対する自分の考えや行動について
+
+です。
+
+### 技術系話の共有
+
+1個目の技術系話の共有は毎朝メンバーの中からランダムに発表者が選定され、 +
+Slackで通知が来るようになっています。
+
+エンジニアたるもの情報を常に取りに行こうという思いのもと、そんな仕組みを入れています。 +
+(あまりに連続で当たってしまうとネタがどんどんなくなってくるんですが)
+
+例えば、「こんなニュースを読んでこんなことを思いました〜」とか
+「先日こんなイベントに行ってこんな話を聞きました〜」とか
+ソフトハードなど特に問わず技術系の話を毎朝するようにしており、当たるかどうかもあってドキドキです。
+
+### エンジニア行動指針
+初回のポストにもありました通り弊社においてエンジニア組織が出来上がったのはまだつい最近のことで、 +
+エンジニアとして、特にイノベーションという会社にいるエンジニアとしてどうありたいか、 +
+という話は今まであまりされてきませんでした。
+
+しかし組織を大きくしていくに当たっては我々がどうあるべきか、もしくはどうあってはいけないかを
+明確にすることで個々人の行動指針を示し、同じ方向を見ながら成長したいという思いがあり、
+エンジニアメンバーで合宿を行い、この度**エンジニア行動指針**というものを策定いたしました。
+
+[source, rust]
+----
+【イノベーションエンジニア行動指針】
+・ 迷ったらチャレンジ
+・ DRYを意識する
+・ 情報感度を高める
+・ こだわる
+・ 勇気を持ってアウトプットする
+・ スピードを重視する
+・ 学び続ける
+----
+
+ここからブラッシュアップや調整も必要かとは思いますが、いい感じのものができたのではと思っています。
+
+ただ、これをしっかり根付かせ行動を起こせるようにしなくては意味がありません。 +
+ということでまさに今週から朝会の小噺としてエンジニア行動指針に触れて行くことになりました。
+
+こちらは技術系の話とは目的が違うため当番制で発表していくこととなりました。
+
+## 作ってみた話
+
+やっぱり当番に毎朝Slackで通知きたりすると楽だよな！作ろう！！ってことです。
+
+### 当番表の作成
+まずGoogleスプレッドシートで当番表を作成いたします。
+
+image::http://tech.innovation.co.jp/images/ozasa/no10.png[当番表]
+
+こんな感じで、内容メモ欄も何となくつけておきます。
+
+
+### Slackの設定
+https://api.slack.com/web
+にアクセスしてAuthenticationでtokenゲットだぜ！！
+
+https://api.slack.com/methods/channels.list/test
+にアクセスして諸々入力してChannelIdをゲットだぜ！！
+
+### GoogleAppsScript
+
+スプレッドシートのツールタブから「スクリプトエディタ」を押下して、
+Let's GoogleAppsScript！
+
+今回は「Slack BotをGASでいい感じで書くためのライブラリ」を使わせていただきました。
+http://qiita.com/soundTricker/items/43267609a870fc9c7453
+
+とっても楽させてもらいました！！
+以下が今回のソースです！！
+
+[source, rust]
+----
+var url = "対象のスプレッドシートのURL";
+var spreadsheet = SpreadsheetApp.openByUrl(url);
+var sheet = spreadsheet.getSheetByName('対象のシートの名前');
+
+//slack定義
+var slack = {
+  postUrl: "https://slack.com/api/chat.postMessage",
+  token: "xxxxxxxxxxxxx",  //取得したSlackWebAPIのtoken
+  ChannelId: "xxxxxxxx",  //投稿するチャンネルのChannelId
+  userName: "Guide",  //botの名前
+  iconEmoji: ":sunglasses:",  //botのアイコン
+}
+
+function myFunction() {
+
+  var today = Utilities.formatDate(new Date(), "Asia/Tokyo", "yyyy/MM/dd");
+  //日付の欄を取得します
+  var data = sheet.getRange(2,1,63).getValues();
+  var cnt = 0; 
+  var rawnum = 0;
+  data.forEach(function(value){
+    if (value == today) {
+      //超微妙な実装ですが行番号の取得
+      rawnum = cnt + 2;
+    }
+    cnt++;
+  });
+  
+  if (rawnum != 0) {
+  　//担当者と発表する内容、ユーザネームを行番号指定で取得
+    var member  = sheet.getRange(rawnum, 2).getValue();
+    var guide   = sheet.getRange(rawnum, 3).getValue();
+    var mention = '@' + sheet.getRange(rawnum, 4).getValue();
+
+    //slackにメッセージを送ります
+    var slackApp = SlackApp.create(slack["token"]);
+    var Message = slackApp.postMessage(
+      slack["ChannelId"], mention + ":本日の発表者は" + member + "さんで、内容は「" + guide　+ "」です", {
+        username : slack["userName"],
+        icon_emoji: slack["iconEmoji"],
+        link_names: 1
+      } 
+    );
+  }
+}
+----
+
+ソースがいい感じ(？)なら +
+GASのリソースタブからトリガーを設定しましょう！！
+
+image::http://tech.innovation.co.jp/images/ozasa/trigger.png[trigger]
+
+朝会用なので早い時間に設定しました。
+
+### 完成
+
+image::http://tech.innovation.co.jp/images/ozasa/syogasan.png[syogasan]
+
+※テスト画面です。最後やっとこさ成功してますね。
+
+link_namesを指定しないとメンション飛ばないってところがつまりましたが、 +
+それ以外はかなりサックサクでした。
+
+うん、GAS楽すぎます…… +
+myFunctionって名前が気に入ったのでそのままにしちゃってたりしますし、
+結構雑な書き方になってますけど、こんな手軽に作れるとは驚きでした。
+
+## まとめ
+こういう感じでサクッと作れるところがGoogleAppsScriptのいいところですかね。
+
+今回のブログは何番煎じかって内容かもわからんですが、 +
+DRYを意識するにはまず自分の手で作ってみないとね！！
+
+
+##### ちなみに
+
+本稿を社内メンバー読んでもらった際、 +
+*myFunction忌み嫌うおじさん*に +
+「myFunction()とは何事だ！」と責められましたが、 +
+「俺の」感があっていい！ということで押し切りましたとさ。
+
+
+こちらからは以上です。

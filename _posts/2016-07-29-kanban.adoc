@@ -1,0 +1,71 @@
+= 【やってみた】似顔絵でカンバン方式を改善
+:published_at: 2016-07-29
+:hp-alt-title: kanban
+:hp-tags: firstPost,Ami,kanban,nigaoe
+
+はじめまして、開発チーム見習いエンジニアのAMIです。 +
+イノベーションに新卒で入社し、はじめの1年間営業を経験した後、事業部でカスタマーサポートとして働き、現在は開発とカスタマーサポートの兼務という状況です。 +
+
+イノベーション開発チームでは、タスクの進捗管理を「カンバン方式」で運用しています。 +
+
+ホワイトボードにタスクが書かれた付箋をはり、 +
+【ToDo】→【In progress】→【In review】→【Done】→【Finished】 +
+と、工程が進むたびに付箋を移していくという方式をとっています。 +
+【実際の写真】 +
+
+image::http://tech.innovation.co.jp/images/ami/hontounoafter.png[]
+
+しかし最近になり問題が・・・ +
+はじめたばかりの頃は2人で、付箋の色を分けて管理していたのですが、今やメンバーは9人に増え・・・ +
+
+image::http://tech.innovation.co.jp/images/ami/tyuukurai.png[]
+
+付箋の色が時代が進むスピードに追いつかず、どれが誰のタスクなのかがわからないという課題が出てきていました。 +
+
+image::http://tech.innovation.co.jp/images/ami/yori.png[]
+ピンクに黄色の小ふせんの組み合わせだと、Tさんだったかな？ +
+濃いピンクはOくんの字っぽい気がする +
+
+
+そこで！ +
+どれが誰のタスクなのか、ひと目でわかる画期的な仕組みを導入することにしました。 +
+そこで活用したのが +
+「キンコーズ　ガラス用スケルトンシール　A1サイズ　6,600円　（7月限定特別価格）」 +
+
+作り方は以下！ +
+まずは、開発メンバーの似顔絵を書きます。 +
+
+image::http://tech.innovation.co.jp/images/ami/nigaoe.png[]
+
+色を塗ります。 +
+
+image::http://tech.innovation.co.jp/images/ami/syogasan.png[]
+
+イラレソフトで画像を並べて、切り取り線（パス）をつけます +
+
+image::http://tech.innovation.co.jp/images/ami/kaihatsu.jpg[]
+
+キンコーズにデータを持って行き、ガラス用スケルトンシール　A1サイズを注文します。 +
+そして待つこと2営業日ほど。 +
+完成したシールがこちら！ +
+
+image::http://tech.innovation.co.jp/images/ami/siru.png[]
+
+それを各々の付箋に貼って +
+ひと目で誰のタスクなのか、わかるようになりました！ +
+
+image::http://tech.innovation.co.jp/images/ami/after.png[]
+
+
+【振り返りと改善点】 +
+・シールのサイズは、もう一回り小さくてもよかった +
+・データをもっと詰めて作ればもっとシール1枚に対するコストを抑えられた +
+・スケスケのシールのため、下の色が透けて見えてしまう。白のシートでも良かったかもしれない。 +
+・しょがさんが全然似てない。 +
+ +
+シール作成にあたり、ご協力いただいた皆様、ありがとうございました。 +
+（特にイラレで画像を並べてパスを付けるという一番大変な工程を協力いただいたY氏には頭が上がりません） +
+ +
+以上、開発部門での初仕事の報告でした。 +
+
+image::http://tech.innovation.co.jp/images/ami/finished.png[]
