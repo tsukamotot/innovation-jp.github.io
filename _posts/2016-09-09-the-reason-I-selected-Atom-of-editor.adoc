@@ -57,21 +57,20 @@ image::oyaizu/Atom_06.png[]
 最初のうちは些細なミスをしがちですが、まず最低限の構文はクリアできているかが判断がつくだけで、 +
 ミスを見つけるスピードが変わると思います。 +
 ちなみにAtomで構文をチェックをしてくれるプラグインはコチラ +
-https://atom.io/packages/linter +
+https://atom.io/packages/linter
 
 上記のプラグインに合わせて構文をチェックしたい言語専用のプラグインをインストールしてください +
 http://atomlinter.github.io/
 
 また、日本人ならではのミス、全角スペースが混じってしまっている場合に、それを検出してくれるプラグインもあります！ +
-
-https://atom.io/packages/show-ideographic-space +
+https://atom.io/packages/show-ideographic-space
 
 ### コメントは丁寧に
 
 チーム開発する上でコメントってとても大切ですよね。 +
 
 そのコメントを書きやすくなるようにサポートしてくれるプラグインもあります。 +
-https://atom.io/packages/docblockr +
+https://atom.io/packages/docblockr
 
 このプラグインを利用すれば自動でDocコメントの定型文を出力してくれます。 +
 なれない内はついつい読みにくいコードを書いて先輩を困らせてしまうことあるでしょう。 +
