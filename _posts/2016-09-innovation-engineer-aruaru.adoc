@@ -18,7 +18,7 @@
 image::http://tech.innovation.co.jp/images/ami/pepper.png[]
 
 ##### ・ディスプレイがどんどん増える
-写真に写ってるだけでも１2台ありますね。 +
+写真に写ってるだけでも１4台ありますね。 +
 
 image::http://tech.innovation.co.jp/images/ami/display.png[]
 　 +
