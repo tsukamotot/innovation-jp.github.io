@@ -21,22 +21,24 @@ image::http://tech.innovation.co.jp/images/ami/pepper.png[]
 写真に写ってるだけでも１2台ありますね。 +
 
 image::http://tech.innovation.co.jp/images/ami/display.png[]
+　
 
 ##### ・近藤くんのタスクが詳細
 
 image::http://tech.innovation.co.jp/images/ami/kohe.png[]
-長い・詳細・線が二重
+長い！・詳細！・線が二重 +
+_※画像はサンプルです_ +
 
 ##### ・小柳津くんのタスクが端的
 image::http://tech.innovation.co.jp/images/ami/yaidu.png[]
-シンプルですね
-
+シンプルですね +
+_※画像はサンプルです_ +
 
 ##### ・コーヒーとレッドブルの両刀使い
 塚本さんの席でよくみかける
 
 ##### ・夕方になると座り方がこう
-image::http://tech.innovation.co.jp/images/ami/suwarikata.png[]
+image::http://tech.innovation.co.jp/images/ami/suwarikata.png[] +
 
 ##### ・「逆に」「〜だとしても！」「そっち系ですね」が口癖
 矢ヶ崎さん、所賀さんがよく使うので、前職から輸入されたものなのでしょうか。
