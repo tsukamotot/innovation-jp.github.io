@@ -1,5 +1,5 @@
 = イノベーションエンジニアあるあるまとめ
-:published_at: 2016-09-１６
+:published_at: 2016-09-16
 :hp-alt-title: innovationEngineerAruaru
 :hp-tags: AMI,aruaru
 
