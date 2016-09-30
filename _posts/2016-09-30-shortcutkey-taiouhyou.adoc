@@ -1,0 +1,36 @@
+= Mac　⇔ Windows ショートカットキー対応表＜私用＞
+:published_at: 2016-09-30
+:hp-alt-title: shortcutkey taiouhyou
+:hp-tags: AMI,Shortcutkey
+
+こんにちは、AMIです。 +
+本日で上半期も最終日、皆様いかがお過ごしですか。 +
+
+生まれてこのかた、ずっとWindowsユーザーの私ですが、 +
+今年の7月、会社からMacのパソコンを支給していただき、 +
+3か月ほどMacとWindowsの２台でお仕事をさせていただいていました。 +
+
+ここでひとつ、自分の備忘録用にWindowsでよく使うけどMacだとどんなだっけ？というようなショートカットキーをまとめおこうと思います。 +
+
+
+|=======================
+||Mac|Windows
+|タブの移動 |Option　＋　command　＋　←（or→）| Ctrl　＋　PgUp（or PgDn）
+|ページの最下部へスクロール |Fn　＋　→| End
+|ウインドウを閉じる| command　＋　Q| Alt　→　Space　→　C
+|スプレッドシートのタブ移動| command　＋　Shift　＋　Fn　＋　↑（or↓）| Ctrl　＋　Shift　＋　PgUp（or PgDn）
+|部分スクリーンショット| command　＋　Shift　＋　4|
+|スクリーンショット| command　＋　Shift　＋　3| PrtSc
+|文字検索で該当したテキストリンクをクリックする| Ctrl　＋　Enter| Ctrl　＋　Enter
+|ウィンドウを半分に寄せる| |Windows　＋　←（or→）
+|ウインドウをしまう| command　＋　M| Windows　＋　↓　＋　↓
+|テキストの先頭へ| Ctrl　＋　A| Ctrl　＋　Home
+|文字の区切りごとに移動| command　+　←（or→）| Ctrl　＋　←（or→）
+|ひとつ後の文字を消す| Fn　＋　Delete| Delete
+|=======================
+ +
+空白になっている部分は、ご存知でしたらご一報ください。 +
+上期も大変お世話になり、ありがとうございました。 +
+下期以降も引き続き、イノベーションエンジニアブログをどうぞよろしくお願いします。 +
+
+
