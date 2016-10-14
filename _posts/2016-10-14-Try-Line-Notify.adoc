@@ -63,9 +63,10 @@ IMPORTANT: 「なんか目標達成したときにLINEに通知したりした�
 TIP:  IAMロールの設定は省きます
 
 仮にデイリーの目標となる数値を取得できるAPIを実装していたとします。
-（API_URLにGETリクエストで数値を取得可能とする）
+（`API_URL`にGETリクエストで数値を取得可能とする）
 
 Lambdaに上げたスクリプトは以下
+今回は軽い処理なのでPython使います。
 
 ```python
 import urllib.parse
