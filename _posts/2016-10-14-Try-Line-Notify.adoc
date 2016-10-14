@@ -73,13 +73,13 @@ Lambdaに上げたスクリプトは以下
 import urllib.parse
 import pycurl
 
-def get_point()
+def get_point():
     API_URL='https://api.ourcompany.com/daily/point'
     curl = pycurl.Curl()
     curl.setopt(pycurl.URL, API_URL)
     return curl.perform()
 
-def send_line(message)
+def send_line(message):
     LINE_NOTIFY_URL = 'https://notify-api.line.me/api/notify'
     LINE_NOTIFY_TOKEN = '*****yourtoken*****'
     headers = { 'Authorization' : 'Bearer %s' % LINE_NOTIFY_TOKEN }
@@ -92,7 +92,7 @@ def send_line(message)
     curl.setopt(pycurl.POSTFIELDS, field_data)
     curl.perform()
 
-def lambda_handler()
+def lambda_handler():
     goal = 1000
     result = get_point()
     if result < goal:
