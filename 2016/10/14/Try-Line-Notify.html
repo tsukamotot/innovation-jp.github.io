@@ -56,7 +56,7 @@ var _trackingid = 'LFT-10003-1';
     <meta property="og:url" content="http://tech.innovation.co.jp/2016/10/14/Try-Line-Notify.html" />
     <meta property="og:image" content="http://tech.innovation.co.jp/images/line_notify_scsh.png" />
     <meta property="article:published_time" content="2016-10-13T15:00:00.000Z" />
-    <meta property="article:modified_time" content="2016-10-14T13:04:13.025Z" />
+    <meta property="article:modified_time" content="2016-10-14T13:12:52.672Z" />
     <meta property="article:tag" content="Tsukamoto" />
     <meta property="article:tag" content="Line" />
     <meta property="article:tag" content="Lambda" />
@@ -83,7 +83,7 @@ var _trackingid = 'LFT-10003-1';
     "headline": "LINE Notifyが使いやすそうなので、Lambdaから何か送ってみる",
     "url": "http://tech.innovation.co.jp/2016/10/14/Try-Line-Notify.html",
     "datePublished": "2016-10-13T15:00:00.000Z",
-    "dateModified": "2016-10-14T13:04:13.025Z",
+    "dateModified": "2016-10-14T13:12:52.672Z",
     "image": "http://tech.innovation.co.jp/images/line_notify_scsh.png",
     "keywords": "Tsukamoto, Line, Lambda, api",
     "description": "今回は、「世のマイクロサービスおじさんは皆大好きMartin Fowler大先生が定義した『設計償却線』を、事業としてやりたい理想視点＆DDD的視点から実線算出提示する」というタイトルの記事を書く予定でしたが、 思えば自分の記事は毎回エモいのばっかりだなと気づきちょっと足踏みしていた塚本です。秋寒前線にはお気をつけください。 そんな昨日（10/13）LINE Engineer Blogにポストされた、 コマンドラインから LINE にメッセージを送れる LINE Notify という記事がバズってるのを読み、早速やってみたところ死ぬほど簡単だったので、..."
@@ -378,13 +378,13 @@ IAMロールの設定は省きます
 <pre class="highlight"><code class="language-python" data-lang="python">import urllib.parse
 import pycurl
 
-def get_point()
+def get_point():
     API_URL='https://api.ourcompany.com/daily/point'
     curl = pycurl.Curl()
     curl.setopt(pycurl.URL, API_URL)
     return curl.perform()
 
-def send_line(message)
+def send_line(message):
     LINE_NOTIFY_URL = 'https://notify-api.line.me/api/notify'
     LINE_NOTIFY_TOKEN = '*****yourtoken*****'
     headers = { 'Authorization' : 'Bearer %s' % LINE_NOTIFY_TOKEN }
@@ -397,7 +397,7 @@ def send_line(message)
     curl.setopt(pycurl.POSTFIELDS, field_data)
     curl.perform()
 
-def lambda_handler()
+def lambda_handler():
     goal = 1000
     result = get_point()
     if result &lt; goal:
