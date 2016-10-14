@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>LINE Notifyが使いやすそうなので、Lambdaから何か送ってみる - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="LINE Notifyが使いやすそうなので、Lambdaから何か送ってみる">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="LINE Notifyが使いやすそうなので、Lambdaから何か送ってみる">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2016/10/14/Try-Line-Notify.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="LINE Notifyが使いやすそうなので、Lambdaから何か送ってみる" />
+    <meta property="og:description" content="今回は、「世のマイクロサービスおじさんは皆大好きMartin Fowler大先生が定義した『設計償却線』を、事業としてやりたい理想視点＆DDD的視点から実線算出提示する」というタイトルの記事を書く予定でしたが、 思えば自分の記事は毎回エモいのばっかりだなと気づきちょっと足踏みしていた塚本です。秋寒前線にはお気をつけください。 そんな昨日（10/13）LINE Engineer Blogにポストされた、 コマンドラインから LINE にメッセージを送れる LINE Notify という記事がバズってるのを読み、早速やってみたところ死ぬほど簡単だったので、..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2016/10/14/Try-Line-Notify.html" />
+    <meta property="og:image" content="http://tech.innovation.co.jp/images/line_notify_scsh.png" />
+    <meta property="article:published_time" content="2016-10-13T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-10-14T13:04:13.025Z" />
+    <meta property="article:tag" content="Tsukamoto" />
+    <meta property="article:tag" content="Line" />
+    <meta property="article:tag" content="Lambda" />
+    <meta property="article:tag" content="api" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="LINE Notifyが使いやすそうなので、Lambdaから何か送ってみる" />
+    <meta name="twitter:description" content="今回は、「世のマイクロサービスおじさんは皆大好きMartin Fowler大先生が定義した『設計償却線』を、事業としてやりたい理想視点＆DDD的視点から実線算出提示する」というタイトルの記事を書く予定でしたが、 思えば自分の記事は毎回エモいのばっかりだなと気づきちょっと足踏みしていた塚本です。秋寒前線にはお気をつけください。 そんな昨日（10/13）LINE Engineer Blogにポストされた、 コマンドラインから LINE にメッセージを送れる LINE Notify という記事がバズってるのを読み、早速やってみたところ死ぬほど簡単だったので、..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2016/10/14/Try-Line-Notify.html" />
+    <meta name="twitter:image:src" content="http://tech.innovation.co.jp/images/line_notify_scsh.png" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "Hisahiro Tsukamoto",
+        "image": "https://avatars.githubusercontent.com/u/2120249?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": "http://d.hatena.ne.jp/hi-hats/"
+    },
+    "headline": "LINE Notifyが使いやすそうなので、Lambdaから何か送ってみる",
+    "url": "http://tech.innovation.co.jp/2016/10/14/Try-Line-Notify.html",
+    "datePublished": "2016-10-13T15:00:00.000Z",
+    "dateModified": "2016-10-14T13:04:13.025Z",
+    "image": "http://tech.innovation.co.jp/images/line_notify_scsh.png",
+    "keywords": "Tsukamoto, Line, Lambda, api",
+    "description": "今回は、「世のマイクロサービスおじさんは皆大好きMartin Fowler大先生が定義した『設計償却線』を、事業としてやりたい理想視点＆DDD的視点から実線算出提示する」というタイトルの記事を書く予定でしたが、 思えば自分の記事は毎回エモいのばっかりだなと気づきちょっと足踏みしていた塚本です。秋寒前線にはお気をつけください。 そんな昨日（10/13）LINE Engineer Blogにポストされた、 コマンドラインから LINE にメッセージを送れる LINE Notify という記事がバズってるのを読み、早速やってみたところ死ぬほど簡単だったので、..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Tsukamoto tag-Line tag-Lambda tag-api no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="14 Oct 2016" class="post-meta__date date">14 Oct 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Tsukamoto">Tsukamoto</a>, <a href="http://tech.innovation.co.jp/tag/Line">Line</a>, <a href="http://tech.innovation.co.jp/tag/Lambda">Lambda</a>, <a href="http://tech.innovation.co.jp/tag/api">api</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/2120249?v=3" alt="profile image for Hisahiro Tsukamoto" class="avatar post-meta__avatar" /> by Hisahiro Tsukamoto</span>
+      </div>
+      <h1 class="post-title">LINE Notifyが使いやすそうなので、Lambdaから何か送ってみる</h1>
+    </header>
+
+    <section class="post tag-Tsukamoto tag-Line tag-Lambda tag-api">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回は、「世のマイクロサービスおじさんは皆大好きMartin Fowler大先生が定義した『設計償却線』を、事業としてやりたい理想視点＆DDD的視点から実線算出提示する」というタイトルの記事を書く予定でしたが、
+思えば自分の記事は毎回エモいのばっかりだなと気づきちょっと足踏みしていた塚本です。秋寒前線にはお気をつけください。</p>
+</div>
+<div class="paragraph">
+<p>そんな昨日（10/13）LINE Engineer Blogにポストされた、 <a href="http://developers.linecorp.com/blog/ja/?p=3784">コマンドラインから LINE にメッセージを送れる LINE Notify</a>
+という記事がバズってるのを読み、早速やってみたところ死ぬほど簡単だったので、たまには実践風のこちらを記事にすることにします。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">まずコマンドラインで</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>上記LINEブログに書いてあるとおりです。（Tokenの取得を先にやっておく必要あり）</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">curl -X POST -H "Authorization: Bearer ***token***" -F "message=It works!!" https://notify-api.line.me/api/notify</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これだけ。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/line_notify_scsh.png" alt="LINE screenshot" width="400">
+</div>
+</div>
+<div class="paragraph">
+<p>せっかくなので、<code>.bashrc</code>にエイリアスを設定します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">function sendline (){
+    curl -X POST -H "Authorization: Bearer ${LINENOTIFYTOKEN}" -F "message=$1" $LINENOTIFYHOST
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>環境変数を設定します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">export LINENOTIFYTOKEN=************
+export LINENOTIFYHOST=https://notify-api.line.me/api/notify</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>叩く</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-bash" data-lang="bash">sendline '動作確認やで！'</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/line_scsh.png" alt="LINE screenshot" width="400">
+</div>
+</div>
+<div class="paragraph">
+<p>来ました！</p>
+</div>
+<div class="paragraph">
+<p>遅まきながらここで気づいたのが、送信元が「LINE Notify」と表示されるので、私信には使いにくいということ。
+明らかにシステム通知っぽいものしか用途にならないと思いそっち方面での用途について考えました。</p>
+</div>
+<div class="paragraph">
+<p>とはいえ、我々エンジニアは既にSlackにどっぷり浸かっているため、システム通知を今更代替しようとも思わない。
+他の職種の方々が使いそうなものは無いかなと考えたところ、</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+「なんか目標達成したときにLINEに通知したりしたらいいんじゃないか」
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>と思いましたので、Lambdaで作ってみました。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_aws_lambda">AWS Lambdaで実装</h2>
+<div class="sectionbody">
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+IAMロールの設定は省きます
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>仮にデイリーの目標となる数値を取得できるAPIを実装していたとします。
+（<code>API_URL</code>にGETリクエストで数値を取得可能とする）</p>
+</div>
+<div class="paragraph">
+<p>Lambdaに上げたスクリプトは以下
+今回は軽い処理なのでPython使います。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import urllib.parse
+import pycurl
+
+def get_point()
+    API_URL='https://api.ourcompany.com/daily/point'
+    curl = pycurl.Curl()
+    curl.setopt(pycurl.URL, API_URL)
+    return curl.perform()
+
+def send_line(message)
+    LINE_NOTIFY_URL = 'https://notify-api.line.me/api/notify'
+    LINE_NOTIFY_TOKEN = '*****yourtoken*****'
+    headers = { 'Authorization' : 'Bearer %s' % LINE_NOTIFY_TOKEN }
+    data={'message': message}
+    field_data = urllib.parse.urlencode(data)
+
+    curl = pycurl.Curl()
+    curl.setopt(pycurl.URL, LINE_NOTIFY_URL)
+    curl.setopt(pycurlHTTPHEADER, ["%s: %s" % t for t in headers.items()])
+    curl.setopt(pycurl.POSTFIELDS, field_data)
+    curl.perform()
+
+def lambda_handler()
+    goal = 1000
+    result = get_point()
+    if result &lt; goal:
+        return False
+
+    message = '本日 %s Point 達成しました！！' % result
+    send_line(message)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>まず手動で実行します。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/line_achieve_scsh.png" alt="LINE screenshot" width="450">
+</div>
+</div>
+<div class="paragraph">
+<p>来ました！</p>
+</div>
+<div class="paragraph">
+<p>Lambdaのコンソール画面でスケジュール設定すれば、毎分でも確認に行ってくれます</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+（厳重注意）このままのコードだと、達成後は（喜びも束の間）毎分通知が飛び続けるという地獄が待っています。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>というわけで、簡単（ここまで1時間弱）です。
+Pythonやnode.jsの習熟度で若干差はありますが、言っても何時間もかからないと思います。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">総括</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>SlackなどのChatツールを使っていない部門の方々にシステムからお知らせしたいことなどあればすぐ実装できますね。
+（LINEを会社として使ってよいのかという大問題が据え置きですが、一旦既読スルーで）</p>
+</div>
+<div class="paragraph">
+<p>ちなみに元記事にはムーンのウザスタンプをおくるやつが書いてますが、パラメータがURL指定となっており、どこでそれが分かるのかわかりません。</p>
+</div>
+<div class="paragraph">
+<p>ご存じの方いらっしゃれば <a href="https://twitter.com/hihats">@hihats</a>までお知らせいただければ喜んですみっコぐらしのスタンプをお送りします。</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です。</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
