@@ -13,7 +13,8 @@
 
 ## まずコマンドラインで
 
-上記LINEブログに書いてあるとおりです。
+上記LINEブログに書いてあるとおりです。（Tokenの取得を先にやっておく必要あり）
+
 ```bash
 curl -X POST -H "Authorization: Bearer ***token***" -F "message=It works!!" https://notify-api.line.me/api/notify
 ```
