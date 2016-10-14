@@ -5,7 +5,7 @@
 :hp-image: line_notify_scsh.png
 
 今回は、「世のマイクロサービスおじさんは皆大好きMartin Fowler大先生が定義した『設計償却線』を、事業としてやりたい理想視点＆DDD的視点から実線算出提示する」というタイトルの記事を書く予定でしたが、
-思えば自分の記事は毎回エモいのばっかりだなと気づきちょっと足踏みしていました。
+思えば自分の記事は毎回エモいのばっかりだなと気づきちょっと足踏みしていた塚本です。秋寒前線にはお気をつけください。
 
 そんな昨日（10/13）LINE Engineer Blogにポストされた、 http://developers.linecorp.com/blog/ja/?p=3784[コマンドラインから LINE にメッセージを送れる LINE Notify]
 という記事がバズってるのを読み、早速やってみたところ死ぬほど簡単だったので、たまには実践風のこちらを記事にすることにします。
@@ -18,6 +18,7 @@
 curl -X POST -H "Authorization: Bearer ***token***" -F "message=It works!!" https://notify-api.line.me/api/notify
 ```
 これだけ。
+
 image::line_notify_scsh.png[LINE screenshot]
 
 
