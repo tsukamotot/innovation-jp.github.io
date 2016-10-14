@@ -93,6 +93,7 @@ def send_line(message)
     curl.perform()
 
 def lambda_handler()
+    goal = 1000
     result = get_point()
     if result < goal:
         return False
