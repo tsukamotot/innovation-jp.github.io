@@ -19,7 +19,7 @@ curl -X POST -H "Authorization: Bearer ***token***" -F "message=It works!!" http
 ```
 これだけ。
 
-image::line_notify_scsh.png[LINE screenshot]
+image::line_notify_scsh.png/400*400[LINE screenshot]
 
 
 
@@ -41,7 +41,7 @@ export LINENOTIFYHOST=https://notify-api.line.me/api/notify
 sendline '動作確認やで！'
 ```
 
-image::line_scsh.png[LINE screenshot]
+image::line_scsh.png/400*400[LINE screenshot]
 
 来ました！
 
@@ -100,7 +100,7 @@ def lambda_handler()
 
 ```
 
-image::line_achieve_scsh.png[LINE screenshot]
+image::line_achieve_scsh.png/400*400[LINE screenshot]
 
 来ました！
 
