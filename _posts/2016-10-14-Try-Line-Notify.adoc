@@ -19,7 +19,7 @@ curl -X POST -H "Authorization: Bearer ***token***" -F "message=It works!!" http
 ```
 これだけ。
 
-image::line_notify_scsh.png[LINE screenshot]
+image::line_notify_scsh.png[LINE screenshot, 400]
 
 
 
