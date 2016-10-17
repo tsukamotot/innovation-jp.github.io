@@ -56,7 +56,7 @@ var _trackingid = 'LFT-10003-1';
     <meta property="og:url" content="http://tech.innovation.co.jp/2016/10/14/Try-Line-Notify.html" />
     <meta property="og:image" content="http://tech.innovation.co.jp/images/line_notify_scsh.png" />
     <meta property="article:published_time" content="2016-10-13T15:00:00.000Z" />
-    <meta property="article:modified_time" content="2016-10-16T03:06:35.911Z" />
+    <meta property="article:modified_time" content="2016-10-17T10:04:27.707Z" />
     <meta property="article:tag" content="Tsukamoto" />
     <meta property="article:tag" content="Line" />
     <meta property="article:tag" content="Lambda" />
@@ -83,7 +83,7 @@ var _trackingid = 'LFT-10003-1';
     "headline": "LINE Notifyが使いやすそうなので、Lambdaから何か通知させてみる",
     "url": "http://tech.innovation.co.jp/2016/10/14/Try-Line-Notify.html",
     "datePublished": "2016-10-13T15:00:00.000Z",
-    "dateModified": "2016-10-16T03:06:35.911Z",
+    "dateModified": "2016-10-17T10:04:27.707Z",
     "image": "http://tech.innovation.co.jp/images/line_notify_scsh.png",
     "keywords": "Tsukamoto, Line, Lambda, api",
     "description": "今回は、「世のマイクロサービスおじさんは皆大好きMartin Fowler大先生が定義した『設計償却線』を、事業としてやりたい理想視点＆DDD的視点から実線算出提示する」というタイトルの記事を書く予定でしたが、 思えば自分の記事は毎回エモいのばっかりだなと気づきちょっと足踏みしていた塚本です。秋寒前線にはお気をつけください。 そんな昨日（10/13）LINE Engineer Blogにポストされた、 コマンドラインから LINE にメッセージを送れる LINE Notify という記事がバズってるのを読み、早速やってみたところ死ぬほど簡単だったので、..."
@@ -353,6 +353,9 @@ export LINENOTIFYHOST=https://notify-api.line.me/api/notify</code></pre>
 <div class="sect1">
 <h2 id="_aws_lambda">AWS Lambdaで実装</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p><strong>AWS Lambda</strong>は、ざっくり言ってしまうと「<strong>サーバ構築せずにスクリプトを実行できるAWSのマネージドサービス</strong>」です。https://codezine.jp/article/detail/8446[解説]</p>
+</div>
 <div class="admonitionblock tip">
 <table>
 <tr>
