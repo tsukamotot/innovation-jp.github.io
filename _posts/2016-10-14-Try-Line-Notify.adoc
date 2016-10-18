@@ -60,7 +60,7 @@ IMPORTANT: 「なんか目標達成したときにLINEに通知したりした�
 
 ## AWS Lambdaで実装
 
-**AWS Lambda**は、ざっくり言ってしまうと「**サーバ構築せずにスクリプトを実行できるAWSのマネージドサービス**」です。https://codezine.jp/article/detail/8446[解説]
+**AWS Lambda**は、ざっくり言ってしまうと「**サーバ構築せずにスクリプトを実行できるAWSのマネージドサービス**」です。 https://codezine.jp/article/detail/8446[解説]
 
 
 TIP:  IAMロールの設定は省きます
