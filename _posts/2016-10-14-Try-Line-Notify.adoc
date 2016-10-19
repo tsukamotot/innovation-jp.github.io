@@ -1,7 +1,7 @@
-= LINE Notifyが使いやすそうなので、Lambdaから何か通知させてみる
+= LINE Notifyが使いやすそうなので、Lambda(python)から何か通知させてみる
 :published_at: 2016-10-14
 :hp-alt-title: TryLineNotify
-:hp-tags: Tsukamoto,Line,Lambda,api
+:hp-tags: Tsukamoto,Line,Lambda,api,Python
 :hp-image: line_notify_scsh.png
 
 今回は、「世のマイクロサービスおじさんは皆大好きMartin Fowler大先生が定義した『設計償却線』を、事業としてやりたい理想視点＆DDD的視点から実線算出提示してみんなが幸せになる」というカオスタイトルの記事を書く予定でしたが、
