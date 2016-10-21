@@ -1,0 +1,94 @@
+= プライベートPaaS環境を作るときに使えそうなオープンソース
+:published_at: 2016-10-21
+:hp-alt-title: opensource-paas
+:hp-tags: kato,opensource,paas
+
+
+
+こんにちは、加藤です。 +
+最近は涼しくなり、花粉症もなく、1年で最も過ごしやすい季節になりました。 +
+
+本日は、個人的に注目しているオープンソースを紹介したいと思います。 +
+有名所もありますが、お付き合いください。
+
+
+### プライベートPlatform as a Service（PaaS）
+
+Herokuの様な「開発」したら「デプロイ」するだけ！
+という環境を作る場合に使います。
+
+
+#### Cloud Foundry
+
+https://www.cloudfoundry.org/ +
+IBM、NTT、Yahoo!などが自社のサービスで採用しているのオープンソースのPaaS基盤です。
+
+image::kato/5/1.png[]
+
+
+#### RedHat OpenShift Origin
+
+https://www.openshift.org/ +
+Cloud Foundryと同様にPaaS環境を作るものですが、 +
+今までCloud Foundryの様に大型の採用事例がありませんでした。 +
+OpenShift3.0から、Docker+Kubernetesの統合環境として方向転換しました。
+
+image::kato/5/2.png[]
+
+
+### プライベートPaaS基盤で使いたいオープンソース！
+
+AWSを使えばそれ出来るよ！なんですが、 
+
+* 1円も出す余裕がない、自宅の余ったマシンでなんとかしたい
+* インフラ管理に時間を割けない
+
+という「お金無い」「時間無い」人向けのサクッと使える系オープンソースを紹介します。
+
+
+#### GlusterFS
+
+https://www.gluster.org/ +
+プライベートPaaS環境で一番困るのが永続ストレージです。 +
+データの書き込みが早くないという難点があるものの、 +
+マスタレスな汎用分散ファイルシステムはメンテナンスが簡単です。
+
+
+image::kato/5/3.png[]
+
+#### Scylla
+
+http://www.scylladb.com/ +
+Apache Cassandraは、インフラ資源を結構使ってしまいます。 +
+Scyllaは、Apache Cassandraと互換性がある上10倍早く動作し +
+「1台のサーバーで、1秒あたり、100万トランザクション」を処理できると謳っています。 +
+また、マスタレスのため、メンテンナンスが簡単です。
+
+image::kato/5/4.png[]
+
+
+#### Minio Cloud Storage
+
+https://www.minio.io/ +
+S3互換のストレージが欲しい場合おすすめです。 +
+Amazon S3 v4のAPIで接続できます。 +
+また、Go言語で書かれています。
+
+
+image::kato/5/5.png[]
+
+
+#### RethinkDB
+
+https://www.rethinkdb.com/ +
+RethinkDBは、Json形式のデータベースで、継続的にブラウザにデータを送信する、リアルタイムアプリケーションを作る際に便利です。 +
+特に付属する管理画面が良く出来ていて、サーバーを追加するなどの作業も管理画面で完結することが出来ます。
+
+
+image::kato/5/6.png[]
+
+
+
+いかがだったでしょうか？
+オープンソースで快適プライベートPaaS生活を送りましょう。
+
