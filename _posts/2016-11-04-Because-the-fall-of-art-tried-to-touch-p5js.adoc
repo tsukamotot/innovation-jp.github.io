@@ -21,7 +21,7 @@ Webサイトなどでの表現をリッチにするためには、 +
 ## やってみた
 
 #### 即完成！
-以下の枠内で適当にキーボード入力してみてください！！
+以下の枠内を**クリックした後**、適当にキーボード入力してみてください！！
 
 ++++
 <iframe src="http://tech.innovation.co.jp/docs/ozasa/textcolor.html" width="300" height="300"></iframe>
