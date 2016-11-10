@@ -25,7 +25,7 @@ pepperがイノベーションに来て早半年。
 
 dotsでよく見かけていたこちらのイベントに参加してみました。
 
-写真のせる！
+image::nakamura/dots_pepper.png[]
 
 1週間前に予約した際には他に参加者がいなかったのですが、
 結果満員（6名）だったみたいです。
@@ -37,8 +37,15 @@ dotsでよく見かけていたこちらのイベントに参加してみまし�
 
 秋葉原といえばオタクなイメージですが、3331という元々中学校だった場所を利用して建てられたアートセンターの中にあり、とてもお洒落な感じでした！
 
+image::nakamura/3331.jpg[]
 
 
+image::nakamura/pepper_ippai.png[]
+
+
+image::nakamura/pepper_with_sensei.png[]
+
+image::nakamura/atelier.png[]
 
 
 アトリエ秋葉原の説明〜
