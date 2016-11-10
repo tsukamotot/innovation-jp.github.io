@@ -127,14 +127,22 @@ image::nakamura/pepper_work_2-1.png[]
 
 image::nakamura/pepper_work_1-2.png[]
 
-QichatというBoxを使うとこれだけでOK。
+QichatというBoxを使うとこれだけでOK！
 
 image::nakamura/pepper_work_3-1.png[]
 
 その代わりにQichatのBoxに設定をどんどんしていくようです。
 
+image::nakamura/pepper_work_3-2.png[]
 
+また分岐なども設定することができるようです。
 
+image::nakamura/pepper_work_3-3.png[]
+
+Boxでも同じことを設定することは可能だけどごちゃごちゃになるし大変だなー、そのあたりからPythonで書くのかなと思っていたのですがこんな便利な機能あるんですね！
+
+特に便利と感じたのが、ワイルドカードや配列などが使えるということ。 + 
+詳細を説明しだすとかなり長くなってしまうので、この辺でやめときます！
 
 
 
