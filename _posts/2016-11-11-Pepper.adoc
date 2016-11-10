@@ -131,6 +131,10 @@ QichatというBoxを使うとこれだけでOK。
 
 image::nakamura/pepper_work_3-1.png[]
 
+その代わりにQichatのBoxに設定をどんどんしていくようです。
+
+
+
 
 
 
