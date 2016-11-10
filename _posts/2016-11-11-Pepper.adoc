@@ -31,6 +31,8 @@ image::nakamura/dots_pepper.png[]
 
 ### アトリエ秋葉原
 
+http://pepper-atelier-akihabara.jp/
+
 image::nakamura/atelier.png[]
 
 
