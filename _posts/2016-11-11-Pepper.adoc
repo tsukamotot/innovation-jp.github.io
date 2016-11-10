@@ -63,20 +63,21 @@ image::nakamura/pepper_ippai.png[]
 ざっくりとこんな感じでした。 + 
 
 
-image::nakamura/pepper_work_1-1.png[]
 SDKの説明をちゃんとしてもらったのは意外と良かったかも。 + 
-「ダイアログ」「ポーズライブラリ」はよく使うので出しておいたほうがいいよ！だそうです！ + 
+「ダイアログ」「ポーズライブラリ」はよく使うので出しておいたほうがいいよ！だそうです！ 要チェックや！
 
-要チェックや！
+image::nakamura/pepper_work_1-1.png[]
 
 
-
-image::nakamura/pepper_work_1-2.png[]
 簡単な会話は以下のようにBoxを配置させるのですが（この辺は知っていた）
 
+image::nakamura/pepper_work_1-2.png[]
+
+
+誤認識が多い場合の調整方法も教えてもらいました！
 
 image::nakamura/pepper_work_1-3.png[]
-誤認識が多い場合の調整方法も教えてもらいました！ + 
+
 これはｲｲ！
 
 
@@ -86,6 +87,49 @@ image::nakamura/pepper_work_1-3.png[]
 
 ### 2時間目「移動とタブレットの使い方」
 
+- Pepperで音楽を再生
+- タブレットに画像を表示
+- 移動させる
+- 身振りをつけて話す
+
+2時間目はこんな感じ。
+
+タブレットに画像を表示させたのですが、htmlというディレクトリに表示させたい素材を入れておくとのこと。
+どうやらHtml、CSS、javascriptなどは表示させること可能らしいです。 + 
+
+image::nakamura/pepper_work_2-1.png[]
+
+
+おーPython触ったこと無い俺でも色々出来そうな気がしてきた！
+
+
+この時間帯は周りの人を待っている時間が多く、個人的にBox色々弄ってみたりして少し暇でした。
+
+
+### 3時間目「Pepperで高度な会話を」
+
+- Qichatの説明
+
+なんと3時間目はQichatがメインでした。 + 
+ただ、
+
+これ学べて良かったな！
+
+って思えるほど非常に便利でエンジニアとしては使いやすい代物でした。
+
+
+今までは
+
+人：こんにちは ⇒ Pepper：こんにちは！ + 
+人：こんばんわ ⇒ Pepper：こんばんわ！
+
+こんな設定をする場合には、以下のようにBoxを配置する必要がありましたが。。。
+
+image::nakamura/pepper_work_1-2.png[]
+
+QichatというBoxを使うとこれだけでOK。
+
+image::nakamura/pepper_work_3-1.png[]
 
 
 
