@@ -1,7 +1,7 @@
 = Pepper 開発体験 ワークショップに行ってみた
 :published_at: 2016-11-11
 :hp-alt-title: 
-:hp-tags: Pepper,Gyo-za,Nakamura
+:hp-tags: Pepper,atelier-akihabara,Gyo-za,Nakamura
 
 おひさしぶりです、
 最近餃子食べに行けずモヤモヤしている中村です。
