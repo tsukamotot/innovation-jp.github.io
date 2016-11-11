@@ -94,7 +94,7 @@ image::nakamura/pepper_work_1-3.png[]
 
 タブレットに画像を表示させる場合には、htmlというディレクトリを作成&そこに表示させたい素材を入れておくとのこと。 + 
 なんかDocumentRootみたいだなと思い質問すると。。。ビンゴ！ + 
-どうやらHtml、CSS、javascriptなどを同じ方法で表示出来るみたいです。 + 
+どうやらhtml、css、javascriptなどを同じ方法で表示出来るみたいです。 + 
 
 image::nakamura/pepper_work_2-1.png[]
 
