@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Pepper 開発体験 ワークショップに行ってみた - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Pepper 開発体験 ワークショップに行ってみた">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Pepper 開発体験 ワークショップに行ってみた">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2016/11/11/Pepper.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Pepper 開発体験 ワークショップに行ってみた" />
+    <meta property="og:description" content="おひさしぶりです、 最近餃子食べに行けずモヤモヤしている中村です。 先日Pepper開発体験ワークショップに行ってきたのでその感想をお伝えしようと思います。 参加動機 Pepperがイノベーションに来て早半年。なのに何の活躍もできてない！ せっかく導入してもらったので何かやりたいけど。。。ぶっちゃけ何が出来るか分からない！ 手っ取り早く習得したい！ そんなこんなで参加してみました。 参加したイベント dotsでよく見かけていたこちらのイベントに参加してみました。 https://eventdots.jp/event/604961 1週間前に予約した際に..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2016/11/11/Pepper.html" />
+    <meta property="article:published_time" content="2016-11-10T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-11-11T05:55:15.321Z" />
+    <meta property="article:tag" content="Pepper" />
+    <meta property="article:tag" content="atelier-akihabara" />
+    <meta property="article:tag" content="Gyo-za" />
+    <meta property="article:tag" content="Nakamura" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Pepper 開発体験 ワークショップに行ってみた" />
+    <meta name="twitter:description" content="おひさしぶりです、 最近餃子食べに行けずモヤモヤしている中村です。 先日Pepper開発体験ワークショップに行ってきたのでその感想をお伝えしようと思います。 参加動機 Pepperがイノベーションに来て早半年。なのに何の活躍もできてない！ せっかく導入してもらったので何かやりたいけど。。。ぶっちゃけ何が出来るか分からない！ 手っ取り早く習得したい！ そんなこんなで参加してみました。 参加したイベント dotsでよく見かけていたこちらのイベントに参加してみました。 https://eventdots.jp/event/604961 1週間前に予約した際に..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2016/11/11/Pepper.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "m_nakamura",
+        "image": "https://avatars.githubusercontent.com/u/7381448?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Pepper 開発体験 ワークショップに行ってみた",
+    "url": "http://tech.innovation.co.jp/2016/11/11/Pepper.html",
+    "datePublished": "2016-11-10T15:00:00.000Z",
+    "dateModified": "2016-11-11T05:55:15.321Z",
+    "keywords": "Pepper, atelier-akihabara, Gyo-za, Nakamura",
+    "description": "おひさしぶりです、 最近餃子食べに行けずモヤモヤしている中村です。 先日Pepper開発体験ワークショップに行ってきたのでその感想をお伝えしようと思います。 参加動機 Pepperがイノベーションに来て早半年。なのに何の活躍もできてない！ せっかく導入してもらったので何かやりたいけど。。。ぶっちゃけ何が出来るか分からない！ 手っ取り早く習得したい！ そんなこんなで参加してみました。 参加したイベント dotsでよく見かけていたこちらのイベントに参加してみました。 https://eventdots.jp/event/604961 1週間前に予約した際に..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Pepper tag-atelier-akihabara tag-Gyo-za tag-Nakamura no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="11 Nov 2016" class="post-meta__date date">11 Nov 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Pepper">Pepper</a>, <a href="http://tech.innovation.co.jp/tag/atelier-akihabara">atelier-akihabara</a>, <a href="http://tech.innovation.co.jp/tag/Gyo-za">Gyo-za</a>, <a href="http://tech.innovation.co.jp/tag/Nakamura">Nakamura</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/7381448?v=3" alt="profile image for m_nakamura" class="avatar post-meta__avatar" /> by m_nakamura</span>
+      </div>
+      <h1 class="post-title">Pepper 開発体験 ワークショップに行ってみた</h1>
+    </header>
+
+    <section class="post tag-Pepper tag-atelier-akihabara tag-Gyo-za tag-Nakamura">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>おひさしぶりです、
+最近餃子食べに行けずモヤモヤしている中村です。</p>
+</div>
+<div class="paragraph">
+<p>先日Pepper開発体験ワークショップに行ってきたのでその感想をお伝えしようと思います。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__">参加動機</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Pepperがイノベーションに来て早半年。なのに何の活躍もできてない！</p>
+</li>
+<li>
+<p>せっかく導入してもらったので何かやりたいけど。。。ぶっちゃけ何が出来るか分からない！</p>
+</li>
+<li>
+<p>手っ取り早く習得したい！</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>そんなこんなで参加してみました。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___2">参加したイベント</h3>
+<div class="paragraph">
+<p>dotsでよく見かけていたこちらのイベントに参加してみました。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://eventdots.jp/event/604961" class="bare">https://eventdots.jp/event/604961</a></p>
+</div>
+<div class="paragraph">
+<p>1週間前に予約した際には他に参加者がいなかったのですが、
+結果満員（6名）だったみたいです。<br>
+せっかく行くので、3講座一気に受講してきました。17:00〜21:20！まさにPepper漬けの1日！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">アトリエ秋葉原</h3>
+<div class="paragraph">
+<p><a href="http://pepper-atelier-akihabara.jp/" class="bare">http://pepper-atelier-akihabara.jp/</a></p>
+</div>
+<div class="paragraph">
+<p>場所は秋葉原。</p>
+</div>
+<div class="paragraph">
+<p>秋葉原といえばオタクなイメージですが、3331という元々中学校だった場所を利用して建てられたアートセンターの中にあり、とてもお洒落な感じです。</p>
+</div>
+<div class="paragraph">
+<p>しかしPepperは裏切らない。<br>
+教室（本当に教室でした）に入ると。。。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/pepper_ippai.png" alt="pepper ippai.png">
+</div>
+</div>
+<div class="paragraph">
+<p>30体くらいのPepperがお出迎え（笑）<br>
+やる気出てきました。</p>
+</div>
+<div class="paragraph">
+<p>それでは受講内容を簡単に紹介していきます〜</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_1">1時間目 「喋る、動かす、会話する」</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>一人ずつ自己紹介（今回の参加目的、意気込みなど）</p>
+</li>
+<li>
+<p>Pepperの説明（耳はスピーカーで頭にマイクがあるんだよ〜など）</p>
+</li>
+<li>
+<p>インストールしておいたSDKの説明</p>
+</li>
+<li>
+<p>Boxを繋げてPepperを喋らせる</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ざっくりとこんな感じでした。<br></p>
+</div>
+<div class="paragraph">
+<p>SDKの説明をちゃんとしてもらったのは意外と良かったかも。<br>
+「ダイアログ」「ポーズライブラリ」はよく使うので出しておいたほうがいいよ！だそうです！ 要チェックや！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/pepper_work_1-1.png" alt="pepper work 1 1.png">
+</div>
+</div>
+<div class="paragraph">
+<p>簡単な会話は以下のようにBoxを配置させるのですが（この辺は知っていた）</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/pepper_work_1-2.png" alt="pepper work 1 2.png">
+</div>
+</div>
+<div class="paragraph">
+<p>誤認識が多い場合の調整方法も教えてもらいました！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/pepper_work_1-3.png" alt="pepper work 1 3.png">
+</div>
+</div>
+<div class="paragraph">
+<p>これはｲｲ！</p>
+</div>
+<div class="paragraph">
+<p>ここまででBoxの使い方さえ理解できれば色々出来そうな気がしてきました（笑）</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2">2時間目「移動とタブレットの使い方」</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Pepperで音楽を再生</p>
+</li>
+<li>
+<p>タブレットに画像を表示</p>
+</li>
+<li>
+<p>移動させる</p>
+</li>
+<li>
+<p>身振りをつけて話す</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>2時間目はこんな感じ。</p>
+</div>
+<div class="paragraph">
+<p>タブレットに画像を表示させる場合には、htmlというディレクトリを作成&amp;そこに表示させたい素材を入れておくとのこと。<br>
+なんかDocumentRootみたいだなと思い質問すると。。。ビンゴ！<br>
+どうやらhtml、css、javascriptなどを同じ方法で表示出来るみたいです。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/pepper_work_2-1.png" alt="pepper work 2 1.png">
+</div>
+</div>
+<div class="paragraph">
+<p>おーPython触ったこと無い俺でも色々出来そうな気がしてきた！</p>
+</div>
+<div class="paragraph">
+<p>この時間帯は周りの人を待っている時間が多く、個人的にBox色々弄ってみたりして少し暇でした。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_pepper">3時間目「Pepperで高度な会話を」</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Qichatの説明</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>なんと3時間目はほぼQichatという機能のみ。<br>
+ただ、</p>
+</div>
+<div class="sect4">
+<h5 id="___4">これ学べて良かったな！</h5>
+<div class="paragraph">
+<p>って思えるほど非常に便利で使いやすい代物でした。</p>
+</div>
+<div class="paragraph">
+<p>今までは</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>人：こんにちは ⇒ Pepper：こんにちは！
+人：こんばんわ ⇒ Pepper：こんばんわ！</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>こんな設定をする場合には、以下のようにBoxを配置する必要がありましたが。。。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/pepper_work_1-2.png" alt="pepper work 1 2.png">
+</div>
+</div>
+<div class="paragraph">
+<p>QichatというBoxを使うとこれだけでOK！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/pepper_work_3-1.png" alt="pepper work 3 1.png">
+</div>
+</div>
+<div class="paragraph">
+<p>その代わりにQichatのBoxに設定をどんどんしていくようです。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/pepper_work_3-2.png" alt="pepper work 3 2.png">
+</div>
+</div>
+<div class="paragraph">
+<p>また分岐なども設定することができるようです。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/pepper_work_3-3.png" alt="pepper work 3 3.png">
+</div>
+</div>
+<div class="paragraph">
+<p>Boxでも同じことを設定することは可能だけどごちゃごちゃになるし大変だなー、そのあたりからPythonで書くのかなーと思っていたのですが、こんな便利な機能あるんですね！</p>
+</div>
+<div class="paragraph">
+<p>特に便利と感じたのが、ワイルドカードや配列などが使えるということ。<br>
+詳細を説明しだすとかなり長くなってしまうので、この辺でやめときますね（笑）</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___5">振り返り</h3>
+<div class="paragraph">
+<p>少人数でのワークショップだったので気軽に質問もでき、実際にPepperを好きに動かしながら作業できるのはとても良いと思います。
+（たまにPepperが不機嫌になっても、先生が速やかに交換してくれます）<br></p>
+</div>
+<div class="paragraph">
+<p>そして＃1〜3まで一気に受講することをオススメします！<br>
+基礎も大事だし、#3で学ぶQichatは超大事なので〜</p>
+</div>
+<div class="paragraph">
+<p>またワークショップの教材も自由に使って良いとのこと、とてもありがたいです。<br>
+せっかくなので社内でPepper勉強会をやってみようかと思っている今日この頃です。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/pepper_with_sensei.png" alt="pepper with sensei.png">
+</div>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です！</p>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
