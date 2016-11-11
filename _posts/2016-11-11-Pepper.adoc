@@ -21,7 +21,7 @@
 
 dotsでよく見かけていたこちらのイベントに参加してみました。
 
-image::nakamura/dots_pepper.png[]
+https://eventdots.jp/event/604961
 
 1週間前に予約した際には他に参加者がいなかったのですが、
 結果満員（6名）だったみたいです。 + 
