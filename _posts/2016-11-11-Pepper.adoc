@@ -33,14 +33,10 @@ image::nakamura/dots_pepper.png[]
 
 http://pepper-atelier-akihabara.jp/
 
-image::nakamura/atelier.png[]
-
 
 場所は秋葉原。
 
 秋葉原といえばオタクなイメージですが、3331という元々中学校だった場所を利用して建てられたアートセンターの中にあり、とてもお洒落な感じです。
-
-image::nakamura/3331.jpg[]
 
 
 しかしPepperは裏切らない。 + 
