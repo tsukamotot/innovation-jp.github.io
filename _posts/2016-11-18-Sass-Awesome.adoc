@@ -41,8 +41,8 @@ body {
 
 ```
 body {
-	height: $height;
-	width: }
+	height: 150px;
+	width: 200px}
 ```
 
 ・ セレクタをネストできる
