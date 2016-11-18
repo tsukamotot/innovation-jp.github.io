@@ -105,6 +105,72 @@ div {
 これは`@mixin`で指定したスタイルを`@include`で呼び出すことができます。 +
 なんかこれだけでもごっちゃりしたCSSをスッキリ書けるんじゃないかと思ってきました！ +
 
+・繰り返しも使える
+
+`class="fs-12"`というクラスを指定してCSS側で`.fs12{font-size: 12px;}`って書くことがよくあるんですが、 +
+こういったクラスをfont-sizeごとに用意する、そんなパターンも！
+
+```
+@for $i from 16 through 20 {
+    .fs-#{$i} { font-size: #{$i}px; }
+}
+
+```
+
+↓コンパイル後
+
+```
+.fs-16 {
+  font-size: 16px; }
+
+.fs-17 {
+  font-size: 17px; }
+
+.fs-18 {
+  font-size: 18px; }
+
+.fs-19 {
+  font-size: 19px; }
+
+.fs-20 {
+  font-size: 20px; }
+
+```
+
+繰り返しは`@for`や`@foreach`があります。 +
+変数の中身を出力したい場合は`#{}`を使えば良いみたいですね！
+
+・ 配列を反復処理できる
+
+```
+$positions: above, middle, under;
+$colors: green, yellow, red;
+
+@each  $position in $positions{
+    $index_key: index($positions, $position);
+    .position-#{$position} {
+        background-color: nth($colors, $index_key);
+    }
+}
+```
+
+↓コンパイル後
+
+```
+.position-above {
+  background-color: green; }
+
+.position-middle {
+  background-color: yellow; }
+
+.position-under {
+  background-color: red; }
+```
+
+変数には複数の値を入れることで配列としても使用でき、 +
+`@each`で配列の値の数だけ反復処理ができ、`index`や`nth`で配列のキーや値を取得できます。 +
+これはかなり幅が広がりますね！！
+
 __ん〜これは確かにAwesome__ +
 
 調べると2013年あたりから記事が見つかりますので、もっと詳しい記述法は是非調べてみてください。 +
