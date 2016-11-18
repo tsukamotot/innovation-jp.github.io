@@ -1,0 +1,81 @@
+= 芸術の秋だからp5.js触ってみた
+:published_at: 2016-11-04
+:hp-alt-title: Because the fall of art tried to touch p5.js
+:hp-tags: p5.js,Processing,Ozasa
+
+## p5.jsとは
+「.js」と名のつく通りJavaScriptのライブラリです。 +
+「p5」とは https://processing.org/[Processing] というコンピュータアートのためのプログラミング言語の愛称のようでして、
+まぁつまりはProcessingのJavaScript版が https://p5js.org/[p5.js] って理解で良いかと思います。 +
+色々アーチスチックな表現を簡単な記述で実現できちゃうのが特徴のようです。
+
+Webサイトなどでの表現をリッチにするためには、 +
+やはり動的な処理が必要になっていきますから、覚えておいて損はないでしょう。きっと。
+
+ってことで**芸術の秋**でもありますし、p5.js触ってみました。
+
+## 環境
+とりあえずブラウザで実行できてしまうので特に環境構築は必要ありません。 +
+強いていうならhtmlファイルを用意しましたyo。
+
+## やってみた
+
+#### 即完成！
+以下の枠内を**クリックした後**、適当にキーボード入力してみてください！！
+
+++++
+<iframe src="http://tech.innovation.co.jp/docs/ozasa/textcolor.html" width="300" height="300"></iframe>
+++++
+
+#### ソースと解説
+
+```
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        // 外部にあるp5.min.jsを取ってくる
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.11/p5.min.js"></script>
+        <script>
+            var s = 300;
+            // プログラム開始時に一度だけ実行される処理
+            function setup() {
+                createCanvas(s, s);
+            }
+
+            // key入力を拾って繰り返し実行される処理
+            function keyTyped() {
+                // 文字なども含む図形の輪郭線を消します。デフォルトは黒い枠線が出てきちゃいます。
+                noStroke();
+                // ランダムな色を指定します。
+                fill(random(255), random(255), random(255), random(255));
+                // テキストのサイズを指定します。
+                textSize(random(30, 90));
+                // ランダムな位置に入力値(key)を出力します。
+                text(key, random(s), random(s));
+            }
+        </script>
+    </body>
+</html>
+
+```
+
+#### 雑感
+かなりシンプルな記述でkeyの入力をキャッチして描画することに成功しました。 +
+ね、簡単でしょう？
+
+そして https://p5js.org/reference/[p5.jsのリファレンス] を見てもらえれば分かるのですが、かなりやれることの種類が豊富です！今回のは極々一部の機能しか使えてません……
+
+実際何を作ろうかなと妄想する時間とリファレンスを見るのに時間をかけた感じで、コーディングは本当に一瞬でした。
+
+やっぱり作りたいものがないと良い道具があっても困ってしまいますね。 +
+ネタがないと！ネタが！！
+
+ということで今度は作りたいものをしっかり考えてから書いてみようと思いました。 +
+面白かったのは面白かったので！
+
+と言いつつ、このブログを書きながらぼんやりネタはできてきているので、
+近日中に追加で公開できるといいなぁ。
+
+こちらからは以上です。

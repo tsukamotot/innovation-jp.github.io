@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.3.11/p5.min.js"></script>
+        <script>
+            var s = 300;
+            // プログラム開始時に一度だけ実行される処理
+            function setup() {
+                createCanvas(s, s);
+            }
+
+            // key入力を拾って繰り返し実行される処理
+            function keyTyped() {
+                // 文字なども含む図形の輪郭線を消します。デフォルトは黒い枠線が出てきちゃいます。
+                noStroke();
+                // ランダムな色を指定
+                fill(random(255), random(255), random(255), random(255));
+                // テキストのサイズを指定
+                textSize(random(30, 90));
+                // ランダムな位置に入力値(key)を出力
+                text(key, random(s), random(s));
+            }
+        </script>
+    </body>
+</html>
