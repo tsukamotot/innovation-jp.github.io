@@ -1,0 +1,113 @@
+= 誕生日を覚えるのも、メールを送るのも忘れてしまいがちな私がGASを使って全自動化した話
+:published_at: 2016-11-24
+:hp-alt-title: 
+:hp-tags: GooleAppScript,GAS,gas, kohe
+
+
+
+〜誕生日を覚えるのも、メールを送るのも忘れてしまいがちな私がGASを使って全自動化した話〜
+
+## 下準備
+まずはスプレットシートに必要な情報を記入していく。
+
+こ～んな感じで、
+
+image::kohe/GAS1.png[]
+
+* A列に日付
+* B列に誕生日の人の名前
+* C列に誕生日の人のメアド
+* D列にメールの件名
+* E列にメール本文
+* F列にデフォルトのメールの件名
+* G列にデフォルトのメールの本文
+
+を書いていく。
+
+これで表側の準備終了！
+
+仕組みとしては簡単！
+誕生日の日に指定したメアドにメールを送る。
+何も指定がなければ、デフォルトの件名と内容が自動的に入る。
+指定すれば、指定した件名と内容が送信される！!
+
+
+## コードを書いていこう
+
+image::kohe/GAS2.png[]
+
+全部で40行もかからない。なんとお手軽。
+ってことで解説。
+
+```
+ var sh_id    =　 SpreadsheetApp.openById('ここにスプレットシートのIDが入るよ')
+```
+
+まず、どのシートを使うか指定する。
+スプレットシートのIDは↓のところをコピペでおっけー。
+
+image::kohe/GAS3.png[]
+
+
+
+
+```
+  var rows           = sh_id.getDataRange();
+  var num_rows   = rows.getNumRows();
+  var values         = rows.getValues();
+```
+
+rows にセルの情報、
+num_rowsに値が入っているセルの最大列数、
+values にセルに入っている値の情報が入る。
+```
+  var today         = new Date();
+  var this_day      = today.getDate();
+  var this_month    = today.getMonth() + 1;
+
+```
+今日の日付を準備して。
+```
+  var subject       = sh_id.getRange("f2").getValue();
+  var body_template = sh_id.getRange("g2").getValue();
+```
+デフォルトの本文と件名を変数に詰め込んでおく。
+
+```
+  for(var i = 1;i < num_rows;i++){
+    var birthday    =　values[i][0].getDate();
+    var birthmonth  =　values[i][0].getMonth() + 1;
+    
+    if(birthday == this_day && birthmonth　== this_month){
+      name = values[i][1];
+      to   = values[i][2];
+      if(values[i][3] != ""){
+        subject = values[i][3];
+      }
+      if(values[i][4] != ""){
+        body_template = values[i][4];
+      }
+    }
+  }
+```
+
+後は、今日の日付と誕生日の日付が一致した時にその列のセルの情報を変数に入れる。
+
+```
+    if (to != ""){
+      body += name + "\n" + body_template;
+      MailApp.sendEmail(to, subject, body);
+    } 
+  
+```
+メアドが書かれていたら送信！
+
+
+
+最後にプログラム実行タイミングを設定。
+毎日の0時〜1時の間に実行としておけば完璧。
+
+image::kohe/GAS4.png[]
+
+
+これで誕生日に縛られない悠々自適な生活を〜。
