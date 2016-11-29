@@ -1,0 +1,105 @@
+= AWS本社に行ってきたりしました
+:published_at: 2016-11-30
+:hp-alt-title: I-went-to-the-AWS-headquarters
+:hp-tags: AWS,Amazon Echo,Amazon Echo Dot,Amazon Books,Amazon Fresh,Amazon Dash,ozasa
+
+こんにちは。オザサです。
+
+唐突ですが、今、アメリカにいます！！
+
+そう、AWS re:Invent 2016のJAPANツアーに参加しているのです！！ +
+イノベーションは会社として初の参加！個人的にももちろん初です！！
+
+日本との時差が17時間ほどあるのですが、 +
+現地時間で9:30よりAmazon Fresh,Amazon Dash,そしてそんなサービスを生み出していくAmazonのカルチャーについてDeep Diveしていただいたり、 +
+話題のAmazon Booksにも行ってきましたよ！
+
+image::ozasa/amazon.JPG[]
+
+オフィスは受付からしてなんかおしゃれでした！
+
+## Amazon Fresh
+生鮮食品に絞っている https://www.amazon.com/AmazonFresh/b?ie=UTF8&node=10329849011[Amazonの配送サービス] です。 +
+生鮮食品の特性上、通常のAmazonよりも在庫の流動性が高く、 +
+未来の在庫や消費予想などを機械学習により構築し、 +
+日々システムのブラッシュアップをしているようです！！
+
+最近日本では https://www.amazon.co.jp/b?node=3907674051[Prime Now] が東京都内にサービスを拡大したりして、 +
+短時間系配送サービスが注目されていますが、 +
+Amazon Freshについても日本での展開が期待されますね！
+
+AWSの技術的には
+
+* Amazon Simple Workflow
+* Lambda
+* Amazon Simple Notification Service
+
+などを用いてデータの管理ややりとりをすることが多いようです。
+
+また、分析には**ElasticSearch**と**kibana**を用いているとのことで、
+当然分析にも力を注いでいるようです。
+
+う〜ん、やはり今後の展開が注目されます！！
+
+## Amazon Dash
+https://developer.amazon.com/dash-replenishment-service[Dash Replenishment Service(DRS)] といって、
+デバイスが自動注文システムを内蔵することで、
+洗剤などの消耗品がいざという時にない！ということが起きないようにするサービスです。 +
+リンク先の動画をご覧いただけますとイメージ伝わるかと思いますので、是非見てみてください。
+
+他にもプリンタにDRSが内蔵されていれば、 +
+インクが切れそうになる前に自動でインクの発注がかけられるようになります。
+
+BtoBでも何か展開を模索しているようで、
+弊社としても何か考えてみたいですね。
+
+とりあえず個人的には +
+冷蔵庫のアルコール類が切れそうになったら自動発注できる冷蔵庫とかがいいです。
+
+どうでしょう。Amazonさん。
+
+## Amazonのカルチャー
+Amazon本社最後のプレゼントして、Peculiarity やジェフベゾス氏のFly Wheelなど、
+Amazonで大切にされている考え方などをご共有いただきました。
+
+しっかりとグローバルのカルチャーが、
+ローカルチーム用のカルチャーとしても根付いており、
+徹底的な教育の成果が垣間見える瞬間でした。
+
+エンジニア行動指針なども考案している弊社としても考えさせられる話が
+いくつもありましたので、帰国後メンバーと話し合ってみたいと思います！！
+
+## Amazon Books
+
+image::ozasa/amazonbooks.JPG[]
+
+Amazonによるリアル店舗ということで話題になったAmazon Books、
+クリスマスシーズン？ということもあってか、
+Alexaで話題のAmazon Echoがお安く売ってありました！！
+
+image::ozasa/echo.JPG[]
+Amazon Echo
+
+image::ozasa/echodot.JPG[]
+Amazon Echo Dot
+
+が、みなさんご存知の通り日本においては電波法の関係で
+使用が認められておりません。
+
+が、今年のre:Inventでもかなり注目を集めているAlexa。
+何かアップデートがあるかもしれません。要チェックです！！
+
+## 明日から
+ついにセッションなどに参加してまいります！
+現場の熱気が伝わるようブログを更新してまいりますので、
+どうぞよろしくお願いいたします！！
+
+image::ozasa/reinvent.JPG[]
+
+
+
+
+#### 追伸
+なんかアメリカって色々巨大です！！
+
+image::ozasa/beer.JPG[]
