@@ -77,7 +77,7 @@ Amazonによるリアル店舗ということで話題になったAmazon Books�
 クリスマスシーズン？ということもあってか、
 Alexaで話題のAmazon Echoがお安く売ってありました！！
 
-image::ozasa/echo.JPG[book, 300, 600]
+image::ozasa/echo.JPG[book, 600, 300]
 Amazon Echo
 
 image::ozasa/echodot.JPG[]
