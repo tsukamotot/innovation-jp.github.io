@@ -1,4 +1,4 @@
-= AWS本社に行ってきたりしました
+= AWS本社に行ってきたりしました(re:Invent2016シリーズ①)
 :published_at: 2016-11-30
 :hp-alt-title: I-went-to-the-AWS-headquarters
 :hp-tags: AWS,Amazon Echo,Amazon Echo Dot,Amazon Books,Amazon Fresh,Amazon Dash,ozasa
