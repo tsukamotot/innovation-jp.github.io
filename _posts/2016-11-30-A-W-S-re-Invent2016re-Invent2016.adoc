@@ -1,5 +1,5 @@
 = AWS re:Invent2016初日！(re:Invent2016シリーズ②)
-:hp-tags: AWS,re:Invent2016,Las Vegas
+:hp-tags: AWS,re:Invent2016,Las Vegas,Nakamura
 
 お久しぶりです、中村です。
 
