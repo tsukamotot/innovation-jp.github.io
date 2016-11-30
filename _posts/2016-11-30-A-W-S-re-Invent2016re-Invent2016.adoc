@@ -7,7 +7,7 @@
 今オザサと一緒にAWS re:Invent2016に参加するために
 アメリカへ来てます！
 
-今日初日だったので、どんなイベントなのか、お伝えしますね。
+今日初日だったので、どんなイベントなのか、雰囲気重視でお伝えします。
 
 ### 開催地はラスベガス！
 
@@ -49,6 +49,10 @@ registorationブースに行き、パスポートを提出すると顔写真付�
 image::nakamura/reInvent/IMG_3027.png[]
 
 image::nakamura/reInvent/IMG_2954.png[]
+
+image::nakamura/reInvent/IMG_2959.png[]
+
+registorationブースの隣ではDJがいました！
 
 image::nakamura/reInvent/IMG_2956.png[]
 
@@ -99,39 +103,46 @@ re:Inventの流れ簡単に説明すると、
 完璧に失敗です。
 re:Invent2017に行く方は会場をなるべく合わせておくことをお勧めします。。。
 
+image::nakamura/reInvent/IMG_2990.png[]
+
 
 ### セッションの雰囲気
 
 会場によって大分違いました。ホテルが違ったりするので当たり前なのですが、それ以上に通常はショーなどで利用していそうな場所だったりと、さすがラスベガス！といった感じでした。
 
-image::nakamura/reInvent/IMG_3027.png[]
+image::nakamura/reInvent/IMG_2961.png[]
+
+image::nakamura/reInvent/IMG_2974.png[]
 
 
 
 ちなみに一部のセッションでは翻訳機での同時通訳もあるのですが、基本的には英語のみ。
 ただAWSのアイコンが出てくるので、全く分からないことはありませんでした。
 
-=====写真載せる=====
+image::nakamura/reInvent/IMG_2971.png[]
 
 
-個人的にはDatadogのMatt Williamsさん（Evangelist)のスピーチがとても素敵で気に入りました。
+個人的にはDatadogのMatt Williams氏（Evangelist)のスピーチが分かりやすく、所々にジョークを挟んでいてとても気に入りました。
 
-=====写真載せる=====
+image::nakamura/reInvent/IMG_2978.png[]
 
 
-あとJames Hamiltonのイベントは席に着くとポップコーン&ビールが配られ、前座でライブやっていたり。。。
+### TuesdayNight!
+
+初日の締めはVP and Distinguished EngineerであるJames Hamilton氏が講演するイベントがありました。
+
+席に着くとポップコーン&ビールが配られ、前座でライブやっていたり。。。
 まさにお祭りといった感じで最高でした！
 
+image::nakamura/reInvent/IMG_2991.png[]
+
+image::nakamura/reInvent/IMG_2993.png[]
 
 
 
-明日は新発表などもありそうなのでとても楽しみです。
+ただこちらも前夜祭のようなもので、本番は明日から！ +
+Keynoteでの新発表などとても楽しみです。
 
-
-ちなみにラスベガスは乾燥がひどく、水の消費が半端ないところでした。
-
-
-
-こちらからは以上です！
+また共有させていただきます、こちらからは以上です！
 
 
