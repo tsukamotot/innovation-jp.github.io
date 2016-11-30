@@ -77,10 +77,10 @@ Amazonによるリアル店舗ということで話題になったAmazon Books�
 クリスマスシーズン？ということもあってか、
 Alexaで話題のAmazon Echoがお安く売ってありました！！
 
-image::ozasa/echo.JPG[]
+image::ozasa/echo.png[]
 Amazon Echo
 
-image::ozasa/echodot.JPG[]
+image::ozasa/echodot.png[]
 Amazon Echo Dot
 
 が、みなさんご存知の通り日本においては電波法の関係で
@@ -102,4 +102,4 @@ image::ozasa/reinvent.JPG[]
 #### 追伸
 なんかアメリカって色々巨大です！！
 
-image::ozasa/beer.JPG[]
+image::ozasa/beer.png[]
