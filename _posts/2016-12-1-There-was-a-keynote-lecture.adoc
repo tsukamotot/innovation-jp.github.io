@@ -1,6 +1,6 @@
 = 基調講演がありました！！(re:Invent2016シリーズ③)
 :published_at: 2016-12-1
-:hp-alt-title:There-was-a-keynote-lecture
+:hp-alt-title: There-was-a-keynote-lecture
 :hp-tags: AWS,keynote,ozasa
 
 こんにちは！！
