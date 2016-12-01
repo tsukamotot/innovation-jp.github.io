@@ -1,4 +1,6 @@
 = AWS re:Invent2016初日！(re:Invent2016シリーズ②)
+:published_at: 2016-12-01
+:hp-alt-title: AWS-reInvent2016-firstday
 :hp-tags: AWS,re:Invent2016,Las Vegas,Nakamura
 
 お久しぶりです、中村です。
