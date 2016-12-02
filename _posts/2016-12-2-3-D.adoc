@@ -45,8 +45,8 @@ image::http://tech.innovation.co.jp/images/ami/table.png[500,300]
 
 image::http://tech.innovation.co.jp/images/ami/ningyou.png[500,300]
 
-藁人形風
-
+ 
+ 
 弊社で提供しているリストファインダーというツールの +
 マスコットキャラクター、リストくん！ +
 
