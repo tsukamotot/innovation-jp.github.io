@@ -42,7 +42,7 @@ image::nakamura/reInvent/IMG_1608.jpeg[]
 それでは当日の様子をレポートしていきますね。 +
 まず集合した後、数が多いと説明しづらい（聞こえづらい）とのことで2組に分かれて行動しました。
 
-トップバッターはDatadogさん。 +
+トップバッターは https://www.datadoghq.com/[Datadog] さん。 +
 
 image::nakamura/reInvent/IMG_3194.jpeg[]
 
@@ -59,7 +59,7 @@ image::nakamura/reInvent/IMG_3178.jpeg[]
 
 
 
-2番手はパロアルトネットワークスさん。 +
+2番手は https://www.paloaltonetworks.jp/[パロアルトネットワークス] さん。 +
 こちらもモニターの前でサービスの特徴を説明していただいたのですが、この時すでに時間が押していたために詳細はお聞きできませんでした。質問は2つほど出ていました。
 
 image::nakamura/reInvent/IMG_3179.jpeg[]
@@ -78,7 +78,7 @@ image::nakamura/reInvent/IMG_3234.jpeg[]
 
 
 
-3番手はCloudEndureさん
+3番手は https://www.cloudendure.com/[CloudEndure] さん
 
 サービスの概要のみをしていただいたので、所要時間はなんと3分ほど。。。 +
 質問も1人のみとかなり短かったです。もう少しお聞きしたかったです！
@@ -91,7 +91,7 @@ image::nakamura/reInvent/IMG_3180.jpeg[]
 
 
 
-4番手はAlertLogicさん
+4番手は https://www.alertlogic.com/[AlertLogic] さん
 
 時間が無いことを事前に把握してくださり、5分ほどで簡単にサービスの説明をしていただきました。 +
 何か見ながらご説明いただくことはありませんでしたが、とてもわかりやすく感じました。
@@ -107,7 +107,7 @@ image::nakamura/reInvent/IMG_3235.jpeg[]
 
 
 
-ラストはdruvaさん
+ラストは http://jp.druva.com/[druva] さん
 
 ノートPCにて日本語の資料を見せつつ、サービスの説明をしていただきました。 +
 時間は全部で10分程。質問も1、2個ありました。
