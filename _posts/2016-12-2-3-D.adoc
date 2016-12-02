@@ -19,6 +19,7 @@
 * インクのプラスチック
 
 image::http://tech.innovation.co.jp/images/ami/item.png[]
+image::http://tech.innovation.co.jp/images/ami/hontounoafter.png[]
 
 ペンは電源をさしながら使います。
 ボタンを押してペンを温めます
