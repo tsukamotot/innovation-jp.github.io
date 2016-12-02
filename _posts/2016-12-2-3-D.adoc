@@ -17,40 +17,40 @@
 
 * ペン本体
 * 電気のコード
-* インクのプラスチック
+* プラスチックのインク
 
-image::http://tech.innovation.co.jp/images/ami/item.png[]
+image::http://tech.innovation.co.jp/images/ami/item.png[500]
 
 ペンは電源をさしながら使います。
 ペンが温まったらインクをセットし、▽ボタンを押します。 +
 
-image::http://tech.innovation.co.jp/images/ami/sankaku.png[]
+image::http://tech.innovation.co.jp/images/ami/sankaku.png[500,300]
 
 すると！
 
 インクが出てきた！ +
 
-image::http://tech.innovation.co.jp/images/ami/pen2.gif[]
+image::http://tech.innovation.co.jp/images/ami/pen2.gif[500,300]
 
 
 
 とりあえず何か作ってみる +
 3Dペン処女作「テーブル」 +
 
-image::http://tech.innovation.co.jp/images/ami/table.png[]
+image::http://tech.innovation.co.jp/images/ami/table.png[500,300]
 
 まっすぐ線を引くのも難しい・・・
 
 人形 +
 
-image::http://tech.innovation.co.jp/images/ami/ningyou.png[]
+image::http://tech.innovation.co.jp/images/ami/ningyou.png[500,300]
 
 藁人形風
 
 弊社で提供しているリストファインダーというツールの +
 マスコットキャラクター、リストくん！ +
 
-image::http://tech.innovation.co.jp/images/ami/listkun.jpg[]
+image::http://tech.innovation.co.jp/images/ami/listkun.jpg[500,300]
 
 手の震えによる絶妙なタッチ・・ +
 人相も変わってしまった・・！ +
