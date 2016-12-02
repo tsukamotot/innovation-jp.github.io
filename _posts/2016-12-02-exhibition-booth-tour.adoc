@@ -43,6 +43,9 @@ image::nakamura/reInvent/IMG_1608.jpeg[]
 まず集合した後、数が多いと説明しづらい（聞こえづらい）とのことで2組に分かれて行動しました。
 
 トップバッターはDatadogさん。 +
+
+image::nakamura/reInvent/IMG_3194.jpeg[]
+
 縦長のモニターの前でサービスの説明を色々していただき、質問も3、4つほど出ました。英語ではそこまで質問でなかったのではと思います。
 
 image::nakamura/reInvent/IMG_3178.jpeg[]
@@ -53,6 +56,9 @@ image::nakamura/reInvent/IMG_3178.jpeg[]
 「1時間で終わるんですよね？」なんて会話をツアー客同士でしてました。
 
 
+
+
+
 2番手はパロアルトネットワークスさん。 +
 こちらもモニターの前でサービスの特徴を説明していただいたのですが、この時すでに時間が押していたために詳細はお聞きできませんでした。質問は2つほど出ていました。
 
@@ -61,21 +67,40 @@ image::nakamura/reInvent/IMG_3179.jpeg[]
 所要時間は10分程度。全員にオリジナルキャップをいただいちゃいました！ありがとうございます！
 
 
+image::nakamura/reInvent/IMG_3193.jpeg[]
+
+
 
 3番手はCloudEndureさん
 
+サービスの概要のみをしていただいたので、所要時間はなんと3分ほど。。。 +
+質問も1人のみとかなり短かったです。もう少しお聞きしたかったです！
+
 image::nakamura/reInvent/IMG_3180.jpeg[]
 
-サービスの概要のみをしていただいたので、所要時間はなんと3分ほど。。。質問も1人のみとかなり短かったです。 +
-もう少しお聞きしたかったです！
+
+
+
+
 
 
 4番手はAlertLogicさん
 
+時間が無いことを事前に把握してくださり、3分ほどで簡単にサービスの説明をしていただきました。 +
+質問する暇がないほど簡潔にまとめてくださってました。
+
 image::nakamura/reInvent/IMG_3181.jpeg[]
 
-時間が無いことを把握してくださり、3分ほどでサービスの説明をしていただきました。 +
-その後に
+また資料とお土産のTシャツを人数分用意していただいており、いただいちゃいました。
+
+image::nakamura/reInvent/IMG_3190.jpeg[]
+
+
+
+
+
+ラストはdruvaさん
+
 
 
 image::nakamura/reInvent/IMG_3182.jpeg[]
@@ -84,11 +109,9 @@ image::nakamura/reInvent/IMG_3182.jpeg[]
 
 image::nakamura/reInvent/IMG_3185.jpeg[]
 
-image::nakamura/reInvent/IMG_3190.jpeg[]
 
-image::nakamura/reInvent/IMG_3193.jpeg[]
 
-image::nakamura/reInvent/IMG_3194.jpeg[]
+
 
 ### 参加してみた感想
 
@@ -101,7 +124,7 @@ image::nakamura/reInvent/IMG_3194.jpeg[]
 
 
 ただ時間配分だけ残念でした。（最初と最後のブースで時間差が結構ありました） +
-是非来年に活かしていただけたら嬉しいです！
+是非来年は調整をしつつ、また開催していただけたら嬉しいです！
 
 image::nakamura/reInvent/IMG_3183.jpeg[]
 
