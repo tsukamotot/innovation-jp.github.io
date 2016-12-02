@@ -25,7 +25,7 @@ image::http://tech.innovation.co.jp/images/ami/item.png[]
 image::ami/pen.png[]
 
 ペンが温まったらインクをセットして▽ボタンを押します。
-image::ami/sankaku.png[]
+image::http://tech.innovation.co.jp/images/ami/sankaku.png[]
 
 すると！
 
