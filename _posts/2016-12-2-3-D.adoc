@@ -21,43 +21,43 @@
 image::http://tech.innovation.co.jp/images/ami/item.png[]
 
 ペンは電源をさしながら使います。
-ボタンを押してペンを温めます
+ボタンを押してペンを温めます +
 image::http://tech.innovation.co.jp/images/ami/pen.png[]
 
-ペンが温まったらインクをセットして▽ボタンを押します。
+ペンが温まったらインクをセットして▽ボタンを押します。 +
 image::http://tech.innovation.co.jp/images/ami/sankaku.png[]
 
 すると！
 
-インクが出てきた！
+インクが出てきた！ +
 image::http://tech.innovation.co.jp/images/ami/pen2.gif[]
 
 いろいろやってみた
 
 とりあえず何か作ってみる
-3Dペン処女作「テーブル」
+3Dペン処女作「テーブル」 +
 image::http://tech.innovation.co.jp/images/ami/table.png[]
 まっすぐ線を引くのも難しい・・・
 
-人形
+人形 +
 image::http://tech.innovation.co.jp/images/ami/ningyou.png[]
 藁人形風
 
-弊社で提供しているリストファインダーというツールの
-マスコットキャラクター、リストくん！
+弊社で提供しているリストファインダーというツールの +
+マスコットキャラクター、リストくん！ +
 image::http://tech.innovation.co.jp/images/ami/listkun.jpg[]
-手の震えによる絶妙なタッチ・・
-人相も変わってしまった・・！
-※ちなみに元画像はこれ
+手の震えによる絶妙なタッチ・・ +
+人相も変わってしまった・・！ +
+※ちなみに元画像はこれ +
 image::http://tech.innovation.co.jp/images/ami/listkunWithPC.png[]
 
 
 **まとめ**
 
-インクはペンから出た直後は柔らかく、（触れる程度の）高温ですが、
-すぐに冷めて固まります。
-コントロールが難しく、習得には少し時間がかかるかも。。
-でも、すっごく面白い！
+インクはペンから出た直後は柔らかく、（触れる程度の）高温ですが、 +
+すぐに冷めて固まります。 +
+コントロールが難しく、習得には少し時間がかかるかも。。 +
+でも、すっごく面白い！ +
 おすすめですのでぜひトライしてみてください。
 
 
