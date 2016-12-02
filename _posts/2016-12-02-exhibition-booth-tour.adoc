@@ -1,0 +1,68 @@
+= 展示ブースツアーに参加してみた(re:Invent2016シリーズ④)
+:published_at: 2016-12-02
+:hp-alt-title: exhibition_booth_tour
+:hp-tags: AWS,re:Invent2016,Las Vegas,Gyoza,Nakamura
+
+ラスベガスからこんにちは！ +
+最近餃子が恋しい中村です。 +
+
+今回展示ブースツーアに参加してみたので、その内容をレポートさせていただきます。
+
+### 展示ブースツアーとは
+
+こちらのイベントはre:Inventのツアーに組み込まれているものではなく、サーバーワークスの羽柴さんが企画してくださった素晴らしいイベントです！
+
+私のようなre:Invent初参加者にとっては非常に嬉しい企画！絶対参加！
+
+と思ったら募集が始まるとすぐに定員オーバーとなってしまいました。。。 +
+が、急遽枠を増やしていただきなんとか参加することができました。
+
+
+ちなみにre:Invent2016の展示ブースの様子がこちら。
+
+image::nakamura/reInvent/IMG_1608.jpeg[]
+
+めちゃくちゃ広く、飲み物や軽食などもフリーなので色々迷ってしまいます（笑）
+
+
+image::nakamura/reInvent/IMG_3178.jpeg[]
+
+
+image::nakamura/reInvent/IMG_3179.jpeg[]
+
+image::nakamura/reInvent/IMG_3180.jpeg[]
+
+image::nakamura/reInvent/IMG_3181.jpeg[]
+
+image::nakamura/reInvent/IMG_3182.jpeg[]
+
+
+
+image::nakamura/reInvent/IMG_3185.jpeg[]
+
+image::nakamura/reInvent/IMG_3190.jpeg[]
+
+image::nakamura/reInvent/IMG_3193.jpeg[]
+
+image::nakamura/reInvent/IMG_3194.jpeg[]
+
+### 参加してみた感想
+
+英語がまるでダメな私にとって、
+
+#### 展示ブースでのやり取り ＝ Tシャツ欲しい時
+
+となっていたので母国語での丁寧な説明をしていただけたので楽しかったです。 +
+羽柴さん、各ブースで対応していただいた皆様、本当にありがとうございました！
+
+
+ただ時間配分だけ残念でした。（最初と最後のブースで時間差が結構ありました） +
+是非来年に活かしていただけたら嬉しいです！
+
+image::nakamura/reInvent/IMG_3183.jpeg[]
+
+次回(来年)も参加したい！
+
+こちらからは以上です。
+
+
