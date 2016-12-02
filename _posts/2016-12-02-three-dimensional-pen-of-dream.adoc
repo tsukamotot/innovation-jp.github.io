@@ -1,5 +1,5 @@
 = 空間に絵を描ける夢の3Dペンをいただいたので使ってみた
-:published_at: 2016-12-2
+:published_at: 2016-12-02
 :hp-alt-title: three-dimensional-pen-of-dream
 :hp-tags: 3Dpen,AMI
 
