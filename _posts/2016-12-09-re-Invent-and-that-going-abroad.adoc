@@ -3,8 +3,9 @@
 :hp-alt-title: reInvent-and-that-going-abroad
 :hp-tags: AWS,re:Invent2016,Las Vegas,Ozasa
 
-さて、行ってきましたre:Invent2016。
+こんにちは、オザサです。
 
+さて、行ってきましたre:Invent2016ってことで +
 イベントの最中にもブログを更新しておりましたので、 +
 ざっくりした雰囲気はそちらを見ていただきたのですが、 +
 本ポストでは初の米国滞在と初のre:Inventが僕が何を感じたかを書いてみたいと思います。
