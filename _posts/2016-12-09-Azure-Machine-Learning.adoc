@@ -1,0 +1,13 @@
+= 下書き
+:published_at: 2016-12-09
+:hp-alt-title: Azure Machine Learning
+:hp-tags: syoga, log, Azure Machine Learning
+
+**aaaa**
+
+
+* ペン本体
+* 電気のコード
+* プラスチックフィラメント（インク）
+
+image::http://tech.innovation.co.jp/images/ami/item.png[500]
