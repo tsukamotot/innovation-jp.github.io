@@ -12,7 +12,7 @@
 どのようなシーンで利用できると思っているかというと、お客様の問合せメールを学習させ、問合せ内容からタグ付け等を自動に行い、ナレッジから最適な回答を提示するなんて事ができる…そうです。
 
 == Azure Machine Learning
-MS 派の私は 今更感はありますが Azure Machine Learning を使ってみます、Gary Ericson　さんの https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[チュートリアル] にそって学んでいきたいと思います！
+MS 派の私は 今更感がありますが Azure Machine Learning を使ってみます、Gary Ericson　さんの https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[チュートリアル] にそって学んでいきたいと思います！
 
 #### チュートリアルの流れ
 ```
@@ -107,7 +107,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml1/12.png[]
 
 出力ポートをつなぎ、画面下部にある RUN ボタンをクリックし処理を実行します。
 
-image::http://tech.innovation.co.jp/images/syoga/aml1/13.png[]
+image::http://tech.innovation.co.jp/images/syoga/aml1/25.png[]
 
 
 Missing Values Scrubber の結果を確認するため、出力ポートをクリックして視覚化（Visualize）。
