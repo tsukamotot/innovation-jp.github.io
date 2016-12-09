@@ -38,7 +38,7 @@ Machine Learning Studio には、多数のサンプル データセットが含�
 ```
 https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
 
-という事でまずはサンプルデータを使用しろという事なので早速ログイン、新しい実験を作成ます、MS ぽくない UI な気がしますが、左下の 「+ NEW」をクリック。
+という事でまずはサンプルデータを使用しろという事なので早速ログイン、新しい実験を作成します、MS ぽくない UI な気がしますが、左下の 「+ NEW」をクリック。
 
 image::http://tech.innovation.co.jp/images/syoga/aml1/1.png[]
 
@@ -162,8 +162,11 @@ image::http://tech.innovation.co.jp/images/syoga/aml1/18.png[]
 
 image::http://tech.innovation.co.jp/images/syoga/aml1/19.png[]
 
-学習アルゴリズムと分析モデルを構築します、線形回帰（Linear Regression）モジュールを、トレーニングは（Train Model）モジュールを利用して行うという事で
-それぞれ検索しキャンバスにセットし、分配した75%のデータと線形回帰の出力ポートをトレーニングに接続。
+学習アルゴリズムと分析モデルを構築します。
+
+線形回帰（Linear Regression）モジュールとトレーニング（Train Model）モジュールを利用して行うという事で、それぞれパレットからキャンバスにセットします。
+
+線形回帰（Linear Regression）モジュールと、分配（Split）モジュールの左側にある出力ポート（75%の方）を、トレーニング（Train Model）モジュールに接続。
 
 image::http://tech.innovation.co.jp/images/syoga/aml1/20.png[]
 
