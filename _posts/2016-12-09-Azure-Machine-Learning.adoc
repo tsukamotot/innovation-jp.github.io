@@ -1,13 +1,209 @@
-= 下書き
+= Azure Machine Learning のお話 その1
 :published_at: 2016-12-09
 :hp-alt-title: Azure Machine Learning
 :hp-tags: syoga, log, Azure Machine Learning
 
-**aaaa**
+弊社エンジニアチーム、運用の人 ショガ です。
+
+前回はログのお話でしたが、皆様ゴリゴリコーディングされているかと思います、今一度書かせていただきますが、ログをないがしろにしないでね！
+
+運用で利用できるかもしれない機械学習について勉強しようと思っています。
+
+どのようなシーンで利用できると思っているかというと、お客様の問合せメールを学習させ、問合せ内容からタグ付け等を自動に行い、ナレッジから最適な回答を提示するなんて事ができる…そうです。
+
+== Azure Machine Learning
+MS 派の私は 今更感はありますが Azure Machine Learning を使ってみます、Gary Ericson　さんの https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[チュートリアル] にそって学んでいきたいと思います！
+
+#### チュートリアルの流れ
+```
+実験を作成する 5 つの手順
+このチュートリアルでは、Machine Learning Studio で 5 つの基本的なステップに従い、モデルを作成、トレーニング、スコア付けするための実験を構築します。
+
+モデルの作成
+　手順 1: データを取得する
+　手順 2: データを前処理する
+　手順 3: 特徴を定義する
+モデルをトレーニングする
+　手順 4: 学習アルゴリズムを選択して、適用する
+そのモデルのスコア付けとテスト
+　手順 5: 新しい自動車の価格を予測する
+```
+https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+
+ふむふむ、急に自動車の話が出てきましたね。
+
+#### 手順1 データを取得する
+```
+Machine Learning Studio には、多数のサンプル データセットが含まれており、多様なソースからデータをインポートできます。 この例では、含まれているサンプル データセット 自動車価格データ (未加工)を使用します。 このデータセットには、製造仕様、モデル仕様、技術仕様などの情報を含む、多くの個別の自動車のエントリが含まれています。
+```
+https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+
+という事でまずはサンプルデータを使用しろという事なので早速ログイン、新しい実験を作成ます、MS ぽくない UI な気がしますが、左下の 「+ NEW」をクリック。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/1.png[]
+
+新規の実験（EXPERIMENT）ボタンから、空の実験をクリック。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/2.png[]
+
+お、なんか出てきました。
+
+チュートリアル通りサンプルを使用し作業をします、自動車価格データを選択するため検索BOXに「auto」と入力。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/3.png[]
 
 
-* ペン本体
-* 電気のコード
-* プラスチックフィラメント（インク）
+自動車価格データ（Automobile proce data(RAW))をパレット（モジュールが表示されているエリア）からキャンバス（右側のエリア）にドラッグします。
 
-image::http://tech.innovation.co.jp/images/ami/item.png[500]
+image::http://tech.innovation.co.jp/images/syoga/aml1/4.png[]
+
+
+どうやらセットされたようです、これで手順1は終わりですがデータの中身を確認してみます、出力ポートをクリックして視覚化（Visualize）をクリックします。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/5.png[]
+
+
+CSV ファイルですね！
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/6.png[]
+
+#### 手順 2: データを前処理する
+```
+通常、データセットには、分析前にある程度の前処理が必要です。 さまざまな行の中に、値が不足している列があります。 モデルがデータを正しく分析するには、これらの不足値をクリーニングする必要があります。 この例では、値が見つからない行をすべて削除します。 また、見つからない値の大部分は、正規化された損失列にあります。したがって、モデルからこの列も一緒に除外します。
+```
+https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+
+要約すると歯抜けになっているデータを整形するための処理が前処理という事のようです、早速やってみます。
+
+列セレクターを使用するため、検索BOXに「Select Columns Dataset」と入力し、データセットと同様にモジュールをパレットからキャンバスにドラッグします。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/7.png[]
+
+
+データセットの出力ポートを列セレクターにつなぎます（微妙にずらしたくなりますね！）
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/8.png[]
+
+
+それでは列セレクターで整形ルールを作成します右側に表示されている「Lunch column selector」をクリック。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/9.png[]
+
+
+全てのカラムから「normalized-losses」カラムに対して除外処理を行うように設定します。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/10.png[]
+
+
+除外処理のルールとしてカラムが空欄の行を削除するには、「Missing Values Scrubber」モジュールを使用しますので、検索BOXで検索しパレットに配置。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/11.png[]
+
+
+Missing Values Scrubber　の設定では 一番上の　For missing values の値を行全体の削除（Remove entire row）変更します。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/12.png[]
+
+
+出力ポートをつなぎ、画面下部にある RUN ボタンをクリックし処理を実行します。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/13.png[]
+
+
+Missing Values Scrubber の結果を確認するため、出力ポートをクリックして視覚化（Visualize）。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/14.png[]
+
+
+対応カラムがブランクになっている行と対応カラムの列が削除されました。
+
+#### 手順 3: 特徴を定義する
+```
+機械学習において 特徴 とは、関心のある項目を個別に測定できるプロパティです。 この例のデータセットでは、各行が 1 つの車種を表し、各列がその車種の特徴に対応します。
+
+予測モデルの作成に役立つ特徴を見つけるには、解決する問題に関する実験と知識が必要です。 一部の特徴は、他よりも対象を予測することに優れています。 また、特徴によっては、たとえば市内での燃費と高速道路での燃費のように、他の特徴との強い相関がある場合があります。したがって、このような特徴はモデルに新しい情報をそれほど多く追加しないので、削除できます。
+```
+https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+
+予測を立てやすいデータの選択が大事なんですね。
+
+次は分析対象列のフィルタリングです、おなじみの「Select Columns Dataset」モジュールでフィルタリング対象のカラムを設定します。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/15.png[]
+
+分析対象はチュートリアル通りに以下を選択します、フィルタリングの場合は include を選択しカラム名を入力。
+make, body-style, wheel-base, engine-size, horsepower, peak-rpm, highway-mpg, price
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/16.png[]
+
+
+そして、もう一度 RUN ボタンで処理を実行、これで指定したカラムでフィルタリングされました。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/17.png[]
+
+#### 手順 4: 学習アルゴリズムを選択して、適用する
+```
+データが準備できると、分析モデルの構築に必要なのは、トレーニングとテストになります。 このデータを使用してモデルのトレーニングとテストを行い、予測できる価格がどれがけ近いかを確認します。 ここでは、モデルをトレーニングしてからテストしなければならない理由は深く考えないでください。
+
+"分類" と "回帰" は、2 種類の管理された機械学習の手法です。 分類は、色 (赤、青、または緑) のような定義された一連のカテゴリから予測するものです。 回帰は、数値を予測する目的で使用されます。
+
+ここで行いたいことは価格を予測することです。価格は数値であるため、回帰モデルを使用することになります。 この例では、簡単な "線形回帰" モデルをトレーニングし、次の手順でこのモデルをテストします。
+```
+https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+
+あまり深く考えるなって言われてますので、とりあえずは考えない方向にします、価格の予想は連続した数値なので回帰分析を使用するという事ですね。
+
+分配（Split）モジュールをキャンバスに配置。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/18.png[]
+
+設定で Fraction rows in the first を0.75（75%）に、これによりデータの 75% をモデルのトレーニングに使用し、25% をテスト用に保持します。
+データはランダムに抽出する事も可能。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/19.png[]
+
+学習アルゴリズムと分析モデルを構築します、線形回帰（Linear Regression）モジュールを、トレーニングは（Train Model）モジュールを利用して行うという事で
+それぞれ検索しキャンバスにセットし、分配した75%のデータと線形回帰の出力ポートをトレーニングに接続。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/20.png[]
+
+トレーニングの設定で価格予測に使用するカラムである price を選択。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/21.png[]
+
+ここで RUN すると結果として、トレーニングされた回帰モデルが作成されサンプルに対するスコア予測が可能になります。
+
+#### 手順 5: 新しい自動車の価格を予測する
+ここで保持された25%を使用する時がきました、モデルのスコア付け（Score Model）モジュールをパレットから選択しキャンバスにセット、トレーニングと分配の25%の出力ポートをスコア付けモジュールに接続し、RUN します。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/22.png[]
+
+では、スコア付けモジュールの実行結果を視覚化（Visualize）してみます、make 列を選択し右側の compare to を price に設定してみると、価格に対するメーカのグラフが出ました。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/23.png[]
+
+２５％のテストデータの中では Volvo がズバ抜けた価格でした。
+
+最後は分析モデルを評価するためモデルの評価（Evaluate Model）をパレットからキャンバスに配置し、いつもの通り出力ポートを接続します、RUN をクリックし結果を視覚化（Visualize）。
+
+image::http://tech.innovation.co.jp/images/syoga/aml1/24.png[]
+
+
+```
+平均絶対誤差 (MAE): 絶対誤差の平均です ( 誤差 とは、予測された値と実際の値との差です)。
+二乗平均平方根誤差 (RMSE): テスト データセットに対して実行した予測の二乗誤差平均の平方根です。
+相対絶対誤差: 実際の値とすべての実際の値の平均との絶対差を基準にした絶対誤差の平均です。
+相対二乗誤差: 実際の値とすべての実際の値の平均との二乗差を基準にした二乗誤差の平均です。
+決定係数: R-2 乗値ともいいます。どの程度モデルが高い精度でデータと適合するかを示す統計指標です。
+エラーの各統計情報を小さくすることをお勧めします。 小さい値は、予測が実際の値をより厳密に照合することを示します。 決定係数では、値が 1 (1.0) に近づくほど、予測の精度が高くなります。
+```
+https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+
+う〜ん？決定係数が1に近い方が精度が高という事はわかるのですが、その他はサッパリです！
+
+1に近いので精度は高いのでしょうか？
+
+#### 感想
+という訳で触ってみましたが、チュートリアルという事でまだフワフワしております、まずは色々なデータセットから各モジュールでどのように分析できるかを勉強し、反復学習等で予想の制度を上げWEBサービスとして何やら触れるようにする事を目指します。
+
+*完*
