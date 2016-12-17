@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>新卒未経験のbigenがプログラムの構造って面白いって思った話 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="新卒未経験のbigenがプログラムの構造って面白いって思った話">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="新卒未経験のbigenがプログラムの構造って面白いって思った話">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2016/12/16/Programing-Architecture-And-Math.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="新卒未経験のbigenがプログラムの構造って面白いって思った話" />
+    <meta property="og:description" content="はじめまして、bigenです。 今年の１０月から入社した、新卒（ほぼ）未経験のひよこエンジニアです。 軽く経歴を紹介しますと、 1991年9月  京都に生まれる 2010年4月  PCで遊ぶのが好き（コーディングとかはしない）なので、京都大学工学部情報学科へ入学 2013年4月  麻雀が好きなので留年 2014年7月  麻雀が好きなので最高位戦日本プロ麻雀協会に入会 2016年9月  麻雀はいったん休憩にして、真面目に数学を勉強して卒業 2016年１０月2.5留年を経て、イノベーションへ入社 という感じです。 現在は弊社のListFinderというマー..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2016/12/16/Programing-Architecture-And-Math.html" />
+    <meta property="article:published_time" content="2016-12-15T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2016-12-17T02:13:06.767Z" />
+    <meta property="article:tag" content="MVC" />
+    <meta property="article:tag" content="Architecture" />
+    <meta property="article:tag" content="Math" />
+    <meta property="article:tag" content="Bigen" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="新卒未経験のbigenがプログラムの構造って面白いって思った話" />
+    <meta name="twitter:description" content="はじめまして、bigenです。 今年の１０月から入社した、新卒（ほぼ）未経験のひよこエンジニアです。 軽く経歴を紹介しますと、 1991年9月  京都に生まれる 2010年4月  PCで遊ぶのが好き（コーディングとかはしない）なので、京都大学工学部情報学科へ入学 2013年4月  麻雀が好きなので留年 2014年7月  麻雀が好きなので最高位戦日本プロ麻雀協会に入会 2016年9月  麻雀はいったん休憩にして、真面目に数学を勉強して卒業 2016年１０月2.5留年を経て、イノベーションへ入社 という感じです。 現在は弊社のListFinderというマー..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2016/12/16/Programing-Architecture-And-Math.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars.githubusercontent.com/u/23183770?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "新卒未経験のbigenがプログラムの構造って面白いって思った話",
+    "url": "http://tech.innovation.co.jp/2016/12/16/Programing-Architecture-And-Math.html",
+    "datePublished": "2016-12-15T15:00:00.000Z",
+    "dateModified": "2016-12-17T02:13:06.767Z",
+    "keywords": "MVC, Architecture, Math, Bigen",
+    "description": "はじめまして、bigenです。 今年の１０月から入社した、新卒（ほぼ）未経験のひよこエンジニアです。 軽く経歴を紹介しますと、 1991年9月  京都に生まれる 2010年4月  PCで遊ぶのが好き（コーディングとかはしない）なので、京都大学工学部情報学科へ入学 2013年4月  麻雀が好きなので留年 2014年7月  麻雀が好きなので最高位戦日本プロ麻雀協会に入会 2016年9月  麻雀はいったん休憩にして、真面目に数学を勉強して卒業 2016年１０月2.5留年を経て、イノベーションへ入社 という感じです。 現在は弊社のListFinderというマー..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-M-V-C tag-Architecture tag-Math tag-Bigen no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="16 Dec 2016" class="post-meta__date date">16 Dec 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/M-V-C">MVC</a>, <a href="http://tech.innovation.co.jp/tag/Architecture">Architecture</a>, <a href="http://tech.innovation.co.jp/tag/Math">Math</a>, <a href="http://tech.innovation.co.jp/tag/Bigen">Bigen</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/23183770?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">新卒未経験のbigenがプログラムの構造って面白いって思った話</h1>
+    </header>
+
+    <section class="post tag-M-V-C tag-Architecture tag-Math tag-Bigen">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>はじめまして、<strong>bigen</strong>です。</p>
+</div>
+<div class="paragraph">
+<p>今年の１０月から入社した、<strong>新卒（ほぼ）未経験</strong>のひよこエンジニアです。<br>
+軽く経歴を紹介しますと、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>1991年9月  京都に生まれる</p>
+</li>
+<li>
+<p>2010年4月  PCで遊ぶのが好き（コーディングとかはしない）なので、京都大学工学部情報学科へ入学</p>
+</li>
+<li>
+<p>2013年4月  麻雀が好きなので留年</p>
+</li>
+<li>
+<p>2014年7月  麻雀が好きなので最高位戦日本プロ麻雀協会に入会</p>
+</li>
+<li>
+<p>2016年9月  麻雀はいったん休憩にして、真面目に数学を勉強して卒業</p>
+</li>
+<li>
+<p>2016年１０月2.5留年を経て、イノベーションへ入社</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>という感じです。
+現在は弊社の<strong>ListFinder</strong>という<strong>マーケティングオートメーションツール</strong>の開発を行っています！+
+<br>
+大学では線形代数とかをやっていたので、<br>
+研究で使う計算（積分したり行列計算したり）ぐらいのプログラムは書けたんですが、<br>
+プロダクトやアプリを作るような経験は全くなしでした。<br></p>
+</div>
+<div class="paragraph">
+<p>そんな僕が、真面目にプログラミングを初めてみて、<br>
+<strong>「やっぱり計算機とかプログラミングの概念って学者が作ったんだなぁ」と感じて面白かった話</strong>です。<br>
+<br></p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="__">「モデル」という言葉</h4>
+<div class="paragraph">
+<p>例えばごく基本的な考え方として「<strong>MVCモデル</strong>」というものがあります（最近勉強した）。<br>
+サービスの構造を<br></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>目に見える部分（<strong>View</strong>)</p>
+</li>
+<li>
+<p>なにか入力を与える部分(<strong>Controler</strong>)</p>
+</li>
+<li>
+<p>なかでごちゃごちゃやる部分（<strong>Model</strong>）</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>で分離しようという考え方ですが、<br>
+最後の「なかでごちゃごちゃやる部分」に「Model」なんて名前をつけるのはいかにも学者っぽいですね。<br>
+<br>
+ 学術領域では「入力と出力にある関係があった時に、決められたある枠組みの中でその入出力関係を記述したもの」をモデルと呼びます（ちょっと語弊があるかも）。<br>
+ 小難しいことはおいといて、普通に生きてたら「モデル」なんて言葉は芸能人とかプラモデルぐらいにしか使わないわけですよ。<br>
+ そんな言葉が普通に出てきてるのが面白いなぁと思いました。<br>
+<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___2">オブジェクト指向って数学そのもの</h4>
+<div class="paragraph">
+<p>あと、「<strong>オブジェクト指向</strong>」という言葉も勉強中で超難しいなーとか思ってるわけですが、<br>
+「クラス」「サブクラス」といった概念は、よく考えたら線形代数でモロに出てくる概念でした。<br>
+<br>
+ このことに気づいた瞬間、<br>
+ 様々な「クラス」が何重にも折り重なった複雑怪奇なフレームワークも、<br>
+ 線形空間に照らし合わせて考えればすごく理解しやすくなりました。<br>
+ 以下具体例込みでもう少し説明したいと思います。<br>
+<br>
+語弊を恐れず超ざっくり言うと、<br>
+線形代数とは 「足し算と掛け算が<strong>普通に</strong>使える変数と関数」だけを扱う数学です。<br>
+ 何言ってんの？って感じるかもしれませんが、<br>
+ 「a+b ≠ b+a」とか「a(b+c)≠(b+c)a」になるような数学もたくさんあります。<br>
+<br>
+なので、変数一つ扱うのにも、<br>
+まずは「右から足しても左から足しても結果は同じやつだけ使おう」とか<br>
+「点が２つ存在してたら、それだけで距離は一通りに決まる空間で話をしよう」 とか<br>
+そんなあたり前に見える話をきっちり決めとかないと、<br>
+Aさん：足し算しただけなのに結果がおかしいぜ！<br>
+Bさん：そんなわけないだろ！どれどれ・・・・えっ！右から足したり左から足したりしてんの！？そりゃおかしくなるだろ！<br>
+みたいに矛盾が生じて議論が進まないんです。<br>
+<br>
+オブジェクト指向も思想は結構似ていて、<br>
+まずは「変数が２つあったら、距離メソッドが絶対使える前提で話をしよう」とか、<br>
+「tb名とアクションの情報（プロパティ）は絶対もってる命令文だけを扱うぜ！」とか、<br>
+あらかじめ議論のフィールドを決めてから仕組みを作んないと、<br>
+「絶対に矛盾がない（絶対にエラーがおきない）」状態は維持できない。<br>
+だから「このグループからとってきた要素だったらこういう風に使っていいですよ」<br>
+っていう「前提となる集合」と「その要素」の関係をプログラム言語で実現しようというのが<br>
+オブジェクト指向なんだろうな、と思っています。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___3">まとめ</h4>
+<div class="paragraph">
+<p>というわけで、数学とアーキテクチャの話はすごい共通点が多くて、<br>
+あんなに苦痛だった数学の勉強もやはり役に立つもんだなぁと思って面白かったお話でした。<br>
+<br>
+ちなみに今回はいきなりコーディングに関するブログでしたが、<br>
+個人的には組織の成果を最適化する仕組み作りなんかに結構興味あって、<br>
+今後そういった「俺はこういうのがやりたいんだ！」という話もしていきたいと思っています。<br></p>
+</div>
+<div class="paragraph">
+<p>次回をお楽しみに！</p>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
