@@ -26,8 +26,8 @@ http://tech.innovation.co.jp/2016/08/12/Why-Using-Framework.html[なぜフレー
 実際にコーディングしているメンバーも、そのあたりに対する迷いからくる不安が払拭されないまま負債を増やしていくことへなんとかしたい思いが芽生えていました。
 
 そしてひょんなことから
-草創期からLaravelに関わり深い造詣のある竹澤さん（https://twitter.com/ex_takezawa[@ex_takezawa]）
-栗生さん（https://twitter.com/k_kuriu[@k_kuriu]）の
+草創期からLaravelに関わり深い造詣のある竹澤さん（ https://twitter.com/ex_takezawa[@ex_takezawa] ）
+栗生さん（ https://twitter.com/k_kuriu[@k_kuriu]）の
 お二人をお招きして社内で勉強会を開きました。
 
 image::larastudy2.jpg[左から栗生さん 竹澤さん]
@@ -135,13 +135,13 @@ IMPORTANT: ファサードをマネてstaicのクラスを作るのはやめま�
 ### 聞けてよかった具体箇所
 
 − 各パターンの話
- − 守破離の話
- − 便利なものが正義なわけではない(Facadeの話より：値がほしいだけでFacadeされるオブジェクトが必要なわけではない)
+− 守破離の話
+− 便利なものが正義なわけではない(Facadeの話より：値がほしいだけでFacadeされるオブジェクトが必要なわけではない)
 
 ### 難しかった箇所
 
 − サービスロケータとDIコンテナの違い
- − ドメイン駆動設計の話
+− ドメイン駆動設計の話
  
 ## まとめ
 粗いテーマ設定にもかかわらず、次から次へと溢れ出る[line-through]#思い#言葉によって、参加者を巻き込んでいただき講師のお二人には大変感謝です。
