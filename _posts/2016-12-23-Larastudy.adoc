@@ -71,10 +71,10 @@ IMPORTANT: 軽い気持ちでお願いしてはいけない
 ちなみにバージョンは > 5.1 を前提としています
 （リファレンス本がそう）
 
-https://speakerdeck.com/hihats/larastudy2016[スライド]（AsciidocはJSで埋め込めない？）
 
-
+++++
 <script async class="speakerdeck-embed" data-id="53d4e7d55e774ccba6f57d4156107c5a" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+++++
 
 
 ## スライド補足
