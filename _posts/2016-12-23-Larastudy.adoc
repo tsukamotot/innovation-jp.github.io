@@ -1,5 +1,5 @@
 = Laravelフレームワーク勉強会を開催しました
-:published_at: 2016-12-22
+:published_at: 2016-12-23
 :hp-alt-title: Larastudy
 :hp-tags: Laravel,OOP,DDD,MVC
 :hp-image: larastudy1.png
