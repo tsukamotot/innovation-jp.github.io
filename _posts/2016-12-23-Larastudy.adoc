@@ -106,8 +106,8 @@ IMPORTANT: ファサードをマネてstaicのクラスを作るのはやめま�
 
 また、Facadeの代わりに全てのContractをDIにすればよいわけではなく、罠もある
 
-- 使わないMiddlewareをはずしましょう
-   デフォルトではすべてのMiddlewareを通ってしまう
+- 使わないMiddlewareをはずしましょう  
+   デフォルトではすべてのMiddlewareを通ってしまう  
    APIにセッションいらないよね？
 
 
@@ -182,7 +182,7 @@ image::larastudy3.jpg[piko]
 <div class="amazlet-box" style="margin-bottom:0px;border: 1px;"><div class="amazlet-image" style="float:left;margin:0px 12px 1px 0px;"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4844339451" name="amazletlink" target="_blank"><img src="https://images-fe.ssl-images-amazon.com/images/I/5121qHh-MoL._SL160_.jpg" alt="Laravel リファレンス[Ver.5.1 LTS 対応] Web職人好みの新世代PHPフレームワーク" style="border: 1px;" /></a></div><div class="amazlet-info" style="line-height:120%; margin-bottom: 10px"><div class="amazlet-name" style="margin-bottom:10px;line-height:120%"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4844339451" name="amazletlink" target="_blank">Laravel リファレンス[Ver.5.1 LTS 対応] Web職人好みの新世代PHPフレームワーク</a><div class="amazlet-powered-date" style="font-size:80%;margin-top:5px;line-height:120%">posted with <a href="http://www.amazlet.com/" title="amazlet" target="_blank">amazlet</a> at 16.12.24</div></div><div class="amazlet-detail">新原 雅司 竹澤 有貴 川瀬 裕久 大村 創太郎 松尾 大 <br />インプレス (2015-12-04)<br />売り上げランキング: 197,058<br /></div><div class="amazlet-sub-info" style="float: left;"><div class="amazlet-link" style="margin-top: 5px"><a href="http://www.amazon.co.jp/exec/obidos/ASIN/4844339451" name="amazletlink" target="_blank">Amazon.co.jpで詳細を見る</a></div></div></div><div class="amazlet-footer" style="clear: left"></div></div>
 ++++
 
-Laravel.com からは読み取れない意図や目的をより現場の視点から説明されていると感じました。
+laravel.com からは読み取れない意図や目的をより現場の視点から説明されていると感じました。
 一冊通しで全容を学ぶというよりは、各コンポーネントを理解したいときにそのチャプターを読むことで背景やユースケースがすっと入ってくるので、「今まさにLaravelを導入し始めている」「社内にそれほど精通している人がいない」といったケースで特に役立ちそうです。
 
 ### 今後について
@@ -196,6 +196,8 @@ Laravel.com からは読み取れない意図や目的をより現場の視点�
 
 ### 真面目に
 今回は、社内でのクローズドな会でしたが、せっかくのスペシャルなお話なので、社内のエンジニアだけでは勿体ないと思っております。もし、Laravelについて一緒に勉強会やりたいという方々がおられましたらお声がけください。（Laravelに限らず、DDDやOOP、AOPやFacade警察についても）
+ご連絡は https://twitter.com/hihats[@hihats] まで
+
 
 
 それにしても楽しかったです。
