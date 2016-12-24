@@ -28,7 +28,7 @@ http://tech.innovation.co.jp/2016/08/12/Why-Using-Framework.html[「なぜフレ
 
 そしてひょんなことから
 草創期からLaravelに関わり深い造詣のある竹澤さん（ https://twitter.com/ex_takezawa[@ex_takezawa] ）
-栗生さん（ https://twitter.com/k_kuriu[@k_kuriu]）の
+栗生さん（ https://twitter.com/kurikazu[@kurikazu]）の
 お二人をお招きして社内で勉強会を開くことになりました。
 
 image::larastudy2.jpg[左から栗生さん 竹澤さん]
