@@ -1,0 +1,111 @@
+= VultrとRancherで作るLaravel環境
+:published_at: 2017-01-06
+:hp-alt-title: vultrandlaravel
+:hp-tags: Laravel,vultr
+
+
+
+こんばんは、皆様Advent Calendarに追われる日々をいかがお過ごしでしょうか？
+歳末大感謝モードでお送りします塚本です。
+
+
+
+
+
+あけましておめでとうございます。
+初詣で引いたおみくじが大吉で、ちょっとうれしい加藤です。
+
+
+VultrとRancherでLaravelが動作する環境を構築します。
+
+
+・Vultr
+https://www.vultr.com/
+1時間単位で利用できるSSD VPSサービスです。
+東京リージョンが存在するため、日本国内からのレイテンシも10ms以下と快適に利用できます。
+
+・Rancher
+http://rancher.com/
+洗練されたWeb UI でDockerのクラスタ及びコンテナ管理ができます。ついに、日本語対応しました！
+
+
+参考記事
+RancherでDockerクラスタを構築する-① 準備編
+http://qiita.com/TongTheDopeness/items/e05f2b1517e4ff6483c5
+1.	RancherでDockerクラスタを構築する-② VultrにRancher Server を立ち上げる
+2.	RancherでDockerクラスタを構築する-③ RancherからVULTR APIでDockerホストを追加する
+3.	RancherでDockerクラスタを構築する-④ 【DockerHub編】Railsスタックを立ち上げる
+
+Docker, Rancher, and Laravel: Easy and Safe Scalability!
+By Luca Critelli
+https://paypertrail.com/blog/tech/docker-rancher-and-laravel-easy-and-safe-scalability
+
+
+
+
+1.	vultrでrancher os起動
+iPXEブートでrancherOSを起動します。
+事前に、Startup Scriptを登録しておきます。
+
+
+#!ipxe
+# Boots RancherOS in Ramdisk with persistent storage on disk /dev/vda
+
+# Location of Kernel/Initrd images
+set base-url http://releases.rancher.com/os/latest
+
+kernel ${base-url}/vmlinuz rancher.state.formatzero=true rancher.state.autoformat=[/dev/vda] rancher.password=[初回ログインパスワード]
+
+initrd ${base-url}/initrd
+
+boot
+
+参考) https://www.vultr.com/docs/install-rancher-os-via-ipxe
+
+登録したStartup Scriptを使用し、インスタンス追加ししばらくすると、下記のユーザーで接続できるようになります。
+ユーザー名：rancher
+パスワード：startup scriptで設定した値
+
+
+起動後、cloud-config.ymlを作成し、osのインストールを行います。
+cloud-config.yml
+
+hostname: rancher3
+ssh_authorized_keys:
+  - [公開鍵]
+
+sudo ros install -c cloud-config.yml -d /dev/sda
+
+
+2.	rancher serverのインストール〜Dockerホストの追加
+qiitaに素晴らしい解説がありますので、こちらを参考にDockerホストの追加まで行ってください。
+
+3.	カスタムコンテナイメージの作成
+laravelが動作するコンテナを作成します。
+
+mkdir rancher-laravel
+mkdir public
+echo ‘phpinfo()’ > public/index.php
+
+また、同ディレクトリに、Dockerfile下記の内容で追加します。
+
+FROM lucacri/laravelcaddy:latest
+
+MAINTAINER "Kato"
+
+RUN mkdir -p /var/www
+COPY . /var/www
+RUN chown -R www-data:www-data /var/www/
+
+
+作成したディレクトリを、githubもしくはbitbucketにpushしておきます。
+
+イメージのビルド
+Dockerクラウド(https://cloud.docker.com)等で、ビルドを行います。
+
+
+4.	Ranherでスタックを追加
+
+
+
+
