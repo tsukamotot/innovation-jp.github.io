@@ -1,53 +1,46 @@
 = VultrとRancherで作るLaravel環境
 :published_at: 2017-01-06
 :hp-alt-title: vultrandlaravel
-:hp-tags: Laravel,vultr
-
-
-
-こんばんは、皆様Advent Calendarに追われる日々をいかがお過ごしでしょうか？
-歳末大感謝モードでお送りします塚本です。
-
-
-
+:hp-tags: laravel,vultr,rancher
 
 
 あけましておめでとうございます。
 初詣で引いたおみくじが大吉で、ちょっとうれしい加藤です。
 
 
-VultrとRancherでLaravelが動作する環境を構築します。
+今回は、VultrとRancherでLaravelが動作する環境を構築します。
 
 
-・Vultr
-https://www.vultr.com/
-1時間単位で利用できるSSD VPSサービスです。
+===== Vultr
+https://www.vultr.com/  +
+1時間単位で利用できるSSD VPSサービスです。 +
 東京リージョンが存在するため、日本国内からのレイテンシも10ms以下と快適に利用できます。
 
-・Rancher
-http://rancher.com/
+===== Rancher
+http://rancher.com/  +
 洗練されたWeb UI でDockerのクラスタ及びコンテナ管理ができます。ついに、日本語対応しました！
 
 
-参考記事
-RancherでDockerクラスタを構築する-① 準備編
-http://qiita.com/TongTheDopeness/items/e05f2b1517e4ff6483c5
-1.	RancherでDockerクラスタを構築する-② VultrにRancher Server を立ち上げる
-2.	RancherでDockerクラスタを構築する-③ RancherからVULTR APIでDockerホストを追加する
-3.	RancherでDockerクラスタを構築する-④ 【DockerHub編】Railsスタックを立ち上げる
+===== 参考記事
+今回の記事を書くにあたって、参考にさせていただいた記事です。
 
-Docker, Rancher, and Laravel: Easy and Safe Scalability!
-By Luca Critelli
-https://paypertrail.com/blog/tech/docker-rancher-and-laravel-easy-and-safe-scalability
+* RancherでDockerクラスタを構築する-① 準備編 +
+  http://qiita.com/TongTheDopeness/items/e05f2b1517e4ff6483c5
+* RancherでDockerクラスタを構築する-② VultrにRancher Server を立ち上げる +
+  http://qiita.com/TongTheDopeness/items/58713ed877cb0f409de8
+* RancherでDockerクラスタを構築する-③ RancherからVULTR APIでDockerホストを追加する +
+  http://qiita.com/TongTheDopeness/items/e469ea72bcd2aaeb6af3
+* Docker, Rancher, and Laravel: Easy and Safe Scalability! By Luca Critelli +
+  https://paypertrail.com/blog/tech/docker-rancher-and-laravel-easy-and-safe-scalability
 
 
 
 
-1.	vultrでrancher os起動
-iPXEブートでrancherOSを起動します。
+=== 1.	vultrにインスタンスを作成する
+iPXEブートでrancherOSを起動します。 + 
 事前に、Startup Scriptを登録しておきます。
 
-
+```
 #!ipxe
 # Boots RancherOS in Ramdisk with persistent storage on disk /dev/vda
 
@@ -59,52 +52,186 @@ kernel ${base-url}/vmlinuz rancher.state.formatzero=true rancher.state.autoforma
 initrd ${base-url}/initrd
 
 boot
+```
+(参考) https://www.vultr.com/docs/install-rancher-os-via-ipxe
+ +
+ +
 
-参考) https://www.vultr.com/docs/install-rancher-os-via-ipxe
-
-登録したStartup Scriptを使用し、インスタンス追加ししばらくすると、下記のユーザーで接続できるようになります。
+登録したStartup Scriptを使用し、インスタンス追加ししばらくすると、下記のユーザーで接続できるようになります。 +
+```
 ユーザー名：rancher
 パスワード：startup scriptで設定した値
+```
 
 
-起動後、cloud-config.ymlを作成し、osのインストールを行います。
-cloud-config.yml
+起動後、rancher osのインストールを行います。
 
-hostname: rancher3
+下記の内容で、cloud-config.ymlファイルを作成します。
+```
+hostname: rancher-laravel
 ssh_authorized_keys:
   - [公開鍵]
+```
 
+上記のファイルを使い、ディスクにrancher os　をインストールします。
+```
 sudo ros install -c cloud-config.yml -d /dev/sda
+```
 
 
-2.	rancher serverのインストール〜Dockerホストの追加
-qiitaに素晴らしい解説がありますので、こちらを参考にDockerホストの追加まで行ってください。
+=== 2.	rancher serverのインストール、各種設定、Dockerホストの追加
 
-3.	カスタムコンテナイメージの作成
+qiitaの記事が素晴らしいです！ +
+こちらを参考にDockerホストの追加まで行ってください。 +
+vultrを使用している場合、rancher上でDockerホストの追加ができるようになります。 +
+
+* RancherでDockerクラスタを構築する-② VultrにRancher Server を立ち上げる +
+  http://qiita.com/TongTheDopeness/items/58713ed877cb0f409de8
+* RancherでDockerクラスタを構築する-③ RancherからVULTR APIでDockerホストを追加する +
+  http://qiita.com/TongTheDopeness/items/e469ea72bcd2aaeb6af3
+
+
+=== 3.	カスタムコンテナイメージの作成
 laravelが動作するコンテナを作成します。
 
+```
 mkdir rancher-laravel
-mkdir public
-echo ‘phpinfo()’ > public/index.php
+cd rancher-laravel
+composer create-project --prefer-dist laravel/laravel .
+```
 
-また、同ディレクトリに、Dockerfile下記の内容で追加します。
+また、同ディレクトリに、下記の内容でDockerfileファイルを作成します。
 
-FROM lucacri/laravelcaddy:latest
+```
+FROM ttaranto/docker-nginx-php7:latest
 
-MAINTAINER "Kato"
+MAINTAINER "[YourName]"
 
 RUN mkdir -p /var/www
 COPY . /var/www
-RUN chown -R www-data:www-data /var/www/
-
+RUN printenv > /var/www/.env
+RUN touch /var/www/storage/logs/laravel.log
+RUN chown -R www-data:www-data /var/www/storage > /dev/null 2>&1 || true
+RUN php /var/www/artisan generate:key > /dev/null 2>&1 || true
+RUN php /var/www/artisan config:clear > /dev/null 2>&1 || true
+RUN php /var/www/artisan config:cache > /dev/null 2>&1 || true
+RUN php /var/www/artisan route:cache > /dev/null 2>&1 || true
+RUN php /var/www/artisan optimize --force > /dev/null 2>&1 || true
+```
 
 作成したディレクトリを、githubもしくはbitbucketにpushしておきます。
 
-イメージのビルド
-Dockerクラウド(https://cloud.docker.com)等で、ビルドを行います。
 
 
-4.	Ranherでスタックを追加
+=== 4. イメージのビルド
+
+Dockerのイメージのビルドを行います。 + 
+ビルドは、Dockerクラウド(https://cloud.docker.com) が便利です。 + 
+githubやbitbucketと簡単に連携でき、ビルドまで自動で行ってくれます。
+
+
+=== 5.	Ranherでスタックを追加
+
+
+rancherのスタック追加画面で、下記の情報を指定し、追加します。
+
+docker-compose.yml
+```
+postgres:
+  image: 'postgres:latest'
+  environment:
+    - POSTGRES_USER=blog
+    - POSTGRES_PASSWORD=blog123
+
+redis:
+  image: redis:3
+  restart: always
+  tty: true
+  stdin_open: true
+
+web:
+  image: 'creer/laravel'
+  restart: always
+  links:
+    - postgres:postgres
+    - redis:redis
+    - beanstalk:queue
+  environment:
+    - APP_DEBUG=true
+    - DB_HOST=postgres
+    - DB_DATABASE=test
+    - DB_USERNAME=test
+    - DB_PASSWORD=test
+    - QUEUE_DRIVER=redis
+    - USERMOD="1000 www-data"
+  ports:
+    - '80:80'
+  volumes:
+      - /home/rancher/data:/var/www
+
+
+beanstalk:
+  image: 'schickling/beanstalkd:latest'
+  restart: always
+  tty: true
+  stdin_open: true
+```
+
+
+rancher-compose.yml
+```
+web:
+  scale: 1
+  upgrade_strategy:
+      start_first: true
+  health_check:
+      port: 80
+      interval: 30000
+      unhealthy_threshold: 4
+      response_timeout: 20000
+      request_line: GET / HTTP/1.0
+      healthy_threshold: 2
+
+web-balancer:
+  scale: 1
+  load_balancer_config:
+    name: web-balancer config
+
+
+redis:
+  scale: 1
+  health_check:
+      port: 6379
+      interval: 2000
+      unhealthy_threshold: 10
+      response_timeout: 2000
+      healthy_threshold: 2
+
+beanstalk:
+  scale: 1
+  health_check:
+      port: 11300
+      interval: 2000
+      unhealthy_threshold: 10
+      response_timeout: 2000
+      healthy_threshold: 2
+
+postgres:
+  scale: 1
+  health_check:
+      port: 5432
+      interval: 2000
+      unhealthy_threshold: 10
+      response_timeout: 2000
+      healthy_threshold: 2
+```
+
+
+
+
+
+
+
 
 
 
