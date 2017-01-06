@@ -1,0 +1,185 @@
+= 君がッ！PPAPするまで！歌うのをやめないッ！(新春)
+:published_at: 2017-01-06
+:hp-alt-title: ppap-javascript
+:hp-tags: ppap,Ozasa,javascript
+
+今年もよろしくお願いいたします。 +
+イノベーションのおエンジニアをやらしていただいております、 +
+オザサと申します。
+
+皆様は年末年始をどのように過ごされましたか？ +
+私は某シャーマンキングを読み返すという素晴らしい日々を過ごしておりました。 +
+あとは家族とテレビを見たりとかもしましたかね。
+
+テレビといえば、 +
+昨年から金ピカに輝く彼の人をよく見るようになりましたね。 +
+弊社でもモノマネをする者が出てくるほどの人気でしたよ。
+
+そう、こs、じゃなくてピコ太郎氏です。 +
+彼の有名な歌でPPAPという曲がありますね。 +
+そう、pen pineapple apple protocol(嘘)です。
+
+どこ見てもPPAPがチラつくので、 +
+新年ボケした頭の体操にPPAPをJSで実装してみました。
+
+[source, rust]
+----
+var obj  = [];
+obj[0]   = {article: 'a', name: 'pen', color: 'black'};
+obj[1]   = {article: 'a', name: 'pineapple', color: 'yellow'};
+obj[2]   = {article: 'an', name: 'apple', color: 'red'};
+obj[3]   = {article: 'a', name: 'banana', color: 'purple'};
+var t    = "";
+var tn   = "";
+var r    = [];
+var g    = 0;
+var y    = 1;
+var ppap = "pen pineapple apple pen"
+while (g < 1) {
+    if (y == 7) {
+        t = r[2] + " & " + r[5];
+        console.log(t);
+        t = r[3]['name'] + " " + r[4]['name'] + " " + r[1]['name'] + " " + r[0]['name'];
+        console.log("ah " + t);
+        if (t == ppap) {
+            g++;
+        } else {
+            r = [];
+            y = 1;
+        }
+    } else {
+        t = obj[Math.floor(Math.random()*obj.length)];
+        tn = "I have " + t['article'] + ' ' + t['name'];
+        if (y%3==0) {
+           t = r[y-2]['name'] + " " + r[y-3]['name'];
+           tn = "ah " + t;
+        }
+        console.log(tn);
+        r.push(t);
+        y++;
+    }
+}
+console.log("ピコ");
+----
+
+出力結果
+
+[source, rust]
+----
+I have a pen
+I have a pen
+ah pen pen
+I have an apple
+I have a pen
+ah pen apple
+pen pen & pen apple
+ah apple pen pen pen
+I have a banana
+I have a banana
+ah banana banana
+I have an apple
+I have a banana
+ah banana apple
+banana banana & banana apple
+ah apple banana banana banana
+I have a banana
+I have a pineapple
+ah pineapple banana
+I have a pineapple
+I have a banana
+ah banana pineapple
+pineapple banana & banana pineapple
+ah pineapple banana pineapple banana
+I have a banana
+I have a pen
+ah pen banana
+I have an apple
+I have a pen
+ah pen apple
+pen banana & pen apple
+ah apple pen pen banana
+I have an apple
+I have an apple
+ah apple apple
+I have a banana
+I have a pineapple
+ah pineapple banana
+apple apple & pineapple banana
+ah banana pineapple apple apple
+I have a pen
+I have an apple
+ah apple pen
+I have a banana
+I have an apple
+ah apple banana
+apple pen & apple banana
+ah banana apple apple pen
+I have a pen
+I have an apple
+ah apple pen
+I have a pineapple
+I have a banana
+ah banana pineapple
+apple pen & banana pineapple
+ah pineapple banana apple pen
+I have an apple
+I have an apple
+ah apple apple
+I have an apple
+I have an apple
+ah apple apple
+apple apple & apple apple
+ah apple apple apple apple
+I have a pen
+I have a pen
+ah pen pen
+I have an apple
+I have a pineapple
+ah pineapple apple
+pen pen & pineapple apple
+ah apple pineapple pen pen
+I have a banana
+I have a pen
+ah pen banana
+I have a banana
+I have a pineapple
+ah pineapple banana
+pen banana & pineapple banana
+ah banana pineapple pen banana
+I have a pen
+I have an apple
+ah apple pen
+I have a pen
+I have a pineapple
+ah pineapple pen
+apple pen & pineapple pen
+ah pen pineapple apple pen
+ピコ
+----
+
+本当は出力結果もっと長い・・・ +
+PPAPって奇跡でできてるんですね。
+
+
+多分これがネタ的に一番早いと思います、 +
+と書いてたらもうやってる人いました。みんな考えることは同じですね。
+
+今回は思いついてからかなりタイトなスケジュールで書いたので、 +
+マジックナンバー的なものの多用感も拭えないですし、 +
+colorとか使いきれていない問題があったりするので、 +
+気が向いたらブラッシュアップしていきます。
+
+こちらからは以上です。
+
+
+
+_追伸_
+
+夜も遅いからか
+[source, rust]
+----
+apple apple & apple apple
+ah apple apple apple apple
+----
+というappleのゴリ押し具合に不覚にもニヤッとしてしまいました。
+
