@@ -176,13 +176,13 @@ postgres:
 
 === 5. 既存のLaravelプロジェクトで使用する場合
 
-下記のプロジェクトをフォークし内容を書き換えます。
+下記のプロジェクトをフォークし内容を書き換えます。 +
 https://github.com/ttaranto/docker-nginx-php7
+ +
+ +
+■書き換え例 +
 
-
-■書き換え例
-
-Dockerfile
+Dockerfile +
 既存のプロジェクトファイルを使用するように書き換えます。
 ```
 - # set WWW public folder
@@ -193,7 +193,7 @@ Dockerfile
 ```
 
 
-build/setup.sh
+build/setup.sh +
 スクリプトの下部に、初期設定を行う設定を追記します
 ```
 + printenv > /var/www/.env
@@ -207,10 +207,11 @@ build/setup.sh
 
 === 6. まとめ
 
-AWSがちょっと高い！Herokuがちょっと高い！
+AWSがちょっと高い！Herokuがちょっと高い！ +
 という人には、VultrとRancherという組み合わせは、かなり良いのではないかと思います！
 
 
+以上です！
 
 
 
