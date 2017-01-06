@@ -4,7 +4,7 @@
 :hp-tags: laravel,vultr,rancher
 
 
-あけましておめでとうございます。
+あけましておめでとうございます。 +
 初詣で引いたおみくじが大吉で、ちょっとうれしい加藤です。
 
 
@@ -19,21 +19,6 @@ https://www.vultr.com/  +
 ===== Rancher
 http://rancher.com/  +
 洗練されたWeb UI でDockerのクラスタ及びコンテナ管理ができます。ついに、日本語対応しました！
-
-
-===== 参考記事
-今回の記事を書くにあたって、参考にさせていただいた記事です。
-
-* RancherでDockerクラスタを構築する-① 準備編 +
-  http://qiita.com/TongTheDopeness/items/e05f2b1517e4ff6483c5
-* RancherでDockerクラスタを構築する-② VultrにRancher Server を立ち上げる +
-  http://qiita.com/TongTheDopeness/items/58713ed877cb0f409de8
-* RancherでDockerクラスタを構築する-③ RancherからVULTR APIでDockerホストを追加する +
-  http://qiita.com/TongTheDopeness/items/e469ea72bcd2aaeb6af3
-* Docker, Rancher, and Laravel: Easy and Safe Scalability! By Luca Critelli +
-  https://paypertrail.com/blog/tech/docker-rancher-and-laravel-easy-and-safe-scalability
-
-
 
 
 === 1.	vultrにインスタンスを作成する
@@ -64,7 +49,7 @@ boot
 ```
 
 
-起動後、rancher osのインストールを行います。
+起動後、RancherOSのインストールを行います。
 
 下記の内容で、cloud-config.ymlファイルを作成します。
 ```
@@ -79,7 +64,7 @@ sudo ros install -c cloud-config.yml -d /dev/sda
 ```
 
 
-=== 2.	rancher serverのインストール、各種設定、Dockerホストの追加
+=== 2.	Rancher serverのインストール、各種設定、Dockerホストの追加
 
 qiitaの記事が素晴らしいです！ +
 こちらを参考にDockerホストの追加まで行ってください。 +
@@ -91,57 +76,22 @@ vultrを使用している場合、rancher上でDockerホストの追加がで�
   http://qiita.com/TongTheDopeness/items/e469ea72bcd2aaeb6af3
 
 
-=== 3.	カスタムコンテナイメージの作成
-laravelが動作するコンテナを作成します。
 
-```
-mkdir rancher-laravel
-cd rancher-laravel
-composer create-project --prefer-dist laravel/laravel .
-```
-
-また、同ディレクトリに、下記の内容でDockerfileファイルを作成します。
-
-```
-FROM ttaranto/docker-nginx-php7:latest
-
-MAINTAINER "[YourName]"
-
-RUN mkdir -p /var/www
-COPY . /var/www
-RUN printenv > /var/www/.env
-RUN touch /var/www/storage/logs/laravel.log
-RUN chown -R www-data:www-data /var/www/storage > /dev/null 2>&1 || true
-RUN php /var/www/artisan generate:key > /dev/null 2>&1 || true
-RUN php /var/www/artisan config:clear > /dev/null 2>&1 || true
-RUN php /var/www/artisan config:cache > /dev/null 2>&1 || true
-RUN php /var/www/artisan route:cache > /dev/null 2>&1 || true
-RUN php /var/www/artisan optimize --force > /dev/null 2>&1 || true
-```
-
-作成したディレクトリを、githubもしくはbitbucketにpushしておきます。
-
-
-
-=== 4. イメージのビルド
-
-Dockerのイメージのビルドを行います。 + 
-ビルドは、Dockerクラウド(https://cloud.docker.com) が便利です。 + 
-githubやbitbucketと簡単に連携でき、ビルドまで自動で行ってくれます。
-
-
-=== 5.	Ranherでスタックを追加
+=== 3.	Ranherでスタックを追加
 
 
 rancherのスタック追加画面で、下記の情報を指定し、追加します。
+
+* (参考)Docker, Rancher, and Laravel: Easy and Safe Scalability! By Luca Critelli +
+  https://paypertrail.com/blog/tech/docker-rancher-and-laravel-easy-and-safe-scalability
 
 docker-compose.yml
 ```
 postgres:
   image: 'postgres:latest'
   environment:
-    - POSTGRES_USER=blog
-    - POSTGRES_PASSWORD=blog123
+    - POSTGRES_USER=pguser
+    - POSTGRES_PASSWORD=pgpass
 
 redis:
   image: redis:3
@@ -150,7 +100,7 @@ redis:
   stdin_open: true
 
 web:
-  image: 'creer/laravel'
+  image: 'ttaranto/docker-nginx-php7'
   restart: always
   links:
     - postgres:postgres
@@ -159,16 +109,13 @@ web:
   environment:
     - APP_DEBUG=true
     - DB_HOST=postgres
-    - DB_DATABASE=test
-    - DB_USERNAME=test
-    - DB_PASSWORD=test
+    - DB_DATABASE=testdb
+    - DB_USERNAME=testuser
+    - DB_PASSWORD=testpasswd
     - QUEUE_DRIVER=redis
     - USERMOD="1000 www-data"
   ports:
     - '80:80'
-  volumes:
-      - /home/rancher/data:/var/www
-
 
 beanstalk:
   image: 'schickling/beanstalkd:latest'
@@ -191,12 +138,6 @@ web:
       response_timeout: 20000
       request_line: GET / HTTP/1.0
       healthy_threshold: 2
-
-web-balancer:
-  scale: 1
-  load_balancer_config:
-    name: web-balancer config
-
 
 redis:
   scale: 1
@@ -227,8 +168,47 @@ postgres:
 ```
 
 
+=== 4. 表示確認
+
+作成した環境に接続して、下記のような表示になればOKです。
 
 
+
+=== 5. 既存のLaravelプロジェクトで使用する場合
+
+下記のプロジェクトをフォークし内容を書き換えます。
+https://github.com/ttaranto/docker-nginx-php7
+
+
+■書き換え例
+
+Dockerfile
+既存のプロジェクトファイルを使用するように書き換えます。
+```
+- # set WWW public folder
+- RUN mkdir -p /var/www/public
+- ADD build/index.php /var/www/public/index.php
++ RUN git clone --depth 1 https://github.com/[ユーザー名]/[プロジェクトブランチ名].git /var/www
++  RUN cd /var/www/ && composer install
+```
+
+
+build/setup.sh
+スクリプトの下部に、初期設定を行う設定を追記します
+```
++ printenv > /var/www/.env
++ touch /var/www/storage/logs/laravel.log
++ php /var/www/artisan generate:key
++ php /var/www/artisan config:clear
++ php /var/www/artisan config:cache
++ php /var/www/artisan route:cache
++ php /var/www/artisan optimize --force
+```
+
+=== 6. まとめ
+
+AWSがちょっと高い！Herokuがちょっと高い！
+という人には、VultrとRancherという組み合わせは、かなり良いのではないかと思います！
 
 
 
