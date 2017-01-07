@@ -17,7 +17,7 @@
 
 そう、こs、じゃなくてピコ太郎氏です。 +
 彼の有名な歌でPPAPという曲がありますね。 +
-そう、pen pineapple apple protocol(嘘)です。
+そう、Pen Pineapple Apple Protocol(嘘)です。
 
 どこ見てもPPAPがチラつくので、 +
 新年ボケした頭の体操にPPAPをJSで実装してみました。
@@ -25,16 +25,16 @@
 [source, rust]
 ----
 var obj  = [];
-obj[0]   = {article: 'a', name: 'pen', color: 'black'};
-obj[1]   = {article: 'a', name: 'pineapple', color: 'yellow'};
-obj[2]   = {article: 'an', name: 'apple', color: 'red'};
-obj[3]   = {article: 'a', name: 'banana', color: 'purple'};
+obj[0]   = {article: 'a', name: 'Pen', color: 'black'};
+obj[1]   = {article: 'a', name: 'Pineapple', color: 'yellow'};
+obj[2]   = {article: 'an', name: 'Apple', color: 'red'};
+obj[3]   = {article: 'a', name: 'Banana', color: 'purple'};
 var t    = "";
 var tn   = "";
 var r    = [];
 var g    = 0;
 var y    = 1;
-var ppap = "pen pineapple apple pen"
+var ppap = "Pen Pineapple Apple Pen"
 while (g < 1) {
     if (y == 7) {
         t = r[2] + " & " + r[5];
