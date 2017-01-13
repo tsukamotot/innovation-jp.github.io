@@ -28,6 +28,7 @@ image::oyaizu/shodo.JPG[]
 
 image::oyaizu/note.png[]
 
+
 コードはコチラ。 +
 
 ----
