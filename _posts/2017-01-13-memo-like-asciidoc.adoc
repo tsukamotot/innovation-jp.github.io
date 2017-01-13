@@ -120,12 +120,12 @@ function textConvert(el) {
         return str.replace(/\*$/g, "</strong>");
     });
     // _イタリック_
-    text = text.replace(/_(?!\n)(?=\S)([\s\S]*?\S)(?!\n)_(?!_)/g, function() {
+    text = text.replace(/_(?!\n)(?=\S)([\s\S]*?\S)(?!\n)_/g, function() {
         var str = arguments[0].replace(/^_/g, "<i>");
         return str.replace(/_$/g, "</i>");
     });
     // `コマンド`
-    text = text.replace(/`(?!\n)(?=\S)([\s\S]*?\S)(?!\n)`(?!`)/g, function() {
+    text = text.replace(/`(?!\n)(?=\S)([\s\S]*?\S)(?!\n)`/g, function() {
         var str = arguments[0].replace(/^`/g, '<span class="command">');
         return str.replace(/`$/g, "</span>");
     });
