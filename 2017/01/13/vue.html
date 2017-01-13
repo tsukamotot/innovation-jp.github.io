@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>jQueryから移行するならVue.jsが良さそう - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="jQueryから移行するならVue.jsが良さそう">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="jQueryから移行するならVue.jsが良さそう">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/01/13/vue.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="jQueryから移行するならVue.jsが良さそう" />
+    <meta property="og:description" content="お久しぶりです、中村です。 いきなりですが、年末にこんなイベントに行ってきました。 【ヒカ☆ラボ】最新フロントエンドフレームワークを利用した開発事例！ https://atnd.org/events/83403# フロントエンドフレームワークがもの凄い勢いで誕生している中、 Angular 2、Vue.js 2、React.jsの3つのフレームワークを導入した貴重なお話を聞いてきました。 主催してくださった レバレジーズさん、登壇者の皆様ありがとうございました！ 弊社ではほぼjQueryで開発しており、管理することが難しく（不可能に）なってきたため 移..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/01/13/vue.html" />
+    <meta property="article:published_time" content="2017-01-12T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-01-13T17:12:06.489Z" />
+    <meta property="article:tag" content="Vue.js" />
+    <meta property="article:tag" content="jQuery" />
+    <meta property="article:tag" content="nakamura" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="jQueryから移行するならVue.jsが良さそう" />
+    <meta name="twitter:description" content="お久しぶりです、中村です。 いきなりですが、年末にこんなイベントに行ってきました。 【ヒカ☆ラボ】最新フロントエンドフレームワークを利用した開発事例！ https://atnd.org/events/83403# フロントエンドフレームワークがもの凄い勢いで誕生している中、 Angular 2、Vue.js 2、React.jsの3つのフレームワークを導入した貴重なお話を聞いてきました。 主催してくださった レバレジーズさん、登壇者の皆様ありがとうございました！ 弊社ではほぼjQueryで開発しており、管理することが難しく（不可能に）なってきたため 移..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/01/13/vue.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "m_nakamura",
+        "image": "https://avatars.githubusercontent.com/u/7381448?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "jQueryから移行するならVue.jsが良さそう",
+    "url": "http://tech.innovation.co.jp/2017/01/13/vue.html",
+    "datePublished": "2017-01-12T15:00:00.000Z",
+    "dateModified": "2017-01-13T17:12:06.489Z",
+    "keywords": "Vue.js, jQuery, nakamura",
+    "description": "お久しぶりです、中村です。 いきなりですが、年末にこんなイベントに行ってきました。 【ヒカ☆ラボ】最新フロントエンドフレームワークを利用した開発事例！ https://atnd.org/events/83403# フロントエンドフレームワークがもの凄い勢いで誕生している中、 Angular 2、Vue.js 2、React.jsの3つのフレームワークを導入した貴重なお話を聞いてきました。 主催してくださった レバレジーズさん、登壇者の皆様ありがとうございました！ 弊社ではほぼjQueryで開発しており、管理することが難しく（不可能に）なってきたため 移..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Vuejs tag-j-Query tag-nakamura no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="13 Jan 2017" class="post-meta__date date">13 Jan 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Vuejs">Vue.js</a>, <a href="http://tech.innovation.co.jp/tag/j-Query">jQuery</a>, <a href="http://tech.innovation.co.jp/tag/nakamura">nakamura</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/7381448?v=3" alt="profile image for m_nakamura" class="avatar post-meta__avatar" /> by m_nakamura</span>
+      </div>
+      <h1 class="post-title">jQueryから移行するならVue.jsが良さそう</h1>
+    </header>
+
+    <section class="post tag-Vuejs tag-j-Query tag-nakamura">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>お久しぶりです、中村です。<br>
+いきなりですが、年末にこんなイベントに行ってきました。</p>
+</div>
+<div class="paragraph">
+<p>【ヒカ☆ラボ】最新フロントエンドフレームワークを利用した開発事例！
+<a href="https://atnd.org/events/83403#" class="bare">https://atnd.org/events/83403#</a></p>
+</div>
+<div class="paragraph">
+<p>フロントエンドフレームワークがもの凄い勢いで誕生している中、<br>
+Angular 2、Vue.js 2、React.jsの3つのフレームワークを導入した貴重なお話を聞いてきました。</p>
+</div>
+<div class="paragraph">
+<p>主催してくださった <a href="http://leverages.jp/">レバレジーズ</a>さん、登壇者の皆様ありがとうございました！</p>
+</div>
+<div class="paragraph">
+<p>弊社ではほぼjQueryで開発しており、管理することが難しく（不可能に）なってきたため<br>
+移行したいなぁと思っている今日この頃です。</p>
+</div>
+<div class="paragraph">
+<p>ただ、</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>・これを選定しておけば間違いないといったフレームワークがない
+・学習コストが高い
+・いっぺんに移行するにはリスクが高すぎる</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>といったことを理由に今まで新しいフレームワークに踏み込めていなかったのですが、<br>
+イベントに行ってみて「Vue.jsいいんじゃない？」って思ったので少し挑戦してみました。</p>
+</div>
+<div class="paragraph">
+<p>5分程度でVue.jsの魅力が伝わると思うので、ぜひやって見てください！</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_vue_js">Vue.jsいいなと思った所</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>・少しずつVue.jsに移行できる
+・学習コストが低い</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ある特定のページだけVue.jsにしてみたり、共存することも可能なため<br>
+少しずつ移行していくのに非常に適しているなと。</p>
+</div>
+<div class="paragraph">
+<p>また学習コストも低いので、新卒エンジニアが多い弊社でも導入出来るんじゃないか。</p>
+</div>
+<div class="paragraph">
+<p>他のフレームワークとの比較が公式サイトにあるので、詳細はこちらを読んで見てください。
+<a href="https://jp.vuejs.org/v2/guide/comparison.html" class="bare">https://jp.vuejs.org/v2/guide/comparison.html</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">とりあえず動かしてみる</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="title">hello.html</div>
+<div class="content">
+<pre>&lt;html&gt;
+&lt;head&gt;
+    &lt;style&gt;
+        .error {
+            font-size: 10px;
+            color: red;
+            font-weight: bold;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="app"&gt;
+        &lt;div&gt;{{ message }}&lt;/div&gt;
+        &lt;input v-model="message"&gt;&lt;br&gt;
+        &lt;p class="error" v-if="!message"&gt;入力してください&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;script src="https://unpkg.com/vue/dist/vue.js"&gt;&lt;/script&gt;
+    &lt;script&gt;
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!'
+            }
+        })
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>たったこれだけでデータバインディングができちゃいます！</p>
+</div>
+<iframe width="172" height="86" src="https://www.youtube.com/embed/nPMGX_zkRGE" frameborder="0" allowfullscreen></iframe>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">簡単に解説</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;script src="https://unpkg.com/vue/dist/vue.js"&gt;&lt;/script&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>まずはvue.jsを使うためにファイルをインクルードしておきます。<br>
+準備はこれだけ。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;script&gt;
+var app = new Vue({
+    el: '#app',
+    data: {
+        message: 'Hello Vue!'
+    }
+})
+&lt;/script&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>「id="app"」の要素内に {{ message }} と記述すれば、初期に「Hello Vue!」と表示されるようになります。<br>
+script側はこれだけ。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;input v-model="message"&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>「v-model」をつかうと、簡単に双方向バインディングが設定できます。<br>
+これで入力フォームの内容がそのまま上に表示される訳です。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;p class="error" v-if="!message"&gt;入力してください&lt;/p&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>「v-if」では、内容がtrueの場合のみ、その要素を追加してくれます。<br>
+ここでは「message」がnullの場合のみ追加され、それ以外は&lt;p&gt;タグが存在しません。</p>
+</div>
+<div class="paragraph">
+<p>ちなみに「ｖ-if」の代わりに「v-show」を使っても見た目は同じですが、<br>
+messageがnullで無い場合にも要素が存在します。<br>
+ただし「style="display: none;"」となることで、非表示になるという違いがあります。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___3">感想</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回と同じような記述をすることで、簡単にEFO機能（エントリーフォーム最適化）が実装できそうだと感じました。<br>
+またAPI経由で取得してきたデータをpushするだけで表示が変わるので、<br>
+記述が少なくなりそうでいいですね！もっと使ってみようと思います。</p>
+</div>
+<div class="paragraph">
+<p>まぁIE8以下対応していないので、 <a href="http://it-trend.jp">ITトレンド</a>には導入できないんですけどね。。。<br>
+交渉してみよっと。</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です！</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
