@@ -42,12 +42,11 @@ Angular 2、Vue.js 2、React.jsの3つのフレームワークを導入した貴
 https://jp.vuejs.org/v2/guide/comparison.html
 
 
-まぁIE8以下対応していないので、ITトレンドには導入できないんですけどね。。。
-交渉してみよっと。
 
 ## とりあえず動かしてみる
 
-```
+.hello.html
+----
 <html>
 <head>
     <style>
@@ -60,7 +59,7 @@ https://jp.vuejs.org/v2/guide/comparison.html
 </head>
 <body>
     <div id="app">
-        <div height="10">{{ message }}</div>
+        <div>{{ message }}</div>
         <input v-model="message"><br>
         <p class="error" v-if="!message">入力してください</p>
     </div>
@@ -75,11 +74,66 @@ https://jp.vuejs.org/v2/guide/comparison.html
     </script>
 </body>
 </html>
+----
+
+
+たったこれだけでデータバインディングができちゃいます！
+
+
+## 簡単に解説
+
 ```
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+```
+まずはvue.jsを使うためにファイルをインクルードしておきます。 +
+準備はこれだけ。
 
-これだけでデータバインディングができちゃいます！
+
+
+```
+<script>
+var app = new Vue({
+    el: '#app',
+    data: {
+        message: 'Hello Vue!'
+    }
+})
+</script>
+```
+「id="app"」の要素内に {{ message }} と記述すれば、初期に「Hello Vue!」と表示されるようになります。 +
+script側はこれだけ。
+
+
+```
+<input v-model="message">
+```
+「v-model」をつかうと、簡単に双方向バインディングが設定できます。 +
+これで入力フォームの内容がそのまま上に表示される訳です。
+
+```
+<p class="error" v-if="!message">入力してください</p>
+
+```
+「v-if」では、内容がtrueの場合のみ、その要素を追加してくれます。 +
+ここでは「message」がnullの場合のみ追加され、それ以外は<p>タグが存在しません。
+
+
+ちなみに「ｖ-if」の代わりに「v-show」を使っても見た目は同じですが、 +
+messageがnullで無い場合にも要素が存在します。 +
+ただし「style="display: none;"」となることで、非表示になるという違いがあります。
 
 
 
+## 感想
 
+今回と同じような記述をすることで、簡単にEFO機能が実装できそうだと感じました。 +
+またAPI経由で取得してきたデータをpushするだけで表示が変わるので、 +
+記述が少なくなりそうでいいですね！
+
+
+まぁIE8以下対応していないので、ITトレンドには導入できないんですけどね。。。 +
+交渉してみよっと。
+
+
+こちらからは以上です！
 
