@@ -21,6 +21,7 @@ image::oyaizu/shodo.JPG[]
 でも、忘れんぼうなので、メモを取ることを忘れてしまいます... +
 そこで、メモしたくなるように自分でメモ帳を作ってみることにしました。 +
 このブログではAsciiDocというマークアップ言語を使用しているのですが、 今回はそれ*風*のメモ帳を作成します。 +
+今回はブラウザで動かせるものを完成形とします。 +
 
 == AsciiDoc風メモ帳
 
@@ -31,75 +32,30 @@ image::oyaizu/note.png[]
 
 コードはコチラ。 +
 
+*html* +
+
 ----
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="utf-8">
     <title>AsciiDoc</title>
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-            font-size: 16px;
-        }
-        .center {text-align: center;}
-        textarea {
-            box-sizing: border-box;
-            padding: 10px;
-            display: block;
-            border: none;
-            width: 50%;
-            height: 900px;
-            float: left;
-            background-color: #fafafa;
-            resize: none;
-        }
-        textarea:focus {
-            outline-offset: 0;
-            outline: 0;
-        }
-        #preview {
-            box-sizing: border-box;
-            padding: 10px;
-            width: 50%;
-            height: 900px;
-            float: right;
-        }
-        .line {
-            height: 2px;
-            width: 100%;
-            background-color: #CCC;
-        }
-        .codeblock {
-            padding: 10px;
-            background-color: #EEE;
-            border-radius: 3px;
-        }
-        .command {
-            padding: 0 7px;
-            background-color: #EEE;
-            color: #E40A5D;
-            border-radius: 3px;
-        }
-        h1 {font-size: 40px;}
-        h2 {
-            border-bottom: 1px solid #CCC;
-            font-size: 33px;
-        }
-        h3 {font-size: 30px;}
-        h4 {font-size: 27px;}
-        h5 {font-size: 24px;}
-        h6 {font-size: 21px;}
-    </style>
+    <link rel="stylesheet" href="asciidoc.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="asciidoc.js"></script>
 </head>
 <body>
     <h1 class="center">AsciiDoc風ノート</h1>
     <textarea id="editor"></textarea>
     <div id="preview"></div>
 </body>
-<script>
+</html>
+
+----
+
+*js* +
+
+----
 $(function(){
     $('#editor').keyup(function() {
         // テキストエリアの値を受け取る
@@ -173,8 +129,65 @@ function textConvert(el) {
 
     return text;
 }
-</script>
-</html>
+----
+
+*cs* +
+
+----
+* {
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+}
+.center {text-align: center;}
+textarea {
+    box-sizing: border-box;
+    padding: 10px;
+    display: block;
+    border: none;
+    width: 50%;
+    height: 900px;
+    float: left;
+    background-color: #fafafa;
+    resize: none;
+}
+textarea:focus {
+    outline-offset: 0;
+    outline: 0;
+}
+#preview {
+    box-sizing: border-box;
+    padding: 10px;
+    width: 50%;
+    height: 900px;
+    float: right;
+}
+.line {
+    height: 2px;
+    width: 100%;
+    background-color: #CCC;
+}
+.codeblock {
+    padding: 10px;
+    background-color: #EEE;
+    border-radius: 3px;
+}
+.command {
+    padding: 0 7px;
+    background-color: #EEE;
+    color: #E40A5D;
+    border-radius: 3px;
+}
+h1 {font-size: 40px;}
+h2 {
+    border-bottom: 1px solid #CCC;
+    font-size: 33px;
+}
+h3 {font-size: 30px;}
+h4 {font-size: 27px;}
+h5 {font-size: 24px;}
+h6 {font-size: 21px;}
+
 ----
 
 主にJQuery、正規表現を使用して作成しました。 +
