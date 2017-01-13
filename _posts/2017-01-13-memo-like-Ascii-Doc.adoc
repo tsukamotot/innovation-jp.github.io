@@ -1,7 +1,7 @@
 = 忘れんぼうを直すために自分でAsciiDoc風なメモ帳を作った
 :published_at: 2017-01-13
-:hp-alt-title: memo-like-asciidoc
-:hp-tags: asciidoc,Yaizu,javascript
+:hp-alt-title: memo-like-AsciiDoc
+:hp-tags: AsciiDoc,Yaizu,javascript
 
 明けましておめでとうございます。 +
 イノベーションのエンジニアのオヤイヅと申します。 +
@@ -36,7 +36,7 @@ image::oyaizu/note.png[]
 <html lang="ja">
 <head>
     <meta charset="utf-8">
-    <title>asciidoc</title>
+    <title>AsciiDoc</title>
     <style>
         * {
             padding: 0;
@@ -95,7 +95,7 @@ image::oyaizu/note.png[]
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
-    <h1 class="center">asciidoc風ノート</h1>
+    <h1 class="center">AsciiDoc風ノート</h1>
     <textarea id="editor"></textarea>
     <div id="preview"></div>
 </body>
@@ -181,7 +181,8 @@ function textConvert(el) {
 正規表現難しい !! +
 そして、結構長いですね。もっと短く書けると思いますが、こうなってしまいました泣 +
 
-これ以外にもAsciiDocには多彩な表現がある、改行は`+`で表現するなどの違いなどはありますが、本ブログはこんな感じで。 +
+これ以外にもAsciiDocには多彩な表現があり、まだ全然足りない状態です。 +
+他にも改行は`+`で表現するなどの違いなどはありますが、あくまでもAsciiDoc風ということで本記事はここまでとします。 +
 またテーブルなどを表現する記法もあるのですが、その正規表現はまだできそうにないので、修行がてら今後もチャレンジし、完全なAsciiDocに徐々に近づけたいと思います。 +
 
 
