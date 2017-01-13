@@ -131,7 +131,7 @@ function textConvert(el) {
 }
 ----
 
-*cs* +
+*css* +
 
 ----
 * {
