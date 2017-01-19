@@ -32,8 +32,59 @@ image::kohe/swiftwebview2.png[]
 
 
 
-image::kohe/swiftwebview3.png[]
+```
+import UIKit
 
+class ViewController: UIViewController ,UIWebViewDelegate{
+    @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak var hamBtn: UIButton!
+    
+    var googleURL = "https://www.google.co.jp/"
+    var innoURL   = "https://www.innovation.co.jp"
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let url = URL(string: googleURL)
+        let request = URLRequest(url: url!)
+        self.webView.loadRequest(request)
+        webView.delegate = self
+    }
+    
+    func webViewDidStartLoad(_ webView: UIWebView) {
+        self.indicator.startAnimating()
+        self.indicator.isHidden = false
+        print("ロード開始")
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        self.indicator.stopAnimating()
+        self.indicator.isHidden = true
+        print("ロード終了")
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+
+    }
+
+    @IBAction func back(_ sender: Any) {
+        self.webView.goBack()
+        self.hamBtn.alpha = 0
+        UIView.animate(withDuration: 5, animations: { () -> Void in
+            self.hamBtn.isHidden = false
+            self.hamBtn.alpha = 1
+        })
+    }
+    
+    @IBAction func tapHAM(_ sender: Any) {
+        let url = URL(string: innoURL)
+        let request = URLRequest(url:url!)
+        self.webView.loadRequest(request)
+        self.hamBtn.isHidden = true
+    }
+
+```
 
 
 
@@ -127,5 +178,5 @@ webview読み込み時に、くるくる回るやつを表示させ、くるく�
 
 
 
-image::kohe/swiftwebview4.gif[]
+image::kohe/swiftwebview5.gif[]
 
