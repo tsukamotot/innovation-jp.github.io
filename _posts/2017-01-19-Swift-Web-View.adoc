@@ -1,4 +1,4 @@
-= 【Swift】WebVIewで遊んでみたお話
+= 【Swift】WebViewで遊んでみたお話
 :published_at: 2017-01-19
 :hp-alt-title: SwiftWebView
 :hp-tags: Swift,WebView,kohe
