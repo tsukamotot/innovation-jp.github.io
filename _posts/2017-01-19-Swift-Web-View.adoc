@@ -1,0 +1,136 @@
+= 【Swift】WebVIewで遊んでみたお話
+:published_at: 2017-01-19
+:hp-alt-title: SwiftWebView
+:hp-tags: Swift,WebView,kohe
+
+
+こんばんは。こへです。 +
+
+
+
+
+
+【swift】webviewで遊んでみたお話。
+
+こんばんはこへです。
+
+
+iosでwebを閲覧するアプリを簡単に作ってみたので紹介いたします。
+
+画面準備
+ざっくりんこんな感じ。
+
+
+image::kohe/swiftwebview1.png[]
+
+
+
+オブジェクトの説明。
+
+
+
+image::kohe/swiftwebview2.png[]
+
+
+
+そして、ViewController.swiftにコードを書いていく。
+
+
+
+
+image::kohe/swiftwebview3.png[]
+
+
+
+
+コード一覧はこーんな感じ。
+
+では、コード説明。
+
+```
+    @IBOutlet weak var webView: UIWebView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak var hamBtn: UIButton!
+    
+```
+
+まずオブジェクトに名前をつけていく。
+
+```
+   override func viewDidLoad() {
+        super.viewDidLoad()
+        let url = URL(string: googleURL)
+        let request = URLRequest(url: url!)
+        self.webView.loadRequest(request)
+        webView.delegate = self
+    }
+    
+```
+
+アプリ起動時にGOOGLEさんをwebViewに表示する。
+
+```
+class ViewController: UIViewController ,UIWebViewDelegate
+```
+
+webviewのdelegateを使うために記述。
+
+```
+ func webViewDidStartLoad(_ webView: UIWebView) {
+        self.indicator.startAnimating()
+        self.indicator.isHidden = false
+        print("ロード開始")
+    }
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        self.indicator.stopAnimating()
+        self.indicator.isHidden = true
+        print("ロード終了")
+    }
+```
+
+webview読み込み時に、くるくる回るやつを表示させ、くるくる回らせる。
+読み込み終了時にはこやつを削除。
+
+
+```
+  @IBAction func back(_ sender: Any) {
+        self.webView.goBack()
+    }
+```
+
+そしてよくある。「戻るボタン」を実装。
+なんてお手軽…
+
+
+```
+ @IBAction func tapHAM(_ sender: Any) {
+        let url = URL(string: innoURL)
+        let request = URLRequest(url:url!)
+        self.webView.loadRequest(request)
+        self.hamBtn.isHidden = true
+    }
+```
+
+ハンバーガーを押したら弊社のサイトを表示する。
+そして、ハンバーガーが邪魔なので消す。
+
+
+```
+ @IBAction func back(_ sender: Any) {
+　　     self.hamBtn.alpha = 0
+   　     UIView.animate(withDuration: 5, animations: { () -> Void in
+           self.hamBtn.isHidden = false
+           self.hamBtn.alpha = 1
+    })
+ }
+    
+```
+
+最後に戻るボタンを押したときにハンバーガーを復活させて終了。
+もっと色々触って、面白いアプリ作れそうですね。
+完成品はこんな感じ。
+```
+
+image::kohe/swiftwebview4.gif[]
+
