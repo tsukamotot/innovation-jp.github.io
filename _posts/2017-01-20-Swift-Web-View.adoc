@@ -3,3 +3,106 @@
 :hp-alt-title: SwiftWebView
 :hp-tags: GoogleAppsScript,StockPrice,AMI
 
+
+こんにちは、亜美です。 +
+12月21日、当社イノベーションはマザーズ上場を果たしました！ +
+これもひとえに皆様のご支援のおかげです！ +
+ありがとうございます！ +
+
+
+上場したからには、皆さんに株を買ってほしい。 +
+そんな思いから、GoogleAppsScriptで、持ち株の損益を通知する +
+仕組みを作ってみました！ +
+
+
+
+### Googleスプレッドシートに必要情報を取り込む
+
+
+まずは、通知するうえで必要な情報を、スプレッドシート上に集めます。 +
+
+
+※画像
+
+
+社名と株価は、Yahoo!ファイナンスのイノベーションページから、 +
+ImportXML関数で取得します。 +
+
+=ImportXML("HTMLを取得するURL","HTMLのどの部分かを指定する") +
+※C9には、イノベーション株購入時の費用を入力してください +
+※C10には、イノベーション株の保有数を入力してください +
+
+
+画像の通り入力すると、以下のように情報が取得できます。 +
+
+※画像
+
+これで必要な情報は揃いました！ +
+
+
+### 通知が飛ぶようにGoogleAppsScriptで設定をする
+
+
+まずはメニューバーの「ツール」から「スクリプトエディタ」を開きます。 +
+
+※画像
+
+
+
+
+function kabu(){
+
+  //スプレッドシートを取得
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  
+  
+  //現在のシートを取得
+  var sheet = spreadsheet.getActiveSheet();
+  
+  
+  //セルの情報を取得する
+  //会社名
+  var companyName　= sheet.getRange("C7");
+  //株価
+  var StockPrice = sheet.getRange("C8");
+  //損益
+  var ProfitAndLoss = sheet.getRange("C11");
+  
+  
+  //該当セルの値を取得する
+  var companyNameValue = companyName.getValue();
+  var StockPriceValue = StockPrice.getValue();
+  var ProfitAndLossValue = ProfitAndLoss.getValue();
+  
+  
+  
+  //メールに記載するメッセージ情報
+    var PALmsg = '';
+    if (ProfitAndLossValue == 0) {
+    PALmsg = '損益はプラマイゼロ、とんとんです！';
+  } else　if (ProfitAndLossValue　>> 0) {
+    PALmsg = '損益は' + ProfitAndLossValue + '円です！やったね！';
+  }　else　if (ProfitAndLossValue << 0) {
+    PALmsg = '損益は' + ProfitAndLossValue + '円です！損してる！';
+  }
+  
+  
+  //メールを送信する。
+  //sampleのメールアドレス部分に、自分のメールアドレスを入れてください。
+  MailApp.sendEmail(
+    'sample@sample.com', 
+    '株価のお知らせ！', 
+    "現在の"+"companyNameValue"+"の株価は"　+　StockPriceValue　+　"円です！\n"+
+    PALmsg
+  );
+
+}
+
+
+上記の関数を毎日1回通知されるよう、設定をすれば完了です！ +
+
+※画像
+
+ImportXML関数に入れるURLを帰れば、イノベーションの株に限らず利用可能ですので、
+ぜひお試しください！
+
