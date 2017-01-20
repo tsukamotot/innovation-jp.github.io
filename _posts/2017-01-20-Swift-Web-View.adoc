@@ -48,7 +48,7 @@ image::ami/20160120/list2.png[]
 まずはメニューバーの「ツール」から「スクリプトエディタ」を開きます。 +
 
 
-image::ami/20160120/editor.png[]
+image::ami/20160120/Editor.png[]
 
 
 
