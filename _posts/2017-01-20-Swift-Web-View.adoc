@@ -99,7 +99,6 @@ function kabu(){
     "現在の"+"companyNameValue"+"の株価は"　+　StockPriceValue　+　"円です！\n"+
     PALmsg
   );
-
 }
 ```
 
@@ -107,6 +106,7 @@ function kabu(){
 上記の関数を毎日1回通知されるよう、設定をすれば完了です！ +
 
 image::ami/20160120/trigger.png[]
+
 
 
 ImportXML関数に入れるURLを帰れば、イノベーションの株に限らず利用可能ですので、
