@@ -84,9 +84,9 @@ function kabu(){
     var PALmsg = '';
     if (ProfitAndLossValue == 0) {
     PALmsg = '損益はプラマイゼロ、とんとんです！';
-  } else　if (ProfitAndLossValue　>> 0) {
+  } else　if (ProfitAndLossValue　> 0) {
     PALmsg = '損益は' + ProfitAndLossValue + '円です！やったね！';
-  }　else　if (ProfitAndLossValue << 0) {
+  }　else　if (ProfitAndLossValue < 0) {
     PALmsg = '損益は' + ProfitAndLossValue + '円です！損してる！';
   }
   
@@ -96,7 +96,7 @@ function kabu(){
   MailApp.sendEmail(
     'sample@sample.com', 
     '株価のお知らせ！', 
-    "現在の"+"companyNameValue"+"の株価は"　+　StockPriceValue　+　"円です！\n"+
+    "現在の" + companyNameValue + "の株価は" + StockPriceValue + "円です！\n" +
     PALmsg
   );
 }
@@ -108,7 +108,7 @@ function kabu(){
 image::ami/20160120/trigger.png[]
 
 
-
-ImportXML関数に入れるURLを帰れば、イノベーションの株に限らず利用可能ですので、
-ぜひお試しください！
-
+GAS初心者のでしたが、とても簡単に作ることができました！
+メールを送るだけでなく、他のGoogleのサービスなどとも連携が可能なようですので
+今後も色々試してみたいと思います！
+おしまい
