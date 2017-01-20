@@ -127,7 +127,7 @@ webviewのdelegateを使うために記述。
         print("ロード開始")
     }
     
-    func webViewDidFinishLoad(_ webView: UIWebView) {
+ func webViewDidFinishLoad(_ webView: UIWebView) {
         self.indicator.stopAnimating()
         self.indicator.isHidden = true
         print("ロード終了")
