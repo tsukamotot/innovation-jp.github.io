@@ -9,7 +9,7 @@
 
 
 
-iosでwebを閲覧するアプリを簡単に作ってみたので紹介いたします。
+IOSでWebを閲覧するアプリを簡単に作ってみたので紹介いたします。
 
 ### 画面準備
 ざっくりんこんな感じ。
@@ -112,13 +112,13 @@ class ViewController: UIViewController ,UIWebViewDelegate{
     
 ```
 
-アプリ起動時にGOOGLEさんをwebViewに表示する。
+アプリ起動時にGoogleさんをWebViewに表示する。
 
 ```
 class ViewController: UIViewController ,UIWebViewDelegate
 ```
 
-webviewのdelegateを使うために記述。
+WebViewのdelegateを使うために記述。
 
 ```
  func webViewDidStartLoad(_ webView: UIWebView) {
@@ -134,7 +134,7 @@ webviewのdelegateを使うために記述。
     }
 ```
 
-webview読み込み時に、くるくる回るやつを表示させ、くるくる回らせる。
+WebView読み込み時に、くるくる回るやつを表示させ、くるくる回らせる。
 読み込み終了時にはこやつを削除。
 
 
