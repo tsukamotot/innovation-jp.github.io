@@ -1,6 +1,6 @@
 = GoogleAppsScriptで、持ち株の損益を通知する
 :published_at: 2017-01-20
-:hp-alt-title: Notice-of-holding_googleAppsScript
+:hp-alt-title: notificationGoogleAppsScript
 :hp-tags: GoogleAppsScript,GoogleSpreadSheet,StockPrice,AMI
 
 
