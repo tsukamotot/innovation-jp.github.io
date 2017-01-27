@@ -3,7 +3,7 @@
 :hp-alt-title: GoogleAppsScriptDeWBS
 :hp-tags: GoogleAppsScript,GoogleSpreadSheet,WBS,kotani
 
-はじめまして、今月からイノベーションで働くことになりました小谷と申します！ +
+はじめまして、今月からイノベーションで働くことになりましたKTNと申します！ +
 入ったばっかりなのでわからないことが多く、勉強勉強の毎日です。 +
 なので、趣味のオンラインゲーム（DOTA2）をする時間がありません。 +
 DOTA2ご存知ですか？大会では10億円とか賞金が出るようなので、 +
