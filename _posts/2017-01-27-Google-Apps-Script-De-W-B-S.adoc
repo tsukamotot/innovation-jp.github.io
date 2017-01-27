@@ -60,7 +60,7 @@ image::kotani/20170127/3.png[]
 
 
 ```
-function makeKeikaku(sheet){
+function makeKeikakujisseki(sheet){
   const c_startcalendar_col = 8;
   const c_endcalendar_col = 38;
   const c_planstart_col = 3;
@@ -80,13 +80,28 @@ function makeKeikaku(sheet){
     if(sheet.getRange(w_row, c_planstart_col).getValue() == ""){
       continue;
     }
+
+    //期間と進捗率から何セル■にするか計算する
+    var w_kikan = sheet.getRange(w_row, 5).getValue();
+    var w_sincyoku = sheet.getRange(w_row, 6).getValue();
+    var w_jissizuminissuu = Math.floor(w_kikan * w_sincyoku)
+
+    //予定開始日が入っている場合は、□か■を入れる場所を探す
     for(var w_col = c_startcalendar_col; w_col <= c_endcalendar_col; w_col++){
+      //予定開始日の日付から□を入れる場所を探す
       var w_str2 = sheet.getRange(c_day_row, w_col).getValue();
       if(sheet.getRange(w_row, c_planstart_col).getValue().getTime() != w_str2.getTime()){
         continue;
       }
+      //予定終了日まで□か■を入れていく
       for(var w_col2 = w_col; w_col2 <= c_endcalendar_col; w_col2++){
-        sheet.getRange(w_row, w_col2).setValue("□");
+        if(w_jissizuminissuu > 0){
+          sheet.getRange(w_row, w_col2).setValue("■");
+          w_jissizuminissuu--;
+        }else{
+          sheet.getRange(w_row, w_col2).setValue("□");
+        }
+        //予定終了日を越えたら処理終了
         if(sheet.getRange(c_day_row, w_col2).getValue().getTime() == sheet.getRange(w_row, c_planend_col).getValue().getTime()){
           break;
         }
@@ -118,11 +133,88 @@ GASからスプレットシートに線を引くことが出来無いっぽい�
 しょうがないですよね。 +
 
 ```
-sdfasdfdsfasd
-asfsdfasf
-sadfsaflkjslkdjf
-safasfsd
+function makeInazumaModoki(sheet){
+  const c_startcalendar_col = 8;
+  const c_endcalendar_col = 38;
+  const c_planstart_col = 3;
+  const c_planend_col = 4;
+  const c_parcent_col = 6;
+  const c_day_row = 2;
+  const c_startcalendar_row = 3;
+  const c_endcalendar_row = 18;
+
+  //今日の日付の位置を取得する
+  for(var w_col = c_startcalendar_col; w_col <= c_endcalendar_col; w_col++){
+    var w_today = Utilities.formatDate(new Date(), "JST", "YYYYMMdd");
+    var w_day = Utilities.formatDate(sheet.getRange(c_day_row, w_col).getValue(), "JST", "YYYYMMdd");
+    if(w_today == w_day){
+      break;
+    }
+  }
+  var w_today_col = w_col;
+  
+  //タスクの行数分ぐるぐるする
+  for(var w_row = c_startcalendar_row; w_row <= c_endcalendar_row; w_row++){
+    var w_kikan = sheet.getRange(w_row, 5).getValue();
+    var w_sincyoku = sheet.getRange(w_row, 6).getValue();
+    var w_jissizuminissuu = Math.floor(w_kikan * w_sincyoku)
+
+    //タスクが無い列は今日に線を引く
+    if(sheet.getRange(w_row, c_planstart_col).getValue() == ""){
+      sheet.getRange(w_row, w_today_col).setBackground("orange");
+      continue;
+    }
+    
+    //遅延が発生しているかチェック
+    //遅延が発生している場合は進捗状況をチェックして線を引く
+    //遅延が発生してい無い場合は今日に線を引く
+    if((sheet.getRange(w_row, c_planend_col).getValue() < new Date()) && (sheet.getRange(w_row, c_parcent_col).getValue() != "1")){
+      //■を探す
+      for(var w_col = w_today_col; w_col >= c_startcalendar_col; w_col--){
+        if(sheet.getRange(w_row, w_col).getValue() == "■"){
+          break;
+        }
+      }
+      
+      //■が見つかった場合はそのセルに線を引く
+      if(w_col >= c_startcalendar_col){
+        sheet.getRange(w_row, w_col).setBackground("orange");
+      }else{
+        //□を探す
+        for(var w_col2 = c_startcalendar_col; w_col2 <= c_endcalendar_col; w_col2++){
+          if(sheet.getRange(w_row, w_col2).getValue() == "□"){
+            sheet.getRange(w_row, w_col2).setBackground("orange");
+            break;
+          }
+        }
+      }
+    }else{
+      sheet.getRange(w_row, w_today_col).setBackground("orange");
+    }
+  }
+}
 ```
+
+一応最後に、呼び出し元も書いておきます。
+```
+function myFunction() {
+  //スプレッドシートを取得
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  
+  //現在のシートを取得
+  var sheet = spreadsheet.getActiveSheet();
+
+  //非営業日を灰色に
+  setYasumiHaiiro(sheet);
+  
+  //予定開始日、終了日からガントチャートみたいなのを
+  makeKeikakujisseki(sheet);
+
+  //イナズマ線みたいなのを
+  makeInazumaModoki(sheet);
+}
+```
+
 image::kotani/20170127/5.png[]
 
 ということで、GAS触って3日目 ぐらいですが、
@@ -131,19 +223,4 @@ image::kotani/20170127/5.png[]
 もっとGAS勉強して次回はイナズマ線引きたいと思います。
 
 ではまた次回で。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
