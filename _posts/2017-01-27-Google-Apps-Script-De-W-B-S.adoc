@@ -3,5 +3,143 @@
 :hp-alt-title: GoogleAppsScriptDeWBS
 :hp-tags: GoogleAppsScript,GoogleSpreadSheet,WBS,kotani
 
-aaaa
+はじめまして、今年からイノベーションで働くことになりました小谷と申します！ +
+入ったばっかりなのでわからないことが多く、勉強勉強の毎日です。 +
+なので、趣味のオンラインゲーム（DOTA2）をする時間がありません。 +
+DOTA2ご存知ですか？大会では10億円とか賞金が出るようなので、 +
+プロゲーマーなって一攫千金いかがでしょうか！？ +
+
+で、いざブログを書こうとなると『ネタ』が見つからず、困ってしまいました。 +
+GASを使った記事が最近多かったので、 +
+私も乗っかってGASでスケジュール管理出来そうなものを作ってみようと思います。 +
+一回で完成まで行くのは難しそうなので、タスクの予定日（開始、終了）を設定すると、 +
+ガントチャート的なものとイナズマ線的なものが作成されるというのを作ってみたいと思います。 +
+あくまでも「的なもの」です。 +
+まず、フォーマットを作りました。これはGASではなく手動で作ったものです。 +
+
+image::kotani/20170127/1.png[]
+
+
+### その１　土日を灰色にする
+単純に土日を探して灰色にしてみようと思います。
+
+
+```
+function setYasumiHaiiro(sheet) {  
+  const c_startcalendar_col = 8;
+  const c_endcalendar_col = 38;
+  const c_day_row = 2;
+  const c_endcalendar_row = 18;
+  
+  //背景色クリア
+  sheet.getRange("H2:AL18").setBackground("white");
+    
+  //休みを探して灰色に（今は土日だけ）
+  for(var w_col = c_startcalendar_col; w_col <= c_endcalendar_col; w_col++){
+    if(checkYasumi(new Date(sheet.getRange(c_day_row, w_col).getValue()))){
+      sheet.getRange(c_day_row, w_col, c_endcalendar_row - c_day_row + 1, 1).setBackground("gray");
+    }
+  }
+}
+
+function checkYasumi(w_date){
+  w_weekday = w_date.getDay();
+  if (w_weekday == 0 || w_weekday == 6) {
+    return true;
+  }else{
+    return false;
+  }
+}
+```
+
+こんな感じになりました。本当は1/2、1/3、1/9も灰色になって欲しいのですが、今回は土日だけです。次回の伸び代として残しました。手抜きじゃ無いです！
+
+
+### その２　ガントチャート的なものを作る
+
+
+```
+function makeKeikaku(sheet){
+  const c_startcalendar_col = 8;
+  const c_endcalendar_col = 38;
+  const c_planstart_col = 3;
+  const c_planend_col = 4;
+  const c_day_row = 2;
+  const c_startcalendar_row = 3;
+  const c_endcalendar_row = 18;
+
+  //セルの値クリア
+  sheet.getRange("H3:AL18").setValue("");
+
+  //予定開始日、終了日からガントチャートのようなものを作る（□を埋める）
+  //タスクの行数分ぐるぐるする
+  for(var w_row = c_startcalendar_row; w_row <= c_endcalendar_row; w_row++){
+    //予定開始日が無い行はスキップ
+    var w_planstart = sheet.getRange(w_row, c_planstart_col).getValue();
+    if(sheet.getRange(w_row, c_planstart_col).getValue() == ""){
+      continue;
+    }
+    for(var w_col = c_startcalendar_col; w_col <= c_endcalendar_col; w_col++){
+      var w_str2 = sheet.getRange(c_day_row, w_col).getValue();
+      if(sheet.getRange(w_row, c_planstart_col).getValue().getTime() != w_str2.getTime()){
+        continue;
+      }
+      for(var w_col2 = w_col; w_col2 <= c_endcalendar_col; w_col2++){
+        sheet.getRange(w_row, w_col2).setValue("□");
+        if(sheet.getRange(c_day_row, w_col2).getValue().getTime() == sheet.getRange(w_row, c_planend_col).getValue().getTime()){
+          break;
+        }
+      }
+    }  
+  }
+}
+```
+だんだんそれっぽくなってきましたね。なってきましたよね？ +
+2月以降使え無いじゃ無いか。とかツッコミは数々ありとは思いますが、そこも今後の伸び代です！ 
+
+### その３　イナズマ線的なものを作る
+さて、ここからが本題です。 これがやりたくて作り始めたようなものです。 +
+そして気合を入れてドキュメントを見ていて気がついたのですが、 +
+GASからスプレットシートに線を引くことが出来無いっぽいです。。。 +
+てっきりExcel VBAみたいに出来るのかと思っていたのですが、事前調査は大事ですね。 +
+ということでGASでスケジュール管理は出来無いということで、終了したいと思います。
+
+
+・ +
+・ +
+・ +
+・ +
+
+と、いくらなんでもこれで終わることは出来ませんので、なんとか代替案を考えようと思います。 +
+背景を黄色に塗っていくことで、イナズマ線的な雰囲気を出して行こうかと。 +
+しょうがないですよね。 +
+
+```
+sdfasdfdsfasd
+asfsdfasf
+sadfsaflkjslkdjf
+safasfsd
+```
+
+ということで、GAS触って3日目 ぐらいですが、
+なんとか動くものが出来ました。
+というか今回の用途では、EXCEL VBAと変わらない感じですね。
+もっとGAS勉強して次回はイナズマ線引きたいと思います。
+
+ではまた次回で。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
