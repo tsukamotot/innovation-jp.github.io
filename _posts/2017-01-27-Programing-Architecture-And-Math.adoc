@@ -1,0 +1,7 @@
+= ブログに書くことがない話
+:published_at: 2017-01-27
+:hp-alt-title: ProgramingArchitectureAndMath
+:hp-tags: MVC,Architecture,Math,Bigen
+
+はじめまして、*bigen*です。
+
