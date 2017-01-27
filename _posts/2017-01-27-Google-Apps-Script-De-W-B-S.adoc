@@ -1,7 +1,7 @@
 = GASでWBSをやってみる
 :published_at: 2017-01-27
 :hp-alt-title: GoogleAppsScriptDeWBS
-:hp-tags: GoogleAppsScript,GoogleSpreadSheet,WBS,kotani
+:hp-tags: GoogleAppsScript,GoogleSpreadSheet,WBS,KTN
 
 はじめまして、今月からイノベーションで働くことになりましたKTNと申します！ +
 入ったばっかりなのでわからないことが多く、勉強勉強の毎日です。 +
