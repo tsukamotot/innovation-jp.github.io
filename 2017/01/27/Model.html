@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Modelってなに？の話 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Modelってなに？の話">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Modelってなに？の話">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/01/27/Model.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Modelってなに？の話" />
+    <meta property="og:description" content="はじめまして、bigenです。 はじめましてじゃない人は、こんばんは。 ブログを書くにあたって、最近の「すげえ！」を色々思い出してみたんですが、 結婚式場たけえ！とか、水タバコうめえ！とか、 エンジニアブログにかけるネタが全然ありませんでした。 なので、前回さらっと触れたモデル（Model)について少し考えてみようと思います。 １．モデルってなんだ・・・ ２．科学のときに使う「モデル」の意味 3.じゃあデザインパターンでのモデルの立ち位置は？ 4.おわりに １．モデルってなんだ・・・ あれからMVCパターンについて学ぶこともあったんですが、 「結局モデ..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/01/27/Model.html" />
+    <meta property="article:published_time" content="2017-01-26T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-01-28T00:08:40.239Z" />
+    <meta property="article:tag" content="MVC" />
+    <meta property="article:tag" content="Model" />
+    <meta property="article:tag" content="Bigen" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Modelってなに？の話" />
+    <meta name="twitter:description" content="はじめまして、bigenです。 はじめましてじゃない人は、こんばんは。 ブログを書くにあたって、最近の「すげえ！」を色々思い出してみたんですが、 結婚式場たけえ！とか、水タバコうめえ！とか、 エンジニアブログにかけるネタが全然ありませんでした。 なので、前回さらっと触れたモデル（Model)について少し考えてみようと思います。 １．モデルってなんだ・・・ ２．科学のときに使う「モデル」の意味 3.じゃあデザインパターンでのモデルの立ち位置は？ 4.おわりに １．モデルってなんだ・・・ あれからMVCパターンについて学ぶこともあったんですが、 「結局モデ..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/01/27/Model.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars.githubusercontent.com/u/23183770?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Modelってなに？の話",
+    "url": "http://tech.innovation.co.jp/2017/01/27/Model.html",
+    "datePublished": "2017-01-26T15:00:00.000Z",
+    "dateModified": "2017-01-28T00:08:40.239Z",
+    "keywords": "MVC, Model, Bigen",
+    "description": "はじめまして、bigenです。 はじめましてじゃない人は、こんばんは。 ブログを書くにあたって、最近の「すげえ！」を色々思い出してみたんですが、 結婚式場たけえ！とか、水タバコうめえ！とか、 エンジニアブログにかけるネタが全然ありませんでした。 なので、前回さらっと触れたモデル（Model)について少し考えてみようと思います。 １．モデルってなんだ・・・ ２．科学のときに使う「モデル」の意味 3.じゃあデザインパターンでのモデルの立ち位置は？ 4.おわりに １．モデルってなんだ・・・ あれからMVCパターンについて学ぶこともあったんですが、 「結局モデ..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-M-V-C tag-Model tag-Bigen no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="27 Jan 2017" class="post-meta__date date">27 Jan 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/M-V-C">MVC</a>, <a href="http://tech.innovation.co.jp/tag/Model">Model</a>, <a href="http://tech.innovation.co.jp/tag/Bigen">Bigen</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/23183770?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">Modelってなに？の話</h1>
+    </header>
+
+    <section class="post tag-M-V-C tag-Model tag-Bigen">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>はじめまして、<strong>bigen</strong>です。<br>
+はじめましてじゃない人は、こんばんは。<br></p>
+</div>
+<div class="paragraph">
+<p>ブログを書くにあたって、最近の「すげえ！」を色々思い出してみたんですが、<br>
+結婚式場たけえ！とか、水タバコうめえ！とか、<br>
+エンジニアブログにかけるネタが全然ありませんでした。<br>
+<br>
+なので、前回さらっと触れたモデル（Model)について少し考えてみようと思います。<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>１．モデルってなんだ・・・</strong></p>
+</li>
+<li>
+<p><strong>２．科学のときに使う「モデル」の意味</strong></p>
+</li>
+<li>
+<p><strong>3.じゃあデザインパターンでのモデルの立ち位置は？</strong></p>
+</li>
+<li>
+<p><strong>4.おわりに</strong></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__">１．モデルってなんだ・・・</h5>
+<div class="paragraph">
+<p>あれからMVCパターンについて学ぶこともあったんですが、<br>
+「結局モデルってなんやねん！コントローラとの境目はどこやねん！」<br>
+というありがち（らしい）な悩みに行き着きました。<br>
+<br>
+ プログラミングの観点からモデルとコントローラの扱いについては<br>
+ 色々述べられていて、結局<br>
+「作りたいものに合わせて、柔軟に分担させよう。ただしアンチパターンはある」<br>
+といった感じでした。<br></p>
+</div>
+<div class="paragraph">
+<p>そこで、わざわざ「モデル」という名前をつけられている意味から辿っていこうと考えました。<br>
+「なかで色々やるところ」という意味なら、「Application」でも「Processor」でもいいはずです。<br>
+なぜ「モデル」なのか？<br></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="___2">２．科学のときに使う「モデル」の意味</h5>
+<div class="paragraph">
+<p>科学で用いる「モデル」とは、<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>現実世界の現象を、本質を理解しやすくするために部分的な特徴だけに注目し、簡易的に表したモノ</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>です。<br>
+前回と言っていることが随分違いますが、<br>
+前回は「数理モデル」という、モデルの中でも特別なものを説明しようとしていました。<br>
+今回は、より一般的な「モデル」の意味を考えたいと思います。<br>
+<br>
+例えば、「<strong>真ん丸な地球儀</strong>」は<strong>地球という物質のモデルの一つ</strong>です。<br>
+地球儀は中心にマントルはありませんし、地表の凹凸もありません。<br>
+そもそも本物の地球とは大きさが全然違います。<br>
+しかし、国家間の<strong>おおまかな位置関係</strong>や、東京の裏側が<strong>だいたいどの辺りか</strong><br>
+を理解するのには十分な<strong>近似物</strong>となっています。<br></p>
+</div>
+<div class="paragraph">
+<p>このように、自分の必要な理解を得やすくするために、<br>
+重要な情報（地球儀の場合では、おおまかな相似比）だけを抜き出し、<br>
+簡易的に表したモノを総称して「モデル」と呼びます。<br></p>
+</div>
+<div class="paragraph">
+<p>地球儀のような実際の物体で表されるモデル以外にも、<br>
+もっと<strong>概念的なモデル</strong>も存在します。<br></p>
+</div>
+<div class="paragraph">
+<p>私たちは実は、小学生のころからこの概念モデルに接しています。<br>
+<br>
+「太郎くんは１００ｍ進むのに１分かかりました。あと２分後には合計何ｍ進んでいるでしょう」<br>
+という問題を考えてみましょう。<br>
+これを読んでいるほとんどの人（ほぼ全ての人）は、「３００ｍ」という答えをすぐに出せるでしょう。<br>
+<br>
+ですが、その答えは本当に正しいのでしょうか？<br>
+現実世界で、太郎くんは最初の１分と残りの２分、本当に同じ速度で歩くのでしょうか？<br>
+最初の１分と残りの２分、同じ速度で風は吹き続けるのでしょうか？<br>
+空気抵抗は考えなくていいのでしょうか？<br>
+<br>
+私たちがこの問題を聞かされた時、太郎くんの疲れ具合など分からないし、<br>
+分かったところで進む距離への影響を正確に考えるのはほぼ不可能です。<br>
+風の速度も空気抵抗も同じです。<br>
+<br>
+そこで、現実世界の太郎くんについて考えるのはやめて、<br>
+「太郎くんは疲れを知らず、これまでと同じ速度で歩き、風や空気など歩く速度に影響を与える外的要因は全て無視できる<strong>簡易的な世界</strong>」<br>
+の中で、答えを出しているのです。<br>
+<strong>これが、概念的なモデルです</strong>。</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_3">3.じゃあデザインパターンでのモデルの立ち位置は？</h5>
+<div class="paragraph">
+<p>ここでMVCパターンにおける、Model-View-Controllerの役割について、<br>
+よく説明に用いられる表現を見ていきたいと思います。</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Model: アプリケーションデータ、ビジネスルール、ロジック、関数
+View: グラフや図などの任意の情報表現
+Controller: 入力を受け取りmodelとviewへの命令に変換する
+出典： https://ja.wikipedia.org/wiki/Model_View_Controller</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>コントローラーは、「モデルやビューへの命令への変換」という表現があります。<br></p>
+</div>
+<div class="paragraph">
+<p>ある一つの構造を表現するモデルというのは、どのような特徴に注目するのか、<br>
+どのように簡素化するのかによって、無数に考えることができます。<br></p>
+</div>
+<div class="paragraph">
+<p>ユーザーから <br>
+「１００ｍ進むのに１分かかったよ。あと２分でどれだけすすめるか教えて」<br>
+と言われた時に、<br>
+「ユーザーの国籍を調べて、残りの2分はその国の平均歩行速度を使って考えるモデル」を扱うことにするのか、<br>
+「気象庁に問い合わせてその日の天気まで考えるモデル」を扱うことにするのかは、<br>
+サービスの設計者に委ねられているのです。<br></p>
+</div>
+<div class="paragraph">
+<p>こういった意味で、ユーザーが与えた情報が、過不足なくモデルに必要なものであるとは<br>
+限らないのではないでしょうか。<br>
+そして、それを補い、あるいは削り落とし、つなぎ合わせることがコントローラーの役割のように思えます。<br></p>
+</div>
+<div class="paragraph">
+<p>このようにモデルやビュー、コントローラーの役割を理解するのであれば、<br>
+現在のサービスのほとんどはユーザーインターフェースの時点で<br>
+「モデル」が必要とする情報だけを入力させる構造になっているものが多く、<br>
+「ビュー」が「コントローラー」の役割の大部分を担っているといえるかもしれません。<br></p>
+</div>
+<div class="paragraph">
+<p>また、僕の身の回りで聞く「これってコントローラー？サービス？」と悩んでいる機能の多くは、<br>
+「モデル」の中に吸収されてしまうべきなのでしょう。<br>
+<br>
+与えられた情報を減らしたり増やしたりするだけの部分は「コントローラー」として、<br>
+与えられた情報を加工し、新たな情報を自ら生み出す機能は全て集約して「モデル」として区別できそうです。</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_4">4.おわりに</h5>
+<div class="paragraph">
+<p>ここまで読んでいただいてアレなんですが、<br>
+これは全て僕が考えた一つの解釈の仕方でしかありません。<br></p>
+</div>
+<div class="paragraph">
+<p>こんな区別の仕方をして、プログラムの見通しがよくなったり、<br>
+実装がしやすくなったり、テストがしやすくなったりするとはあまり思いません。<br></p>
+</div>
+<div class="paragraph">
+<p>この解釈をMVCと呼ぶことにするのなら、MVCというデザインパターンは、<br>
+現実世界のプログラミングに役に立つものではないのかも・・・？<br></p>
+</div>
+<div class="paragraph">
+<p>MVCという言葉にこだわってプログラムの構造を理解したいなら、<br>
+やはり提案者がどのような意図でMVCを提案したのかをもっと知るべきかもしれません。<br></p>
+</div>
+<div class="paragraph">
+<p>プログラミングって奥が深い。</p>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
