@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>GASでガントチャート的なものをやってみる - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="GASでガントチャート的なものをやってみる">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="GASでガントチャート的なものをやってみる">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/01/27/Google-Apps-Script-De-W-B-S.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="GASでガントチャート的なものをやってみる" />
+    <meta property="og:description" content="はじめまして、今月からイノベーションで働くことになりましたKTNと申します！ 入ったばっかりなのでわからないことが多く、勉強勉強の毎日です。 なので、趣味のオンラインゲーム（Dota 2）をする時間がありません。 Dota 2ご存知ですか？大会では2000万ドルとか賞金が出るようなので、 プロゲーマーなって一攫千金いかがでしょうか！？ で、いざブログを書こうとなると『ネタ』が見つからず、困ってしまいました。 GASを使った記事が最近多かったので、 私も乗っかってGASでスケジュール管理出来そうなものを作ってみようと思います。 一回で完成まで行くのは難し..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/01/27/Google-Apps-Script-De-W-B-S.html" />
+    <meta property="article:published_time" content="2017-01-26T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-01-29T00:53:50.667Z" />
+    <meta property="article:tag" content="GoogleAppsScript" />
+    <meta property="article:tag" content="GoogleSpreadSheet" />
+    <meta property="article:tag" content="WBS" />
+    <meta property="article:tag" content="KTN" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="GASでガントチャート的なものをやってみる" />
+    <meta name="twitter:description" content="はじめまして、今月からイノベーションで働くことになりましたKTNと申します！ 入ったばっかりなのでわからないことが多く、勉強勉強の毎日です。 なので、趣味のオンラインゲーム（Dota 2）をする時間がありません。 Dota 2ご存知ですか？大会では2000万ドルとか賞金が出るようなので、 プロゲーマーなって一攫千金いかがでしょうか！？ で、いざブログを書こうとなると『ネタ』が見つからず、困ってしまいました。 GASを使った記事が最近多かったので、 私も乗っかってGASでスケジュール管理出来そうなものを作ってみようと思います。 一回で完成まで行くのは難し..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/01/27/Google-Apps-Script-De-W-B-S.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars.githubusercontent.com/u/24905783?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "GASでガントチャート的なものをやってみる",
+    "url": "http://tech.innovation.co.jp/2017/01/27/Google-Apps-Script-De-W-B-S.html",
+    "datePublished": "2017-01-26T15:00:00.000Z",
+    "dateModified": "2017-01-29T00:53:50.667Z",
+    "keywords": "GoogleAppsScript, GoogleSpreadSheet, WBS, KTN",
+    "description": "はじめまして、今月からイノベーションで働くことになりましたKTNと申します！ 入ったばっかりなのでわからないことが多く、勉強勉強の毎日です。 なので、趣味のオンラインゲーム（Dota 2）をする時間がありません。 Dota 2ご存知ですか？大会では2000万ドルとか賞金が出るようなので、 プロゲーマーなって一攫千金いかがでしょうか！？ で、いざブログを書こうとなると『ネタ』が見つからず、困ってしまいました。 GASを使った記事が最近多かったので、 私も乗っかってGASでスケジュール管理出来そうなものを作ってみようと思います。 一回で完成まで行くのは難し..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Google-Apps-Script tag-Google-Spread-Sheet tag-W-B-S tag-K-T-N no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="27 Jan 2017" class="post-meta__date date">27 Jan 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Google-Apps-Script">GoogleAppsScript</a>, <a href="http://tech.innovation.co.jp/tag/Google-Spread-Sheet">GoogleSpreadSheet</a>, <a href="http://tech.innovation.co.jp/tag/W-B-S">WBS</a>, <a href="http://tech.innovation.co.jp/tag/K-T-N">KTN</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/24905783?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">GASでガントチャート的なものをやってみる</h1>
+    </header>
+
+    <section class="post tag-Google-Apps-Script tag-Google-Spread-Sheet tag-W-B-S tag-K-T-N">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>はじめまして、今月からイノベーションで働くことになりましたKTNと申します！<br>
+入ったばっかりなのでわからないことが多く、勉強勉強の毎日です。<br>
+なので、趣味のオンラインゲーム（Dota 2）をする時間がありません。<br>
+Dota 2ご存知ですか？大会では2000万ドルとか賞金が出るようなので、<br>
+プロゲーマーなって一攫千金いかがでしょうか！？<br></p>
+</div>
+<div class="paragraph">
+<p>で、いざブログを書こうとなると『ネタ』が見つからず、困ってしまいました。<br>
+GASを使った記事が最近多かったので、<br>
+私も乗っかってGASでスケジュール管理出来そうなものを作ってみようと思います。<br>
+一回で完成まで行くのは難しそうなので、タスクの予定日（開始、終了）を設定すると、<br>
+ガントチャート的なものとイナズマ線的なものが作成されるというのを作ってみたいと思います。<br>
+あくまでも「的なもの」です。<br>
+まず、フォーマットを作りました。これはGASではなく手動で作ったものです。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170127/2.png" alt="2.png">
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__">その１　土日を灰色にする</h3>
+<div class="paragraph">
+<p>単純に土日を探して灰色にしてみようと思います。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>function setYasumiHaiiro(sheet) {
+  const c_startcalendar_col = 8;
+  const c_endcalendar_col = 38;
+  const c_day_row = 2;
+  const c_endcalendar_row = 18;
+
+  //背景色クリア
+  sheet.getRange("H2:AL18").setBackground("white");
+
+  //休みを探して灰色に（今は土日だけ）
+  for(var w_col = c_startcalendar_col; w_col &lt;= c_endcalendar_col; w_col++){
+    if(checkYasumi(new Date(sheet.getRange(c_day_row, w_col).getValue()))){
+      sheet.getRange(c_day_row, w_col, c_endcalendar_row - c_day_row + 1, 1).setBackground("gray");
+    }
+  }
+}
+
+function checkYasumi(w_date){
+  w_weekday = w_date.getDay();
+  if (w_weekday == 0 || w_weekday == 6) {
+    return true;
+  }else{
+    return false;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170127/3.png" alt="3.png">
+</div>
+</div>
+<div class="paragraph">
+<p>こんな感じになりました。本当は1/2、1/3、1/9も灰色になって欲しいのですが、<br>
+今回は土日だけです。次回の伸び代として残しました。手抜きじゃ無いです！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___2">その２　ガントチャート的なものを作る</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>function makeKeikakujisseki(sheet){
+  const c_startcalendar_col = 8;
+  const c_endcalendar_col = 38;
+  const c_planstart_col = 3;
+  const c_planend_col = 4;
+  const c_day_row = 2;
+  const c_startcalendar_row = 3;
+  const c_endcalendar_row = 18;
+
+  //セルの値クリア
+  sheet.getRange("H3:AL18").setValue("");
+
+  //予定開始日、終了日からガントチャートのようなものを作る（□を埋める）
+  //タスクの行数分ぐるぐるする
+  for(var w_row = c_startcalendar_row; w_row &lt;= c_endcalendar_row; w_row++){
+    //予定開始日が無い行はスキップ
+    var w_planstart = sheet.getRange(w_row, c_planstart_col).getValue();
+    if(sheet.getRange(w_row, c_planstart_col).getValue() == ""){
+      continue;
+    }
+
+    //期間と進捗率から何セル■にするか計算する
+    var w_kikan = sheet.getRange(w_row, 5).getValue();
+    var w_sincyoku = sheet.getRange(w_row, 6).getValue();
+    var w_jissizuminissuu = Math.floor(w_kikan * w_sincyoku)
+
+    //予定開始日が入っている場合は、□か■を入れる場所を探す
+    for(var w_col = c_startcalendar_col; w_col &lt;= c_endcalendar_col; w_col++){
+      //予定開始日の日付から□を入れる場所を探す
+      var w_str2 = sheet.getRange(c_day_row, w_col).getValue();
+      if(sheet.getRange(w_row, c_planstart_col).getValue().getTime() != w_str2.getTime()){
+        continue;
+      }
+      //予定終了日まで□か■を入れていく
+      for(var w_col2 = w_col; w_col2 &lt;= c_endcalendar_col; w_col2++){
+        if(w_jissizuminissuu &gt; 0){
+          sheet.getRange(w_row, w_col2).setValue("■");
+          w_jissizuminissuu--;
+        }else{
+          sheet.getRange(w_row, w_col2).setValue("□");
+        }
+        //予定終了日を越えたら処理終了
+        if(sheet.getRange(c_day_row, w_col2).getValue().getTime() == sheet.getRange(w_row, c_planend_col).getValue().getTime()){
+          break;
+        }
+      }
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170127/4.png" alt="4.png">
+</div>
+</div>
+<div class="paragraph">
+<p>だんだんそれっぽくなってきましたね。なってきましたよね？<br>
+2月以降使え無いじゃ無いか。とか<br>
+タスク増やせ無いじゃないか。とか<br>
+全行処理してんの？？？　日付を変更した行だけ処理すればいいんじゃないの？？？　とか<br>
+ツッコミは数々ありとは思いますが、そこも今後の伸び代です！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">その３　イナズマ線的なものを作る</h3>
+<div class="paragraph">
+<p>さて、ここからが本題です。 これがやりたくて作り始めたようなものです。<br>
+そして気合を入れてドキュメントを見ていて気がついたのですが、<br>
+GASからスプレットシートに線を引くことが出来無いっぽいです。。。<br>
+てっきりExcel VBAみたいに出来るのかと思っていたのですが、事前調査は大事ですね。<br>
+ということでGASでスケジュール管理は出来無いということで、終了したいと思います。</p>
+</div>
+<div class="paragraph">
+<p>・<br>
+・<br>
+・<br>
+・<br></p>
+</div>
+<div class="paragraph">
+<p>と、いくらなんでもこれで終わることは出来ませんので、なんとか代替案を考えようと思います。<br>
+背景を黄色に塗っていくことで、イナズマ線的な雰囲気を出して行こうかと。<br>
+しょうがないですよね。<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>function makeInazumaModoki(sheet){
+  const c_startcalendar_col = 8;
+  const c_endcalendar_col = 38;
+  const c_planstart_col = 3;
+  const c_planend_col = 4;
+  const c_parcent_col = 6;
+  const c_day_row = 2;
+  const c_startcalendar_row = 3;
+  const c_endcalendar_row = 18;
+
+  //今日の日付の位置を取得する
+  for(var w_col = c_startcalendar_col; w_col &lt;= c_endcalendar_col; w_col++){
+    var w_today = Utilities.formatDate(new Date(), "JST", "YYYYMMdd");
+    var w_day = Utilities.formatDate(sheet.getRange(c_day_row, w_col).getValue(), "JST", "YYYYMMdd");
+    if(w_today == w_day){
+      break;
+    }
+  }
+  var w_today_col = w_col;
+
+  //タスクの行数分ぐるぐるする
+  for(var w_row = c_startcalendar_row; w_row &lt;= c_endcalendar_row; w_row++){
+    var w_kikan = sheet.getRange(w_row, 5).getValue();
+    var w_sincyoku = sheet.getRange(w_row, 6).getValue();
+    var w_jissizuminissuu = Math.floor(w_kikan * w_sincyoku)
+
+    //タスクが無い列は今日に線を引く
+    if(sheet.getRange(w_row, c_planstart_col).getValue() == ""){
+      sheet.getRange(w_row, w_today_col).setBackground("orange");
+      continue;
+    }
+
+    //遅延が発生しているかチェック
+    //遅延が発生している場合は進捗状況をチェックして線を引く
+    //遅延が発生してい無い場合は今日に線を引く
+    if((sheet.getRange(w_row, c_planend_col).getValue() &lt; new Date()) &amp;&amp; (sheet.getRange(w_row, c_parcent_col).getValue() != "1")){
+      //■を探す
+      for(var w_col = w_today_col; w_col &gt;= c_startcalendar_col; w_col--){
+        if(sheet.getRange(w_row, w_col).getValue() == "■"){
+          break;
+        }
+      }
+
+      //■が見つかった場合はそのセルに線を引く
+      if(w_col &gt;= c_startcalendar_col){
+        sheet.getRange(w_row, w_col).setBackground("orange");
+      }else{
+        //□を探す
+        for(var w_col2 = c_startcalendar_col; w_col2 &lt;= c_endcalendar_col; w_col2++){
+          if(sheet.getRange(w_row, w_col2).getValue() == "□"){
+            sheet.getRange(w_row, w_col2).setBackground("orange");
+            break;
+          }
+        }
+      }
+    }else{
+      sheet.getRange(w_row, w_today_col).setBackground("orange");
+    }
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>一応最後に、呼び出し元も書いておきます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>function myFunction() {
+  //スプレッドシートを取得
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+
+  //現在のシートを取得
+  var sheet = spreadsheet.getActiveSheet();
+
+  //非営業日を灰色に
+  setYasumiHaiiro(sheet);
+
+  //予定開始日、終了日からガントチャートみたいなのを
+  makeKeikakujisseki(sheet);
+
+  //イナズマ線みたいなのを
+  makeInazumaModoki(sheet);
+}</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170127/5.png" alt="5.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ということで、GAS触って3日目 ぐらいですが、<br>
+なんとか動くものが出来ました。<br>
+というか今回の使い方では、Excel VBAと変わらない感じですね。<br>
+もっとGAS勉強して次回はイナズマ線引きたいと思います！<br></p>
+</div>
+<div class="paragraph">
+<p>ではまた次回で。</p>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
