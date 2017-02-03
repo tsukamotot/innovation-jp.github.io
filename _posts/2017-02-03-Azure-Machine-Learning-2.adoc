@@ -196,9 +196,115 @@ captionsが「a mouse sitting on a table」となっていますね、confidence
 動物(mouse)判定されているようで、もちろんfacesの中身はありません、tags にある white がいい味だしてます、次！
 
 ##### ・エンジニア解析
-せっかく顔を四角で囲むようにしたので、人物写真が良いですね、DTUの方どなたかご協力お願いします。
+せっかく顔を四角で囲むようにしたので、人物写真が良いですね、方どなたかご協力お願いします！！
 
-という訳で顔に四角を描画した後の写真と、解析結果がこちらです。
+という訳でエンジニアの皆様に快くご協力いただき、画像解析のスクリプトを通した後の顔判定をした写真と、解析結果がこちらです。
 
-image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-2.jpg[]
+image::http://tech.innovation.co.jp/images/syoga/aml2/alm2.jpg[]
+```
+{
+    "description": {
+        "captions": [
+            {
+                "text": "a young boy standing in front of a computer",
+                "confidence": 0.05238623493754531
+            }
+        ],
+        "tags": [
+            "indoor",
+            "person",
+            "ceiling",
+            "computer",
+            "young",
+            "table",
+            "office",
+            "holding",
+            "standing",
+            "laptop",
+            "man",
+            "desk",
+            "room",
+            "woman",
+            "sitting",
+            "boy",
+            "luggage",
+            "suitcase",
+            "remote",
+            "keyboard",
+            "playing",
+            "video",
+            "wii",
+            "game"
+        ]
+    },
+    "tags": [
+        {
+            "confidence": 0.9934351444244385,
+            "name": "indoor"
+        },
+        {
+            "confidence": 0.991456925868988,
+            "name": "person"
+        },
+        {
+            "confidence": 0.8908867239952087,
+            "name": "ceiling"
+        },
+        {
+            "confidence": 0.4114169776439667,
+            "name": "office"
+        }
+    ],
+    "requestId": "72ac673f-f8b1-4689-83af-bda0c9dd4573",
+    "faces": [
+        {
+            "gender": "Female",
+            "age": 24,
+            "faceRectangle": {
+                "width": 397,
+                "top": 1485,
+                "height": 397,
+                "left": 223
+            }
+        },
+        {
+            "gender": "Female",
+            "age": 22,
+            "faceRectangle": {
+                "width": 169,
+                "top": 1328,
+                "height": 169,
+                "left": 1986
+            }
+        },
+        {
+            "gender": "Male",
+            "age": 38,
+            "faceRectangle": {
+                "width": 146,
+                "top": 1649,
+                "height": 146,
+                "left": 547
+            }
+        }
+    ],
+    "categories": [
+        {
+            "score": 0.83984375,
+            "name": "people_many"
+        }
+    ],
+    "metadata": {
+        "width": 2160,
+        "format": "Jpeg",
+        "height": 3840
+    }
+}
+```
+captions が 「a young boy standing in front of a computer」 となっていますが、どうやら　AMI さんを young boy と認識したようですね、young boy なら PC の前に立っていても仕方ない、自信のある tags を見ると indoor,  person, ceiling から office とい解析をしたんでしょうかね？
 
+そして顔認識情報ですが…２４歳と２２歳の女性と、38歳の男性がいるという結果でした、young boy はどこに行ってしまったんでしょうか…、Yaizu くんは女性認定されておりご立腹でした。
+
+３８歳の方についてはノーコメントです。
+
+完
