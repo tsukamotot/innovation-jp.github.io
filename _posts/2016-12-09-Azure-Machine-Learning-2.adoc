@@ -1,3 +1,4 @@
 = Azure Machine Learning のお話 その2
 :hp-alt-title: Azure Machine Learning 2
-:hp-tags: syoga, log, Azure Machine Learning, Computer Vision API 
+:hp-tags: syoga, log, Azure Machine Learning, Computer Vision API, python
+
