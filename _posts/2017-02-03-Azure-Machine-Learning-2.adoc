@@ -129,7 +129,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
                 "confidence": 0.3080752519682027
             }
         ],
-        "tags": [            // 関連しそうなタグを表示してくれるよ
+        "tags": [            // 関連しそうなタグを教えてくれるよ
             "indoor",
             "sitting",
             "table",
@@ -179,7 +179,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
     ],
     "requestId": "8a5cb4b1-2af7-464c-91f5-ece07c5e8ebf",
     "faces": [],　　　　　　　　　　　　　　　// 顔情報が入ってくるよ（認識できれば）
-    "categories": [          // カテゴリを表示してくれるよ
+    "categories": [          // 写真をカテゴライズしてくれるよ
         {
             "score": 0.0078125,
             "name": "others_"
