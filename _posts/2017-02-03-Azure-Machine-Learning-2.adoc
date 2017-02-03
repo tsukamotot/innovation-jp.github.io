@@ -301,7 +301,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml2/alm2.jpg[]
     }
 }
 ```
-captions が 「a young boy standing in front of a computer」 となっていますが、どうやら　AMI さんを young boy と認識したようですね、young boy なら PC の前に立っていても仕方ない、自信のある tags を見ると indoor,  person, ceiling から office とい解析をしたんでしょうかね？
+captions が 「a young boy standing in front of a computer」 となっていますが、どうやら　AMI さんを young boy と認識したようですね、young boy なら PC の前に立っていても仕方ない、自信のある tags を見ると indoor,  person, ceiling から office と解析したんでしょうかね？
 
 そして顔認識情報ですが…２４歳と２２歳の女性と、38歳の男性がいるという結果でした、young boy はどこに行ってしまったんでしょうか…、Yaizu くんは女性認定されておりご立腹でした。
 
