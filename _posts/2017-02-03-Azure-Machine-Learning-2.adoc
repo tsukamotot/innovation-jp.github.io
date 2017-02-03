@@ -83,7 +83,6 @@ if len(face_data) != 2:
     cnt = 0
 
     for data in faces:
-
         # 位置情報のリストをループし必要なデータを代入
         if (cnt + 5) % 5 == 1:
             width  = int(data)
@@ -197,4 +196,9 @@ captionsが「a mouse sitting on a table」となっていますね、confidence
 動物(mouse)判定されているようで、もちろんfacesの中身はありません、tags にある white がいい味だしてます、次！
 
 ##### ・エンジニア解析
-せっかく顔を四角で囲むようにしたので、人物写真が良いですね、DTUの方どなたかご協力お願いします！
+せっかく顔を四角で囲むようにしたので、人物写真が良いですね、DTUの方どなたかご協力お願いします。
+
+という訳で顔に四角を描画した後の写真と、解析結果がこちらです。
+
+image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-2.jpg[]
+
