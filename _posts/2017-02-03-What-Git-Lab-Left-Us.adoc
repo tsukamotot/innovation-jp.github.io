@@ -10,7 +10,7 @@
 何よりも、 https://docs.google.com/document/d/1GCK53YDcBWQveod9kfzW-VCxIABGiryG7_z_6jHdVik/pub[インシデントの経緯がこと細やかに記され]、挙句には復旧の様子が https://t.co/8D641MRczH[YoutubeにてLive streaming]という凡そエンジニア以外には理解されがたい光景が広がった今回。
 サーバのドメイン名や中のディレクトリ構造まで包み隠さずレポートし、誰を責めるでもなくリラックスした雰囲気で障害対応に向かう風景には個人的にひたすら感銘を受けました。
 
-image: GitLab-logo.png
+image:: GitLab-logo.png
 
 
 日本語での詳細は http://www.publickey1.jp/blog/17/gitlabcom56.html[Publickey]が詳しいのでそれ以上あまり書くことはありませんが、私達はこれらを観て何を感じるか？
