@@ -11,7 +11,7 @@
 
 そんな訳でVRでプレイしたら、きっと体がビクっと動くであろう「BIOHAZARD 7 resident evil」とも、VRとも関係ない内容でお届けします。
 
-機械学習を使った画像解析の学習結果を、参照したいという欲に駆られたので、Googleの「Google Cloud Vision」、Amazonの「Rekognition」と色々ある中で、MS派のは私Microsoftの「Computer Vision API」を使用したいと思います。
+機械学習を使った画像解析の学習結果を、参照したいという欲に駆られたので、Googleの「Google Cloud Vision」、Amazonの「Rekognition」と色々ある中で、MS派の私はMicrosoftの「Computer Vision API」を使用したいと思います。
 
 ##### ところで機械学習の画像解析って何に使っているの？
 私の梅干し程の大きさの脳みそでは、パッと思いつくのは顔認証や顔認識、監視カメラくらいですが、調べてみるとその他にも、画像超解像技術（低解像度の写真を高解像度に変換）や、科学警察研究所では150人の3次元顔画像を10年間単位で撮影し機械学習でそのデータを利用する事で、加齢による経年変化を推定するモデルを導入しているそうです、へ〜。
@@ -116,18 +116,20 @@ python2.7 compvapi.py ./test.jpg
 ##### ・ペッパー解析
 まずは、弊社のアイドル Pepper くんを解析してみます、「Computer Vision API」は人物解析に特化しており性別、年齢の解析精度が良いらしいですが果たして…
 
+※　前回の記事に記載した通り、confidence の値が 1 に近いほど解析結果に、自信があるという事です。
+
 image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
 
 ```
 {
     "description": {
-        "captions": [
+        "captions": [      // 画像のタイトルをつけてくれるよ
             {
                 "text": "a mouse sitting on a table",
                 "confidence": 0.3080752519682027
             }
         ],
-        "tags": [
+        "tags": [            // 関連しそうなタグを教えてくれるよ
             "indoor",
             "sitting",
             "table",
@@ -156,7 +158,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
             "wii"
         ]
     },
-    "tags": [
+    "tags": [　　　　　　　　　　　　　　　　　　　　 // 自信のあるタグを表示してくれるよ
         {
             "confidence": 0.9925429821014404,
             "name": "wall"
@@ -176,23 +178,23 @@ image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
         }
     ],
     "requestId": "8a5cb4b1-2af7-464c-91f5-ece07c5e8ebf",
-    "faces": [],
-    "categories": [
+    "faces": [],　　　　　　　　　　　　　　　// 顔情報が入ってくるよ（認識できれば）
+    "categories": [          // 写真をカテゴライズしてくれるよ
         {
             "score": 0.0078125,
             "name": "others_"
         }
     ],
-    "metadata": {
+    "metadata": {           // 写真の情報を表示してくれるよ
         "width": 2160,
         "format": "Jpeg",
         "height": 3840
     }
 }
 ```
-captionsが「a mouse sitting on a table」となっていますね、0.3なのであんまり自信はないようです、tagsの wall, indoor, floor は、まぁそうだねという感じですが、appliance のヒントが animal となっているのは、ちょっと謎です。
+captionsが「a mouse sitting on a table」となっていますね、confidenceが 0.3 なのであんまり自信はないようです、tagsの wall, indoor, floor は、まぁそうだねという感じですが、appliance、animal は謎です。
 
-動物(mouse)判定されているようで、もちろんfacesタグはありません、tags にある white がいい味だしてます、次！
+動物(mouse)判定されているようで、もちろんfacesの中身はありません、tags にある white がいい味だしてます、次！
 
 ##### ・エンジニア解析
 せっかく顔を四角で囲むようにしたので、人物写真が良いですね、DTUの方どなたかご協力お願いします！
