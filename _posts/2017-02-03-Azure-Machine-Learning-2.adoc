@@ -123,13 +123,13 @@ image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
 ```
 {
     "description": {
-        "captions": [
+        "captions": [       // タイトルをつけてくれるよ
             {
                 "text": "a mouse sitting on a table",
                 "confidence": 0.3080752519682027
             }
         ],
-        "tags": [
+        "tags": [            // 関連しそうなタグを表示してくれるよ
             "indoor",
             "sitting",
             "table",
@@ -158,7 +158,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
             "wii"
         ]
     },
-    "tags": [
+    "tags": [　　　　　　　　　　　　　　　　　　　　 // 自信のあるタグを表示してくれるよ
         {
             "confidence": 0.9925429821014404,
             "name": "wall"
@@ -178,14 +178,14 @@ image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
         }
     ],
     "requestId": "8a5cb4b1-2af7-464c-91f5-ece07c5e8ebf",
-    "faces": [],
-    "categories": [
+    "faces": [],　　　　　　　　　　　　　　　// 顔情報が入ってくるよ（認識できれば）
+    "categories": [          // カテゴリを表示してくれるよ
         {
             "score": 0.0078125,
             "name": "others_"
         }
     ],
-    "metadata": {
+    "metadata": {           // 写真の情報を表示してくれるよ
         "width": 2160,
         "format": "Jpeg",
         "height": 3840
