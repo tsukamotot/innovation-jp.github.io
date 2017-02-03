@@ -115,6 +115,7 @@ python2.7 compvapi.py ./test.jpg
 
 ##### ・ペッパー解析
 まずは、弊社のアイドル Pepper くんを解析してみます、「Computer Vision API」は人物解析に特化しており性別、年齢の解析精度が良いらしいですが果たして…
+
 ※　前回の記事に記載した通り、confidence の値が 1 に近いほど解析結果に、自信があるという事です。
 
 image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
@@ -191,7 +192,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
     }
 }
 ```
-captionsが「a mouse sitting on a table」となっていますね、0.3なのであんまり自信はないようです、tagsの wall, indoor, floor は、まぁそうだねという感じですが、appliance のヒントが animal となっているのは、ちょっと謎です。
+captionsが「a mouse sitting on a table」となっていますね、confidenceが 0.3 なのであんまり自信はないようです、tagsの wall, indoor, floor は、まぁそうだねという感じですが、appliance のヒントが animal となっているのは、ちょっと謎です。
 
 動物(mouse)判定されているようで、もちろんfacesの中身はありません、tags にある white がいい味だしてます、次！
 
