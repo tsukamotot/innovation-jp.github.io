@@ -1,0 +1,198 @@
+= Azure Machine Learning のお話 その2
+:hp-alt-title: Azure Machine Learning 2
+:hp-tags: syoga, log, Azure Machine Learning, Computer Vision API, python
+
+弊社エンジニアチーム運用の人 Syoga です、よろしくお願いします。
+
+先週（2017/01/26）発売された「BIOHAZARD 7 resident evil」を先週末にクリアしました。
+
+今回はVR対応のためVRでプレイする事を、前提とした演出が多いように感じましたが、
+もろもろ原点回帰し恐怖感を煽ってきて、おもしろかったです。
+
+そんな訳でVRでプレイしたら、きっと体がビクっと動くであろう「BIOHAZARD 7 resident evil」とも、VRとも関係ない内容でお届けします。
+
+機械学習を使った画像解析の学習結果を、参照したいという欲に駆られたので、Googleの「Google Cloud Vision」、Amazonの「Rekognition」と色々ある中で、MS派のは私Microsoftの「Computer Vision API」を使用したいと思います。
+
+##### ところで機械学習の画像解析って何に使っているの？
+私の梅干し程の大きさの脳みそでは、パッと思いつくのは顔認証や顔認識、監視カメラくらいですが、調べてみるとその他にも、画像超解像技術（低解像度の写真を高解像度に変換）や、科学警察研究所では150人の3次元顔画像を10年間単位で撮影し機械学習でそのデータを利用する事で、加齢による経年変化を推定するモデルを導入しているそうです、へ〜。
+
+##### それでは早速やってみましょう。
+
+以下URLから「Computer Vision API」のプレビュー版を申し込みます、プレビュー版は 1ヶ月 5000 post、1分間 20 回までとなっています。
+
+https://www.microsoft.com/cognitive-services/en-us/emotion-api[Microsoft Cognitive Services - Emotion API]
+
+アカウント登録を終えて、使用するAPIを選択する事でAPIキーが発行されますので、キーをメモメモ。
+
+##### Microsoft Cognitive Servicesってなんぞや
+アプリやサービスへ簡単に機械学習結果を利用できるサービスが揃っており、画像解析もComputer Vision API だけではなく、音声認識、映像認識等があるそうです、へ〜。
+
+##### せっかくだから俺はこのPythonを選ぶぜ！
+
+その他言語のサンプルコードは以下ページを確認下さい。
+
+https://dev.projectoxford.ai/docs/services/56f91f2d778daf23d8ec6739/operations/56f91f2e778daf14a499e1fa[Microsoft Cognitive Services APIs Reference]
+
+画像解析結果の情報だけでなく、位置情報から「顔だ！」と認識された箇所を四角で囲み、別名で保存したいと思います、以下コードです。
+
+```
+# -*- coding: utf-8 -*-
+import re
+import cv2
+import sys
+import json
+import httplib
+import urllib
+
+# リクエストヘッダ
+headers = {
+    'Content-Type': 'application/octet-stream',
+    'Ocp-Apim-Subscription-Key': 'ここにAPIキーを入れてね',
+}
+
+# リクエストパラメータ
+params = urllib.urlencode({
+     'visualFeatures': 'Categories, Tags, Description, Faces',
+})
+
+# 解析対象画像のパスを引数で渡す
+args      = sys.argv
+file_path = args[1]
+
+# リクエスト送信
+conn  = httplib.HTTPSConnection('api.projectoxford.ai')
+photo = open(file_path, 'r').read()
+conn.request("POST", "/vision/v1.0/analyze?%s" % params, photo, headers)
+
+response = conn.getresponse()
+
+# レスポンスの解析結果を辞書型に変換
+cvapi_dict   = json.loads(response.read())
+
+# 顔認識情報を取得
+face_data = json.dumps(cvapi_dict["faces"], indent=4, separators=(',', ': '))
+
+# 顔認識情報が存在する場合のみ処理
+if len(face_data) != 2:
+
+    img = cv2.imread(file_path, 1)
+
+    # 顔の位置情報を取得
+    faces  = re.findall(r'[0-9]+', face_data)
+
+    cnt = 0
+
+    for data in faces:
+
+        # 位置情報のリストをループし必要なデータを代入
+        if (cnt + 5) % 5 == 1:
+            width  = int(data)
+        elif (cnt + 5) % 5 == 2:
+            top    = int(data)
+        elif (cnt + 5) % 5 == 3:
+            height = int(data)
+        elif (cnt + 5) % 5 == 4:
+            left   = int(data)
+
+            # 顔の位置に四角を描画
+            cv2.rectangle(img, (left, top), (left + width, top + height), (200, 200, 200), 2)
+
+        cnt = cnt + 1
+
+    # 編集した画像を保存
+    cv2.imwrite('result.jpg', img)
+
+# 全ての解析情報を表示
+print json.dumps(cvapi_dict, indent=4, separators=(',', ': '))
+
+conn.close()
+```
+
+実行時のコマンドはこんな感じです。
+```
+python2.7 compvapi.py ./test.jpg
+```
+
+##### ・ペッパー解析
+まずは、弊社のアイドル Pepper くんを解析してみます、「Computer Vision API」は人物解析に特化しており性別、年齢の解析精度が良いらしいですが果たして…
+
+image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
+
+```
+{
+    "description": {
+        "captions": [
+            {
+                "text": "a mouse sitting on a table",
+                "confidence": 0.3080752519682027
+            }
+        ],
+        "tags": [
+            "indoor",
+            "sitting",
+            "table",
+            "cup",
+            "small",
+            "coffee",
+            "desk",
+            "computer",
+            "front",
+            "mouse",
+            "black",
+            "top",
+            "holding",
+            "keyboard",
+            "white",
+            "game",
+            "playing",
+            "bed",
+            "video",
+            "remote",
+            "man",
+            "woman",
+            "standing",
+            "plate",
+            "room",
+            "wii"
+        ]
+    },
+    "tags": [
+        {
+            "confidence": 0.9925429821014404,
+            "name": "wall"
+        },
+        {
+            "confidence": 0.9915265440940857,
+            "name": "indoor"
+        },
+        {
+            "confidence": 0.9513160586357117,
+            "name": "floor"
+        },
+        {
+            "confidence": 0.5270528793334961,
+            "name": "appliance",
+            "hint": "animal"
+        }
+    ],
+    "requestId": "8a5cb4b1-2af7-464c-91f5-ece07c5e8ebf",
+    "faces": [],
+    "categories": [
+        {
+            "score": 0.0078125,
+            "name": "others_"
+        }
+    ],
+    "metadata": {
+        "width": 2160,
+        "format": "Jpeg",
+        "height": 3840
+    }
+}
+```
+captionsが「a mouse sitting on a table」となっていますね、0.3なのであんまり自信はないようです、tagsの wall, indoor, floor は、まぁそうだねという感じですが、appliance のヒントが animal となっているのは、ちょっと謎です。
+
+動物(mouse)判定されているようで、もちろんfacesタグはありません、tags にある white がいい味だしてます、次！
+
+##### ・エンジニア解析
+せっかく顔を四角で囲むようにしたので、人物写真が良いですね、DTUの方どなたかご協力お願いします！
