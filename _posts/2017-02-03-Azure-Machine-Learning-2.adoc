@@ -192,7 +192,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
 ```
 captionsが「a mouse sitting on a table」となっていますね、0.3なのであんまり自信はないようです、tagsの wall, indoor, floor は、まぁそうだねという感じですが、appliance のヒントが animal となっているのは、ちょっと謎です。
 
-動物(mouse)判定されているようで、もちろんfacesタグはありません、tags にある white がいい味だしてます、次！
+動物(mouse)判定されているようで、もちろんfacesの中身はありません、tags にある white がいい味だしてます、次！
 
 ##### ・エンジニア解析
 せっかく顔を四角で囲むようにしたので、人物写真が良いですね、DTUの方どなたかご協力お願いします！
