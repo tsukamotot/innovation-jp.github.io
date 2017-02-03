@@ -123,7 +123,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml2/aml2-1.JPG[]
 ```
 {
     "description": {
-        "captions": [       // タイトルをつけてくれるよ
+        "captions": [      // 画像のタイトルをつけてくれるよ
             {
                 "text": "a mouse sitting on a table",
                 "confidence": 0.3080752519682027
