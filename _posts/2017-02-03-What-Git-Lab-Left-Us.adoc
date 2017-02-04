@@ -93,7 +93,7 @@ ImmutableだのEphemeral言う前に、まずログをちゃんと残す。
 
 仮にログを取っていてもこれでは無意味。
 
-というわけで、syogaさんが http://tech.innovation.co.jp/2016/09/23/wtf-log.html［ログのお話］ でも書いてくれてますが、もう一度言います。
+というわけで、syogaさんが http://tech.innovation.co.jp/2016/09/23/wtf-log.html[ログのお話] でも書いてくれてますが、もう一度言います。
 
 IMPORTANT: ログをちゃんと残しましょう
 
