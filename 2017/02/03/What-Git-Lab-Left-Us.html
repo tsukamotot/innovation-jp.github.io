@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>GitLab Down Incidentは私たちに何を残したか - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="GitLab Down Incidentは私たちに何を残したか">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="GitLab Down Incidentは私たちに何を残したか">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/02/03/What-Git-Lab-Left-Us.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="GitLab Down Incidentは私たちに何を残したか" />
+    <meta property="og:description" content="寒中お見舞い申し上げます。 皆様既にご存知かと思いますが先日、GitLab.comのデータベースが大方吹っ飛ぶという悲しみが世界を包みました。 何よりも、 インシデントの経緯がこと細やかに記され、挙句には復旧の様子が YoutubeにてLive streamingという凡そエンジニア以外には理解されがたい光景が広がった今回。 サーバのドメイン名や中のディレクトリ構造まで包み隠さずレポートし、誰を責めるでもなくリラックスした雰囲気で障害対応に向かう風景には個人的にひたすら感銘を受けました。 日本語での詳細は Publickeyが詳しいのでそれ以上あまり書..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/02/03/What-Git-Lab-Left-Us.html" />
+    <meta property="og:image" content="http://tech.innovation.co.jp/images/GitLab_logo.png" />
+    <meta property="article:published_time" content="2017-02-02T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-02-04T17:01:55.472Z" />
+    <meta property="article:tag" content="Tsukamoto" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="GitLab Down Incidentは私たちに何を残したか" />
+    <meta name="twitter:description" content="寒中お見舞い申し上げます。 皆様既にご存知かと思いますが先日、GitLab.comのデータベースが大方吹っ飛ぶという悲しみが世界を包みました。 何よりも、 インシデントの経緯がこと細やかに記され、挙句には復旧の様子が YoutubeにてLive streamingという凡そエンジニア以外には理解されがたい光景が広がった今回。 サーバのドメイン名や中のディレクトリ構造まで包み隠さずレポートし、誰を責めるでもなくリラックスした雰囲気で障害対応に向かう風景には個人的にひたすら感銘を受けました。 日本語での詳細は Publickeyが詳しいのでそれ以上あまり書..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/02/03/What-Git-Lab-Left-Us.html" />
+    <meta name="twitter:image:src" content="http://tech.innovation.co.jp/images/GitLab_logo.png" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "Hisahiro Tsukamoto",
+        "image": "https://avatars.githubusercontent.com/u/2120249?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": "http://d.hatena.ne.jp/hi-hats/"
+    },
+    "headline": "GitLab Down Incidentは私たちに何を残したか",
+    "url": "http://tech.innovation.co.jp/2017/02/03/What-Git-Lab-Left-Us.html",
+    "datePublished": "2017-02-02T15:00:00.000Z",
+    "dateModified": "2017-02-04T17:01:55.472Z",
+    "image": "http://tech.innovation.co.jp/images/GitLab_logo.png",
+    "keywords": "Tsukamoto",
+    "description": "寒中お見舞い申し上げます。 皆様既にご存知かと思いますが先日、GitLab.comのデータベースが大方吹っ飛ぶという悲しみが世界を包みました。 何よりも、 インシデントの経緯がこと細やかに記され、挙句には復旧の様子が YoutubeにてLive streamingという凡そエンジニア以外には理解されがたい光景が広がった今回。 サーバのドメイン名や中のディレクトリ構造まで包み隠さずレポートし、誰を責めるでもなくリラックスした雰囲気で障害対応に向かう風景には個人的にひたすら感銘を受けました。 日本語での詳細は Publickeyが詳しいのでそれ以上あまり書..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Tsukamoto no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="03 Feb 2017" class="post-meta__date date">03 Feb 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Tsukamoto">Tsukamoto</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/2120249?v=3" alt="profile image for Hisahiro Tsukamoto" class="avatar post-meta__avatar" /> by Hisahiro Tsukamoto</span>
+      </div>
+      <h1 class="post-title">GitLab Down Incidentは私たちに何を残したか</h1>
+    </header>
+
+    <section class="post tag-Tsukamoto">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>寒中お見舞い申し上げます。
+皆様既にご存知かと思いますが先日、GitLab.comのデータベースが大方吹っ飛ぶという悲しみが世界を包みました。</p>
+</div>
+<div class="paragraph">
+<p>何よりも、 <a href="https://docs.google.com/document/d/1GCK53YDcBWQveod9kfzW-VCxIABGiryG7_z_6jHdVik/pub">インシデントの経緯がこと細やかに記され</a>、挙句には復旧の様子が <a href="https://t.co/8D641MRczH">YoutubeにてLive streaming</a>という凡そエンジニア以外には理解されがたい光景が広がった今回。
+サーバのドメイン名や中のディレクトリ構造まで包み隠さずレポートし、誰を責めるでもなくリラックスした雰囲気で障害対応に向かう風景には個人的にひたすら感銘を受けました。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://upload.wikimedia.org/wikipedia/commons/c/c6/GitLab_logo.png" alt="GitLab logo">
+</div>
+</div>
+<div class="paragraph">
+<p>日本語での詳細は <a href="http://www.publickey1.jp/blog/17/gitlabcom56.html">Publickey</a>が詳しいのでそれ以上あまり書くことはありませんが、私達はこれらを観て何を感じるか？
+ユーザへの実害はそこまで大きく無かったこともあり、第三者が運用の不備体制に対する批判や茶化した揶揄でネタにする風潮もあります。</p>
+</div>
+<div class="paragraph">
+<p>そこには深い分断がありそうに思いました。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">あ、消しちゃった</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>（従来とは異なり叙情的な見出しで進んでいきます）</p>
+</div>
+<div class="paragraph">
+<p>これほどの規模ではありませんが、じんわり血の気が引く経験は私もあります。
+私が若造のころの環境では、自動バックアップという気の利いたものはなく、本番サーバに入ってsudoでいじくるのも日常茶飯事。
+あっ間違った！と思ったときには既にディレクトリごとお亡くなりになった後。</p>
+</div>
+<div class="paragraph">
+<p>そんな感じで軽い気持ちだったりして、事故が起きるのは大体が元は些細な不具合を急いで直そうと焦って作業した結果だったりします。
+もう定時過ぎてプライベートの約束の時間迫っとるのにー みたいな心ここにあらずな状態で発生するところも典型パターン。</p>
+</div>
+<div class="paragraph">
+<p>そもそも今回は、元がDDoS攻撃でまあそいつが一番悪いわけです。
+「なんだよ、ふざけんなよ」と思いながら渋々対応せざるを得ない。
+といった具合に事故ってしまう要因は揃っていたし、何よりこのような日常的な事象の重なりで起こりうる身近な出来事かと思います。
+もうこれはサーバ運用が完全自動化されない限り無くすことは難しいんじゃないでしょうか</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">結局運用のお仕事です</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>たまたま現在無事なだけなのは分かっているのです。
+何かあったら影響は大きく、だからこそ可用性は重要であることも。</p>
+</div>
+<div class="paragraph">
+<p>けれど「いつくるか分からない障害に備えて整備する時間があるなら、日常のタスクを少しでも減らしたい、効率化したい」
+「まぁ○ヶ月くらいなら大丈夫っしょ」という根拠なきオプティミズムから後回しになる。</p>
+</div>
+<div class="paragraph">
+<p>運用とは本来、業務を回す運用ではなく、システムを正しく回すのが一義的であるからして置かれるポジションでありますので
+<strong>目的を見失わないように今一度気をつけるべき</strong> だと警告をいただきました。</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+惜しむべきでない手間を惜しむな
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>ここを見極めて、英断を下せるエンジニアでありたい。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___3">あれバックアップは？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>私も先日、STG環境へバックアップしていたDBのデータが自分自身からdumpを取ったものだったという輪廻転生的な体験をしました。
+滅多に使うことがないとちゃんと取れていないことに気づかない。</p>
+</div>
+<div class="paragraph">
+<p>6本中5本はさすがにアレですが、今とってるはずのバックアップ、ちゃんと取れてますか？
+と問い直す機会になります。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">つまり何よ？（言いたいこと）</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>「対岸の火事じゃないんだよ！」</strong></p>
+</div>
+<div class="paragraph">
+<p>と言っている私を 茶化してた方々が対岸から見ている感じがしますよ！</p>
+</div>
+<div class="paragraph">
+<p>そしてこうやって事故の全てを露見してくれることは、私たちにとっては本当は物凄い意義深いことなんです！</p>
+</div>
+<div class="paragraph">
+<p>と言いたいんです。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__immutable">今のうちにImmutableに</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>実はここからが本番でして（おいTL;DR書いとけと）
+さきほどSTG環境DBのバックアップの話をしましたが、AWSでサーバ運用している場合、コンソールで何でもできちゃう（直感的に使いやすい）ので、逆に人的操作に依存しやすいです。
+人がそのUIに慣れた操作はいずれ思考停止からミスや漏れを誘発するのは確かです。
+なんでも自動化すればいいってもんでもないですが、ロバストネスの観点からも、（バックアップに限らず）起動管理など積極的に自動管理していくべきだと考えます。</p>
+</div>
+<div class="paragraph">
+<p>そしてImmutableインフラにするという選択肢ですが、決して導入しやすいとかイケてるということもなく、むしろイニシャルコストは掛かる可能性のほうが高い。
+これも人的操作に依存しない管理方法であるからそうするわけで（勿論エンジニアがそう感じることが前提条件ですが）、回り回って大きなインシデントを無くすための準備ということを声を大にして言いたい。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___5">ログ大事</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>さて、今回のGitLabの出来事経緯についても、全て明らかになったのは操作をログとして残してくれたからですね。
+そしてもし、レプリケーションのlogが無かったら・・・なんてのは極端な例えですが、考えただけでも恐ろしいのは確か。</p>
+</div>
+<div class="paragraph">
+<p>ImmutableだのEphemeral言う前に、まずログをちゃんと残す。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>まずバックアップのバッチが実行されたのかわからない</p>
+</li>
+<li>
+<p>実行されてても正常に終了したのかわからない</p>
+</li>
+<li>
+<p>正常に終了してても何を処理したのかわからない</p>
+</li>
+<li>
+<p>ログ残してても見に行けない</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>仮にログを取っていてもこれでは無意味。</p>
+</div>
+<div class="paragraph">
+<p>というわけで、syogaさんが <a href="http://tech.innovation.co.jp/2016/09/23/wtf-log.html">ログのお話</a> でも書いてくれてますが、もう一度言います。</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+ログをちゃんと残しましょう
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>最後までまとまりがない駄文でしたが、これまで読んでいただいてありがとうございました。
+こちらからは以上です。</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
