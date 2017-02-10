@@ -3,4 +3,152 @@
 :hp-alt-title: eps-wroom-32-and-esp-idf
 :hp-tags: Kato
 
-テスト
+
+こんにちは、加藤です。
+
+2017年2月1日、個人的に衝撃が走りました。 +
+なんと、秋月電子でESP-WROOM-32の取扱が開始したのです。
+
+秋月電子通商 ESP-WROOM-32 +
+http://akizukidenshi.com/catalog/g/gM-11647/
+
+
+ESP-WROOM-32は何が凄いかというと、 +
+
+#####  「700円(税込み)という価格にかかわらず、WiFiとBluetoothが使える」
+
+という点です。
+
+重要な事なのでもう一度いいます。
+
+#### 「700円(税込み)で、WiFiとBluetoothが使えます！」
+
+もう衝撃としか言いようがありません。 +
+このモジュールを手にした時、自分は人生勝ち組なんだと自覚しました。
+
+
+本日は、ESP-WROOM-32とesp-idfで「Hello World!」をしてみます。
+
+ESP-WROOM-32は、Arduinoでの開発にも対応しているものの、まだBluetooth関係のAPIがないようなので、 +
+今回はESP-WROOM-32公式フレームワークのesp-idfを選択しました。
+
+
+### 前提
+
+* Mac OS での作業を想定しています。
+
+
+#### はんだ付け
+
+日本では、ESP-WROOM-32モジュール用の開発ボードが販売されていないため、自分ではんだ付けをしました。 +
+下記のブログを参考に、モジュールを裏返しにしてはんだ付けをしました。
+
+こばさんの wakwak 山歩き - ESP-WROOM-32 （ESP32） 準備編 +
+http://d.hatena.ne.jp/wakwak_koba/20170202
+
+
+
+image::kato/6/01.png[]
+
+(はんだ付けもうちょっとうまくなりたい)
+
+
+
+また、サイズがバラバラで見てくれが悪い。。。のですが、 +
+秋月電子で販売していたピッチ変換基板を利用し、受け皿を作りました。 +
+
+
+秋月電子通商 - １０ピン２．５４ピッチ（２×５）←→１．２７ピッチ（１×１０）変換基板　金フラッシュ　（４個入）
+http://akizukidenshi.com/catalog/g/gP-07380/
+
+image::kato/6/02.png[]
+
+組み合わせると、こんな感じになります。
+
+image::kato/6/03.png[]
+
+
+#### 配線
+
+配線は、下記のドキュメントの１３ページの回路図を参考に、下記のように組んでみました。
+
+ESP-WROOM-32 Datasheet +
+http://akizukidenshi.com/download/ds/espressifsystems/esp_wroom_32_datasheet_en.pdf
+
+
+image::kato/6/04.jpg[]
+
+左側のスイッチは、リセット用スイッチ。 +
+右側のボタンは、BOOT OPTION用のボタンです。 +
+使い方は、
+
+* 左側のスイッチを操作すると、通常起動します。
+* 右側のボタンを押したまま、左側のスイッチを操作すると、書き込みモードで起動します。
+
+
+#### esp-idfのインストール
+
+公式サイトのドキュメントの通りに作業を行います。 +
+途中ビルドに時間がかかりましたが、特に問題なくインストールまで完了できました。 +
+https://esp-idf.readthedocs.io/en/feature-docs_gh_link_roles/macos-setup.html
+
+
+#### Hello World!
+手っ取り早く、サンプルを実行します。 +
+Hello World! サンプルは、 +
+esp-idf/examples/get-started/hello_world  +
+ディレクトリにあります。
+
+このディレクトリに移動後、
+```
+make menuconfig
+```
+で設定画面を開き通信設定を行います。
+通信設定は、「Serial flasher config」→「一番上のデバイスパス」から行います。
+
+image::kato/6/05.png[]
+
+image::kato/6/06.png[]
+
+
+なお、手元の環境では、「/dev/tty.usbserial-DJ00M2EO」となっていました。
+
+
+image::kato/6/07.png[]
+
+
+設定後、ESP-WROOM-32モジュールを書き込みモードで起動した状態で、
+
+```
+make && make flash
+```
+
+を行うと書き込みが行われます。
+下記のような状態になれば書き込み完了です。
+
+
+image::kato/6/08.png[]
+
+
+書き込み完了後、ESP-WROOM-32モジュールリセットを行うと、
+シリアルコンソールに内容が表示されまし
+た。
+
+image::kato/6/09.png[]
+(Hello Word 改、Hello Innovation! にしてみました)
+
+
+#### まとめ
+
+とりあえず、Hello World！まで行うことが来ました。 +
+今後はBluetooth通信にも挑戦していきたいと思います。
+
+iPhoneと接続して・・・と色々妄想が進みます！
+
+
+
+
+
+
+
+
