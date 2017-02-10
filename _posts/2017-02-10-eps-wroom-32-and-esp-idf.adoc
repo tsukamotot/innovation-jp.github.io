@@ -1,7 +1,7 @@
 = EPS-WROOM-32とesp-idfでHello World!をしてみる
 :published_at: 2017-02-10
 :hp-alt-title: eps-wroom-32-and-esp-idf
-:hp-tags: Kato
+:hp-tags: Kato,EPS-WROOM-32,esp-idf
 
 
 こんにちは、加藤です。
