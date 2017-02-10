@@ -98,7 +98,7 @@ image::yagasaki/drawatchio/set7.png[set7.png]
 https://github.com/yaggytter/drawatchio[*Drawatchio*] 独自の設定です。
 先ほど描いたかっこいい図に、メタデータとしてCognitoとCloudWatchの情報を埋め込んでいきます。
 
-具体的には、https://github.com/yaggytter/drawatchio[*Drawatchio*] が、後述の動画を見ていただければと思いますが、対象のオブジェクトを右クリックして、"Edit Data..."からプロパティを追加していきます。
+具体的には、 https://github.com/yaggytter/drawatchio[*Drawatchio*] か、後述の動画を見ていただければと思いますが、対象のオブジェクトを右クリックして、"Edit Data..."からプロパティを追加していきます。
 
 === draw.ioにPluginの設定をする
 
