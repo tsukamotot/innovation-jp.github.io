@@ -179,13 +179,14 @@ var _trackingid = 'LFT-10003-1';
     		<div style="width: 112px; height: 22px; float: left;">
     			<iframe
     				scrolling="no" frameborder="0" id="fbframe"
-    				style="border: none; overflow: hidden; height: 90px;"
-    				allowTransparency="true"></iframe>
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
     		</div>
     		<script type="text/javascript">
     			(function() {
     				var url = encodeURIComponent(location.href);
-    				document.getElementById('fbframe').src="//www.facebook.com/v2.0/plugins/like.php?href=" + url + "&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=90&amp;appId=1613776965579453"
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
     			})();
     		</script>
     	</div>
@@ -212,6 +213,15 @@ var _trackingid = 'LFT-10003-1';
 
     <ol class="post-list">
       <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/02/10/eps-wroom-32-and-esp-idf.html" title="link to EPS-WROOM-32とesp-idfでHello World!をしてみる">EPS-WROOM-32とesp-idfでHello World!をしてみる</a></h2>
+        <p class="excerpt">こんにちは、加藤です。 2017年2月1日、個人的に衝撃が走りました。 なんと、秋月電子でESP-WROOM-32の取扱が開始したのです。 秋月電子通商 ESP-WROOM-32 http://akizukidenshi.com/catalog/g/gM-11647/ ESP-WROOM-32は何が凄いかというと、 「700円(税込み)という価格にかかわらず、WiFiとBluetoothが使える」 という点です。 重要な事なのでもう一度いいます。 「700円(税込み)で、WiFiとBluetoothが使えます！」 もう衝撃としか言いようがありません。 このモジュールを手にした時、自分は人生勝ち組なんだと自覚しました。 本日は、ESP-WROOM-32とesp-idfで「Hello Worl&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="10 Feb 2017" class="post-list__meta--date date">10 Feb 2017</time> &#8226;
+            <span class="post-list__meta--tags tags"><a href="#blog" title="Kato">Kato</a>, <a href="#blog" title="EPS-WROOM-32">EPS-WROOM-32</a>, <a href="#blog" title="esp-idf">esp-idf</a></span>
+        </div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2016/04/16/google-analytics-with-google-apps-script.html" title="link to Google Apps Scriptを使ってGoogle Analyticsのデータを取り込んでみる">Google Apps Scriptを使ってGoogle Analyticsのデータを取り込んでみる</a></h2>
         <p class="excerpt">弊社イノベーションのエンジニアブログも第３弾となりました。 こんにちは。 Dockerの実験のために、NUCを４台も買ってしまった加藤と 申します。 メモリ合計48GB、4台で1000円/月ぐらいの電気代で運用出来てます。 なので、お得感あります。後悔はしていませ・・・んんん！ 今回はDockerの話ではなく、 「Google Apps Scriptを使ってGoogle Analytics(以下GA)のデータをスプレッドシートに取り込んでみる」 という軽めな題材で行きます！ 目標 今回の目標は、 Google Apps Scriptで、GAのデータをスプレッドシートに取り込めるようにする です。 １．環境用意 新規にスプレッドシートを用意して、シート名を「GAデータ」としておきます。 これ&hellip;</p>
         <div class="post-list__meta">
@@ -233,7 +243,7 @@ var _trackingid = 'LFT-10003-1';
 
 
             <footer class="footer">
-                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
                 <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
                 <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
             </footer>
