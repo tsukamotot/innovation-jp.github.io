@@ -135,7 +135,7 @@ image::kato/6/08.png[]
 た。
 
 image::kato/6/09.png[]
-(Hello Word 改、Hello Innovation! にしてみました)
+(Hello World 改、Hello Innovation! にしてみました)
 
 
 #### まとめ
