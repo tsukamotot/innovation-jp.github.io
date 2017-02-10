@@ -1,0 +1,38 @@
+= draw.ioで描いたかっこいい図をCognitoであれしてCloudWatchの監視ダッシュボードもどきにする！
+:published_at: 2017-02-11
+:hp-alt-title: Drawatchio
+:hp-tags: Yagasaki,drawio,CloudWatch,Cognito,AWS
+
+
+はてさてこんばんは。 矢ヶ崎です。なんやかんやでもう２月ですね。矢ヶ崎です。
+
+== 乾いたアラート
+
+今回は、最近インフラ障害が多く、CloudWatchの無機質な画面とにらめっこしている毎日に刺激を加えるべく、かっこいい！(当社比)監視ボードもどきを作りたい！という夢をみて、あれ？ https://www.draw.io/[draw.io]って、結構簡単にかっこいいインフラ構成図とか作れるよね？それをそのまま監視ボードとして使えたら、かっこいい図を他人に描いてもらって、それをベースに監視できるのではないのか？そうなのか？！
+
+そんな妄想がよぎったので、ちょっぴりやってみました。
+
+その名も、
+https://github.com/yaggytter/drawatchio[*Drawatchio*]です！
+
+== 雰囲気
+
+image::yagasaki/drawatchio/ss.jpg[DrawatchioDemo]
+
+
+== 簡単な仕組み
+
+https://www.draw.io/[draw.io]は、どうやらmxGraphというのをベースにして作られているもようでして、それをAPIとして使って、Pluginが作れるらしいのです。
+
+https://support.draw.io/display/DOB/2016/04/28/draw.io+API
+
+ということは、Javascriptをガリガリ書いてもいいっぽいっていうことっぽいので、じゃあ、CognitoであれしてCloudWatchに簡単にアクセスできるじゃないか！連携できるじゃないか？！
+
+と妄想しました。
+
+つまり
+
+draw.io <=> Javascript製 Plugin <=> Cognitoで認証 <=> CloudWatchAPI
+
+と連携できますよね逆に。
+
