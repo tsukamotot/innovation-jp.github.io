@@ -19,11 +19,13 @@ https://github.com/yaggytter/drawatchio[*Drawatchio*]です！
 
 image::yagasaki/drawatchio/ss.jpg[DrawatchioDemo]
 
+こんな感じで、CloudWatchのメトリクスを表示してくれたり、Alarmがあがると対象のインスタンスがチカチカしてくれたりして、インフラ構成図上のどの部分がいまヤバイのか？を、なんとなくかっこいい図ベースで教えてくる。そんな雰囲気です！
 
 == 簡単な仕組み
 
 https://www.draw.io/[draw.io]は、どうやらmxGraphというのをベースにして作られているもようでして、それをAPIとして使って、Pluginが作れるらしいのです。
 
+draw.io Online Blog  draw.io API
 https://support.draw.io/display/DOB/2016/04/28/draw.io+API
 
 ということは、Javascriptをガリガリ書いてもいいっぽいっていうことっぽいので、じゃあ、CognitoであれしてCloudWatchに簡単にアクセスできるじゃないか！連携できるじゃないか？！
@@ -35,4 +37,56 @@ https://support.draw.io/display/DOB/2016/04/28/draw.io+API
 draw.io <=> Javascript製 Plugin <=> Cognitoで認証 <=> CloudWatchAPI
 
 と連携できますよね逆に。
+
+== 使い方
+
+結構簡単に使えます！
+
+=== まず図を書く
+
+あたりまえですが、「かっこいい」、とにかく「かっこいい」図を https://www.draw.io/[draw.io]を使って描いてください。
+これが出来ないと、はっきり言ってこの後のステップは完全に無意味なものになります。ふつーのCloudWatch Dashboardで十分になっちゃいます。
+
+=== CognitoでIdentity poolを作る
+
+ググればいっぱい出てくるので、軽くだけふれておきます！
+
+Cognitoの画面を開いて、"Manage Federated Identities"を押します
+
+image::yagasaki/drawatchio/set1.png[set1.png]
+
+適当な名前で、Identity poolを作ります。今回は説明を簡単にするために、認証無しでつながるようにするために、"Enable access to unauthenticated identities"にします。
+
+が！これは、後述のロールを誰にでも付与するという意味になるので、本番でやるときにはちゃんと認証したものしか通さないようにしましょう。
+
+image::yagasaki/drawatchio/set2.png[set2.png]
+
+
+そして、Cognitoでの認証時(今回は認証なし時も)に付与するロールを作成する画面になるので、今回はデフォルトのまま作っておきます。
+
+image::yagasaki/drawatchio/set3.png[set3.png]
+
+作成後に、Sample Codeの画面でも他の画面でも良いのですが、"Identity Pool ID"が表示されたところでメモしておきます。Cognitoを利用するために、このIDを後に利用します。
+
+image::yagasaki/drawatchio/set4.png[set4.png]
+
+
+=== Cognitoで作ったIAMロールにCloudWatchのアクセスを許可する
+
+image::yagasaki/drawatchio/set4.png[set4.png]
+
+
+=== さっき描いた図にCognitoとCloudWatchのパラメータを埋め込む
+
+=== draw.ioにPluginの設定をする
+
+=== 監視開始！
+
+=== 設定の雰囲気の動画
+
+こちらに、「CognitoとCloudWatchのパラメータを埋め込む」以降の作業を動画にしたものを置いておきましたので、もしご興味あればご覧ください！
+
+https://youtu.be/xiCtHSh85Mg
+
+安心してください。CognitoのIDはすでに無効にしてあります。
 
