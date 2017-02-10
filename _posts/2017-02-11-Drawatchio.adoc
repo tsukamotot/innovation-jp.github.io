@@ -17,7 +17,7 @@ https://github.com/yaggytter/drawatchio[*Drawatchio*]です！
 
 == 雰囲気
 
-image::yagasaki/drawatchio/ss.jpg[DrawatchioDemo]
+image::https://github.com/yaggytter/drawatchio/raw/master/drawatchiodemo.gif?raw=true[DrawatchioDemo]
 
 こんな感じで、CloudWatchのメトリクスを表示してくれたり、Alarmがあがると対象のインスタンスがチカチカしてくれたりして、インフラ構成図上のどの部分がいまヤバイのか？を、なんとなくかっこいい図ベースで教えてくる。そんな雰囲気です！
 
