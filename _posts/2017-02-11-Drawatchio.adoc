@@ -8,7 +8,7 @@
 
 == 乾いたアラート
 
-今回は、最近インフラ障害が多く、CloudWatchの無機質な画面とにらめっこしている毎日に刺激を加えるべく、かっこいい！(当社比)監視ボードもどきを作りたい！という夢をみて、あれ？ https://www.draw.io/[draw.io]って、結構簡単にかっこいいインフラ構成図とか作れるよね？それをそのまま監視ボードとして使えたら、かっこいい図を他人に描いてもらって、それをベースに監視できるのではないのか？そうなのか？！
+今回は、最近インフラ障害が多く、AWSコンソールを開いてCloudWatchの無機質な画面とにらめっこしている毎日に刺激を加えるべく、かっこいい！(当社比)監視ボードもどきを作りたい！という夢をみて、あれ？ https://www.draw.io/[draw.io]って、結構簡単にかっこいいインフラ構成図とか作れるよね？それをそのまま監視ボードとして使えたら、かっこいい図を他人に描いてもらって、それをベースに監視できるのではないのか？そうなのか？！
 
 そんな妄想がよぎったので、ちょっぴりやってみました。
 
@@ -28,13 +28,13 @@ https://www.draw.io/[draw.io]は、どうやらmxGraphというのをベース�
 draw.io Online Blog  draw.io API
 https://support.draw.io/display/DOB/2016/04/28/draw.io+API
 
-ということは、Javascriptをガリガリ書いてもいいっぽいっていうことっぽいので、じゃあ、CognitoであれしてCloudWatchに簡単にアクセスできるじゃないか！連携できるじゃないか？！
+ということは、Javascriptをガリガリ書いてもいいっぽいっていうことっぽいので、じゃあ、Amazon CognitoであれしてAmazon CloudWatchに簡単にアクセスできるじゃないか！連携できるじゃないか？！
 
 と妄想しました。
 
 つまり
 
-draw.io <=> Javascript製 Plugin <=> Cognitoで認証 <=> CloudWatchAPI
+draw.io <=> Javascript製 Plugin <=> Amazon Cognitoで認証 <=> Amazon CloudWatch API
 
 と連携できますよね逆に。
 
