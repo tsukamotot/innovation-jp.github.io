@@ -2,6 +2,7 @@
 :published_at: 2017-02-11
 :hp-alt-title: Drawatchio
 :hp-tags: Yagasaki,drawio,CloudWatch,Cognito,AWS
+:hp-image: https://github.com/yaggytter/drawatchio/raw/master/drawatchiodemo.gif?raw=true
 
 
 はてさてこんばんは。 矢ヶ崎です。なんやかんやでもう２月ですね。矢ヶ崎です。矢ヶ崎です。
