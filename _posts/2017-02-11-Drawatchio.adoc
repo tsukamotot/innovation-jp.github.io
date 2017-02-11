@@ -1,4 +1,4 @@
-= draw.ioで描いたかっこいい図をCognitoであれしてCloudWatchの監視ダッシュボードもどきにする！
+= draw.ioで描いたかっこいい図をAmazon CognitoであれしてAmazon CloudWatchとつないでAWS監視ダッシュボードもどきにする！
 :published_at: 2017-02-11
 :hp-alt-title: Drawatchio
 :hp-tags: Yagasaki,drawio,CloudWatch,Cognito,AWS
