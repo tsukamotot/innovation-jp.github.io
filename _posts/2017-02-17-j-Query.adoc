@@ -1,0 +1,40 @@
+# jQueryで〜
+
+
+### 何度も$(function(){ を書いてる
+
+例えばこんな感じ。
+
+++++
+<iframe height='294' scrolling='no' title='jQuery Case 01 more' src='//codepen.io/mizukichi/embed/qRwxZg/?height=294&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/qRwxZg/'>jQuery Case 01 more</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
+
+
+ライブラリをどっかから持ってきたときとかにやってませんか？ 
+無駄なのでまとめて書きましょう！
+
+++++
+<iframe height='237' scrolling='no' title='jQuery Case01 good' src='//codepen.io/mizukichi/embed/BpEYGZ/?height=237&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/BpEYGZ/'>jQuery Case01 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
+
+### $(this)を使っていない
+
+++++
+<iframe height='250' scrolling='no' title='jQuery Case 02 more' src='//codepen.io/mizukichi/embed/ZLZxKd/?height=250&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/ZLZxKd/'>jQuery Case 02 more</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
+これもたまに見かけます。
+$(this)を使えば対象の要素（今回だとクリックされた要素）を簡単に指定でき、無駄にidやclassを指定せずに済むので積極的に使いましょう。
+
+++++
+<iframe height='168' scrolling='no' title='jQuery Case 02 good' src='//codepen.io/mizukichi/embed/jyRzJj/?height=168&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/jyRzJj/'>jQuery Case 02 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
+
+
