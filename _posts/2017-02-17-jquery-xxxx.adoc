@@ -1,7 +1,20 @@
-# jQueryで〜
+# きっと明日から役立つ！jQueryの書き方
+:hp-alt-title: jquery_xxxx
+:hp-tags: Nakamura,jQuery
+
+こんにちは、中村です。
+
+先日Vue.jsについての記事を書いたばかりですが、結局日々の業務ではｊQueryしか触っておりません。。。
+
+まぁBtoB向けのサービスなので、IE7対応を求められてしまったりするのでしょうがないですね！ +
+個人的に少しずつ勉強していこうと思います（ｷﾘｯ!
+
+ちなみにjQueryは特にシンプルに記述するように心がけないと、すぐコードが煩雑になってしまいメンテナンスがとても大変になってしまうと思います。
+
+今回は良くあるケースでHtmlとjavascript共にシンプルかつ意味のあるコードになるような例を紹介しますので、是非参考にしてみてください。
 
 
-### 何度も$(function(){ を書いてる
+### 何度も$(function() {  を書いてる
 
 例えばこんな感じ。
 
@@ -28,13 +41,118 @@
 </iframe>
 ++++
 
-これもたまに見かけます。
+これもたまに見かけます。 +
 $(this)を使えば対象の要素（今回だとクリックされた要素）を簡単に指定でき、無駄にidやclassを指定せずに済むので積極的に使いましょう。
 
 ++++
 <iframe height='168' scrolling='no' title='jQuery Case 02 good' src='//codepen.io/mizukichi/embed/jyRzJj/?height=168&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/jyRzJj/'>jQuery Case 02 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
 </iframe>
 ++++
+
+
+### 複数行に分けて記述している
+
+++++
+<iframe height='181' scrolling='no' title='jQuery Case 03 more' src='//codepen.io/mizukichi/embed/qRGWzW/?height=181&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/qRGWzW/'>jQuery Case 03 more</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
+
+1行で書けるものは書きましょう。
+
+++++
+<iframe height='162' scrolling='no' title='jQuery Case 03 good' src='//codepen.io/mizukichi/embed/ggJOYm/?height=162&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/ggJOYm/'>jQuery Case 03 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
+
+
+### 一度全て〜してから対象だけ〜する
+
+例えばあるdivをクリックするとそのdivだけ赤色になり、その他はグレーになるような機能を実装する場合。 +
+
+++++
+<iframe height='178' scrolling='no' title='bgypzR' src='//codepen.io/mizukichi/embed/bgypzR/?height=178&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/bgypzR/'>bgypzR</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
+一度全ての背景色をグレーにする必要はないので、自分以外の兄弟を全て指定する「siblings()」を使いましょう。
+
+++++
+<iframe height='161' scrolling='no' title='jQuery Code 04 good' src='//codepen.io/mizukichi/embed/LxoNoP/?height=161&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/LxoNoP/'>jQuery Code 04 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
+
+
+### 全ての指定をid もしくは class で行っている
+
+例えばテーブルのチェックボックスにチェックを入れたら、その行の背景色を変える機能を実装する場合。 +
+（実際DBからデータを取得し、サーバサイドにてループ処理を行い描画することもありこんな感じで記述していました…）
+
+++++
+<iframe height='233' scrolling='no' title='jQuery Code 05 more' src='//codepen.io/mizukichi/embed/KaLMde/?height=233&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/KaLMde/'>jQuery Code 05 more</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
+
+Html側の記述がどうしても複雑になってしまうので、相対的に指定するようにすると良いと思います。
+
+++++
+<iframe height='229' scrolling='no' title='jQuery Code 05 good' src='//codepen.io/mizukichi/embed/WRBxpy/?height=229&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/WRBxpy/'>jQuery Code 05 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
+
+ｊQuery側の記述だけ見ても何したいのかが理解できていいですね！
+
+
+### 2階層以上の親要素にある兄弟要素を指定したい場合
+
+例えば以下のようなHtmlにて、「お問い合わせする」ボタンをクリックすると、class="result"のｔｄに「お問い合わせありがとうございます」と表示させるような場合。
+
+先ほどの例と同じく「parents()」を使って親要素を特定し、さらに「find()」を使って兄弟要素を指定すると綺麗に書けます。
+
+++++
+<iframe height='166' scrolling='no' title='jQuery Case 06 good' src='//codepen.io/mizukichi/embed/QdREBJ/?height=166&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/QdREBJ/'>jQuery Case 06 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
+
+
+
+### まとめ
+
+いかがでしたでしょうか。 +
+シンプルかつ意味のあるコードを書くことで、拡張性と保守性を高めることができますので是非参考にしてみてください。
+
+
+こちらからは以上です！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
