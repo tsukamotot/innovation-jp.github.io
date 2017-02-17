@@ -122,7 +122,9 @@ https://cdn.rawgit.com/yaggytter/drawatchio/dfb31691/web/js/drawatchio.js
 
 こちらに、「CognitoとCloudWatchのパラメータを埋め込む」以降の作業を動画にしたものを置いておきましたので、もしご興味あればご覧ください！
 
-https://youtu.be/xiCtHSh85Mg
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xiCtHSh85Mg" frameborder="0" allowfullscreen></iframe>
+++++
 
 安心してください。CognitoのIDはすでに無効にしてあります！
 
