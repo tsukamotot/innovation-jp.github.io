@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>きっと明日から役立つ！jQueryの書き方 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="きっと明日から役立つ！jQueryの書き方">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="きっと明日から役立つ！jQueryの書き方">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/02/17/jquery-good-and-more.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="きっと明日から役立つ！jQueryの書き方" />
+    <meta property="og:description" content="こんにちは、中村です。 先日Vue.jsについての記事を書いたばかりですが、結局日々の業務ではjQueryしか触っておりません。。。 まぁBtoB向けのサービスなので、IE7対応を求められてしまったりするのでしょうがないですね！ 個人的に少しずつ勉強していこうと思います（ｷﾘｯ! ちなみにjQueryは特にシンプルに記述するように心がけないと、すぐコードが煩雑になってしまいメンテナンスがとても大変になってしまうと思います。 今回は良くあるケースでHTMLとJavaScript共にシンプルかつ意味のあるコードになるような例を紹介しますので、是非参考にして..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/02/17/jquery-good-and-more.html" />
+    <meta property="article:published_time" content="2017-02-16T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-02-18T05:41:43.991Z" />
+    <meta property="article:tag" content="Nakamura" />
+    <meta property="article:tag" content="jQuery" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="きっと明日から役立つ！jQueryの書き方" />
+    <meta name="twitter:description" content="こんにちは、中村です。 先日Vue.jsについての記事を書いたばかりですが、結局日々の業務ではjQueryしか触っておりません。。。 まぁBtoB向けのサービスなので、IE7対応を求められてしまったりするのでしょうがないですね！ 個人的に少しずつ勉強していこうと思います（ｷﾘｯ! ちなみにjQueryは特にシンプルに記述するように心がけないと、すぐコードが煩雑になってしまいメンテナンスがとても大変になってしまうと思います。 今回は良くあるケースでHTMLとJavaScript共にシンプルかつ意味のあるコードになるような例を紹介しますので、是非参考にして..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/02/17/jquery-good-and-more.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "m_nakamura",
+        "image": "https://avatars.githubusercontent.com/u/7381448?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "きっと明日から役立つ！jQueryの書き方",
+    "url": "http://tech.innovation.co.jp/2017/02/17/jquery-good-and-more.html",
+    "datePublished": "2017-02-16T15:00:00.000Z",
+    "dateModified": "2017-02-18T05:41:43.991Z",
+    "keywords": "Nakamura, jQuery",
+    "description": "こんにちは、中村です。 先日Vue.jsについての記事を書いたばかりですが、結局日々の業務ではjQueryしか触っておりません。。。 まぁBtoB向けのサービスなので、IE7対応を求められてしまったりするのでしょうがないですね！ 個人的に少しずつ勉強していこうと思います（ｷﾘｯ! ちなみにjQueryは特にシンプルに記述するように心がけないと、すぐコードが煩雑になってしまいメンテナンスがとても大変になってしまうと思います。 今回は良くあるケースでHTMLとJavaScript共にシンプルかつ意味のあるコードになるような例を紹介しますので、是非参考にして..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Nakamura tag-j-Query no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="17 Feb 2017" class="post-meta__date date">17 Feb 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Nakamura">Nakamura</a>, <a href="http://tech.innovation.co.jp/tag/j-Query">jQuery</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/7381448?v=3" alt="profile image for m_nakamura" class="avatar post-meta__avatar" /> by m_nakamura</span>
+      </div>
+      <h1 class="post-title">きっと明日から役立つ！jQueryの書き方</h1>
+    </header>
+
+    <section class="post tag-Nakamura tag-j-Query">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは、中村です。</p>
+</div>
+<div class="paragraph">
+<p>先日Vue.jsについての記事を書いたばかりですが、結局日々の業務ではjQueryしか触っておりません。。。</p>
+</div>
+<div class="paragraph">
+<p>まぁBtoB向けのサービスなので、IE7対応を求められてしまったりするのでしょうがないですね！<br>
+個人的に少しずつ勉強していこうと思います（ｷﾘｯ!</p>
+</div>
+<div class="paragraph">
+<p>ちなみにjQueryは特にシンプルに記述するように心がけないと、すぐコードが煩雑になってしまいメンテナンスがとても大変になってしまうと思います。</p>
+</div>
+<div class="paragraph">
+<p>今回は良くあるケースでHTMLとJavaScript共にシンプルかつ意味のあるコードになるような例を紹介しますので、是非参考にしてみてください。</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__function">何度も$(function() {  を書いてる</h3>
+<div class="paragraph">
+<p>例えばこんな感じ。</p>
+</div>
+<iframe height='294' scrolling='no' title='jQuery Case 01 more' src='//codepen.io/mizukichi/embed/qRwxZg/?height=294&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/qRwxZg/'>jQuery Case 01 more</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+<div class="paragraph">
+<p>ライブラリをどっかから持ってきたときとかにやってませんか？
+無駄なのでまとめて書きましょう！</p>
+</div>
+<iframe height='237' scrolling='no' title='jQuery Case01 good' src='//codepen.io/mizukichi/embed/BpEYGZ/?height=237&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/BpEYGZ/'>jQuery Case01 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+</div>
+<div class="sect2">
+<h3 id="__this">$(this)を使っていない</h3>
+<iframe height='250' scrolling='no' title='jQuery Case 02 more' src='//codepen.io/mizukichi/embed/ZLZxKd/?height=250&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/ZLZxKd/'>jQuery Case 02 more</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+<div class="paragraph">
+<p>これもたまに見かけます。<br>
+$(this)を使えば対象の要素（今回だとクリックされた要素）を簡単に指定でき、無駄にidやclassを指定せずに済むので積極的に使いましょう。</p>
+</div>
+<iframe height='168' scrolling='no' title='jQuery Case 02 good' src='//codepen.io/mizukichi/embed/jyRzJj/?height=168&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/jyRzJj/'>jQuery Case 02 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+</div>
+<div class="sect2">
+<h3 id="__">複数行に分けて記述している</h3>
+<iframe height='181' scrolling='no' title='jQuery Case 03 more' src='//codepen.io/mizukichi/embed/qRGWzW/?height=181&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/qRGWzW/'>jQuery Case 03 more</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+<div class="paragraph">
+<p>1行で書けるものは書きましょう。</p>
+</div>
+<iframe height='162' scrolling='no' title='jQuery Case 03 good' src='//codepen.io/mizukichi/embed/ggJOYm/?height=162&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/ggJOYm/'>jQuery Case 03 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+</div>
+<div class="sect2">
+<h3 id="___2">一度全て〜してから対象だけ〜する</h3>
+<div class="paragraph">
+<p>例えばあるdivをクリックするとそのdivだけ赤色になり、その他はグレーになるような機能を実装する場合。<br></p>
+</div>
+<iframe height='178' scrolling='no' title='bgypzR' src='//codepen.io/mizukichi/embed/bgypzR/?height=178&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/bgypzR/'>bgypzR</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+<div class="paragraph">
+<p>一度全ての背景色をグレーにする必要はないので、自分以外の兄弟を全て指定する「siblings()」を使いましょう。</p>
+</div>
+<iframe height='161' scrolling='no' title='jQuery Code 04 good' src='//codepen.io/mizukichi/embed/LxoNoP/?height=161&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/LxoNoP/'>jQuery Code 04 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+</div>
+<div class="sect2">
+<h3 id="__id_class">全ての指定をid もしくは class で行っている</h3>
+<div class="paragraph">
+<p>例えばテーブルのチェックボックスにチェックを入れたら、その行の背景色を変える機能を実装する場合。<br>
+（実際DBからデータを取得し、サーバサイドにてループ処理を行い描画することもありこんな感じで記述していました…）</p>
+</div>
+<iframe height='233' scrolling='no' title='jQuery Code 05 more' src='//codepen.io/mizukichi/embed/KaLMde/?height=233&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/KaLMde/'>jQuery Code 05 more</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+<div class="paragraph">
+<p>HTML側の記述がどうしても複雑になってしまうので、相対的に指定するようにすると良いと思います。</p>
+</div>
+<iframe height='229' scrolling='no' title='jQuery Code 05 good' src='//codepen.io/mizukichi/embed/WRBxpy/?height=229&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/WRBxpy/'>jQuery Code 05 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+<div class="paragraph">
+<p>jQuery側の記述だけ見ても何したいのかが理解できていいですね！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2">2階層以上の親要素にある兄弟要素を指定したい場合</h3>
+<div class="paragraph">
+<p>例えば以下のようなHTMLにて、「お問い合わせする」ボタンをクリックすると、class="result"のtdに「お問い合わせありがとうございます」と表示させるような場合。</p>
+</div>
+<div class="paragraph">
+<p>先ほどの例と同じく「parents()」を使って親要素を特定し、さらに「find()」を使って兄弟要素を指定すると綺麗に書けます。</p>
+</div>
+<iframe height='166' scrolling='no' title='jQuery Case 06 good' src='//codepen.io/mizukichi/embed/QdREBJ/?height=166&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/QdREBJ/'>jQuery Case 06 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+</div>
+<div class="sect2">
+<h3 id="___3">まとめ</h3>
+<div class="paragraph">
+<p>いかがでしたでしょうか。<br>
+前半はさておき、セレクターをなるべく相対的に記述することがポイントかなと思っています。<br></p>
+</div>
+<div class="paragraph">
+<p>シンプルかつ意味のあるコードを書くことで、拡張性と保守性を高めることができますので是非参考にしてみてください。</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です！</p>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
