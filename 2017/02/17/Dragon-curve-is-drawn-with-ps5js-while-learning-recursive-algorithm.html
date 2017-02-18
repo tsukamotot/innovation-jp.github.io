@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>再帰的アルゴリズムを学びつつドラゴン曲線をps5.jsで描画 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="再帰的アルゴリズムを学びつつドラゴン曲線をps5.jsで描画">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="再帰的アルゴリズムを学びつつドラゴン曲線をps5.jsで描画">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/02/17/Dragon-curve-is-drawn-with-ps5js-while-learning-recursive-algorithm.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="再帰的アルゴリズムを学びつつドラゴン曲線をps5.jsで描画" />
+    <meta property="og:description" content="こんばんはオザサです。 最近はスクラムを学びつつ開発プロセスの改善に取り組んでおり、 コーディングの時間自体は少し減ってしまったなとも思い、 再帰的アルゴリズムのお勉強ついでにドラゴン曲線を描画してみました。 実装について 描画には以前も使用したps5.jsを用いてみました。 ドラゴン曲線を描画するため、A地点からB地点まで結んだ直線に対し、 直角になる二本の線分を引くことのできるC地点を求めることになるのですが、 さらにそのA地点からC地点に結んだ直線に対し、 直角になる二本の線分を引くことのできるD地点を求めることになる、 といった処理になります。..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/02/17/Dragon-curve-is-drawn-with-ps5js-while-learning-recursive-algorithm.html" />
+    <meta property="article:published_time" content="2017-02-16T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-02-18T05:17:50.554Z" />
+    <meta property="article:tag" content="ozasa" />
+    <meta property="article:tag" content="ps5.js" />
+    <meta property="article:tag" content="recursive-algorithm" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="再帰的アルゴリズムを学びつつドラゴン曲線をps5.jsで描画" />
+    <meta name="twitter:description" content="こんばんはオザサです。 最近はスクラムを学びつつ開発プロセスの改善に取り組んでおり、 コーディングの時間自体は少し減ってしまったなとも思い、 再帰的アルゴリズムのお勉強ついでにドラゴン曲線を描画してみました。 実装について 描画には以前も使用したps5.jsを用いてみました。 ドラゴン曲線を描画するため、A地点からB地点まで結んだ直線に対し、 直角になる二本の線分を引くことのできるC地点を求めることになるのですが、 さらにそのA地点からC地点に結んだ直線に対し、 直角になる二本の線分を引くことのできるD地点を求めることになる、 といった処理になります。..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/02/17/Dragon-curve-is-drawn-with-ps5js-while-learning-recursive-algorithm.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "yuki ozasa",
+        "image": "https://avatars.githubusercontent.com/u/8304640?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "再帰的アルゴリズムを学びつつドラゴン曲線をps5.jsで描画",
+    "url": "http://tech.innovation.co.jp/2017/02/17/Dragon-curve-is-drawn-with-ps5js-while-learning-recursive-algorithm.html",
+    "datePublished": "2017-02-16T15:00:00.000Z",
+    "dateModified": "2017-02-18T05:17:50.554Z",
+    "keywords": "ozasa, ps5.js, recursive-algorithm",
+    "description": "こんばんはオザサです。 最近はスクラムを学びつつ開発プロセスの改善に取り組んでおり、 コーディングの時間自体は少し減ってしまったなとも思い、 再帰的アルゴリズムのお勉強ついでにドラゴン曲線を描画してみました。 実装について 描画には以前も使用したps5.jsを用いてみました。 ドラゴン曲線を描画するため、A地点からB地点まで結んだ直線に対し、 直角になる二本の線分を引くことのできるC地点を求めることになるのですが、 さらにそのA地点からC地点に結んだ直線に対し、 直角になる二本の線分を引くことのできるD地点を求めることになる、 といった処理になります。..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-ozasa tag-ps5js tag-recursive-algorithm no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="17 Feb 2017" class="post-meta__date date">17 Feb 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/ozasa">ozasa</a>, <a href="http://tech.innovation.co.jp/tag/ps5js">ps5.js</a>, <a href="http://tech.innovation.co.jp/tag/recursive-algorithm">recursive-algorithm</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/8304640?v=3" alt="profile image for yuki ozasa" class="avatar post-meta__avatar" /> by yuki ozasa</span>
+      </div>
+      <h1 class="post-title">再帰的アルゴリズムを学びつつドラゴン曲線をps5.jsで描画</h1>
+    </header>
+
+    <section class="post tag-ozasa tag-ps5js tag-recursive-algorithm">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんばんはオザサです。</p>
+</div>
+<div class="paragraph">
+<p>最近はスクラムを学びつつ開発プロセスの改善に取り組んでおり、<br>
+コーディングの時間自体は少し減ってしまったなとも思い、<br>
+再帰的アルゴリズムのお勉強ついでにドラゴン曲線を描画してみました。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">実装について</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>描画には以前も使用したps5.jsを用いてみました。</p>
+</div>
+<div class="paragraph">
+<p>ドラゴン曲線を描画するため、A地点からB地点まで結んだ直線に対し、<br>
+直角になる二本の線分を引くことのできるC地点を求めることになるのですが、<br>
+さらにそのA地点からC地点に結んだ直線に対し、<br>
+直角になる二本の線分を引くことのできるD地点を求めることになる、<br>
+といった処理になります。</p>
+</div>
+<div class="sect2">
+<h3 id="___2">コードの一部</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-rust" data-lang="rust">var xx = bx - ax;
+var yy = -(by - ay);
+var cx = ax + (xx + yy) /2;
+var cy = by + (xx + yy) /2;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>こんな風に2点を元に新たな1点を求め、描画する部分を再帰的に記述することができるわけです。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">やってみた</h3>
+<div class="paragraph">
+<p>再帰回数0回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ozasa/dragon0.png" alt="dragon0.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ざっくり処理の流れをイメージするとこんな感じです。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ozasa/dragon0f.png" alt="dragon0f.png">
+</div>
+</div>
+<div class="paragraph">
+<p>再帰回数1回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ozasa/dragon1.png" alt="dragon1.png">
+</div>
+</div>
+<div class="paragraph">
+<p>再帰回数2回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ozasa/dragon2.png" alt="dragon2.png">
+</div>
+</div>
+<div class="paragraph">
+<p>再帰回数12回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ozasa/dragon12.png" alt="dragon12.png">
+</div>
+</div>
+<div class="paragraph">
+<p>うん、なんとなくフラクタル図形はかっこいいように思います。<br>
+しかし、再帰回数の指定をあげすぎると私のパソコンがうなりだしましたので、<br>
+これ以上複雑な図形をお見せできないのは申し訳ないです！</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">感想</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>再帰的アルゴリズムを用いれば、<br>
+記述自体はかなりすっきりするなと感じました。<br>
+抽象度と可読性のバランスを考慮しつつDRYを意識していこうと思います！！</p>
+</div>
+<div class="paragraph">
+<p>しかしながら数学的な知識が私にないので、<br>
+かなり色々調べつつになってしまいアウトプットはできているもののかなり時間がかかってしまいました。<br>
+精進あるのみです。</p>
+</div>
+<div class="paragraph">
+<p>また、今回折角ps5.jsを使っているのにも関わらず、<br>
+line関数くらいしか用いておらず、色すら付けられていない現状なので、<br>
+リベンジしようと思います！</p>
+</div>
+<div class="paragraph">
+<p>ちなみにGoogleで「再帰」と検索するとほっこりしますのでオススメです！<br>
+こちらからは以上です！！</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
