@@ -1,5 +1,5 @@
 # きっと明日から役立つ！jQueryの書き方
-:hp-alt-title: jquery_xxxx
+:hp-alt-title: jquery_good_and_more
 :hp-tags: Nakamura,jQuery
 
 こんにちは、中村です。
@@ -11,7 +11,7 @@
 
 ちなみにjQueryは特にシンプルに記述するように心がけないと、すぐコードが煩雑になってしまいメンテナンスがとても大変になってしまうと思います。
 
-今回は良くあるケースでHtmlとjavascript共にシンプルかつ意味のあるコードになるような例を紹介しますので、是非参考にしてみてください。
+今回は良くあるケースでHTMLとJavaScript共にシンプルかつ意味のあるコードになるような例を紹介しますので、是非参考にしてみてください。
 
 
 ### 何度も$(function() {  を書いてる
@@ -96,7 +96,7 @@ $(this)を使えば対象の要素（今回だとクリックされた要素）�
 ++++
 
 
-Html側の記述がどうしても複雑になってしまうので、相対的に指定するようにすると良いと思います。
+HTML側の記述がどうしても複雑になってしまうので、相対的に指定するようにすると良いと思います。
 
 ++++
 <iframe height='229' scrolling='no' title='jQuery Code 05 good' src='//codepen.io/mizukichi/embed/WRBxpy/?height=229&theme-id=0&default-tab=js&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/mizukichi/pen/WRBxpy/'>jQuery Code 05 good</a> by mizuki nakamura (<a href='http://codepen.io/mizukichi'>@mizukichi</a>) on <a href='http://codepen.io'>CodePen</a>.
@@ -104,12 +104,12 @@ Html側の記述がどうしても複雑になってしまうので、相対的�
 ++++
 
 
-ｊQuery側の記述だけ見ても何したいのかが理解できていいですね！
+jQuery側の記述だけ見ても何したいのかが理解できていいですね！
 
 
 ### 2階層以上の親要素にある兄弟要素を指定したい場合
 
-例えば以下のようなHtmlにて、「お問い合わせする」ボタンをクリックすると、class="result"のｔｄに「お問い合わせありがとうございます」と表示させるような場合。
+例えば以下のようなHTMLにて、「お問い合わせする」ボタンをクリックすると、class="result"のtdに「お問い合わせありがとうございます」と表示させるような場合。
 
 先ほどの例と同じく「parents()」を使って親要素を特定し、さらに「find()」を使って兄弟要素を指定すると綺麗に書けます。
 
