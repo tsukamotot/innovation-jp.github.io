@@ -1,0 +1,170 @@
+# GhromeのExtensionで来客情報を取得したお話。
+:hp-alt-title: GhromeのExtension
+:hp-tags: GoogleExtension,kohe,js,html
+
+
+こんばんはこへです。
+
+
+弊社では新人が毎朝GRIDYの来客情報を確認し、全社員の前で広報している。
+
+私も自分が担当のときは毎朝GRIDYを確認し朝会に備えている。
+
+しかし、来客情報を確認してそれをいちいち紙にメモを取る行為は繰り返し作業かつ非効率的で非生産的だと感じたので*自動化*してみた。
+
+[quote, 'https://knowledgesuite.jp/free/about/[GRIDYグループウェアとは]']
+____
+GRIDY グループウェアは、企業等の組織、さらには企業間を飛び越えたグループ会社や協力会社まで、社内外での情報共有を活性化し、コミュニケーションを強化するグループウェアアプリケーションです。
+____
+
+## GRIDYから「今日の来客情報」のみを取得したい！
+
+
+image::kohe/extention01.png[]
+
+↑の画像の赤丸の情報を取得したい。
+
+具体的に説明すると、
+
+取得したい情報は上記画像の今日と同じ日の列にある(このブログでは本日を２３日とする）「来客」と言う文字が書いてある下の文字の情報が欲しいのである。
+
+今回は *GoogleExtension* でこの問題を解決していく。
+
+
+
+## code
+
+manifest.json
+```
+
+ {
+    "manifest_version": 2, 
+    "name": "getVisitor",
+    "description": "今日の来客情報のみ取得",
+    "version": "1.0",
+    "permissions": ["tabs"],
+    "content_scripts": [
+      {
+        "matches": ["https://gridy.jp/reservation/week"],
+        "js": ["jquery.js", "content.js"]
+      }
+    ],
+    "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": "icon_16.png"
+    },
+     "icons": {
+         "128": "icon_128.png"
+    }
+  }
+
+```
+
+重要そうなとこを説明。
+
+```    
+ "content_scripts": [
+      {
+        "matches": ["https://gridy.jp/reservation/week"],
+        "js": ["jquery.js", "content.js"]
+      }
+    ] 
+
+```
+
+`https://gridy.jp/reservation/week`へアクセスした時のみ、`content.js`を実行
+
+いつでも実行したいときは   `http:// * / *   と　https:// * / *` と指定しておけばok
+
+
+
+```
+ "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": "icon_16.png"
+    },
+ 
+```
+extensionのアイコンをクリックしたときに`popup.html`を呼び出す。
+
+
+
+popup.html
+
+```
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset = "UTF-8">
+    <script src="jquery.js"></script>
+    <script src="main.js"></script>
+  </head>
+  <body style="width:1000px;">
+    <p>来客情報一覧</p>
+    <div id="info"></div>
+  </body>
+</html>
+
+
+```
+
+
+main.js
+
+```
+chrome.tabs.query({active:true}, function(tab) {
+    chrome.tabs.sendMessage(tab[0].id, {text:''}, function(response) {
+        var infoType = response.infotype;
+        var content  = response.content;
+        var count    = 0;
+        jQuery.each(infoType, function(i, val) {
+            if(val.match('来客')){
+                 $("#info").append('<p>' + content[count] + '</p>');
+            }
+            count+=1;
+        });
+     });
+});
+
+
+```
+
+`chrome.tabs.sesendMessage()`により
+`content.js`の`chrome.runtime.onMessage.addListener`を呼び出す。
+
+
+content.js
+ 
+ 
+```
+chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+    var now   = new Date();
+    var nowId = now.getFullYear() + '/' +
+	( "0"+( now.getMonth()+1 ) ).slice(-2) + '/' +
+	( "0"+now.getDate() ).slice(-2);
+    var content  = $("[id *= '" + nowId + "'] .pad_left").map(function(){
+        return $(this).attr('title');
+    }).get();
+    var infoType = $("[id *= '" + nowId + "'] .pad_left").prev('span').map(function(){
+        return $(this).html();
+    }).get();
+    sendResponse( {infotype:infoType,content:content} );
+});
+
+
+```
+
+`content_scripts`で指定したjsでしか *閲覧している* WebサイトのDOM操作ができないため、`content.js`に欲しい情報を取得する処理を記述。
+
+その結果を　`sendResponse()` で`main.js`に送る。
+
+
+### 完成品
+
+image::kohe/extension01.gif[]
+
+これでみんな幸せになれると思います:)
+ 
+おわり
+
