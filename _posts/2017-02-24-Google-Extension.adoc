@@ -21,7 +21,7 @@ image::kohe/extention01.png[]
 
 具体的に説明すると、
 
-取得したい情報は上記画像の今日同じ日の列にある(このブログでは本日を２３日とする）「来客」と言う文字が書いてある下の文字の情報が欲しいのである。
+取得したい情報は上記画像の今日と同じ日の列にある(このブログでは本日を２３日とする）「来客」と言う文字が書いてある下の文字の情報が欲しいのである。
 
 今回は *GoogleExtension* でこの問題を解決していく。
 
@@ -110,8 +110,6 @@ main.js
 ```
 chrome.tabs.query({active:true}, function(tab) {
     chrome.tabs.sendMessage(tab[0].id, {text:''}, function(response) {
-        var url       = tab[0].url;
-        console.log(response);
         var infoType = response.infotype;
         var content  = response.content;
         var count    = 0;
@@ -152,7 +150,8 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
 
 ```
 
-`content_scripts`で指定したjsでしか閲覧しているWebサイトのDOM操作ができないため、`content.js`に欲しい情報を取得する処理を記述。
+`content_scripts`で指定したjsでしか *閲覧している* WebサイトのDOM操作ができないため、`content.js`に欲しい情報を取得する処理を記述。
+
 その結果を　`sendResponse()` で`main.js`に送る。
 
 
