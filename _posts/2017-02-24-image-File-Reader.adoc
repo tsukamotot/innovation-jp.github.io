@@ -1,0 +1,11 @@
+# FileReaderを使ってローカルにある画像をブラウザに読み込ませる方法
+:hp-alt-title: image-FileReader
+:hp-tags: yaizu,javascript,jQuery,FileReader
+
+こんにちは、
+
+++++
+<iframe height='265' scrolling='no' title='image-FileReader' src='//codepen.io/yaizuuuu/embed/WpNmNe/?height=265&theme-id=dark&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/yaizuuuu/pen/WpNmNe/'>image-FileReader</a> by yuma oyaizu (<a href='http://codepen.io/yaizuuuu'>@yaizuuuu</a>) on <a href='http://codepen.io'>CodePen</a>.
+</iframe>
+++++
+
