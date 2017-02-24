@@ -1,6 +1,6 @@
 # ChromeのExtensionで来客情報を取得したお話。
 :hp-alt-title: ChromeのExtension
-:hp-tags: GoogleExtension,kohe,js,html
+:hp-tags: ChromeExtension,kohe,js,html
 
 
 こんばんはこへです。
@@ -28,7 +28,7 @@ image::kohe/extention01.png[]
 
 取得したい情報は上記画像の今日と同じ日の列にある(このブログでは本日を２３日とする）「来客」と言う文字が書いてある下の文字の情報が欲しいのである。
 
-今回は *GoogleExtension* でこの問題を解決していく。
+今回は *ChromeのExtension* でこの問題を解決していく。
 
 
 
