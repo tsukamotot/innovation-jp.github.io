@@ -67,7 +67,7 @@ manifest.json
 
 ```
 
-`https://gridy.jp/reservation/week`の時のみ、`content.js`を実行
+`https://gridy.jp/reservation/week`へアクセスした時のみ、`content.js`を実行
 
 いつでも実行したいときは   `http:// * / *   と　https:// * / *` と指定しておけばok
 
