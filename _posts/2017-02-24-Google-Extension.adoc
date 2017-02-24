@@ -1,4 +1,4 @@
-# GoogleExtensionで来客情報を取得した話し。
+# GoogleExtensionで来客情報を取得したお話。
 :hp-alt-title: GoogleExtension
 :hp-tags: GoogleExtention,kohe,js,html
 
@@ -54,6 +54,34 @@ manifest.json
   }
 
 ```
+
+重要そうなとこを説明。
+
+```    
+ "content_scripts": [
+      {
+        "matches": ["https://gridy.jp/reservation/week"],
+        "js": ["jquery.js", "content.js"]
+      }
+    ] 
+
+```
+
+`https://gridy.jp/reservation/week`の時のみ、`content.js`を実行
+
+いつでも実行したいときは   `http:// * / *   と　https:// * / *` と指定しておけばok
+
+
+
+```
+ "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": "icon_16.png"
+    },
+ 
+```
+extensionのボタンをクリックしたときに`popup.html`を呼び出す。
+
 
 
 popup.html
@@ -122,7 +150,9 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
 ```
 
 
-
+### 完成品
 
 image::kohe/extension01.gif[]
+ 
+おわり
 
