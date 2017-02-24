@@ -2,10 +2,126 @@
 :hp-alt-title: image-FileReader
 :hp-tags: yaizu,javascript,jQuery,FileReader
 
-こんにちは、
+こんにちは、widthが192cmの小柳津です。 +
+
+今回はローカルのファイルをブラウザに読み込ませる方法を習得したので、そちらを取り扱って行こうと思います。 +
+
+方法はJavaScriptのFileReaderオブジェクトを使用します。 +
+
+サンプルとして画像をリアルタイムでブラウザに反映できるものを作ってみました。 +
+
+## 動作
+
+百聞は一見にしかず、動作は以下のようになります。 +
 
 ++++
 <iframe height='265' scrolling='no' title='image-FileReader' src='//codepen.io/yaizuuuu/embed/WpNmNe/?height=265&theme-id=dark&default-tab=js,result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/yaizuuuu/pen/WpNmNe/'>image-FileReader</a> by yuma oyaizu (<a href='http://codepen.io/yaizuuuu'>@yaizuuuu</a>) on <a href='http://codepen.io'>CodePen</a>.
 </iframe>
 ++++
 
+画像を選択できる箇所が５つあり、選択するとそれぞれの直下に画像がリアルタイムで追加されます。 +
+さらに、今回は選択できる画像を`'image/jpeg', 'image/png', 'image/gif'`に制限しており、 +
+それ以外の拡張子を選択するとアラートされる仕様にしています。 +
+
+最初はajax通信でどこかのストレージに画像を保存をしてimgタグのsrcを指定しようと思ったのですが、 +
+FileReaderオブジェクトのほうが簡単・お手軽にできました。 +
+
+
+## コード
+
+全体のコードはコチラ。 +
+
+```
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>file_reader</title>
+    <style>
+        img {
+            max-width: 200px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+<input type="file" class="image_file" data-image-tag-id="#image01"><br>
+<img id="image01"><br>
+
+<input type="file" class="image_file" data-image-tag-id="#image02"><br>
+<img id="image02"><br>
+
+<input type="file" class="image_file" data-image-tag-id="#image03"><br>
+<img id="image03"><br>
+
+<input type="file" class="image_file" data-image-tag-id="#image04"><br>
+<img id="image04"><br>
+
+<input type="file" class="image_file" data-image-tag-id="#image05"><br>
+<img id="image05"><br>
+</body>
+<script>
+    $(function () {
+        $('.image_file').change(function () {
+            // 画像の情報を取得
+            var file = this.files[0];
+            var img_tag_id = $(this).data('imageTagId');
+
+            // 指定の拡張子以外の場合はアラート
+            var permit_type = ['image/jpeg', 'image/png', 'image/gif'];
+            if (file && permit_type.indexOf(file.type) == -1) {
+                alert('この形式のファイルはアップロードできません');
+                $(this).val('');
+                $(img_tag_id).attr('src', '');
+                return
+            }
+
+            // 読み込んだ画像を取得し、フォームの直後に表示させる
+            var reader = new FileReader()
+            reader.onload = function () {
+                $(img_tag_id).attr('src', reader.result);
+                $(img_tag_id + '_prev').attr('src', '');
+            }
+
+            // 画像の読み込み
+            reader.readAsDataURL(file);
+        });
+    });
+</script>
+</html>
+
+```
+
+拡張子の制限や指定した箇所に画像を反映させるなどの処理がありますが、 +
+画像を反映させるのコアの部分は、下記の４点になります。 +
+
+1. `var file = this.files[0]`で選択された画像の情報を取得。 +
+
+2. `var reader = new FileReader()`でFileReaderオブジェクトをインスタンス化して、
+
+3. `reader.readAsDataURL(file)`で画像の読み込み。 +
+
+4. 以下の部分で画像の読み込みが終了し次第imgタグに画像を反映 +
+
+
+```
+reader.onload = function () {
+	$(img_tag_id).attr('src', reader.result);
+	$(img_tag_id + '_prev').attr('src', '');
+}
+
+```
+
+ 
+対応ブラウザやより詳しい使い方はコチラで確認できます。 +
+https://developer.mozilla.org/ja/docs/Web/API/FileReader[FileReader]
+ 
+ 
+
+
+とても簡単ですね。ぜひ参考にして頂ければ！ +
+前回のブログ内容の http://tech.innovation.co.jp/2017/01/13/memo-like-Ascii-Doc.html[AsciiDoc風のメモ帳]に、画像を差し込む機能を付けて更にパワーアップが図れそう。 +
+
+他にもリマインダー機能として特定の時間にメールを飛ばす機能を開発したい、忘れん坊なので... +
+
+今回はここで失礼します。
