@@ -1,6 +1,6 @@
 # GoogleExtensionで来客情報を取得したお話。
 :hp-alt-title: GoogleExtension
-:hp-tags: GoogleExtention,kohe,js,html
+:hp-tags: GoogleExtension,kohe,js,html
 
 
 こんばんはこへです。
