@@ -22,30 +22,61 @@ image::kohe/extention01.png[]
 具体的に説明すると。
 取得したい情報は上記画像の本日の日付の列にある(このブログでは本日を２３日とする）「来客」と言う文字が書いてある下の文字の情報が欲しいのである。
 
-今回は *GoogleExtension*
+今回は *GoogleExtension* でこの問題を解決していく。
 
 
 
-[source, js]
-----
-chrome.tabs.query({active:true}, function(tab) {
-    chrome.tabs.sendMessage(tab[0].id, {text:''}, function(response) {
-        var url       = tab[0].url;
-        console.log(response);
-        var infoType = response.infotype;
-        var content  = response.content;
-        var count    = 0;
-        jQuery.each(infoType, function(i, val) {
-            if(val.match('来客')){
-                 $("#info").append('<p>' + content[count] + '</p>');
-            }
-            count+=1;
-        });
-     });
-});
+## code
 
-----
+manifest.json
+```
 
+ {
+    "manifest_version": 2, 
+    "name": "getVisitor",
+    "description": "今日の来客情報のみ取得",
+    "version": "1.0",
+    "permissions": ["tabs"],
+    "content_scripts": [
+      {
+        "matches": ["https://gridy.jp/reservation/week"],
+        "js": ["jquery.js", "content.js"]
+      }
+    ],
+    "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": "icon_16.png"
+    },
+     "icons": {
+         "128": "icon_128.png"
+    }
+  }
+
+```
+
+
+popup.html
+
+```
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset = "UTF-8">
+    <script src="jquery.js"></script>
+    <script src="main.js"></script>
+  </head>
+  <body style="width:1000px;">
+    <p>来客情報一覧</p>
+    <div id="info"></div>
+  </body>
+</html>
+
+
+```
+
+
+main.js
 
 ```
 chrome.tabs.query({active:true}, function(tab) {
@@ -66,3 +97,31 @@ chrome.tabs.query({active:true}, function(tab) {
 
 
 ```
+
+
+content.js
+ 
+ 
+```
+chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+    var now   = new Date();
+    var nowId = now.getFullYear() + '/' +
+	( "0"+( now.getMonth()+1 ) ).slice(-2) + '/' +
+	( "0"+now.getDate() ).slice(-2);
+    var content  = $("[id *= '" + nowId + "'] .pad_left").map(function(){
+        return $(this).attr('title');
+    }).get();
+    var infoType = $("[id *= '" + nowId + "'] .pad_left").prev('span').map(function(){
+        return $(this).html();
+    }).get();
+    sendResponse( {infotype:infoType,content:content} );
+});
+
+
+```
+
+
+
+
+image::kohe/extension01.gif[]
+
