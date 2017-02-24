@@ -80,7 +80,7 @@ manifest.json
     },
  
 ```
-extensionのボタンをクリックしたときに`popup.html`を呼び出す。
+extensionのアイコンをクリックしたときに`popup.html`を呼び出す。
 
 
 
