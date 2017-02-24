@@ -1,5 +1,5 @@
-# GhromeのExtensionで来客情報を取得したお話。
-:hp-alt-title: GhromeのExtension
+# ChromeのExtensionで来客情報を取得したお話。
+:hp-alt-title: ChromeのExtension
 :hp-tags: GoogleExtension,kohe,js,html
 
 
