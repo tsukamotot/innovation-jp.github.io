@@ -128,8 +128,7 @@ chrome.tabs.query({active:true}, function(tab) {
 ```
 
 `chrome.tabs.sesendMessage()`により
-`chrome.runtime.onMessage.addListener`が記述してある
-`content.js`を呼び出す。
+`content.js`の`chrome.runtime.onMessage.addListener`を呼び出す。
 
 
 content.js
@@ -153,7 +152,7 @@ chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
 
 ```
 
-content_scriptsで指定した、jsでしか閲覧しているWebサイトのDOM操作ができないため、content.jsに欲しい情報を取得する処理を記述。
+`content_scripts`で指定したjsでしか閲覧しているWebサイトのDOM操作ができないため、`content.js`に欲しい情報を取得する処理を記述。
 その結果を　`sendResponse()` で`main.js`に送る。
 
 
