@@ -1,0 +1,52 @@
+# GoogleExtentionで来客情報を取得した話し。
+:hp-alt-title: GoogleExtention
+:hp-tags: GoogleExtention,kohe,js,html
+
+
+
+## Gridyから「今日の来客情報」のみを取得したい！
+
+
+image::kohe/extention01.png[]
+
+
+[source, js]
+----
+chrome.tabs.query({active:true}, function(tab) {
+    chrome.tabs.sendMessage(tab[0].id, {text:''}, function(response) {
+        var url       = tab[0].url;
+        console.log(response);
+        var infoType = response.infotype;
+        var content  = response.content;
+        var count    = 0;
+        jQuery.each(infoType, function(i, val) {
+            if(val.match('来客')){
+                 $("#info").append('<p>' + content[count] + '</p>');
+            }
+            count+=1;
+        });
+     });
+});
+
+----
+
+
+```
+chrome.tabs.query({active:true}, function(tab) {
+    chrome.tabs.sendMessage(tab[0].id, {text:''}, function(response) {
+        var url       = tab[0].url;
+        console.log(response);
+        var infoType = response.infotype;
+        var content  = response.content;
+        var count    = 0;
+        jQuery.each(infoType, function(i, val) {
+            if(val.match('来客')){
+                 $("#info").append('<p>' + content[count] + '</p>');
+            }
+            count+=1;
+        });
+     });
+});
+
+
+```
