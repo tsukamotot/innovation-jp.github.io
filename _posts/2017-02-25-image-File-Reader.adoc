@@ -1,4 +1,5 @@
 # FileReaderを使ってローカルにある画像をブラウザに読み込ませる方法
+:published_at: 2017-02-25
 :hp-alt-title: image-FileReader
 :hp-tags: yaizu,javascript,jQuery,FileReader
 
