@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>GoogleExtensionで来客情報を取得したお話。 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="GoogleExtensionで来客情報を取得したお話。">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="GoogleExtensionで来客情報を取得したお話。">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/02/24/Google-Extension.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="GoogleExtensionで来客情報を取得したお話。" />
+    <meta property="og:description" content="こんばんはこへです。 弊社では新人が毎朝GRIDYの来客情報を確認し、全社員の前で広報している。 私も自分が担当のときは毎朝GRIDYを確認し朝会に備えている。 しかし、来客情報を確認してそれをいちいち紙にメモを取る行為は繰り返し作業かつ非効率的で非生産的だと感じたので自動化してみた。 GRIDY グループウェアは、企業等の組織、さらには企業間を飛び越えたグループ会社や協力会社まで、社内外での情報共有を活性化し、コミュニケーションを強化するグループウェアアプリケーションです。 &amp;#8212; GRIDYグループウェアとは GRIDYから「今日の来客情報..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/02/24/Google-Extension.html" />
+    <meta property="article:published_time" content="2017-02-23T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-02-26T06:02:18.260Z" />
+    <meta property="article:tag" content="GoogleExtension" />
+    <meta property="article:tag" content="kohe" />
+    <meta property="article:tag" content="js" />
+    <meta property="article:tag" content="html" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="GoogleExtensionで来客情報を取得したお話。" />
+    <meta name="twitter:description" content="こんばんはこへです。 弊社では新人が毎朝GRIDYの来客情報を確認し、全社員の前で広報している。 私も自分が担当のときは毎朝GRIDYを確認し朝会に備えている。 しかし、来客情報を確認してそれをいちいち紙にメモを取る行為は繰り返し作業かつ非効率的で非生産的だと感じたので自動化してみた。 GRIDY グループウェアは、企業等の組織、さらには企業間を飛び越えたグループ会社や協力会社まで、社内外での情報共有を活性化し、コミュニケーションを強化するグループウェアアプリケーションです。 &amp;#8212; GRIDYグループウェアとは GRIDYから「今日の来客情報..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/02/24/Google-Extension.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "kohe",
+        "image": "https://avatars.githubusercontent.com/u/17563192?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "GoogleExtensionで来客情報を取得したお話。",
+    "url": "http://tech.innovation.co.jp/2017/02/24/Google-Extension.html",
+    "datePublished": "2017-02-23T15:00:00.000Z",
+    "dateModified": "2017-02-26T06:02:18.260Z",
+    "keywords": "GoogleExtension, kohe, js, html",
+    "description": "こんばんはこへです。 弊社では新人が毎朝GRIDYの来客情報を確認し、全社員の前で広報している。 私も自分が担当のときは毎朝GRIDYを確認し朝会に備えている。 しかし、来客情報を確認してそれをいちいち紙にメモを取る行為は繰り返し作業かつ非効率的で非生産的だと感じたので自動化してみた。 GRIDY グループウェアは、企業等の組織、さらには企業間を飛び越えたグループ会社や協力会社まで、社内外での情報共有を活性化し、コミュニケーションを強化するグループウェアアプリケーションです。 &amp;#8212; GRIDYグループウェアとは GRIDYから「今日の来客情報..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Google-Extension tag-kohe tag-js tag-html no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="24 Feb 2017" class="post-meta__date date">24 Feb 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Google-Extension">GoogleExtension</a>, <a href="http://tech.innovation.co.jp/tag/kohe">kohe</a>, <a href="http://tech.innovation.co.jp/tag/js">js</a>, <a href="http://tech.innovation.co.jp/tag/html">html</a></span>
+        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/17563192?v=3" alt="profile image for kohe" class="avatar post-meta__avatar" /> by kohe</span>
+      </div>
+      <h1 class="post-title">GoogleExtensionで来客情報を取得したお話。</h1>
+    </header>
+
+    <section class="post tag-Google-Extension tag-kohe tag-js tag-html">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんばんはこへです。</p>
+</div>
+<div class="paragraph">
+<p>弊社では新人が毎朝GRIDYの来客情報を確認し、全社員の前で広報している。</p>
+</div>
+<div class="paragraph">
+<p>私も自分が担当のときは毎朝GRIDYを確認し朝会に備えている。</p>
+</div>
+<div class="paragraph">
+<p>しかし、来客情報を確認してそれをいちいち紙にメモを取る行為は繰り返し作業かつ非効率的で非生産的だと感じたので<strong>自動化</strong>してみた。</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>GRIDY グループウェアは、企業等の組織、さらには企業間を飛び越えたグループ会社や協力会社まで、社内外での情報共有を活性化し、コミュニケーションを強化するグループウェアアプリケーションです。</p>
+</div>
+</blockquote>
+<div class="attribution">
+&#8212; <a href="https://knowledgesuite.jp/free/about/">GRIDYグループウェアとは</a>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_gridy">GRIDYから「今日の来客情報」のみを取得したい！</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="/images/kohe/extention01.png" alt="extention01.png">
+</div>
+</div>
+<div class="paragraph">
+<p>↑の画像の赤丸の情報を取得したい。</p>
+</div>
+<div class="paragraph">
+<p>具体的に説明すると、</p>
+</div>
+<div class="paragraph">
+<p>取得したい情報は上記画像の今日と同じ日の列にある(このブログでは本日を２３日とする）「来客」と言う文字が書いてある下の文字の情報が欲しいのである。</p>
+</div>
+<div class="paragraph">
+<p>今回は <strong>GoogleExtension</strong> でこの問題を解決していく。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_code">code</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>manifest.json</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code> {
+    "manifest_version": 2,
+    "name": "getVisitor",
+    "description": "今日の来客情報のみ取得",
+    "version": "1.0",
+    "permissions": ["tabs"],
+    "content_scripts": [
+      {
+        "matches": ["https://gridy.jp/reservation/week"],
+        "js": ["jquery.js", "content.js"]
+      }
+    ],
+    "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": "icon_16.png"
+    },
+     "icons": {
+         "128": "icon_128.png"
+    }
+  }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>重要そうなとこを説明。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code> "content_scripts": [
+      {
+        "matches": ["https://gridy.jp/reservation/week"],
+        "js": ["jquery.js", "content.js"]
+      }
+    ]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code><a href="https://gridy.jp/reservation/week" class="bare">https://gridy.jp/reservation/week</a></code>へアクセスした時のみ、<code>content.js</code>を実行</p>
+</div>
+<div class="paragraph">
+<p>いつでも実行したいときは   <code>http:// * / *   と　https:// * / *</code> と指定しておけばok</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code> "browser_action": {
+      "default_popup": "popup.html",
+      "default_icon": "icon_16.png"
+    },</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>extensionのアイコンをクリックしたときに<code>popup.html</code>を呼び出す。</p>
+</div>
+<div class="paragraph">
+<p>popup.html</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+  &lt;head&gt;
+    &lt;meta charset = "UTF-8"&gt;
+    &lt;script src="jquery.js"&gt;&lt;/script&gt;
+    &lt;script src="main.js"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body style="width:1000px;"&gt;
+    &lt;p&gt;来客情報一覧&lt;/p&gt;
+    &lt;div id="info"&gt;&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>main.js</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>chrome.tabs.query({active:true}, function(tab) {
+    chrome.tabs.sendMessage(tab[0].id, {text:''}, function(response) {
+        var infoType = response.infotype;
+        var content  = response.content;
+        var count    = 0;
+        jQuery.each(infoType, function(i, val) {
+            if(val.match('来客')){
+                 $("#info").append('&lt;p&gt;' + content[count] + '&lt;/p&gt;');
+            }
+            count+=1;
+        });
+     });
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>chrome.tabs.sendMessage()</code>により
+<code>content.js</code>の<code>chrome.runtime.onMessage.addListener</code>を呼び出す。</p>
+</div>
+<div class="paragraph">
+<p>content.js</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
+    var now   = new Date();
+    var nowId = now.getFullYear() + '/' +
+	( "0"+( now.getMonth()+1 ) ).slice(-2) + '/' +
+	( "0"+now.getDate() ).slice(-2);
+    var content  = $("[id *= '" + nowId + "'] .pad_left").map(function(){
+        return $(this).attr('title');
+    }).get();
+    var infoType = $("[id *= '" + nowId + "'] .pad_left").prev('span').map(function(){
+        return $(this).html();
+    }).get();
+    sendResponse( {infotype:infoType,content:content} );
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>content_scripts</code>で指定したjsでしか <strong>閲覧している</strong> WebサイトのDOM操作ができないため、<code>content.js</code>に欲しい情報を取得する処理を記述。</p>
+</div>
+<div class="paragraph">
+<p>その結果を　<code>sendResponse()</code> で<code>main.js</code>に送る。</p>
+</div>
+<div class="sect2">
+<h3 id="__">完成品</h3>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kohe/extension01.gif" alt="extension01.gif">
+</div>
+</div>
+<div class="paragraph">
+<p>おわり</p>
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
