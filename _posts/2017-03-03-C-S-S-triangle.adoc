@@ -26,23 +26,29 @@ borderの一辺を使って、三角形を作ります
 ・三角形の完成！
 
 HTML
+
+----
 <div class="sample"></div>
+----
 
 CSS
-<style>
-    .sample {
+
+----
+.sample {
         width: 0px;
         height: 0px;
        border: 50px solid;
         border-color: transparent;
         border-bottom-color: #FFCB7F;
     }
-
+----
 
 borderの各辺の幅を変えると、いろんな形の三角形を作ることができます！
 
 ・正三角形(だいたい)
 「画像」
+
+----
 .sample {
     width: 0px;
     height: 0px;
