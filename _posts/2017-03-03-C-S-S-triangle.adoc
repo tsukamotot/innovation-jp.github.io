@@ -3,50 +3,53 @@
 :hp-alt-title: CSS_triangle
 :hp-tags: CSS,triangle,AMI
 
-こんにちはAMIです
-
-最近、CSSで三角形を作る方法を覚えたので、三角形を使って幾つか作ってみようと思います。
-
-
-borderの一辺を使って、三角形を作ります
-三角形の作り方の流れは以下のとおりです。
+こんにちはAMIです +
+最近、CSSで三角形を作る方法を覚えたので、三角形を使って幾つか作ってみようと思います。 +
 
 
-・四角形にborderを設定する
-　「画像」
+borderの一辺を使って、三角形を作ります +
+三角形の作り方の流れは以下のとおりです。 +
+ +
 
-・4辺をそれぞれ違う色に設定するとこんなふうになっているので
-　「画像」
+・四角形にborderを設定する +
 
-・四角形のwidthとheightを0にして
-　「画像」
+image::ami/20170303/1.png[]
 
-・bottom以外の辺を透明にすると
+・4辺をそれぞれ違う色に設定するとこんなふうになっているので +
 
-・三角形の完成！
+image::ami/20170303/2.png[]
 
-HTML
+・四角形のwidthとheightを0にして +
+
+image::ami/20170303/3.png[]
+
+・bottom以外の辺を透明にすると、三角形の完成！ +
+
+image::ami/20170303/4.png[]
+
+HTML +
 
 ----
 <div class="sample"></div>
 ----
 
-CSS
+CSS +
 
 ----
 .sample {
-        width: 0px;
-        height: 0px;
-       border: 50px solid;
-        border-color: transparent;
-        border-bottom-color: #FFCB7F;
-    }
+    width: 0px;
+    height: 0px;
+    border: 50px solid;
+    border-color: transparent;
+    border-bottom-color: #FFCB7F;
+}
 ----
 
-borderの各辺の幅を変えると、いろんな形の三角形を作ることができます！
+borderの各辺の幅を変えると、いろんな形の三角形を作ることができます！ +
+ +
+・正三角形(だいたい) +
 
-・正三角形(だいたい)
-「画像」
+image::ami/20170303/5.png[]
 
 ----
 .sample {
@@ -59,8 +62,10 @@ borderの各辺の幅を変えると、いろんな形の三角形を作るこ�
 }
 ----
 
-・細長
-「画像」
+・細長 +
+
+image::ami/20170303/6.png[]
+
 ----
 .sample {
     width: 0px;
@@ -72,8 +77,9 @@ borderの各辺の幅を変えると、いろんな形の三角形を作るこ�
 }
 ----
 
-・直角
-「画像」
+・直角 +
+
+image::ami/20170303/7.png[]
 ----
 .sample {
     width: 0px;
@@ -83,21 +89,23 @@ borderの各辺の幅を変えると、いろんな形の三角形を作るこ�
     border-color: transparent;
     border-bottom-color: #FFCB7F;
 }
-
-----
-三角を使っていろんなのをつくってみました！
-
-・リボン風
-「画像」
-
-HTML
-
 ----
 
+三角を使っていろんなのをつくってみました！ +
+ +
+・リボン風 +
+image::ami/20170303/8.png[]
+
+
+HTML +
+----
 <div class="ribbon" alt="リボン"> リボン風 </div>
+----
 
-CSS
-    .ribbon {
+
+CSS +
+----
+   .ribbon {
         width: 200px;
         height: 30px;
         background-color: #F3A7AC;
@@ -116,12 +124,19 @@ CSS
         left: 200px;
         top: 0px;
     }
+----
 
-・ひし形
-HTML
+・ひし形 +
+image::ami/20170303/9.png[]
+
+HTML +
+----
 <div class="diamond"></div>
-CSS
-    .diamond {
+----
+
+CSS +
+----
+   .diamond {
         width: 0;
         height: 0;
        border: 50px solid transparent;
@@ -140,14 +155,23 @@ top: -50px;
         border: 50px solid transparent;
         border-top-color: #F3A7AC;
     }
+----
 
+・吹き出し +
+image::ami/20170303/10.png[]
 
-・吹き出し
-HTML
+HTML +
+
+----
 <div class="fukidashi">吹き出しなかみ</div>
 
-CSS
-    .fukidashi {
+----
+
+
+CSS +
+
+----
+   .fukidashi {
         background-color: #97DBF4;
         color: #ffffff;
         width: 200px;
@@ -165,8 +189,9 @@ CSS
         top: 100%;
         right: 50%;
     }
+----
 
-CSSで三角形つくれるんだ！というのを知り、書いてみました！
-思うように作れなくて、難しい部分もありましたが、非常に勉強になりました
-今後は動きのあるものや、レスポンシブにも挑戦してみたいな〜と思ってます！
-おしまい
+CSSで三角形つくれるんだ！というのを知り、書いてみました。 +
+思うように作れなくて、難しい部分もありましたが、非常に勉強になりました +
+今後は動きのあるものや、レスポンシブにも挑戦してみたいな〜と思ってます！ +
+おしまい +
