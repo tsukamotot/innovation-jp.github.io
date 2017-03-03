@@ -94,16 +94,19 @@ image::ami/20170303/7.png[]
 三角を使っていろんなのをつくってみました！ +
  +
 ・リボン風 +
+
 image::ami/20170303/8.png[]
 
 
 HTML +
+
 ----
 <div class="ribbon" alt="リボン"> リボン風 </div>
 ----
 
 
 CSS +
+
 ----
    .ribbon {
         width: 200px;
@@ -131,6 +134,7 @@ CSS +
 image::ami/20170303/9.png[]
 
 HTML +
+
 ----
 <div class="diamond"></div>
 
