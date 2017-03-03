@@ -1,0 +1,158 @@
+# CSSの三角形でいろいろ作る
+:published_at: 2017-03-03
+:hp-alt-title: CSS_triangle
+:hp-tags: CSS,triangle,AMI
+
+こんにちはAMIです
+
+最近、CSSで三角形を作る方法を覚えたので、三角形を使って幾つか作ってみようと思います。
+
+
+borderの一辺を使って、三角形を作ります
+三角形の作り方の流れは以下のとおりです。
+
+
+・四角形にborderを設定する
+　「画像」
+
+・4辺をそれぞれ違う色に設定するとこんなふうになっているので
+　「画像」
+
+・四角形のwidthとheightを0にして
+　「画像」
+
+・bottom以外の辺を透明にすると
+
+・三角形の完成！
+
+HTML
+<div class="sample"></div>
+
+CSS
+<style>
+    .sample {
+        width: 0px;
+        height: 0px;
+       border: 50px solid;
+        border-color: transparent;
+        border-bottom-color: #FFCB7F;
+    }
+
+
+borderの各辺の幅を変えると、いろんな形の三角形を作ることができます！
+
+・正三角形(だいたい)
+「画像」
+.sample {
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 50px 85px 50px;
+    border-color: transparent;
+    border-bottom-color: #FFCB7F;
+}
+
+・細長
+「画像」
+.sample {
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 50px 100px 50px;
+    border-color: transparent;
+    border-bottom-color: #FFCB7F;
+}
+
+・直角
+「画像」
+.sample {
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 0 100px 100px 0;
+    border-color: transparent;
+    border-bottom-color: #FFCB7F;
+}
+
+三角を使っていろんなのをつくってみました！
+
+・リボン風
+「画像」
+
+HTML
+<div class="ribbon" alt="リボン"> リボン風 </div>
+
+CSS
+    .ribbon {
+        width: 200px;
+        height: 30px;
+        background-color: #F3A7AC;
+        color: #ffffff;
+        position: relative;
+        line-height: 200%;
+    }
+
+   .ribbon:after {
+        content: '';
+        border-style: solid;
+        border-width: 15px 15px 15px 5px;
+        border-color: #F3A7AC;
+        border-right-color: transparent;
+        position: absolute;
+        left: 200px;
+        top: 0px;
+    }
+
+・ひし形
+HTML
+<div class="diamond"></div>
+CSS
+    .diamond {
+        width: 0;
+        height: 0;
+       border: 50px solid transparent;
+        border-bottom-color: #F3A7AC;
+        position: relative;
+top: -50px;
+   }
+
+   .diamond:after {
+        content: '';
+        position: absolute;
+        left: -50px;
+        top: 50px;
+        width: 0;
+       height: 0;
+        border: 50px solid transparent;
+        border-top-color: #F3A7AC;
+    }
+
+
+・吹き出し
+HTML
+<div class="fukidashi">吹き出しなかみ</div>
+
+CSS
+    .fukidashi {
+        background-color: #97DBF4;
+        color: #ffffff;
+        width: 200px;
+        height: 50px;
+        position: relative;
+    }
+
+   .fukidashi:after {
+        content: '';
+        border-color: transparent;
+        border-top-color: #97DBF4;
+        border-style: solid;
+        border-width: 10px 10px 0 10px;
+        position: absolute;
+        top: 100%;
+        right: 50%;
+    }
+
+CSSで三角形つくれるんだ！というのを知り、書いてみました！
+思うように作れなくて、難しい部分もありましたが、非常に勉強になりました
+今後は動きのあるものや、レスポンシブにも挑戦してみたいな〜と思ってます！
+おしまい
