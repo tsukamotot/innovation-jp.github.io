@@ -57,9 +57,11 @@ borderの各辺の幅を変えると、いろんな形の三角形を作るこ�
     border-color: transparent;
     border-bottom-color: #FFCB7F;
 }
+----
 
 ・細長
 「画像」
+----
 .sample {
     width: 0px;
     height: 0px;
@@ -68,9 +70,11 @@ borderの各辺の幅を変えると、いろんな形の三角形を作るこ�
     border-color: transparent;
     border-bottom-color: #FFCB7F;
 }
+----
 
 ・直角
 「画像」
+----
 .sample {
     width: 0px;
     height: 0px;
@@ -80,12 +84,16 @@ borderの各辺の幅を変えると、いろんな形の三角形を作るこ�
     border-bottom-color: #FFCB7F;
 }
 
+----
 三角を使っていろんなのをつくってみました！
 
 ・リボン風
 「画像」
 
 HTML
+
+----
+
 <div class="ribbon" alt="リボン"> リボン風 </div>
 
 CSS
