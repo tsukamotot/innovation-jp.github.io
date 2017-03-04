@@ -56,8 +56,8 @@ function markReadAll() {
 ちなみに一回で取得できるスレッドは500件までらしいので、 +
 実際は全件既読ではなく500件既読です。 +
 
-image::bigen/image1.png
-image::bigen/image2.png
+image::bigen/image1.png[]
+image::bigen/image2.png[]
 
 
 ここで、のちほどAPIで叩くときに必要になる情報を取得しておきます。 +
@@ -66,7 +66,7 @@ image::bigen/image2.png
 *スクリプトID*と*スコープ*の情報を取得。 +
 後で使うのでメモっておきましょう。 +
 
-image::bigen/image3.png
+image::bigen/image3.png[]
 
 また、あとで外から叩くために、公開状態にしておきます。 +
 「公開」→「ウェブアプリケーションとして導入」を選択。 +
@@ -75,7 +75,7 @@ image::bigen/image3.png
 
 
 ===== ②Google API ConsoleにてExecution APIを有効にする +
-image::bigen/image4.png
+image::bigen/image4.png[]
 
 Google API Consoleのライブラリから「Google Apps Script Execution API」を検索。
 
@@ -84,12 +84,12 @@ Google API Consoleのライブラリから「Google Apps Script Execution API」
 Google Apps Script Execution APIを見つけたら、有効にしましょう。 +
 
 ===== ③認証情報（クライアントID）を新たに作成する
-image::bigen/image5.png
+image::bigen/image5.png[]
 
 Google API Consoleの認証情報から、 +
 「認証情報を作成」→「OAuth クライアント　ID」を選択。 +
 
-image::bigen/image6.png
+image::bigen/image6.png[]
 
 ウェブアプリケーションを選択して、名前をなんでもいいので適当に入力。 +
 
@@ -104,7 +104,7 @@ image::bigen/image6.png
 「http://localhost:10000」 +
 みたいにしときます。10000はポート番号。 +
 
-image::bigen/image7.png
+image::bigen/image7.png[]
 
 「作成」を押すと「*クライアントID*」が表示されます。 +
 後で使うので、メモしておきましょう。 +
@@ -284,15 +284,15 @@ https://developers.google.com/apps-script/guides/rest/quickstart/js[公式ペー
 ----
 
 ==== 動かしてみる
-image::bigen/image8.png
+image::bigen/image8.png[]
 
 まずはなんかいっぱい未読を作っておいて +
 
-image::bigen/image9.png
+image::bigen/image9.png[]
 
 いけっ！ +
 
-image::bigen/image10.png
+image::bigen/image10.png[]
 
 既読になりました。 +
 めでたしめでたし。 +
@@ -305,9 +305,8 @@ image::bigen/image10.png
 ==== ちなみに
 これであとは拡張機能でページを開くだけ！やるぜ！ +
 
-image::bigen/image11.png
+image::bigen/image11.png[]
 
 できない・・・ +
-なぜ動かないのか教えてエロい人！ +
 
-ちょっと今回は長くなったので、また機会があれば続きに挑戦します。 +
+拡張機能については、またの機会に挑戦したいと思います。
