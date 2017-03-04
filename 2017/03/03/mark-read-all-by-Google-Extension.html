@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>外部からGmailを全件既読にする - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="外部からGmailを全件既読にする">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="外部からGmailを全件既読にする">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/03/03/mark-read-all-by-Google-Extension.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="外部からGmailを全件既読にする" />
+    <meta property="og:description" content="びげんです。 前回まで数学とかのお話をしていたのですが、 今回は流行りにのってGAS（GoogleAppScript)をいじります。 といっても、今回のメインは Execution API です。 聞いたところによると、こいつを使えば外部から自作GASをぶっ叩けるとか！ 「じゃあ拡張機能を使って、ボタンひとつでGmailを全件既読にできるのではないか？」 と思い立ったので、実際にやってみました。 なお、結論からいうと拡張機能はできませんでした・・・。 もう少し何かが足りない感じ・・・。 拡張機能での実現はできませんでしたが、 ローカルのページからボタン..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/03/03/mark-read-all-by-Google-Extension.html" />
+    <meta property="article:published_time" content="2017-03-02T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-03-04T15:00:19.808Z" />
+    <meta property="article:tag" content="GoogleExtension" />
+    <meta property="article:tag" content="GoogleAppsScript" />
+    <meta property="article:tag" content="ExecutionAPI" />
+    <meta property="article:tag" content="Gmail" />
+    <meta property="article:tag" content="Bigen" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="外部からGmailを全件既読にする" />
+    <meta name="twitter:description" content="びげんです。 前回まで数学とかのお話をしていたのですが、 今回は流行りにのってGAS（GoogleAppScript)をいじります。 といっても、今回のメインは Execution API です。 聞いたところによると、こいつを使えば外部から自作GASをぶっ叩けるとか！ 「じゃあ拡張機能を使って、ボタンひとつでGmailを全件既読にできるのではないか？」 と思い立ったので、実際にやってみました。 なお、結論からいうと拡張機能はできませんでした・・・。 もう少し何かが足りない感じ・・・。 拡張機能での実現はできませんでしたが、 ローカルのページからボタン..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/03/03/mark-read-all-by-Google-Extension.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars2.githubusercontent.com/u/23183770?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "外部からGmailを全件既読にする",
+    "url": "http://tech.innovation.co.jp/2017/03/03/mark-read-all-by-Google-Extension.html",
+    "datePublished": "2017-03-02T15:00:00.000Z",
+    "dateModified": "2017-03-04T15:00:19.808Z",
+    "keywords": "GoogleExtension,  GoogleAppsScript,  ExecutionAPI,  Gmail,  Bigen",
+    "description": "びげんです。 前回まで数学とかのお話をしていたのですが、 今回は流行りにのってGAS（GoogleAppScript)をいじります。 といっても、今回のメインは Execution API です。 聞いたところによると、こいつを使えば外部から自作GASをぶっ叩けるとか！ 「じゃあ拡張機能を使って、ボタンひとつでGmailを全件既読にできるのではないか？」 と思い立ったので、実際にやってみました。 なお、結論からいうと拡張機能はできませんでした・・・。 もう少し何かが足りない感じ・・・。 拡張機能での実現はできませんでしたが、 ローカルのページからボタン..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Google-Extension tag-Google-Apps-Script tag-Execution-A-P-I tag-Gmail tag-Bigen no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="03 Mar 2017" class="post-meta__date date">03 Mar 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Google-Extension">GoogleExtension</a>, <a href="http://tech.innovation.co.jp/tag/Google-Apps-Script"> GoogleAppsScript</a>, <a href="http://tech.innovation.co.jp/tag/Execution-A-P-I"> ExecutionAPI</a>, <a href="http://tech.innovation.co.jp/tag/Gmail"> Gmail</a>, <a href="http://tech.innovation.co.jp/tag/Bigen"> Bigen</a></span>
+        <span class="post-meta__author author"><img src="https://avatars2.githubusercontent.com/u/23183770?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">外部からGmailを全件既読にする</h1>
+    </header>
+
+    <section class="post tag-Google-Extension tag-Google-Apps-Script tag-Execution-A-P-I tag-Gmail tag-Bigen">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>びげんです。</p>
+</div>
+<div class="paragraph">
+<p>前回まで数学とかのお話をしていたのですが、<br>
+今回は流行りにのってGAS（GoogleAppScript)をいじります。<br>
+<br>
+といっても、今回のメインは</p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_execution_api">Execution API</h5>
+<div class="paragraph">
+<p>です。<br></p>
+</div>
+<div class="paragraph">
+<p>聞いたところによると、こいつを使えば外部から自作GASをぶっ叩けるとか！<br>
+<strong>「じゃあ拡張機能を使って、ボタンひとつでGmailを全件既読にできるのではないか？」</strong><br>
+と思い立ったので、実際にやってみました。<br></p>
+</div>
+<div class="paragraph">
+<p>なお、結論からいうと拡張機能は<strong>できませんでした</strong>・・・。<br>
+もう少し何かが足りない感じ・・・。<br></p>
+</div>
+<div class="paragraph">
+<p>拡張機能での実現はできませんでしたが、<br>
+ローカルのページからボタンひとつで全件既読はできたので、<br>
+そこまでをご紹介します。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__">手順</h3>
+<div class="paragraph">
+<p><strong>①動かしたいGASを書く<br>
+②Google API ConsoleにてExecution APIを有効にする<br>
+③認証情報（クライアントID）を新たに作成する<br>
+④ローカルサーバーから叩く</strong><br></p>
+</div>
+<div class="paragraph">
+<p><strong>必要な情報：<br>
+i)  OAuth認証クライアントID<br>
+ii) GASのスクリプトID<br>
+iii)GASのスコープ情報</strong></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___2">作ってみる</h3>
+<div class="sect4">
+<h5 id="__gas">①動かしたいGASを書く</h5>
+<div class="listingblock">
+<div class="content">
+<pre>function markReadAll() {
+
+  /* 検索条件を指定してGmailからスレッドを取り出す */
+  var searchTerm = 'is:unread';
+  var Threads = GmailApp.search(searchTerm, 0, 500);
+
+  /* 全件既読をつける */
+  for (i=0; i&lt;Threads.length; i++){
+    Threads[i].markRead();
+  }
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>全件既読はコードとしては簡単。<br>
+未読のスレッドを取得して、.markReadってやるだけ。<br>
+ちなみに一回で取得できるスレッドは500件までらしいので、<br>
+実際は全件既読ではなく500件既読です。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/image1.png" alt="image1.png">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/image2.png" alt="image2.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ここで、のちほどAPIで叩くときに必要になる情報を取得しておきます。<br></p>
+</div>
+<div class="paragraph">
+<p>「ファイル」→「プロジェクトのプロパティ」から、<br>
+<strong>スクリプトID</strong>と<strong>スコープ</strong>の情報を取得。<br>
+後で使うのでメモっておきましょう。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/image3.png" alt="image3.png">
+</div>
+</div>
+<div class="paragraph">
+<p>また、あとで外から叩くために、公開状態にしておきます。<br>
+「公開」→「ウェブアプリケーションとして導入」を選択。<br>
+写真のかんじで適当に設定して導入。<br>
+これでGAS側の準備は完了。</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__google_api_console_execution_api_br">②Google API ConsoleにてExecution APIを有効にする<br></h5>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/image4.png" alt="image4.png">
+</div>
+</div>
+<div class="paragraph">
+<p>Google API Consoleのライブラリから「Google Apps Script Execution API」を検索。</p>
+</div>
+<div class="paragraph">
+<p>デフォルトの一覧には表示されていないので注意してください。<br></p>
+</div>
+<div class="paragraph">
+<p>Google Apps Script Execution APIを見つけたら、有効にしましょう。<br></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="__id">③認証情報（クライアントID）を新たに作成する</h5>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/image5.png" alt="image5.png">
+</div>
+</div>
+<div class="paragraph">
+<p>Google API Consoleの認証情報から、<br>
+「認証情報を作成」→「OAuth クライアント　ID」を選択。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/image6.png" alt="image6.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ウェブアプリケーションを選択して、名前をなんでもいいので適当に入力。<br></p>
+</div>
+<div class="paragraph">
+<p><strong>【ここ大事】</strong><br>
+<strong>「承認済みの JavaScript 生成元」</strong>と、<br>
+<strong>「承認済みのリダイレクト URI」</strong>の<strong>両方</strong>に、<br>
+自分がExecutionAPIを呼び出したいファイルのあるドメインを指定。<br>
+ここを片方しか指定しておらず、<br>
+「Not a valid origin for the client」のエラーが出て結構ハマりました。</p>
+</div>
+<div class="paragraph">
+<p>今回はローカルから呼び出したので、例えば写真のように<br>
+「http://localhost:10000」<br>
+みたいにしときます。10000はポート番号。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/image7.png" alt="image7.png">
+</div>
+</div>
+<div class="paragraph">
+<p>「作成」を押すと「<strong>クライアントID</strong>」が表示されます。<br>
+後で使うので、メモしておきましょう。<br></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="___3">④ローカルサーバーからぶったたく</h5>
+<div class="paragraph">
+<p><a href="https://developers.google.com/apps-script/guides/rest/quickstart/js">公式ページ</a>を参考にほぼコピペで作ります。<br>
+変えるのは、あらかじめ取得した３種の情報だけ。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-html" data-lang="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Google Apps Script Execution API Quickstart&lt;/title&gt;
+    &lt;meta charset='utf-8' /&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p&gt;Google Apps Script Execution API Quickstart&lt;/p&gt;
+
+    &lt;!--Add buttons to initiate auth sequence and sign out--&gt;
+    &lt;button id="authorize-button" style="display: none;"&gt;Authorize&lt;/button&gt;
+    &lt;button id="signout-button" style="display: none;"&gt;Sign Out&lt;/button&gt;
+
+    &lt;pre id="content"&gt;&lt;/pre&gt;
+
+    &lt;script type="text/javascript"&gt;
+      // Client ID and API key from the Developer Console
+      // ここに認証情報のクライアントID
+      var CLIENT_ID = 'なんたらかんたら';
+
+      // Array of API discovery doc URLs for APIs used by the quickstart
+      var DISCOVERY_DOCS = ["https://script.googleapis.com/$discovery/rest?version=v1"];
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      // ここにスコープの情報。複数あるときは配列['a','b']の形式でかく
+      var SCOPES = 'https://mail.google.com/';
+
+      var authorizeButton = document.getElementById('authorize-button');
+      var signoutButton = document.getElementById('signout-button');
+
+      /**
+       *  On load, called to load the auth2 library and API client library.
+       */
+      function handleClientLoad() {
+        gapi.load('client:auth2', initClient);
+      }
+
+      /**
+       *  Initializes the API client library and sets up sign-in state
+       *  listeners.
+       */
+      function initClient() {
+        gapi.client.init({
+          discoveryDocs: DISCOVERY_DOCS,
+          clientId: CLIENT_ID,
+          scope: SCOPES
+        }).then(function () {
+          // Listen for sign-in state changes.
+          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+          // Handle the initial sign-in state.
+          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+          authorizeButton.onclick = handleAuthClick;
+          signoutButton.onclick = handleSignoutClick;
+        });
+      }
+
+      /**
+       *  Called when the signed in status changes, to update the UI
+       *  appropriately. After a sign-in, the API is called.
+       */
+      function updateSigninStatus(isSignedIn) {
+        if (isSignedIn) {
+          authorizeButton.style.display = 'none';
+          signoutButton.style.display = 'block';
+          callScriptFunction();
+        } else {
+          authorizeButton.style.display = 'block';
+          signoutButton.style.display = 'none';
+        }
+      }
+
+      /**
+       *  Sign in the user upon button click.
+       */
+      function handleAuthClick(event) {
+        gapi.auth2.getAuthInstance().signIn();
+      }
+
+      /**
+       *  Sign out the user upon button click.
+       */
+      function handleSignoutClick(event) {
+        gapi.auth2.getAuthInstance().signOut();
+      }
+
+      /**
+       * Append a pre element to the body containing the given message
+       * as its text node. Used to display the results of the API call.
+       *
+       * @param {string} message Text to be placed in pre element.
+       */
+      function appendPre(message) {
+        var pre = document.getElementById('content');
+        var textContent = document.createTextNode(message + '\n');
+        pre.appendChild(textContent);
+      }
+
+      /**
+       * Load the API and make an API call.  Display the results on the screen.
+       */
+      function callScriptFunction() {
+       	//ここにGASのスクリプトIDを書く
+        var scriptId = "なんたらかんたら";
+
+        // Call the Execution API run method
+        //   'scriptId' is the URL parameter that states what script to run
+        //   'resource' describes the run request body (with the function name
+        //              to execute)
+        gapi.client.script.scripts.run({
+          'scriptId': scriptId,
+          'resource': {
+            'function': 'markReadAll'
+          }
+        }).then(function(resp) {
+          var result = resp.result;
+          if (result.error &amp;&amp; result.error.status) {
+            // The API encountered a problem before the script
+            // started executing.
+            appendPre('Error calling API:');
+            appendPre(JSON.stringify(result, null, 2));
+          } else if (result.error) {
+            // The API executed, but the script returned an error.
+
+            // Extract the first (and only) set of error details.
+            // The values of this object are the script's 'errorMessage' and
+            // 'errorType', and an array of stack trace elements.
+            var error = result.error.details[0];
+            appendPre('Script error message: ' + error.errorMessage);
+
+            if (error.scriptStackTraceElements) {
+              // There may not be a stacktrace if the script didn't start
+              // executing.
+              appendPre('Script error stacktrace:');
+              for (var i = 0; i &lt; error.scriptStackTraceElements.length; i++) {
+                var trace = error.scriptStackTraceElements[i];
+                appendPre('\t' + trace.function + ':' + trace.lineNumber);
+              }
+            }
+          } else {
+            // The structure of the result will depend upon what the Apps
+            // Script function returns. Here, the function returns an Apps
+            // Script Object with String keys and values, and so the result
+            // is treated as a JavaScript object (folderSet).
+
+            var folderSet = result.response.result;
+            if (Object.keys(folderSet).length == 0) {
+                appendPre('No folders returned!');
+            } else {
+              appendPre('Folders under your root folder:');
+              Object.keys(folderSet).forEach(function(id){
+                appendPre('\t' + folderSet[id] + ' (' + id  + ')');
+              });
+            }
+          }
+        });
+      }
+
+    &lt;/script&gt;
+
+    &lt;script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()"&gt;
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___4">動かしてみる</h4>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/image8.png" alt="image8.png">
+</div>
+</div>
+<div class="paragraph">
+<p>まずはなんかいっぱい未読を作っておいて<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/image9.png" alt="image9.png">
+</div>
+</div>
+<div class="paragraph">
+<p>いけっ！<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/image10.png" alt="image10.png">
+</div>
+</div>
+<div class="paragraph">
+<p>既読になりました。<br>
+めでたしめでたし。<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___5">まとめ</h4>
+<div class="paragraph">
+<p>やっぱりGASが少し書けて、Googleのアプリケーションを使っていれば<br>
+大体なんでもできるんだなぁって実感しました。<br>
+こうやってどんどんGoogleから離れられなくなるんですね・・・・怖い！<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___6">ちなみに</h4>
+<div class="paragraph">
+<p>これであとは拡張機能でページを開くだけ！やるぜ！<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/image11.png" alt="image11.png">
+</div>
+</div>
+<div class="paragraph">
+<p>できない・・・<br></p>
+</div>
+<div class="paragraph">
+<p>拡張機能については、またの機会に挑戦したいと思います。</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
