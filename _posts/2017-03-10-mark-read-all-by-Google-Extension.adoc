@@ -1,0 +1,338 @@
+# リモコンが見つからないなら作ればいいじゃない！？
+:published_at: 2017-03-10
+:hp-alt-title: mark read all by Google Extension
+:hp-tags: IoT, Raspberry Pi, Remote controller, KTN
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+びげんです。
+
+前回まで数学とかのお話をしていたのですが、 +
+今回は流行りにのってGAS（GoogleAppScript)をいじります。 +
+ +
+といっても、今回のメインは
+
+===== Execution API
+
+です。 +
+
+聞いたところによると、こいつを使えば外部から自作GASをぶっ叩けるとか！ +
+*「じゃあ拡張機能を使って、ボタンひとつでGmailを全件既読にできるのではないか？」* +
+と思い立ったので、実際にやってみました。 +
+
+なお、結論からいうと拡張機能は*できませんでした*・・・。 +
+もう少し何かが足りない感じ・・・。 +
+
+拡張機能での実現はできませんでしたが、 +
+ローカルのページからボタンひとつで全件既読はできたので、 +
+そこまでをご紹介します。
+
+=== 手順
+*①動かしたいGASを書く +
+②Google API ConsoleにてExecution APIを有効にする +
+③認証情報（クライアントID）を新たに作成する +
+④ローカルサーバーから叩く* +
+
+*必要な情報： +
+i)  OAuth認証クライアントID +
+ii) GASのスクリプトID +
+iii)GASのスコープ情報*
+
+=== 作ってみる
+===== ①動かしたいGASを書く
+----
+function markReadAll() {
+ 
+  /* 検索条件を指定してGmailからスレッドを取り出す */
+  var searchTerm = 'is:unread';
+  var Threads = GmailApp.search(searchTerm, 0, 500);
+
+  /* 全件既読をつける */
+  for (i=0; i<Threads.length; i++){
+    Threads[i].markRead();
+  }
+}
+----
+全件既読はコードとしては簡単。 +
+未読のスレッドを取得して、.markReadってやるだけ。 +
+ちなみに一回で取得できるスレッドは500件までらしいので、 +
+実際は全件既読ではなく500件既読です。 +
+
+image::bigen/image1.png[]
+image::bigen/image2.png[]
+
+
+ここで、のちほどAPIで叩くときに必要になる情報を取得しておきます。 +
+
+「ファイル」→「プロジェクトのプロパティ」から、 +
+*スクリプトID*と*スコープ*の情報を取得。 +
+後で使うのでメモっておきましょう。 +
+
+image::bigen/image3.png[]
+
+また、あとで外から叩くために、公開状態にしておきます。 +
+「公開」→「ウェブアプリケーションとして導入」を選択。 +
+写真のかんじで適当に設定して導入。 +
+これでGAS側の準備は完了。
+
+
+===== ②Google API ConsoleにてExecution APIを有効にする +
+image::bigen/image4.png[]
+
+Google API Consoleのライブラリから「Google Apps Script Execution API」を検索。
+
+デフォルトの一覧には表示されていないので注意してください。 +
+
+Google Apps Script Execution APIを見つけたら、有効にしましょう。 +
+
+===== ③認証情報（クライアントID）を新たに作成する
+image::bigen/image5.png[]
+
+Google API Consoleの認証情報から、 +
+「認証情報を作成」→「OAuth クライアント　ID」を選択。 +
+
+image::bigen/image6.png[]
+
+ウェブアプリケーションを選択して、名前をなんでもいいので適当に入力。 +
+
+*【ここ大事】* +
+*「承認済みの JavaScript 生成元」*と、 +
+*「承認済みのリダイレクト URI」*の*両方*に、 +
+自分がExecutionAPIを呼び出したいファイルのあるドメインを指定。 +
+ここを片方しか指定しておらず、 +
+「Not a valid origin for the client」のエラーが出て結構ハマりました。
+
+今回はローカルから呼び出したので、例えば写真のように +
+「http://localhost:10000」 +
+みたいにしときます。10000はポート番号。 +
+
+image::bigen/image7.png[]
+
+「作成」を押すと「*クライアントID*」が表示されます。 +
+後で使うので、メモしておきましょう。 +
+
+===== ④ローカルサーバーからぶったたく
+https://developers.google.com/apps-script/guides/rest/quickstart/js[公式ページ]を参考にほぼコピペで作ります。 +
+変えるのは、あらかじめ取得した３種の情報だけ。
+[source,html]
+----
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Apps Script Execution API Quickstart</title>
+    <meta charset='utf-8' />
+  </head>
+  <body>
+    <p>Google Apps Script Execution API Quickstart</p>
+
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <button id="authorize-button" style="display: none;">Authorize</button>
+    <button id="signout-button" style="display: none;">Sign Out</button>
+
+    <pre id="content"></pre>
+
+    <script type="text/javascript">
+      // Client ID and API key from the Developer Console
+      // ここに認証情報のクライアントID
+      var CLIENT_ID = 'なんたらかんたら';
+
+      // Array of API discovery doc URLs for APIs used by the quickstart
+      var DISCOVERY_DOCS = ["https://script.googleapis.com/$discovery/rest?version=v1"];
+
+      // Authorization scopes required by the API; multiple scopes can be
+      // included, separated by spaces.
+      // ここにスコープの情報。複数あるときは配列['a','b']の形式でかく
+      var SCOPES = 'https://mail.google.com/';
+
+      var authorizeButton = document.getElementById('authorize-button');
+      var signoutButton = document.getElementById('signout-button');
+
+      /**
+       *  On load, called to load the auth2 library and API client library.
+       */
+      function handleClientLoad() {
+        gapi.load('client:auth2', initClient);
+      }
+
+      /**
+       *  Initializes the API client library and sets up sign-in state
+       *  listeners.
+       */
+      function initClient() {
+        gapi.client.init({
+          discoveryDocs: DISCOVERY_DOCS,
+          clientId: CLIENT_ID,
+          scope: SCOPES
+        }).then(function () {
+          // Listen for sign-in state changes.
+          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+          // Handle the initial sign-in state.
+          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+          authorizeButton.onclick = handleAuthClick;
+          signoutButton.onclick = handleSignoutClick;
+        });
+      }
+
+      /**
+       *  Called when the signed in status changes, to update the UI
+       *  appropriately. After a sign-in, the API is called.
+       */
+      function updateSigninStatus(isSignedIn) {
+        if (isSignedIn) {
+          authorizeButton.style.display = 'none';
+          signoutButton.style.display = 'block';
+          callScriptFunction();
+        } else {
+          authorizeButton.style.display = 'block';
+          signoutButton.style.display = 'none';
+        }
+      }
+
+      /**
+       *  Sign in the user upon button click.
+       */
+      function handleAuthClick(event) {
+        gapi.auth2.getAuthInstance().signIn();
+      }
+
+      /**
+       *  Sign out the user upon button click.
+       */
+      function handleSignoutClick(event) {
+        gapi.auth2.getAuthInstance().signOut();
+      }
+
+      /**
+       * Append a pre element to the body containing the given message
+       * as its text node. Used to display the results of the API call.
+       *
+       * @param {string} message Text to be placed in pre element.
+       */
+      function appendPre(message) {
+        var pre = document.getElementById('content');
+        var textContent = document.createTextNode(message + '\n');
+        pre.appendChild(textContent);
+      }
+
+      /**
+       * Load the API and make an API call.  Display the results on the screen.
+       */
+      function callScriptFunction() {
+       	//ここにGASのスクリプトIDを書く
+        var scriptId = "なんたらかんたら";
+
+        // Call the Execution API run method
+        //   'scriptId' is the URL parameter that states what script to run
+        //   'resource' describes the run request body (with the function name
+        //              to execute)
+        gapi.client.script.scripts.run({
+          'scriptId': scriptId,
+          'resource': {
+            'function': 'markReadAll'
+          }
+        }).then(function(resp) {
+          var result = resp.result;
+          if (result.error && result.error.status) {
+            // The API encountered a problem before the script
+            // started executing.
+            appendPre('Error calling API:');
+            appendPre(JSON.stringify(result, null, 2));
+          } else if (result.error) {
+            // The API executed, but the script returned an error.
+
+            // Extract the first (and only) set of error details.
+            // The values of this object are the script's 'errorMessage' and
+            // 'errorType', and an array of stack trace elements.
+            var error = result.error.details[0];
+            appendPre('Script error message: ' + error.errorMessage);
+
+            if (error.scriptStackTraceElements) {
+              // There may not be a stacktrace if the script didn't start
+              // executing.
+              appendPre('Script error stacktrace:');
+              for (var i = 0; i < error.scriptStackTraceElements.length; i++) {
+                var trace = error.scriptStackTraceElements[i];
+                appendPre('\t' + trace.function + ':' + trace.lineNumber);
+              }
+            }
+          } else {
+            // The structure of the result will depend upon what the Apps
+            // Script function returns. Here, the function returns an Apps
+            // Script Object with String keys and values, and so the result
+            // is treated as a JavaScript object (folderSet).
+
+            var folderSet = result.response.result;
+            if (Object.keys(folderSet).length == 0) {
+                appendPre('No folders returned!');
+            } else {
+              appendPre('Folders under your root folder:');
+              Object.keys(folderSet).forEach(function(id){
+                appendPre('\t' + folderSet[id] + ' (' + id  + ')');
+              });
+            }
+          }
+        });
+      }
+
+    </script>
+
+    <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+  </body>
+</html>
+----
+
+==== 動かしてみる
+image::bigen/image8.png[]
+
+まずはなんかいっぱい未読を作っておいて +
+
+image::bigen/image9.png[]
+
+いけっ！ +
+
+image::bigen/image10.png[]
+
+既読になりました。 +
+めでたしめでたし。 +
+
+==== まとめ
+やっぱりGASが少し書けて、Googleのアプリケーションを使っていれば +
+大体なんでもできるんだなぁって実感しました。 +
+こうやってどんどんGoogleから離れられなくなるんですね・・・・怖い！ +
+
+==== ちなみに
+これであとは拡張機能でページを開くだけ！やるぜ！ +
+
+image::bigen/image11.png[]
+
+できない・・・ +
+
+拡張機能については、またの機会に挑戦したいと思います。
