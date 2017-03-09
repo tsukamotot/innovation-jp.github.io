@@ -1,11 +1,46 @@
 # リモコンが見つからないなら作ればいいじゃない！？
 :published_at: 2017-03-10
-:hp-alt-title: mark read all by Google Extension
+:hp-alt-title: mark read all by Raspberry Pi de Remote controller
 :hp-tags: IoT, Raspberry Pi, Remote controller, KTN
 
 
 
 
+
+
+
+
+
+
+=== 前準備
+
+ググるといっぱい記事が出てくるので、
+その通りにやってみます
+ざっくり手順は以下の感じ
+
+＜ラズパイの画像＞
+
+NOOBSのインストール
+PCでダウンロードSDに展開してmicroSDにコピー
+
+＜インストーラの画面＞
+
+OS選択して次へ
+ほっとくと完了
+
+起動後LANを結線
+ifconfigでIP確認
+SSHサービスを起動
+リモートから接続
+ID:pi
+PASS:raspberry
+
+とりあえずパッケージ更新
+sudo apt-get update
+sudo apt-get upgrade
+
+日本語化
+sudo apt-get install fonts-ipaexfont
 
 
 
