@@ -1,74 +1,106 @@
 # 子供の頃の純粋さを求めて KOOVER になってみたお話
 :published_at: 2017-03-10
-:hp-alt-title: KOOVER
+:hp-alt-title: I'm KOOVER
 :hp-tags: IoT, KOOV, sony, syoga, log
 
 弊社運用の人改め SRE の人、shoga か syoga なら syoga をチョイスする syoga です。
 
 S3の停止がヒューマンエラーだったという事で、一層身が引き締まる思いでおりますが、皆様 3/3 に何があったかご存知でしょうか？そうです、我が家の犬1号の誕生日でございます。
 
-犬1号
-写真１
+## 犬1号
+image::http://tech.innovation.co.jp/images/syoga/koov/1.JPG[]
 
 さらに同日「Nintendo Switch」が発売されました！
 
-積みゲー（購入したけどまったく遊んでいない or 触りだけ遊んだゲーム）を消化する工数を試算したところ、不眠不休で10ヶ月かかる事が分かりましたが、ゲーマーとしては購入しない訳には（個人の感想です）いきません！
+積みゲー（購入したけどまったく遊んでいない or 触りだけ遊んだゲーム）を消化する工数を試算したところ、
+不眠不休で10ヶ月かかる事が分かりましたが、ゲーマーとしては購入しない訳には（個人の感想です）いきません！
 
-という事でドン！
-
-switch写真
+## という事でドン！
+image::http://tech.innovation.co.jp/images/syoga/koov/2.JPG[]
 
 という訳で今回は、「Nintendo Switch」も犬も関係ない内容でお送りします。
 
-■ KOOV が来たよ！
+## ■ KOOV が来たよ！
 
-弊社では現在色々なアイテムが集まっており、その中にKOOVというSONYから発売されている玩具を見つけました、子供の頃の純粋さを取り戻すためにも触ってみましたので、そちらを記事に致します。
+弊社では現在色々なIoTアイテムが集まっており、その中にKOOVというSONYから発売されている玩具がありました、子供の頃の純粋さを取り戻すためにも触ってみましたので、そちらを記事に致します。
 
-・KOOVって？
-引用
+KOOVって？
+
+```
 ブロックで自由な「かたち」をつくり、「プログラミング」によってさまざまな動きを与えて遊ぶ、ロボット・プログラミング学習キット。
-koov のホームページより
+```
+https://knowledgesuite.jp/free/about/[KOOV公式サイト]より
 
-ブロックを繋げ作成したオブジェクトに、LEDやモータを組込み、組込んだモータやLEDの動きをプログラミングするというすばらしい玩具となっています。
 
-■ さっそく触ってみよう！
 
+ブロックを繋げ作成したオブジェクトに、LEDやモータを組込み、組込んだモータやLEDの動きを、プログラミングできるという、すばらしい玩具となっています。
+
+## ■ さっそく触ってみよう！
+
+image::http://tech.innovation.co.jp/images/syoga/koov/3.JPG[]
 こんな外観です。
 
+image::http://tech.innovation.co.jp/images/syoga/koov/4.JPG[]
 開けてみると…
 
+image::http://tech.innovation.co.jp/images/syoga/koov/5.JPG[]
 パーツが沢山！（左側がスタータキットとなっています。）
 
+
+image::http://tech.innovation.co.jp/images/syoga/koov/6.JPG[]
 これが、コア！
 
-公式からKOOVのアプリケーションをDLします。
+開封はここまでとして、公式からKOOVのアプリケーションをDLします、まずプレーヤを作成する必要があるそうです。
 
-まずプレーヤを作成！
-
+image::http://tech.innovation.co.jp/images/syoga/koov/7.JPG[]
 16歳のイノベくんを作成しました。
 
-相方を選ぶという事なので、アルパカみたいなのにします。
+image::http://tech.innovation.co.jp/images/syoga/koov/8.JPG[]
 
+相方を選ぶという事なので、アルパカみたいなコにします。
+
+image::http://tech.innovation.co.jp/images/syoga/koov/9.JPG[]
 そしてチュートリアルを開始！はじめてのロボットプロミラングを選択すると、マップがでました。
 
-ゲームではファーストステージは大事で、プログラミングの基礎を説明してくれました、どうしたらロボットが動くかをアルパカが説明してくれます
+
+image::http://tech.innovation.co.jp/images/syoga/koov/10.JPG[]
+ボードゲームのように進んでいきますが、プログラミングの基礎を1から説明してくれました、どうしたらロボットが動くかをアルパカみたいなコが説明してくれます
 。
 
-
+image::http://tech.innovation.co.jp/images/syoga/koov/11.JPG[]
 プログラムはこんな感じでパーツを組合せる感じです、早速LEDを光らせてみます。
 
+image::http://tech.innovation.co.jp/images/syoga/koov/12.JPG[]
 こんな風に設定すれば…
 
+
+image::http://tech.innovation.co.jp/images/syoga/koov/13.JPG[]
+暗いあいつも…
+
+image::http://tech.innovation.co.jp/images/syoga/koov/14.JPG[]
 ピカッと！
 
-では組立てます！！マニュアルが3Dでくるくる動いてわかりやすいです。
+という訳でチュートリアルを最後までやれば、色々説明してくれるのですが、大人なので早速組立てます！
 
-こんな感じで…ドン！
+image::http://tech.innovation.co.jp/images/syoga/koov/15.JPG[]
+マニュアルが3Dでくるくる動いてわかりやすいです。
 
-オウムの完成です。
+image::http://tech.innovation.co.jp/images/syoga/koov/16.JPG[]
+マニュアル通り作ります。
 
-変数や関数も使用できるので、普通にプログラミングですね、首を動かすサンプルプログラムを改造し、いざ実行！！
+image::http://tech.innovation.co.jp/images/syoga/koov/17.JPG[]
+1時間後…あっという間にオウムの完成です。
 
-今回スタータキットを利用し作成しましたが、アドバンスキットを導入する事でかなり色々な判定（赤外線や加速度センサー）が出来るようなので、今後もちょこちょこやっていきたいと思います。
+image::http://tech.innovation.co.jp/images/syoga/koov/18.JPG[]
+変数や関数も使用できるので、普通にプログラミングですね。
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/BsYCXhk_-fA" frameborder="0" allowfullscreen></iframe>
+++++
+首を動かすサンプルプログラムを改造し、いざ実行！!コアの上ボタンを押すと激しく動きます！！
+
+今回スタータキットを利用し作成しましたが、アドバンスキットを導入する事で、赤外線や加速度センサーを使用した複雑な判定が出来るようなので、今後もちょこちょこやっていきたいと思います。
+
+推奨年齢8歳以降とありますが、結構大変なので大人が手伝ってあげてもいいですね！！
 
 完
