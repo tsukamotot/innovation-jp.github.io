@@ -1,4 +1,4 @@
-# レゴWeDo2.0でeducationしてみる
+# レゴ® WeDo2.0でeducationしてみる
 :published_at: 2017-03-10
 :hp-alt-title: mark read all by LEGO WeDo2.0 de education
 :hp-tags: IoT, LEGO, WeDo2.0, KTN
