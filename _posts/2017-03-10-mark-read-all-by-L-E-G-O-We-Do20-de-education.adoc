@@ -99,6 +99,9 @@ image::kotani/20170310/12.png[]
 
 リンクさせてみました！ +
 
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/R4rEL4Jb9_s" frameborder="0" allowfullscreen></iframe>
+++++
 
 青色ランプが点灯したらOK。 +
 
@@ -125,6 +128,10 @@ image::kotani/20170310/13.png[]
 
 動かしてみます。 +
 
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aKb7pyb2avo" frameborder="0" allowfullscreen></iframe>
+++++
+
 
 まあ概ね設定通りに動いてますね。 +
 と、こんな感じに楽しく簡単に動く車を作れちゃいますので、 +
@@ -145,11 +152,11 @@ image::kotani/20170310/14.jpg[]
 なんだか動きが気持ち悪い。。。 +
 （あくまで個人的な感想です！） +
 
-image::kotani/20170310/15.png[]
-
 その他にもこんな感じのものが作れるようです。 +
+
+image::kotani/20170310/15.png[]
 
 それでは子供から大人まで楽しめることがわかったところで、 +
 そろそろ終わりにしようと思います。 +
 
-サヨナラ、サヨナラ、サヨナラ！ +
+それではまた次回をお楽しみに、さよなら、さよなら、さよなら。 +
