@@ -64,8 +64,7 @@ image::http://tech.innovation.co.jp/images/syoga/koov/9.JPG[]
 
 
 image::http://tech.innovation.co.jp/images/syoga/koov/10.JPG[]
-ボードゲームのように進んでいきますが、プログラミングの基礎を1から説明してくれました、どうしたらロボットが動くかをアルパカみたいなコが説明してくれます
-。
+ボードゲームのように進んでいきますが、プログラミングの基礎を1から説明してくれました、どうしたらロボットが動くかをアルパカみたいなコが説明してくれます、いい事言ってるね。
 
 image::http://tech.innovation.co.jp/images/syoga/koov/11.JPG[]
 プログラムはこんな感じでパーツを組合せる感じです、早速LEDを光らせてみます。
