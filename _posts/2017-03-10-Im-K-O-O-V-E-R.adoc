@@ -46,8 +46,8 @@ image::http://tech.innovation.co.jp/images/syoga/koov/4.JPG[]
 外箱を開けてみると…さらに箱が！
 
 image::http://tech.innovation.co.jp/images/syoga/koov/5.JPG[]
-パーツが沢山！ ちょっとワクワクですね。 
-（左側がスタータキットとなっています） 
+パーツが沢山！ ちょっとワクワクですね。 +
+（左側がスターターキットです、KOOVと書いてある四角いのがコアとなります） +
 
 
 開封はここまでとして、公式からKOOVのアプリケーションをダウンロードします、 +
