@@ -25,7 +25,7 @@ KOOVって？
 ```
 ブロックで自由な「かたち」をつくり、「プログラミング」によってさまざまな動きを与えて遊ぶ、ロボット・プログラミング学習キット。
 ```
-https://knowledgesuite.jp/free/about/[KOOV 公式サイト]より
+https://www.koov.io/[KOOV 公式サイト]より
 
 ブロックを繋げ作成したオブジェクトに、LEDやモータを組込み、組込んだモータや +
 LEDの動きを、プログラミングできるというすばらしい玩具となっています。
@@ -92,7 +92,7 @@ image::http://tech.innovation.co.jp/images/syoga/koov/18.JPG[]
 <iframe width="560" height="315" src="https://www.youtube.com/embed/BsYCXhk_-fA" frameborder="0" allowfullscreen></iframe>
 ++++
 首を動かすサンプルプログラムを少し改造し、いざ実行！!コアの上ボタンを押すと激しく動きます。 +
-モーター音が伴って非常にシュール…。
+モーター音が伴って非常にシュール…。 +
 
 今回スタータキットを利用し作成しましたが、アドバンスキットを導入する事で、赤外線や加速度センサーを使用した複雑な判定が出来るようなので、今後もちょこちょこやっていきたいと思います。
 
