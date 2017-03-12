@@ -11,17 +11,17 @@ S3の停止がヒューマンエラーだったという事で、一層身が引
 さらに同日「Nintendo Switch」が発売されました！ +
 
 積みゲー（購入したけどまったく遊んでいない or 触りだけ遊んだゲーム）を消化する工数を +
-試算したところ、不眠不休で10ヶ月かかる事が分かりましたが、ゲーマーとしては+
+試算したところ、不眠不休で10ヶ月かかる事が分かりましたが、ゲーマーとしては +
 購入しない訳には （個人の感想です）いきません！
 
 ## という事でドン！
 image::http://tech.innovation.co.jp/images/syoga/koov/2.JPG[]
 
-という訳で今回は、「Nintendo Switch」も犬も関係ない内容でお送りします。
+そんなこんなで「Nintendo Switch」も犬も関係ない内容でお送りします。
 
 ## ■ KOOV が来たよ！
 
-弊社では現在色々なアイテムが集まっており、その中にKOOVというSONYから +
+弊社では現在色々なアイテムが技術研究のため集まっており、その中にKOOVというSONYから +
 発売されている玩具がありました、子供の頃の純粋さを取り戻すためにも触ってみましたので、 +
 そちらを記事に致します。
 
@@ -30,12 +30,12 @@ KOOVって？
 ```
 ブロックで自由な「かたち」をつくり、「プログラミング」によってさまざまな動きを与えて遊ぶ、ロボット・プログラミング学習キット。
 ```
-https://knowledgesuite.jp/free/about/[KOOV公式サイト]より
+https://knowledgesuite.jp/free/about/[KOOV 公式サイト]より
 
 
 
 ブロックを繋げ作成したオブジェクトに、LEDやモータを組込み、組込んだモータや +
-LEDの動きを、プログラミングできるという、すばらしい玩具となっています。
+LEDの動きを、プログラミングできるというすばらしい玩具となっています。
 
 ## ■ さっそく触ってみよう！
 
@@ -43,14 +43,12 @@ image::http://tech.innovation.co.jp/images/syoga/koov/3.JPG[]
 こんな外観です。
 
 image::http://tech.innovation.co.jp/images/syoga/koov/4.JPG[]
-開けてみると…
+外箱を開けてみると…さらに箱が！
 
 image::http://tech.innovation.co.jp/images/syoga/koov/5.JPG[]
-パーツが沢山！（左側がスタータキットとなっています。）
+パーツが沢山！ ちょっとワクワクですね。 
+（左側がスタータキットとなっています） 
 
-
-image::http://tech.innovation.co.jp/images/syoga/koov/6.JPG[]
-これが、コア！
 
 開封はここまでとして、公式からKOOVのアプリケーションをダウンロードします、 +
 まずプレーヤを作成する必要があるそうです。 +
@@ -86,13 +84,13 @@ image::http://tech.innovation.co.jp/images/syoga/koov/14.JPG[]
 大人なので早速組立てます！
 
 image::http://tech.innovation.co.jp/images/syoga/koov/15.JPG[]
-マニュアルが3Dでくるくる動いてわかりやすいです。
+マニュアルが3Dで、くるくる動いてわかりやすいです。
 
 image::http://tech.innovation.co.jp/images/syoga/koov/16.JPG[]
 マニュアル通り作ります。
 
 image::http://tech.innovation.co.jp/images/syoga/koov/17.JPG[]
-1時間後…あっという間にオウムの完成です。
+1時間後…あっという間（？）にオウムの完成です。
 
 image::http://tech.innovation.co.jp/images/syoga/koov/18.JPG[]
 変数や関数も使用できるので、普通にプログラミングですね。
