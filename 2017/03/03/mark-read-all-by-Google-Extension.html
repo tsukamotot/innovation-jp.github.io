@@ -52,10 +52,10 @@ var _trackingid = 'LFT-10003-1';
     <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="外部からGmailを全件既読にする" />
-    <meta property="og:description" content="びげんです。 前回まで数学とかのお話をしていたのですが、 今回は流行りにのってGAS（GoogleAppScript)をいじります。 といっても、今回のメインは Execution API です。 聞いたところによると、こいつを使えば外部から自作GASをぶっ叩けるとか！ 「じゃあ拡張機能を使って、ボタンひとつでGmailを全件既読にできるのではないか？」 と思い立ったので、実際にやってみました。 なお、結論からいうと拡張機能はできませんでした・・・。 もう少し何かが足りない感じ・・・。 拡張機能での実現はできませんでしたが、 ローカルのページからボタン..." />
+    <meta property="og:description" content="びげんです。 前回まで数学とかのお話をしていたのですが、 今回は流行りにのってGAS（Google Apps Script)をいじります。 といっても、今回のメインは Execution API です。 聞いたところによると、こいつを使えば外部から自作GASをぶっ叩けるとか！ 「じゃあ拡張機能を使って、ボタンひとつでGmailを全件既読にできるのではないか？」 と思い立ったので、実際にやってみました。 なお、結論からいうと拡張機能はできませんでした・・・。 もう少し何かが足りない感じ・・・。 拡張機能での実現はできませんでしたが、 ローカルのページから..." />
     <meta property="og:url" content="http://tech.innovation.co.jp/2017/03/03/mark-read-all-by-Google-Extension.html" />
     <meta property="article:published_time" content="2017-03-02T15:00:00.000Z" />
-    <meta property="article:modified_time" content="2017-03-04T15:00:19.808Z" />
+    <meta property="article:modified_time" content="2017-03-12T13:47:08.028Z" />
     <meta property="article:tag" content="GoogleExtension" />
     <meta property="article:tag" content="GoogleAppsScript" />
     <meta property="article:tag" content="ExecutionAPI" />
@@ -64,7 +64,7 @@ var _trackingid = 'LFT-10003-1';
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="外部からGmailを全件既読にする" />
-    <meta name="twitter:description" content="びげんです。 前回まで数学とかのお話をしていたのですが、 今回は流行りにのってGAS（GoogleAppScript)をいじります。 といっても、今回のメインは Execution API です。 聞いたところによると、こいつを使えば外部から自作GASをぶっ叩けるとか！ 「じゃあ拡張機能を使って、ボタンひとつでGmailを全件既読にできるのではないか？」 と思い立ったので、実際にやってみました。 なお、結論からいうと拡張機能はできませんでした・・・。 もう少し何かが足りない感じ・・・。 拡張機能での実現はできませんでしたが、 ローカルのページからボタン..." />
+    <meta name="twitter:description" content="びげんです。 前回まで数学とかのお話をしていたのですが、 今回は流行りにのってGAS（Google Apps Script)をいじります。 といっても、今回のメインは Execution API です。 聞いたところによると、こいつを使えば外部から自作GASをぶっ叩けるとか！ 「じゃあ拡張機能を使って、ボタンひとつでGmailを全件既読にできるのではないか？」 と思い立ったので、実際にやってみました。 なお、結論からいうと拡張機能はできませんでした・・・。 もう少し何かが足りない感じ・・・。 拡張機能での実現はできませんでしたが、 ローカルのページから..." />
     <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/03/03/mark-read-all-by-Google-Extension.html" />
     
     <script type="application/ld+json">
@@ -82,9 +82,9 @@ var _trackingid = 'LFT-10003-1';
     "headline": "外部からGmailを全件既読にする",
     "url": "http://tech.innovation.co.jp/2017/03/03/mark-read-all-by-Google-Extension.html",
     "datePublished": "2017-03-02T15:00:00.000Z",
-    "dateModified": "2017-03-04T15:00:19.808Z",
+    "dateModified": "2017-03-12T13:47:08.028Z",
     "keywords": "GoogleExtension,  GoogleAppsScript,  ExecutionAPI,  Gmail,  Bigen",
-    "description": "びげんです。 前回まで数学とかのお話をしていたのですが、 今回は流行りにのってGAS（GoogleAppScript)をいじります。 といっても、今回のメインは Execution API です。 聞いたところによると、こいつを使えば外部から自作GASをぶっ叩けるとか！ 「じゃあ拡張機能を使って、ボタンひとつでGmailを全件既読にできるのではないか？」 と思い立ったので、実際にやってみました。 なお、結論からいうと拡張機能はできませんでした・・・。 もう少し何かが足りない感じ・・・。 拡張機能での実現はできませんでしたが、 ローカルのページからボタン..."
+    "description": "びげんです。 前回まで数学とかのお話をしていたのですが、 今回は流行りにのってGAS（Google Apps Script)をいじります。 といっても、今回のメインは Execution API です。 聞いたところによると、こいつを使えば外部から自作GASをぶっ叩けるとか！ 「じゃあ拡張機能を使って、ボタンひとつでGmailを全件既読にできるのではないか？」 と思い立ったので、実際にやってみました。 なお、結論からいうと拡張機能はできませんでした・・・。 もう少し何かが足りない感じ・・・。 拡張機能での実現はできませんでしたが、 ローカルのページから..."
 }
     </script>
 
@@ -264,7 +264,7 @@ var _trackingid = 'LFT-10003-1';
 </div>
 <div class="paragraph">
 <p>前回まで数学とかのお話をしていたのですが、<br>
-今回は流行りにのってGAS（GoogleAppScript)をいじります。<br>
+今回は流行りにのってGAS（Google Apps Script)をいじります。<br>
 <br>
 といっても、今回のメインは</p>
 </div>
