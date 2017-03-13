@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>レゴ® WeDo2.0でeducationしてみる - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="レゴ® WeDo2.0でeducationしてみる">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="レゴ® WeDo2.0でeducationしてみる">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/03/10/mark-read-all-by-L-E-G-O-We-Do20-de-education.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="レゴ® WeDo2.0でeducationしてみる" />
+    <meta property="og:description" content="KTNです。 前回の「GASでガントチャート的なものをやってみる」の続きを書こうと思ったのですが、 最近会社に（研究用の）おもちゃ達がいっぱいやってきて、 今回はその中の一つ「レゴ® WeDo2.0」（以下WeDoと書きます）を遊んで（研究して）みましたので、 こっちをブログに書きたいと思います。 その他の（研究用の）おもちゃについても、 今後の記事で紹介されていくと思いますのでご期待ください！！ 最近流行りのVRとか、DRNなどなど。。 WeDoですが、公式ページの説明を見てみると、 レゴ ブロックを組み立て動かすことで、子どもたちが楽しく簡単にプロ..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/03/10/mark-read-all-by-L-E-G-O-We-Do20-de-education.html" />
+    <meta property="article:published_time" content="2017-03-09T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-03-13T04:09:10.611Z" />
+    <meta property="article:tag" content="IoT" />
+    <meta property="article:tag" content="LEGO" />
+    <meta property="article:tag" content="WeDo2.0" />
+    <meta property="article:tag" content="KTN" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="レゴ® WeDo2.0でeducationしてみる" />
+    <meta name="twitter:description" content="KTNです。 前回の「GASでガントチャート的なものをやってみる」の続きを書こうと思ったのですが、 最近会社に（研究用の）おもちゃ達がいっぱいやってきて、 今回はその中の一つ「レゴ® WeDo2.0」（以下WeDoと書きます）を遊んで（研究して）みましたので、 こっちをブログに書きたいと思います。 その他の（研究用の）おもちゃについても、 今後の記事で紹介されていくと思いますのでご期待ください！！ 最近流行りのVRとか、DRNなどなど。。 WeDoですが、公式ページの説明を見てみると、 レゴ ブロックを組み立て動かすことで、子どもたちが楽しく簡単にプロ..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/03/10/mark-read-all-by-L-E-G-O-We-Do20-de-education.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars3.githubusercontent.com/u/24905783?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "レゴ® WeDo2.0でeducationしてみる",
+    "url": "http://tech.innovation.co.jp/2017/03/10/mark-read-all-by-L-E-G-O-We-Do20-de-education.html",
+    "datePublished": "2017-03-09T15:00:00.000Z",
+    "dateModified": "2017-03-13T04:09:10.611Z",
+    "keywords": "IoT,  LEGO,  WeDo2.0,  KTN",
+    "description": "KTNです。 前回の「GASでガントチャート的なものをやってみる」の続きを書こうと思ったのですが、 最近会社に（研究用の）おもちゃ達がいっぱいやってきて、 今回はその中の一つ「レゴ® WeDo2.0」（以下WeDoと書きます）を遊んで（研究して）みましたので、 こっちをブログに書きたいと思います。 その他の（研究用の）おもちゃについても、 今後の記事で紹介されていくと思いますのでご期待ください！！ 最近流行りのVRとか、DRNなどなど。。 WeDoですが、公式ページの説明を見てみると、 レゴ ブロックを組み立て動かすことで、子どもたちが楽しく簡単にプロ..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Io-T tag-L-E-G-O tag-We-Do20 tag-K-T-N no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="10 Mar 2017" class="post-meta__date date">10 Mar 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Io-T">IoT</a>, <a href="http://tech.innovation.co.jp/tag/L-E-G-O"> LEGO</a>, <a href="http://tech.innovation.co.jp/tag/We-Do20"> WeDo2.0</a>, <a href="http://tech.innovation.co.jp/tag/K-T-N"> KTN</a></span>
+        <span class="post-meta__author author"><img src="https://avatars3.githubusercontent.com/u/24905783?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">レゴ® WeDo2.0でeducationしてみる</h1>
+    </header>
+
+    <section class="post tag-Io-T tag-L-E-G-O tag-We-Do20 tag-K-T-N">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>KTNです。<br></p>
+</div>
+<div class="paragraph">
+<p>前回の「GASでガントチャート的なものをやってみる」の続きを書こうと思ったのですが、<br>
+最近会社に（研究用の）おもちゃ達がいっぱいやってきて、<br>
+今回はその中の一つ「レゴ® WeDo2.0」（以下WeDoと書きます）を遊んで（研究して）みましたので、<br>
+こっちをブログに書きたいと思います。<br>
+その他の（研究用の）おもちゃについても、<br>
+今後の記事で紹介されていくと思いますのでご期待ください！！<br>
+最近流行りのVRとか、DRNなどなど。。</p>
+</div>
+<div class="paragraph">
+<p>WeDoですが、公式ページの説明を見てみると、<br>
+レゴ ブロックを組み立て動かすことで、子どもたちが楽しく簡単にプログラミングと<br>
+ものづくりができる、小学生向けのサイエンス＆プログラミング教材です。<br>
+(引用：http://afrel.co.jp/product/wedo2.0-introduction)<br>
+ということで、レゴ動いちゃうみたいです。<br></p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__">開封の儀</h3>
+<div class="paragraph">
+<p>早速開封して遊んで（研究して）みたいと思います。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/1.jpg" alt="1.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>箱はこんな感じです。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/2.jpg" alt="2.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>目がついてる車や、ヘリコプターが作れるんですね！<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/3.jpg" alt="3.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>裏返すとパーツの分別が書いてありました。<br>
+なので、まず分別していきます。<br></p>
+</div>
+<div class="paragraph">
+<p>写真撮り忘れたのですが、各パーツが小袋に入ってました。<br>
+でも、パーツの分別とは全然関係ない感じで小袋に入れられていて、<br>
+分別するのがものすごく大変で、イラッとしました。<br>
+が、地獄の分別が終わってみるとなんとも言えない満足感があり、<br>
+あえてバラバラに小袋に入れたんだろうと確信するに至りました。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/4.jpg" alt="4.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>LEGOさん、さすが！！<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___2">作ってみる</h3>
+<div class="paragraph">
+<p>まずマニュアルがみつからない。。。<br>
+ソフトウェアダウンロードの紙が入っていたので、<br>
+パソコンでダウンロードをしている間、<br>
+箱についていた表紙を見ながらながら頑張ってみます。<br>
+が、、、全然できないっす。。。<br>
+もう一回探しますが、マニュアルが見つかりません。<br>
+しょうがないので、先ほどダウンロードしていたソフトウェアをインストール。<br>
+インストールが終わったら起動してみます。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/5.png" alt="5.png">
+</div>
+</div>
+<div class="paragraph">
+<p>educationの画面が出てきました。<br>
+本のアイコンをクリックします。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/6.png" alt="6.png">
+</div>
+</div>
+<div class="paragraph">
+<p>「プロジェクトの入門」が出てきて、<br>
+なにやら作り方を教えてくれそうな感じ。<br>
+「A.化学探索機 マイロ」を選択します。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/7.png" alt="7.png">
+</div>
+</div>
+<div class="paragraph">
+<p>「科学者やエンジニアが、遠くにある場所を調査する様々な方法・・・」<br>
+を教えてくれるようです。<br>
+このプラスチックのかわいい目で探査したい！ということで。<br>
+ページをめくっていくと、<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/8.png" alt="8.png">
+</div>
+</div>
+<div class="paragraph">
+<p>きました！！作り方のマニュアルです！！<br>
+手順通りに作っていきます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/9.jpg" alt="9.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>こうなって<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/10.jpg" alt="10.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>こうなって<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/11.jpg" alt="11.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>こんな感じ、出来た！出来上がり！！<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">動かしてみる</h3>
+<div class="paragraph">
+<p>パソコンとWeDoをリンクさせます。<br>
+説明があったのでそれと同じにやります。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/12.png" alt="12.png">
+</div>
+</div>
+<div class="paragraph">
+<p>リンクさせてみました！<br></p>
+</div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/R4rEL4Jb9_s" frameborder="0" allowfullscreen></iframe>
+<div class="paragraph">
+<p>青色ランプが点灯したらOK。<br></p>
+</div>
+<div class="paragraph">
+<p>それではどう動かすかプログラムします。<br>
+プログラムといっても画面でぽちぽちやるだけなので、<br>
+楽しく簡単にできちゃいます。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/13.png" alt="13.png">
+</div>
+</div>
+<div class="paragraph">
+<p>こんな感じにしました。<br>
+　ランプを赤色に変える<br>
+　速度を1(遅い)に設定<br>
+　前に進む<br>
+　5秒スリープ<br>
+　停止<br>
+　ランプを青色に変える<br>
+　速度を4(ちょっと早くする)<br>
+　後ろに戻る<br>
+　音を鳴らす<br>
+　2秒スリープ<br>
+　停止<br>
+という感じです。<br></p>
+</div>
+<div class="paragraph">
+<p>動かしてみます。<br></p>
+</div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/aKb7pyb2avo" frameborder="0" allowfullscreen></iframe>
+<div class="paragraph">
+<p>まあ概ね設定通りに動いてますね。<br>
+と、こんな感じに楽しく簡単に動く車を作れちゃいますので、<br>
+お子様の勉強用にいいかも！？<br>
+小学校高学年ぐらいが一番楽しめそうです！<br>
+今回はちょっとしか触ってないですが、<br>
+プログラムしっかり考えると色々作れそうですね！！<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/14.jpg" alt="14.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>おまけでもう一つ作ってみました。<br>
+これも動かしてみます。<br></p>
+</div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oXxaIEPSTKo" frameborder="0" allowfullscreen></iframe>
+<div class="paragraph">
+<p>なんだか動きが気持ち悪い。。。<br>
+（あくまで個人的な感想です！）<br></p>
+</div>
+<div class="paragraph">
+<p>その他にもこんな感じのものが作れるようです。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170310/15.png" alt="15.png">
+</div>
+</div>
+<div class="paragraph">
+<p>それでは子供から大人まで楽しめることがわかったところで、<br>
+そろそろ終わりにしようと思います。<br></p>
+</div>
+<div class="paragraph">
+<p>それではまた次回をお楽しみに、さよなら、さよなら、さよなら。<br></p>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
