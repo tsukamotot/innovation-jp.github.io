@@ -1,15 +1,15 @@
 = iPhoneからテレビの電源をOn Offしてみる
 :published_at: 2017-03-17
 :hp-alt-title: iphone-irkit-arduino
-:hp-tags: kato,irkit,arduino
+:hp-tags: kato,irkit,arduino,esp-wroom-02     
 
 
 こんにちは、加藤です。
-本日は、WROOM-02を使って、iPhoneからテレビの電源をOn Offしてみます。
+本日は、ESP-WROOM-02を使って、iPhoneからテレビの電源をOn Offしてみます。
 
 Arduinoのインストールは出来て、書き込みも出来る！でも、回路図はわからない！
 
-という人向けに、最小限の写真多めで説明を行います。
+という人向けに、写真多めで説明を行います。
 
 
 ### 参考にしたサイト
@@ -98,7 +98,8 @@ platfotmio run --target upload
 ```
 
 
-書き込み完了後、リモコンのコードを読み取ります。
+書き込み完了後、リモコンの赤外線コードを読み取ります。  +
+赤外線コードの読み取りは、赤外線リモコン受信モジュールに向けて、リモコンのスイッチを押せばOKです  +
 
 シリアルポートを監視しながら、ESP-WROOM-02開発ボードのリセットを押下すると、
 IP、ホスト名が表示されます。
@@ -118,13 +119,13 @@ http://[先程表示されたIP]/messages
 
 ### Homebridgeのインストール
 
-homebrewを使ってnodeのインストールを行います。
+Homebrewを使ってnodeのインストールを行います。
 
 ```
 brew install node
 ```
 
-次に、homebridgeとhomebridge-irkitをインストールします。
+次に、HomebridgeとHomebridge-irkitをインストールします。
 
 ```
 sudo npm install -g homebridge
@@ -132,7 +133,7 @@ sudo npm install -g homebridge-irkit
 ```
 
 
-homebridgeの設定ファイルを作成します。
+Homebridgeの設定ファイルを作成します。
 
 ~/.homebridge/config.json
 
@@ -159,7 +160,7 @@ homebridgeの設定ファイルを作成します。
 ```
 
 
-homebridgeは、下記で起動できます。
+Homebridgeは、下記で起動できます。
 
 
 ```
