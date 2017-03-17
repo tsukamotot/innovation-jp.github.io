@@ -10,19 +10,27 @@
 タイトルにもありますが、 +
 3/11に行われたJAWS DAYS 2017に参加してまいりました。
 
+JAWS DAYSとはJAWS-UG（AWS Users Group – Japan）が主催するイベントです！
+https://jaws-ug.jp/about-us/
+
 きっかけは昨年AWS re:Inventに参加させていただき、 +
 そこで多くのJAWSメンバーの方と関わらせていただいたことでして、 +
-しっかりサポーターとして活動してきましたよ！
+今回しっかりサポーターとして活動してきましたよ！
 
 到着！
 
+image::http://tech.innovation.co.jp/images/ozasa/IMG_3424.JPG[]
+
 しっかりロゴの存在を確認！！
+
+image::http://tech.innovation.co.jp/images/ozasa/IMG_3426.JPG[]
+
+image::http://tech.innovation.co.jp/images/ozasa/IMG_2091.JPG[]
 
 
 午前中は受付として従事しました！ +
 知り合いの方も多く、なんだかウキウキしました！！
 
-※弊社AMIさんの写真です、
 
 そして、午後はセッションに参加させていただきました。
 
@@ -38,6 +46,7 @@
 |[General] [AWS Korea User Group] Raspberry Piを利用した顔の表情分析と感情を認識するシステム構築|http://jawsdays2017.jaws-ug.jp/session/2081/
 |[DeepDive] AWSデータベースアップデート 2017|http://jawsdays2017.jaws-ug.jp/session/1220/
 |=======================
+
 
 
 ## 感想
@@ -64,4 +73,7 @@ Chaos Monkeyは知っていましたが、それよりさらにスコープの�
 
 そんなセッションに加え、懇親会&LTがあったので、あっという間の1日でした。
 
-ユーザグループ主催のイベントでありながら
+ユーザグループ主催のイベントでありながら、お勉強もしっかりできてとっても充実しました。 +
+今後はJAWSの開催する勉強会にも参加してインプット/アウトプットともにしていきたいと思います！
+
+ありがとうございました！！
