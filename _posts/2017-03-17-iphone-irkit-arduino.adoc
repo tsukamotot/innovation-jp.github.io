@@ -1,0 +1,191 @@
+= iPhoneからテレビの電源をOn Offしてみる
+:published_at: 2017-03-17
+:hp-alt-title: iphone-irkit-arduino
+:hp-tags: kato,irkit,arduino
+
+
+こんにちは、加藤です。
+本日は、WROOM-02を使って、iPhoneからテレビの電源をOn Offしてみます。
+
+Arduinoのインストールは出来て、書き込みも出来る！でも、回路図はわからない！
+
+という人向けに、最小限の写真多めで説明を行います。
+
+
+### 参考にしたサイト
+
+Eleclog. - ミニマルなIRKitクローンを作ってiOSから家電を制御する +
+http://eleclog.quitsq.com/2016/09/minirum.html +
+
+GitHub - 9SQ/minIRum +
+https://github.com/9SQ/minIRum
+
+
+### 環境
+・MacOS
+
+### 必要なもの
+・ブレッドボード
+
+・ESPr® Developer（ESP-WROOM-02開発ボード） +
+　https://www.switch-science.com/catalog/2500/
+
+・カーボン抵抗（炭素皮膜抵抗）　１／４Ｗ　１０Ω　（１００本入） +
+　http://akizukidenshi.com/catalog/g/gR-25100/
+
+・赤外線リモコン受信モジュールＯＳＲＢ３８Ｃ９ＡＡ（２個入） +
+　http://akizukidenshi.com/catalog/g/gI-04659
+
+・５ｍｍ赤外線ＬＥＤ　ＯＳＩ５ＬＡ５１１３Ａ　（１０個入） +
+　http://akizukidenshi.com/catalog/g/gI-04311
+
+・ブレッドボード・ジャンパーコード（オス－オス）（１０ｃｍ）２０本セット +
+　http://akizukidenshi.com/catalog/g/gC-05371/
+
+
+
+### 配線
+
+配線は、下記の写真のようにします。 +
+配線が終わったら、USBケーブルで接続しておきます。
+
+image::kato/7/01.jpg[]
+image::kato/7/02.jpg[]
+image::kato/7/03.jpg[]
+image::kato/7/04.jpg[]
+image::kato/7/05.jpg[]
+
+
+### platformioのインストール
+
+platformioを使うと、cliで開発ができるようになります。 +
+http://platformio.org/
+
+インストールは下記のコマンドで完了です。
+
+```
+brew install platformio
+```
+
+下記のコマンドで、wroom-02用のプロジェクトを作ります。
+
+```
+mkdir miniirkit
+cd miniirkit
+platformio init -b esp_wroom_02
+```
+
+プロジェクトができたら、下記リポジトリから、minirum.inoをsrcディレクトリにコピーします。 +
+100行程度で、最小限の機能が実現されています。 +
+ソースコード量が少ないので、私のような入門者にとって勉強材料として、とても参考になりました。 +
+ありがとうございます。 +
+https://github.com/9SQ/minIRum
+
+
+次に、minirum.inoが依存している2つのライブラリを、libディレクトリに入れます。
+
+aJson +
+https://github.com/interactive-matter/aJson
+
+IRRemoteESP8266 +
+https://github.com/markszabo/IRremoteESP8266
+
+
+その後、下記コマンドで、コンパイルとESP-WROOM-02へ書き込みが行われます。
+
+```
+platfotmio run --target upload
+```
+
+
+書き込み完了後、リモコンのコードを読み取ります。
+
+シリアルポートを監視しながら、ESP-WROOM-02開発ボードのリセットを押下すると、
+IP、ホスト名が表示されます。
+
+```
+platformio serialports monitor -b 115200
+```
+
+
+次に、赤外線センサーにリモコンで信号を送ります。
+信号を送ったあと、下記のURLにアクセスすると、リモコンのコードが取得できます。
+
+```
+http://[先程表示されたIP]/messages
+```
+
+
+### Homebridgeのインストール
+
+homebrewを使ってnodeのインストールを行います。
+
+```
+brew install node
+```
+
+次に、homebridgeとhomebridge-irkitをインストールします。
+
+```
+sudo npm install -g homebridge
+sudo npm install -g homebridge-irkit
+```
+
+
+homebridgeの設定ファイルを作成します。
+
+~/.homebridge/config.json
+
+```
+{
+    "bridge":
+    {
+       "name": "Kato-Homebridge",
+       "username": "88:88:88:88:88:88",
+       "port": 51826,
+       "pin": "123-45-678"
+    },
+ 
+    "accessories": [
+        {
+            "accessory": "IRKit",
+            "name": "テレビ",
+            "irkit_host": "minirum-testxxxxxx.local",
+            "on_form": {"format":"raw","freq":38,"data":[先程取得したリモコンのコード]},
+            "off_form": {"format":"raw","freq":38,"data":[先程取得したリモコンのコード]}
+        }
+    ]
+}
+```
+
+
+homebridgeは、下記で起動できます。
+
+
+```
+homebridge
+```
+
+
+### 使ってみる
+
+iPhoneから「ホーム」アプリを開き、アクセサリに追加します。
+
+image::kato/7/06.png[]
+image::kato/7/07.png[]
+image::kato/7/08.png[]
+
+
+これで、iPhoneから操作できるようになりました。
+
+
+### 作ってみて
+
+思っていたよりも簡単にiPhoneからテレビのOn Offができるようになりました。 + 
+これも、先人の方たちがソースコードを公開して頂けているお陰だと実感しました。 +
+まだ未熟ですが、少しでも貢献できるように頑張っていきたいと思います。
+
+おわり。
+
+
+
