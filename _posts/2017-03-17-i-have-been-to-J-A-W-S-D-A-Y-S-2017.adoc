@@ -1,0 +1,67 @@
+= 行ってきましたJAWS DAYS 2017
+:published_at: 2017-03-17
+:hp-alt-title: i-have-been-to-JAWS-DAYS-2017
+:hp-tags: ozasa,jawsdays,aws
+
+#jawsdays
+
+こんにちは。オザサです。
+
+タイトルにもありますが、 +
+3/11に行われたJAWS DAYS 2017に参加してまいりました。
+
+きっかけは昨年AWS re:Inventに参加させていただき、 +
+そこで多くのJAWSメンバーの方と関わらせていただいたことでして、 +
+しっかりサポーターとして活動してきましたよ！
+
+到着！
+
+しっかりロゴの存在を確認！！
+
+
+午前中は受付として従事しました！ +
+知り合いの方も多く、なんだかウキウキしました！！
+
+※弊社AMIさんの写真です、
+
+そして、午後はセッションに参加させていただきました。
+
+
+## 私が参加したセッション
+
+[options="header"]
+|=======================
+|セッション|URL
+|[General] [AWS UG Singapore] Chat bots with Amazon Lex |http://jawsdays2017.jaws-ug.jp/session/1337/
+|[General] 金融クラウド＆FINTECH最前線。～AWSで金融からイノベーション！ 2017 |http://jawsdays2017.jaws-ug.jp/session/1421/
+|[General] [AWS Korea User Group] ソウルリージョンを通じたマルチリージョンアーキテクチャの高可用性を構成する|http://jawsdays2017.jaws-ug.jp/session/1738/
+|[General] [AWS Korea User Group] Raspberry Piを利用した顔の表情分析と感情を認識するシステム構築|http://jawsdays2017.jaws-ug.jp/session/2081/
+|[DeepDive] AWSデータベースアップデート 2017|http://jawsdays2017.jaws-ug.jp/session/1220/
+|=======================
+
+
+## 感想
+
+re:Inventにおいては実際のユーザというよりは、 +
+AWSからのオフィシャルな発表などをメインにセッションに参加していたということもあり、 +
+私たちと同じ立場のユーザがどういう状況にあり、何を考えているのかを知ることができたのは非常に新鮮でした。
+
+また、シンガポールや韓国のユーザグループにおける取り組みを聞いて、 +
+改めてAWSがグローバルな存在であると実感しましたし、 +
+ユーザグループ同士が交流していることも非常に素敵なことであると感じました。
+
+また、技術的なところで印象に残っている話としては、 +
+マルチリージョンアーキテクチャについて考えた時、 +
+東京リージョンとソウルリージョンが地理的に近いという話が、 +
+考えてみればごくごく当たり前なのですが、普段意識はしていなかったという意味でとても新鮮でした。
+
+あとはNETFLIXのChaos Kongですね。 +
+Chaos Monkeyは知っていましたが、それよりさらにスコープの広いツールがあるというのは驚きでした。 +
+リージョン単位で障害を起こすとは……
+
+`※NETFLIXのChaos Engineeringという取り組みについては以下を参考にされてください`
+`http://techblog.netflix.com/2015/09/chaos-engineering-upgraded.html`
+
+そんなセッションに加え、懇親会&LTがあったので、あっという間の1日でした。
+
+ユーザグループ主催のイベントでありながら
