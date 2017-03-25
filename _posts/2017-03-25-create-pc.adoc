@@ -35,7 +35,7 @@
 |CPUファン|92mmサイドフロー型CPUクーラー 白虎 SCBYK-1000I
 |電源|オウルテック 80PLUS SILVER取得 HASWELL対応 ATX電源ユニット　FSP RAIDERシリーズ 750W RA-750S
 |OS|Microsoft Windows 10 Pro 
-|ケース|
+|ケース|IN WIN USB3.1 Type-C フロントI/Oコネクタ搭載 強化ガラス製サイドパネル採用 805C Black/Red
 |=======================
 
 
