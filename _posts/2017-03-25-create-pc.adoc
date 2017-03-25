@@ -1,6 +1,6 @@
 # 自作PCを組んでみた
 :hp-alt-title: create_pc
-:hp-tags: Nakamura,PC,jisaku
+:hp-tags: Nakamura,PC,jisaku,byakko!
 
 こんにちは、中村です。
 
