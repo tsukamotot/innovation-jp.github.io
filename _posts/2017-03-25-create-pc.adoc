@@ -46,6 +46,51 @@
 
 みんなでワイワイしながら組んでいきました〜
 
+image::nakamura/create_pc/IMG_3437.png[]
+今回の使用するパーツ
+
+image::nakamura/create_pc/IMG_3438.png[]
+GTX1080！しかも2枚！！
+
+image::nakamura/create_pc/IMG_3439.png[]
+こんな箱が分厚いマザボは初めてです(笑)
+
+image::nakamura/create_pc/IMG_3440.png[]
+
+
+image::nakamura/create_pc/IMG_3441.png[]
+ケースはこんな感じ。 +
+ドライブベイが2つだけなんて時代は変わったものだ。
+
+image::nakamura/create_pc/IMG_3447.png[]
+美しい…
+
+image::nakamura/create_pc/IMG_3448.png[]
+新人がCPU取り付けに緊張してました！
+
+image::nakamura/create_pc/IMG_3449.png[]
+カチッ！
+
+image::nakamura/create_pc/IMG_3450.png[]
+作業に集中している3人
+
+image::nakamura/create_pc/P_20170322_194749.png[]
+CPUファンを取り付けたところ。 +
+ここのネジって特殊ですよね〜
+
+image::nakamura/create_pc/P_20170322_195437.png[]
+そして今回の目玉、GTX1080〜
+
+image::nakamura/create_pc/P_20170322_203030.png[]
+一通り組んだ状態がこちら
+
+image::nakamura/create_pc/P_20170323_231845.png[]
+ちゃんと動作しました〜 +
+
+と見せかけて、実は最初FAN以外何も動きませんでした(笑)
+
+原因は、マザボのUEFI（BIOS）が今回のCPUに対応していなかったから。 +
+色々検討したのですが、結局バージョンアップするためだけに対応しているCPUを買いました…
 
 
 
@@ -54,16 +99,22 @@
 ファイナルファンタジーXIV: 蒼天のイシュガルド ベンチマークを使って組んだPCの性能を確かめてみました。
 http://jp.finalfantasyxiv.com/benchmark/
 
+image::nakamura/create_pc/score_result.png[]
+
 じゃ〜ん！ +
 でました、「非常に快適」！！
 
-さすがですね！ぬるぬると動画が動くので感動しました。
+さすがですね！ぬるぬると動画が動くので感動しました。 +
+お見せできないのが残念！
+
 
 
 
 ### 感想
 
-最近は個人的にもノートPCしか所持しておらず（家が狭い&最近はMac派）久々のPC組み立て作業となりましたが、基本的な内容が変わっていることも無く無事完成させることができました。
+最近は個人的にもノートPCしか所持しておらず（家が狭い&最近はMac派）久々のPC組み立て作業となりましたが、基本的な内容が変わっていることも無く無事完成させることができました。 +
+UEFIの件以外(笑)
+
 
 社内にはPC自作経験が無い若いメンバーも多かったので、PC自作することでの学びも多かったのではと思います。
 
