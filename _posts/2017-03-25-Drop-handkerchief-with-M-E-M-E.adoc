@@ -99,9 +99,18 @@ image::yagasaki/dh/s4.png[s4.png]
 
 
 動画ではこんな感じ！
-ここに動画を入れます
+
+
+その１
 ++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jh3qwJGLw8s" frameborder="0" allowfullscreen></iframe>
 ++++
+
+その２
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UZvIw5XgG_8" frameborder="0" allowfullscreen></iframe>
+++++
+
 
 こんなすごいことを、こんなに簡単にできちゃうなんて、すごい世の中ですね・・・
 
