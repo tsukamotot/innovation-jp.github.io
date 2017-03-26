@@ -15,7 +15,9 @@
 https://jins-meme.com/ja/
 
 見た目はメガネですが、実はすごいハイテクデバイスです！
-画像
+
+image::https://meme-consumer-static.jins-meme.com/img/common/jinsmeme_es-m.png[JINS MEME]
+
 ふつーのメガネは外を見ますが、JINS MEMEは自分自身を見ることができるデバイス！みたいなことをおっしゃっていて、めっちゃカッコイイ！
 
 == デバイスを簡単に説明
@@ -67,7 +69,7 @@ C側が振り返った時にハンカチが落ちていなかった場合は、D
 C側が振り返った時にハンカチが落ちていた場合は、ハンカチが落ちた時点から振り返った時までの秒数がD側のポイントになります。 +
 それを交互に10回やって、ポイントの多い方が勝ちです。
 
-人間は、緊張をするとまばたきが多くなるということで、C側はJINS MEMEをかけ、D側はC側のまばたきっぷりがわかるようにします。
+人間は、緊張をするとまばたきが多くなるということで、C側はJINS MEMEをかけ振り向きとまばたきを検知し、D側はC側のまばたきっぷりがわかるようにします。
 
 そんな雰囲気のルールにします！
 
@@ -83,24 +85,29 @@ https://gist.github.com/yaggytter/cceb6541cf03ded8761b19ba5b481562
 
 ハンカチ落としスタート！
 
-image::yagasaki/dh/s1.png[s1.png]
+image::yagasaki/dh/s1.png[width="50%",alt="s1.png"]
 
-ハンカチ落をいつ落とそうか？！
+ハンカチをいつ落とそうか？！
 
-image::yagasaki/dh/s2.png[s2.png]
+image::yagasaki/dh/s2.png[width="50%",alt="s2.png"]
 
 ハンカチを落とした！
 
-image::yagasaki/dh/s3.png[s3.png]
+image::yagasaki/dh/s3.png[width="50%",alt="s3.png"]
 
 振り向いた！
 
-image::yagasaki/dh/s4.png[s4.png]
+image::yagasaki/dh/s4.png[width="50%",alt="s4.png"]
 
 
 動画ではこんな感じ！
-ここに動画を入れます
+
 ++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jh3qwJGLw8s" frameborder="0" allowfullscreen></iframe>
+++++
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UZvIw5XgG_8" frameborder="0" allowfullscreen></iframe>
 ++++
 
 こんなすごいことを、こんなに簡単にできちゃうなんて、すごい世の中ですね・・・
