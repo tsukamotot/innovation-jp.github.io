@@ -26,7 +26,7 @@
 
 [cols="1,4"]
 |=======================
-|CPU |Intel CPU Core i7-7700 3.6GHz 8Mキャッシュ 4コア/8スレッド LGA1151
+|CPU |CPU Core i7-7700K 4.2GHz 8Mキャッシュ 4コア/8スレッド LGA1151
 |メモリ|CORSAIR DDR4 メモリモジュール VENGEANCE LPX シリーズ 16GB×2枚キット
 |マザーボード|GIGABYTE Intel Z170チップセット搭載 ATX ゲーミングマザーボードGA-Z170X-Gaming G1
 |SSD|Crucial 内蔵SSD 2.5インチ MX300 275GB
