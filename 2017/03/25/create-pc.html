@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>自作PCを組んでみた - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="自作PCを組んでみた">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="自作PCを組んでみた">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/03/25/create-pc.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="自作PCを組んでみた" />
+    <meta property="og:description" content="こんにちは、中村です。 もうすぐ春ですね！ 4月になったら新人も入ってくるのでとても楽しみです。 先日会社でPCを組むことになったので、今回はその様子をお届けしようと思います！ 条件 機械学習として使えること VR（HTC Vive ）が使えること HoloLensが使えること なんだか凄そうなマシンになりそうです。（ゴクリ） 構成 という訳で、上記条件を満たすようなマシンを考えてみた結果こんな感じの構成にしてみました。 CPU CPU Core i7-7700K 4.2GHz 8Mキャッシュ 4コア/8スレッド LGA1151 メモリ CORSAIR..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/03/25/create-pc.html" />
+    <meta property="article:published_time" content="2017-03-24T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-03-27T00:25:45.954Z" />
+    <meta property="article:tag" content="Nakamura" />
+    <meta property="article:tag" content="PC" />
+    <meta property="article:tag" content="jisaku" />
+    <meta property="article:tag" content="byakko!" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="自作PCを組んでみた" />
+    <meta name="twitter:description" content="こんにちは、中村です。 もうすぐ春ですね！ 4月になったら新人も入ってくるのでとても楽しみです。 先日会社でPCを組むことになったので、今回はその様子をお届けしようと思います！ 条件 機械学習として使えること VR（HTC Vive ）が使えること HoloLensが使えること なんだか凄そうなマシンになりそうです。（ゴクリ） 構成 という訳で、上記条件を満たすようなマシンを考えてみた結果こんな感じの構成にしてみました。 CPU CPU Core i7-7700K 4.2GHz 8Mキャッシュ 4コア/8スレッド LGA1151 メモリ CORSAIR..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/03/25/create-pc.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "m_nakamura",
+        "image": "https://avatars2.githubusercontent.com/u/7381448?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "自作PCを組んでみた",
+    "url": "http://tech.innovation.co.jp/2017/03/25/create-pc.html",
+    "datePublished": "2017-03-24T15:00:00.000Z",
+    "dateModified": "2017-03-27T00:25:45.954Z",
+    "keywords": "Nakamura, PC, jisaku, byakko!",
+    "description": "こんにちは、中村です。 もうすぐ春ですね！ 4月になったら新人も入ってくるのでとても楽しみです。 先日会社でPCを組むことになったので、今回はその様子をお届けしようと思います！ 条件 機械学習として使えること VR（HTC Vive ）が使えること HoloLensが使えること なんだか凄そうなマシンになりそうです。（ゴクリ） 構成 という訳で、上記条件を満たすようなマシンを考えてみた結果こんな感じの構成にしてみました。 CPU CPU Core i7-7700K 4.2GHz 8Mキャッシュ 4コア/8スレッド LGA1151 メモリ CORSAIR..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Nakamura tag-P-C tag-jisaku tag-byakko no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="25 Mar 2017" class="post-meta__date date">25 Mar 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Nakamura">Nakamura</a>, <a href="http://tech.innovation.co.jp/tag/P-C">PC</a>, <a href="http://tech.innovation.co.jp/tag/jisaku">jisaku</a>, <a href="http://tech.innovation.co.jp/tag/byakko">byakko!</a></span>
+        <span class="post-meta__author author"><img src="https://avatars2.githubusercontent.com/u/7381448?v=3" alt="profile image for m_nakamura" class="avatar post-meta__avatar" /> by m_nakamura</span>
+      </div>
+      <h1 class="post-title">自作PCを組んでみた</h1>
+    </header>
+
+    <section class="post tag-Nakamura tag-P-C tag-jisaku tag-byakko">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは、中村です。</p>
+</div>
+<div class="paragraph">
+<p>もうすぐ春ですね！<br>
+4月になったら新人も入ってくるのでとても楽しみです。</p>
+</div>
+<div class="paragraph">
+<p>先日会社でPCを組むことになったので、今回はその様子をお届けしようと思います！</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__">条件</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>機械学習として使えること</p>
+</li>
+<li>
+<p>VR（HTC Vive ）が使えること</p>
+</li>
+<li>
+<p>HoloLensが使えること</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>なんだか凄そうなマシンになりそうです。（ゴクリ）</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___2">構成</h3>
+<div class="paragraph">
+<p>という訳で、上記条件を満たすようなマシンを考えてみた結果こんな感じの構成にしてみました。</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CPU</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CPU Core i7-7700K 4.2GHz 8Mキャッシュ 4コア/8スレッド LGA1151</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">メモリ</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CORSAIR DDR4 メモリモジュール VENGEANCE LPX シリーズ 16GB×2枚キット</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">マザーボード</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GIGABYTE Intel Z170チップセット搭載 ATX ゲーミングマザーボードGA-Z170X-Gaming G1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SSD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Crucial 内蔵SSD 2.5インチ MX300 275GB</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HDD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ST4000DM005 [4TB SATA600]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPUボード</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GIGABYTE GV-N1080G1 GAMING-8GD×2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CPUファン</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">92mmサイドフロー型CPUクーラー 白虎 SCBYK-1000I</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">電源</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">オウルテック 80PLUS SILVER取得 HASWELL対応 ATX電源ユニット　FSP RAIDERシリーズ 750W RA-750S</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Microsoft Windows 10 Pro</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ケース</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IN WIN USB3.1 Type-C フロントI/Oコネクタ搭載 強化ガラス製サイドパネル採用 805C Black/Red</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>こんな良いグラボは買ったことないです…</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">作業風景</h3>
+<div class="paragraph">
+<p>みんなでワイワイしながら組んでいきました〜</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/IMG_3437.png" alt="IMG 3437.png">
+</div>
+</div>
+<div class="paragraph">
+<p>今回の使用するパーツ</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/IMG_3438.png" alt="IMG 3438.png">
+</div>
+</div>
+<div class="paragraph">
+<p>GTX1080！しかも2枚！！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/IMG_3439.png" alt="IMG 3439.png">
+</div>
+</div>
+<div class="paragraph">
+<p>こんな箱が分厚いマザボは初めてです(笑)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/IMG_3440.png" alt="IMG 3440.png">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/IMG_3441.png" alt="IMG 3441.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ケースはこんな感じ。<br>
+ドライブベイが2つだけなんて時代は変わったものだ。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/IMG_3447.png" alt="IMG 3447.png">
+</div>
+</div>
+<div class="paragraph">
+<p>美しい…</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/IMG_3448.png" alt="IMG 3448.png">
+</div>
+</div>
+<div class="paragraph">
+<p>新人がCPU取り付けに緊張してました！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/IMG_3449.png" alt="IMG 3449.png">
+</div>
+</div>
+<div class="paragraph">
+<p>カチッ！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/IMG_3450.png" alt="IMG 3450.png">
+</div>
+</div>
+<div class="paragraph">
+<p>作業に集中している3人</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/P_20170322_194749.png" alt="P 20170322 194749.png">
+</div>
+</div>
+<div class="paragraph">
+<p>CPUファンを取り付けたところ。<br>
+ここのネジって特殊ですよね〜</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/P_20170322_195437.png" alt="P 20170322 195437.png">
+</div>
+</div>
+<div class="paragraph">
+<p>そして今回の目玉、GTX1080〜</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/P_20170322_203030.png" alt="P 20170322 203030.png">
+</div>
+</div>
+<div class="paragraph">
+<p>一通り組んだ状態がこちら</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/P_20170323_231845.png" alt="P 20170323 231845.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ちゃんと動作しました〜<br></p>
+</div>
+<div class="paragraph">
+<p>と見せかけて、実は最初FAN以外何も動きませんでした(笑)</p>
+</div>
+<div class="paragraph">
+<p>原因は、マザボのUEFI（BIOS）が今回のCPUに対応していなかったから。<br>
+色々検討したのですが、結局バージョンアップするためだけに対応しているCPUを買いました…</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___4">ベンチマークしてみた</h3>
+<div class="paragraph">
+<p>ファイナルファンタジーXIV: 蒼天のイシュガルド ベンチマークを使って組んだPCの性能を確かめてみました。
+<a href="http://jp.finalfantasyxiv.com/benchmark/" class="bare">http://jp.finalfantasyxiv.com/benchmark/</a></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/create_pc/score_result.png" alt="score result.png">
+</div>
+</div>
+<div class="paragraph">
+<p>じゃ〜ん！<br>
+でました、「非常に快適」！！</p>
+</div>
+<div class="paragraph">
+<p>さすがですね！ぬるぬると動画が動くので感動しました。<br>
+お見せできないのが残念！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___5">感想</h3>
+<div class="paragraph">
+<p>最近は個人的にもノートPCしか所持しておらず（家が狭い&amp;最近はMac派）久々のPC組み立て作業となりましたが、基本的な内容が変わっていることも無く無事完成させることができました。<br>
+UEFIの件以外(笑)</p>
+</div>
+<div class="paragraph">
+<p>社内にはPC自作経験が無い若いメンバーも多かったので、PC自作することでの学びも多かったのではと思います。</p>
+</div>
+<div class="paragraph">
+<p>そしてやっぱり楽しかったです〜</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上ですっ！</p>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
