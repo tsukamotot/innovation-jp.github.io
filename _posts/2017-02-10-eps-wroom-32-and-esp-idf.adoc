@@ -1,7 +1,7 @@
 = EPS-WROOM-32とesp-idfでHello World!をしてみる
 :published_at: 2017-02-10
 :hp-alt-title: eps-wroom-32-and-esp-idf
-:hp-tags: Kato,EPS-WROOM-32,esp-idf
+:hp-tags: Kato,EPS-WROOM-32,ESP-IDF
 
 
 こんにちは、加藤です。
@@ -27,10 +27,10 @@ ESP-WROOM-32は何が凄いかというと、 +
 このモジュールを手にした時、自分は人生勝ち組なんだと自覚しました。
 
 
-本日は、ESP-WROOM-32とesp-idfで「Hello World!」をしてみます。
+本日は、ESP-WROOM-32とESP-IDFで「Hello World!」をしてみます。
 
 ESP-WROOM-32は、Arduinoでの開発にも対応しているものの、まだBluetooth関係のAPIがないようなので、 +
-今回はESP-WROOM-32公式フレームワークのesp-idfを選択しました。
+今回はESP-WROOM-32公式フレームワークのESP-IDFを選択しました。
 
 
 ### 前提
