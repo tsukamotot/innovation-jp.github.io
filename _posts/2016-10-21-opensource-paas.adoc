@@ -25,7 +25,7 @@ IBM、NTT、Yahoo!などが自社のサービスで採用しているのオー�
 
 image::kato/5/1.png[]
 
-出典： Cloud Foundry, Inc.
+出典： Cloud Foundry, Inc. - https://www.cloudfoundry.org/
 
 
 
@@ -37,7 +37,7 @@ Cloud Foundryと同様にPaaS環境を作るものですが、 +
 OpenShift3.0から、Docker+Kubernetesの統合環境として方向転換しました。
 
 image::kato/5/2.png[]
-出典: OPENSHIFT
+出典: OPENSHIFT - https://www.openshift.org/
 
 
 ### プライベートPaaS基盤で使いたいオープンソース！
@@ -59,7 +59,7 @@ https://www.gluster.org/ +
 
 
 image::kato/5/3.png[]
-出典： Red Hat, Inc.
+出典： Red Hat, Inc. - https://www.gluster.org/
 
 
 #### Scylla
@@ -71,7 +71,7 @@ Scyllaは、Apache Cassandraと互換性がある上10倍早く動作し +
 また、マスタレスのため、メンテンナンスが簡単です。
 
 image::kato/5/4.png[]
-出典：SCYLLA.
+出典：SCYLLA. - http://www.scylladb.com/
 
 
 #### Minio Cloud Storage
@@ -83,7 +83,7 @@ Amazon S3 v4のAPIで接続できます。 +
 
 
 image::kato/5/5.png[]
-出典:MINIO
+出典:MINIO - https://www.minio.io/
 
 
 #### RethinkDB
@@ -94,7 +94,7 @@ RethinkDBは、Json形式のデータベースで、継続的にブラウザに�
 
 
 image::kato/5/6.png[]
-出典：RethinkDB
+出典：RethinkDB - https://www.rethinkdb.com/
 
 
 いかがだったでしょうか？ +
