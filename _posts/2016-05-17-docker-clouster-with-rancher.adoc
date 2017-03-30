@@ -31,7 +31,8 @@ RancherOSは、Docker専用のOSで、主な特徴は、
 となっています。
 
 image::kato/2/02.gif[]
-_出典: http://rancher.com/rancher-os/_
+_出典:Rancher Labs. +
+http://rancher.com/rancher-os/_
 
 Docker専用コンテナといえば「CoreOS」が有名ですが、 +
 CoreOSは、etcdやfleet等のクラスタを組むためのプログラムが内包されている関係上、 +
@@ -50,7 +51,7 @@ http://rancher.com/rancher/
 Rancherは、Dockerのコンテナとして配布されている、コンテナやクラスタを管理するツールです。 +
 2016年3月29日にバージョン1.0に到達し、プロダクション環境でも使えるよ！というアナウンスが有りました。 +
 
-Rancher Blog - Announcing Rancher 1.0 GA
+Rancher Blog - Announcing Rancher 1.0 GA +
 http://rancher.com/announcing-rancher-1-0-ga/
 
 主な特徴は、
@@ -65,7 +66,8 @@ http://rancher.com/announcing-rancher-1-0-ga/
 となっています。
 
 image::kato/2/03.png[]
-_出典： http://rancher.com/announcing-rancher-1-0-ga/_
+_出典:Rancher Labs. +
+http://rancher.com/announcing-rancher-1-0-ga/_
 
 image::kato/2/04.gif[]
 _Amazon EC2ホストを追加する画面_
