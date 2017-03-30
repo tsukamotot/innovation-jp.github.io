@@ -26,7 +26,7 @@ IBM、NTT、Yahoo!などが自社のサービスで採用しているのオー�
 image::kato/5/1.png[]
 
 
-#### RedHat OpenShift Origin
+#### Red Hat OpenShift Origin
 
 https://www.openshift.org/ +
 Cloud Foundryと同様にPaaS環境を作るものですが、 +
