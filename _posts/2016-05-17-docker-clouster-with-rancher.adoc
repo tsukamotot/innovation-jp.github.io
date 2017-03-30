@@ -49,6 +49,10 @@ http://rancher.com/rancher/
 
 Rancherは、Dockerのコンテナとして配布されている、コンテナやクラスタを管理するツールです。 +
 2016年3月29日にバージョン1.0に到達し、プロダクション環境でも使えるよ！というアナウンスが有りました。 +
+
+Rancher Blog - Announcing Rancher 1.0 GA
+http://rancher.com/announcing-rancher-1-0-ga/
+
 主な特徴は、
 
 * オープンソース
@@ -142,7 +146,7 @@ sudo reboot
 
 今回、Rancherのコンテナは、rancher1(192.168.1.201)で動かすことにします。
 
-rancher1(192.168.1.201)にsshで接続し、ranche/serverコンテナを起動します。 +
+rancher1(192.168.1.201)にsshで接続し、rancher/serverコンテナを起動します。 +
 コンテナ起動後しばらくすると、http://192.168.1.201:8080/ でWebUIにアクセスできます。
 [source]
 sudo docker run --name rancher-server -d --restart=always -p 8080:8080 rancher/server
@@ -156,8 +160,8 @@ sudo docker run --name rancher-server -d --restart=always -p 8080:8080 rancher/s
 WebUIのホスト追加画面で、各種パラメータを指定して生成されたコマンドを各マシン(rancher1〜rancher4)で実行します。 +
 (rancher/serverをインストールしたマシンでは、4. のIP指定は必須です)
 
-なお、Default Enviromentは、コンテナ管理環境がCattleになっています。 +
-Kubernetes環境などのEnviromentに切り替えた後にエージェント用コンテナを起動することで、他のコンテナ管理環境になります。
+なお、Default Environmentは、コンテナ管理環境がCattleになっています。 +
+Kubernetes環境などのEnvironmentに切り替えた後にエージェント用コンテナを起動することで、他のコンテナ管理環境になります。
 
 image::kato/2/09.png[]
 
@@ -169,7 +173,7 @@ sudo docker run -e CATTLE_AGENT_IP="192.168.1.201"  -e CATTLE_HOST_LABELS='name=
 
 === もし、最初からやり直したい場合は？
 
-下記のコマンドで、不要になったDockerコンテナやイメージを削除出来ます
+下記のコマンドで、不要になったDockerコンテナやイメージを削除出来ます。
 [source]
 docker rm -f `docker ps -a -q`
 docker rmi `docker images -q`
@@ -179,7 +183,7 @@ docker rmi `docker images -q`
 == Wordpressの環境を作ってみる
 
 では早速、構築した環境でWebアプリケーションを動かしてみます。
-とは言え、CATALOGでwordpressを選んで「Lanch」するだけで終わりです。
+とは言え、CATALOGでWordpressを選んで「Launch」するだけで終わりです。
 
 image::kato/2/10.png[]
 
@@ -189,7 +193,7 @@ image::kato/2/10.png[]
 image::kato/2/11.png[]
 
 
-wordpressの行の右側のポート番号(80)部分のリンクをクリックすると、wordpressが動作していることが確認できます。
+Wordpressの行の右側のポート番号(80)部分のリンクをクリックすると、Wordpressが動作していることが確認できます。
 
 image::kato/2/12.png[]
 
@@ -199,7 +203,7 @@ image::kato/2/13.png[]
 
 
 折角なので、Wordpressのコンテナを1つから4つにスケールしてみます。 +
-wordpressの右の( i )をクリックすると、設定が表示されますので、Scale数を4変更します。
+Wordpressの右の( i )をクリックすると、設定が表示されますので、Scale数を4変更します。
 
 image::kato/2/14.png[]
 
