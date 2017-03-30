@@ -89,7 +89,6 @@ https://www.switch-science.com/catalog/2652/
 * ESP-WROOM-02を単体の場合、別途USB-シリアル変換や +
   電圧を3.3Vに調整する配線が必要ですが、この開発ボードには +
   それら全てが搭載されており、すぐに動作を試すことが出来ます。
-* 初心者や初めてESP-WROOM-02を使う人は迷わずコレを選びましょう
 * 秋葉原の、千石電商２Fで売っています +
    http://www.sengoku.co.jp/mod/sgk_cart/detail.php?code=EEHD-4WED
  
