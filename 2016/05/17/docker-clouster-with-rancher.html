@@ -55,7 +55,7 @@ var _trackingid = 'LFT-10003-1';
     <meta property="og:description" content="こんにちは！加藤です。 勢いで買ったNUC４台と、RancherOS + Rancherで、 Dockerのクラスタを組んでみます。 これです！！！ Rancher OSとRancherについて Rancher OSとは？ http://rancher.com/rancher-os/ RancherOSは、Docker専用のOSで、主な特徴は、 OSのサイズが小さい 　→v0.4.5時点で32.5MB(ただしSYSTEM DOCKER部分は含まれません) 5〜10秒程度で起動 オープンソース ntpd, syslog, consoleなど、Linuxカ..." />
     <meta property="og:url" content="http://tech.innovation.co.jp/2016/05/17/docker-clouster-with-rancher.html" />
     <meta property="article:published_time" content="2016-05-16T15:00:00.000Z" />
-    <meta property="article:modified_time" content="2016-06-08T11:41:19.155Z" />
+    <meta property="article:modified_time" content="2017-03-30T08:47:11.782Z" />
     <meta property="article:tag" content="SecondPost" />
     <meta property="article:tag" content="KatoK" />
     <meta property="article:tag" content="Docker" />
@@ -74,15 +74,15 @@ var _trackingid = 'LFT-10003-1';
     "publisher": "イノベーション　エンジニアブログ",
     "author": {
         "@type": "Person",
-        "name": "Akihiro YAGASAKI",
-        "image": "https://avatars.githubusercontent.com/u/13131599?v=3",
+        "name": "katoK",
+        "image": "https://avatars3.githubusercontent.com/u/70055?v=3",
         "url": "undefined/author/undefined",
         "sameAs": null
     },
     "headline": "Rancher OSとRancherでDockerクラスタを組んでみた",
     "url": "http://tech.innovation.co.jp/2016/05/17/docker-clouster-with-rancher.html",
     "datePublished": "2016-05-16T15:00:00.000Z",
-    "dateModified": "2016-06-08T11:41:19.155Z",
+    "dateModified": "2017-03-30T08:47:11.782Z",
     "keywords": "SecondPost, KatoK, Docker, Rancher, RancherOS",
     "description": "こんにちは！加藤です。 勢いで買ったNUC４台と、RancherOS + Rancherで、 Dockerのクラスタを組んでみます。 これです！！！ Rancher OSとRancherについて Rancher OSとは？ http://rancher.com/rancher-os/ RancherOSは、Docker専用のOSで、主な特徴は、 OSのサイズが小さい 　→v0.4.5時点で32.5MB(ただしSYSTEM DOCKER部分は含まれません) 5〜10秒程度で起動 オープンソース ntpd, syslog, consoleなど、Linuxカ..."
 }
@@ -219,13 +219,14 @@ var _trackingid = 'LFT-10003-1';
     		<div style="width: 112px; height: 22px; float: left;">
     			<iframe
     				scrolling="no" frameborder="0" id="fbframe"
-    				style="border: none; overflow: hidden; height: 90px;"
-    				allowTransparency="true"></iframe>
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
     		</div>
     		<script type="text/javascript">
     			(function() {
     				var url = encodeURIComponent(location.href);
-    				document.getElementById('fbframe').src="//www.facebook.com/v2.0/plugins/like.php?href=" + url + "&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=90&amp;appId=1613776965579453"
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
     			})();
     		</script>
     	</div>
@@ -250,7 +251,7 @@ var _trackingid = 'LFT-10003-1';
     <header class="post-header">
       <div class="post-meta">
         <time datetime="17 May 2016" class="post-meta__date date">17 May 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Second-Post">SecondPost</a>, <a href="http://tech.innovation.co.jp/tag/Kato-K">KatoK</a>, <a href="http://tech.innovation.co.jp/tag/Docker">Docker</a>, <a href="http://tech.innovation.co.jp/tag/Rancher">Rancher</a>, <a href="http://tech.innovation.co.jp/tag/Rancher-O-S">RancherOS</a></span>
-        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/13131599?v=3" alt="profile image for Akihiro YAGASAKI" class="avatar post-meta__avatar" /> by Akihiro YAGASAKI</span>
+        <span class="post-meta__author author"><img src="https://avatars3.githubusercontent.com/u/70055?v=3" alt="profile image for katoK" class="avatar post-meta__avatar" /> by katoK</span>
       </div>
       <h1 class="post-title">Rancher OSとRancherでDockerクラスタを組んでみた</h1>
     </header>
@@ -343,8 +344,14 @@ RancherOSに比べ、</p>
 </div>
 <div class="paragraph">
 <p>Rancherは、Dockerのコンテナとして配布されている、コンテナやクラスタを管理するツールです。<br>
-2016年3月29日にバージョン1.0に到達し、プロダクション環境でも使えるよ！というアナウンスが有りました。<br>
-主な特徴は、</p>
+2016年3月29日にバージョン1.0に到達し、プロダクション環境でも使えるよ！というアナウンスが有りました。<br></p>
+</div>
+<div class="paragraph">
+<p>Rancher Blog - Announcing Rancher 1.0 GA
+<a href="http://rancher.com/announcing-rancher-1-0-ga/" class="bare">http://rancher.com/announcing-rancher-1-0-ga/</a></p>
+</div>
+<div class="paragraph">
+<p>主な特徴は、</p>
 </div>
 <div class="ulist">
 <ul>
@@ -512,7 +519,7 @@ ssh_authorized_keys:
 <p>今回、Rancherのコンテナは、rancher1(192.168.1.201)で動かすことにします。</p>
 </div>
 <div class="paragraph">
-<p>rancher1(192.168.1.201)にsshで接続し、ranche/serverコンテナを起動します。<br>
+<p>rancher1(192.168.1.201)にsshで接続し、rancher/serverコンテナを起動します。<br>
 コンテナ起動後しばらくすると、http://192.168.1.201:8080/ でWebUIにアクセスできます。</p>
 </div>
 <div class="listingblock">
@@ -532,8 +539,8 @@ WebUIのホスト追加画面で、各種パラメータを指定して生成さ
 (rancher/serverをインストールしたマシンでは、4. のIP指定は必須です)</p>
 </div>
 <div class="paragraph">
-<p>なお、Default Enviromentは、コンテナ管理環境がCattleになっています。<br>
-Kubernetes環境などのEnviromentに切り替えた後にエージェント用コンテナを起動することで、他のコンテナ管理環境になります。</p>
+<p>なお、Default Environmentは、コンテナ管理環境がCattleになっています。<br>
+Kubernetes環境などのEnvironmentに切り替えた後にエージェント用コンテナを起動することで、他のコンテナ管理環境になります。</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -552,7 +559,7 @@ Kubernetes環境などのEnviromentに切り替えた後にエージェント用
 <div class="sect2">
 <h3 id="___3">もし、最初からやり直したい場合は？</h3>
 <div class="paragraph">
-<p>下記のコマンドで、不要になったDockerコンテナやイメージを削除出来ます</p>
+<p>下記のコマンドで、不要になったDockerコンテナやイメージを削除出来ます。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -568,7 +575,7 @@ docker rmi `docker images -q`</code></pre>
 <div class="sectionbody">
 <div class="paragraph">
 <p>では早速、構築した環境でWebアプリケーションを動かしてみます。
-とは言え、CATALOGでwordpressを選んで「Lanch」するだけで終わりです。</p>
+とは言え、CATALOGでWordpressを選んで「Launch」するだけで終わりです。</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -584,7 +591,7 @@ docker rmi `docker images -q`</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>wordpressの行の右側のポート番号(80)部分のリンクをクリックすると、wordpressが動作していることが確認できます。</p>
+<p>Wordpressの行の右側のポート番号(80)部分のリンクをクリックすると、Wordpressが動作していることが確認できます。</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -601,7 +608,7 @@ docker rmi `docker images -q`</code></pre>
 </div>
 <div class="paragraph">
 <p>折角なので、Wordpressのコンテナを1つから4つにスケールしてみます。<br>
-wordpressの右の( i )をクリックすると、設定が表示されますので、Scale数を4変更します。</p>
+Wordpressの右の( i )をクリックすると、設定が表示されますので、Scale数を4変更します。</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -650,7 +657,7 @@ wordpressの右の( i )をクリックすると、設定が表示されますの
 
 
             <footer class="footer">
-                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
                 <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
                 <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
             </footer>
