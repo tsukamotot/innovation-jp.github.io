@@ -37,7 +37,7 @@ image::kohe/gasTweet2.png[]
 
 
  
-twitter api 用のLibraryをぶち込む 
+Twitter API 用のLibraryをぶち込む 
 
 
 
