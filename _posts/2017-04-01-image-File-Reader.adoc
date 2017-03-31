@@ -1,0 +1,330 @@
+# Laravelでリマインダーを作ってみた
+:published_at: 2017-04-01
+:hp-alt-title: image-FileReader
+:hp-tags: yaizu,PHP,Laravel,bootstrap
+
+こんにちは、そろそろ二年目になる小柳津です。 +
+
+もう4月には新しい一年生が入ってきますね。 +
+
+先輩になるので、流石に忘れん坊は卒業しようと思い、 +
+
+自分で簡単なリマインダーを作成しました。 +
+
+## 見た目と機能紹介
+
+見た目はこのようにしました。 Bootstrapを使用しています。 +
+主に入力部分と一覧表示部分に分かれています。 +
+
+image::oyaizu/remainder1.png[]
+
+アドレスとリマインド内容、リマインドしたい時間を登録します。 +
+
+image::oyaizu/remainder2.png[]
+
+登録をしたら、送信されるのを待ちます。緊張の一瞬。。。 +
+
+image::oyaizu/remainder3.png[]
+
+届いた！成功！！ +
+
+## 実装
+
+それでは、中身についてお話します！ +
+
+### Routing
+
+・route/web.php
+
+```
+## RemindController ##
+Route::get('reminder', 'ReminderController@index')->name('reminder');
+Route::patch('reminder/update', 'ReminderController@update')->name('reminder.update');
+```
+
+URLは以下の2つを割り振ります。
+
+
+- "http://{domain_name}/reminder" => 入力＆一覧画面｜`RemindController.php`の`index()`を指定
+
+
+- "http://{domain_name}/reminder/update" => 更新処理｜`RemindController.php`の`update()`を指定
+
+
+### Table
+
+使用するDBのテーブルを1つです。
+
+remindsテーブル
+|=======================
+| *Field*      | *Type*             | *Null* | *Key* | *Default* | *Extra*          |
+| id         | int(10) unsigned | NO   | PRI | NULL    | auto_increment |
+| email      | varchar(255)     | NO   |     | NULL    |                |
+| body       | varchar(255)     | NO   |     | NULL    |                |
+| send_at    | datetime         | NO   |     | NULL    |                |
+| created_at | timestamp        | YES  |     | NULL    |                |
+| updated_at | timestamp        | YES  |     | NULL    |                |
+|=======================
+
+
+### Controller
+
+・app/Http/Controllers/ReminderController
+
+```
+namespace App\Http\Controllers;
+
+use App\Remind;
+use Illuminate\Http\Request;
+
+class ReminderController extends Controller
+{
+    function index()
+    {
+        $reminds = Remind::get();
+
+        return view('reminder', compact('reminds'));
+    }
+
+    function update(Request $request)
+    {
+        $remind = new Remind();
+        $remind->email   = $request->email;
+        $remind->body    = $request->body;
+        $remind->send_at = $request->send_at;
+        $remind->save();
+
+        return redirect(route('reminder'));
+    }
+}
+```
+
+Controlloerでは2つのfunctionを設定。
+
+- `index()`：Remindsテーブルからデータ取得し、Viewを表示する
+
+- `update()`：POSTされた値を受け取り、DBを更新する。"http://{domain_name}/reminder" にリダイレクトする
+
+### View
+
+・resources/views/remaider.blade.php
+
+※bodyタグ内のみ
+
+```
+<div class="container">
+  <div class="col-xs-8 col-xs-offset-2">
+    <h3 class="text-center mb40 mt60">What are you likely to forget??</h3>
+    {{ Form::open(['method' => 'post', 'route' => ['reminder.update']]) }}
+    {{ method_field('patch') }}
+    <div class="form-group col-xs-8 col-xs-offset-2 mb40">
+      {{ Form::text('email', '', ['placeholder' => 'email', 'class' => 'form-control']) }}
+      <span class="fui-mail"></span>
+    </div>
+    <div class="form-group col-xs-8 col-xs-offset-2 mb40">
+      {{ Form::text('body', '', ['placeholder' => 'task', 'class' => 'form-control']) }}
+      <span class="fui-new"></span>
+    </div>
+    <div class="form-group col-xs-8 col-xs-offset-2 mb60">
+      {{ Form::text('send_at', '', ['placeholder' => 'send_at', 'class' => 'form-control']) }}
+      <span class="fui-calendar"></span>
+    </div>
+
+    <div class="col-xs-3">
+      {{ Form::submit('Update!', ['class' => 'btn btn-block origin-btn-grn']) }}
+    </div>
+    {{ Form::close() }}
+    <div class="col-xs-3">
+      <a href="{{ route('posts.index') }}" class="btn btn-block origin-btn-red">Back</a>
+    </div>
+  </div>
+  <div class="col-xs-12">
+    <h3 class="text-center mb40 mt60">We remind. You recall.</h3>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>email</th>
+        <th>body</th>
+        <th>send_at</th>
+      </tr>
+      </thead>
+      <tbody>
+      @foreach ($reminds as $remind)
+        <tr>
+          <th scope="row">{{ $remind->id }}</th>
+          <td>{{ $remind->email }}</td>
+          <td>{{ $remind->body }}</td>
+          <td>{{ $remind->send_at }}</td>
+        </tr>
+      @endforeach
+      </tbody>
+    </table>
+  </div>
+</div>
+```
+
+パーツ毎に紹介していきます。
+
+- Formの送信先を /reminder/updateにする
+
+```
+{{ Form::open(['method' => 'post', 'route' => ['reminder.update']]) }}
+~~~
+{{ Form::close() }}
+```
+route/web.phpで
+`route::get('reminder', 'ReminderController@index')->name('reminder');`
+と設定しているため、
+`'route' => ['reminder.update']`は`/reminder/update`を指定できます。 +
+
+
+- 送信する値
+
+```
+{{ Form::text('email', '', ['placeholder' => 'email', 'class' => 'form-control']) }}
+{{ Form::text('body', '', ['placeholder' => 'task', 'class' => 'form-control']) }}
+{{ Form::text('send_at', '', ['placeholder' => 'send_at', 'class' => 'form-control']) }} 
+```
+
+アドレス、リマインドしたい内容、リマインドする時間のinputタグを設置
+
+- リマインド情報一覧の表示部分
+
+```
+    <table class="table">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>email</th>
+        <th>body</th>
+        <th>send_at</th>
+      </tr>
+      </thead>
+      <tbody>
+      @foreach ($reminds as $remind)
+        <tr>
+          <th scope="row">{{ $remind->id }}</th>
+          <td>{{ $remind->email }}</td>
+          <td>{{ $remind->body }}</td>
+          <td>{{ $remind->send_at }}</td>
+        </tr>
+      @endforeach
+      </tbody>
+    </table>
+```
+
+Controllerから受け取った`$remainds`をforeachで表示します。
+
+### Command＆cron
+
+上記で表示＆登録ができるようになったので、後は指定した時刻にメールを飛ばす処理を書いていきます。 +
+
+そのために自作のコマンドを登録し、それが自動で実行されるようにcronに登録をします。
+
+まずはコマンドの自作から。
+
+・app/Console/Commands/SendRemaildMail.php
+
+```
+<?php
+
+namespace App\Console\Commands;
+
+use App\Remind;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+
+class SendRemindMail extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'command:send_remind_mail';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'リマインドメールを送ります';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        $this->info('start');
+        $reminds = Remind::where('send_at', Carbon::now()->format('Y-m-d H:i:00'))->get();
+        foreach ($reminds as $remind) {
+            Mail::raw($remind->body . Carbon::now()->format('Y-m-d H:i:00'), function ($m) use($remind) {
+                $m->from('hello@app.com', 'Your Application');
+                $m->to($remind->email)->subject('We Reminder. You recall.');
+            });
+        }
+        $this->info(Carbon::now()->format('Y-m-d H:m:00'));
+        $this->info('Complete');
+
+    }
+}
+```
+
+- `$signature`に代入した値が実行コマンドとして登録されます。ここでは`command:send_remind_mail`を代入します。
+
+-`handle()`がコマンドの実行内容です。ここではリマインドしたい時間とコマンド実行時の時刻が一致したときにメールが送信されるようにしています。
+
+・app/Console/Kernel.php
+
+```
+    protected $commands = [
+        Commands\SendRemindMail::class,
+    ];
+    
+    protected function schedule(Schedule $schedule)
+    {
+         $schedule->command('command:send_remind_mail')->everyMinute();
+    }
+
+```
+
+Laravelにデフォルトで備わっているKernel.phpに先程設定したClassとコマンドを登録します。 +
+
+これによりコマンドの実行スケジュールを設定でき、ここでは1分に1回実行されます。 +
+
+・cronの設定
+
+スケジュールを設定したので後はこれらのコマンドが自動で実行されるようにcronを設定していきます。
+
+`crontab -e`でcronの設定ファイルを開き、
+
+```
+* * * * * php /{実行できるパス}/artisan schedule:run >> /dev/null 2>&1
+```
+
+と登録します。これにより先程登録したコマンドが1分に1回実行できるようになりました！
+
+## おわりに
+
+長くなってしまいましたが、以上です。 +
+
+ユーザー登録とかバリデーション、繰り返し機能など、まだまだ足りない機能がいっぱいあるので、 +
+どんどん拡張していきたいです！ +
+
+もう忘れないぞー！ +
+
+今回はここで失礼します。
