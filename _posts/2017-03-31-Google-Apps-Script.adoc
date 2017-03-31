@@ -4,9 +4,140 @@
 :hp-tags: GAS,Google Apps Script,Twitter,kohe
 
 皆様こんばんはこへです。
-そろそろGASでTweetしたくなる時期が来たので作成。
+そろそろGASでTweetしたくなる時期が来たので作成
+
+
+image::kohe/gasTweet4.png[]
+
+↑のTweet内容をランダムでTweetしたい！！
+
+ちなみにA６セルはイノベーション株価を取得する関数が入ってます。↓
+
+
+   =ImportXML("http://stocks.finance.yahoo.co.jp/stocks/history/?code=3970","//td[@class='stoksPrice']") 
+
+
 
 ## 下準備
+
+TwitterのAPIを使うために色々と登録。
+
+image::kohe/gasTweet1.png[]
+
+
+コールバックURLは　
+
+ 
+ https://script.google.com/macros/d/[スクリプトID]/usercallback 
+ 
+↓スクリプトID
+
+image::kohe/gasTweet2.png[]
+
+
+
+ 
+twitter api 用のLibraryをぶち込む 
+
+
+
+
+  MFE2ytR_vQqYfZ9VodecRE0qO0XQ_ydfb 
+  
+image::kohe/gasTweet3.png[]
+
+
+
+## コード
+
+
+```
+'use strict';
+
+// OAuth1認証用インスタンス
+var twitter = TwitterWebService.getInstance(
+    'CONSUMER_KEY',　　←ここを変える
+  'CONSUMER_SECRET'　←ここを変える
+);
+
+// 認証を行う（必須）
+function authorize() {
+  twitter.authorize();
+}
+
+// 認証をリセット
+function reset() {
+  twitter.reset();
+}
+
+// 認証後のコールバック（必須）
+function authCallback(request) {
+  return twitter.authCallback(request);
+}
+
+// タイムラインを取得
+function getUserTimeline() {
+  var service  = twitter.getService();
+  var response = service.fetch('https://api.twitter.com/1.1/statuses/user_timeline.json');
+  Logger.log(JSON.parse(response));
+}
+
+// ツイートを投稿
+function postUpdateStatus(message) {
+  var service  = twitter.getService();
+  var response = service.fetch('https://api.twitter.com/1.1/statuses/update.json', {
+    method: 'post',
+    payload: { status: message }
+  });
+  Logger.log(JSON.parse(response));
+}
+
+function tweet(message){
+  postUpdateStatus(message); 
+}
+
+//スプレッドシートからツイートしたい内容を取得。
+function getTweetContet(){
+  var ss = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('tweetContent');
+  var values = ss.getDataRange().getValues();
+  var maxNum = values.length;
+  
+  var randNum = Math.floor(Math.random()*maxNum -2);
+  randNum += 2;
+  var message = values[randNum][0];
+  
+  if(typeof message == "number"){
+   message = "銘柄番号3910の株価は" + message + "です"; 
+  }
+  tweet(message);
+ 
+}
+
+
+```
+
+認証手順
+
+* 最初に認証するために `authorize()` を実行
+* ログに出てくるURLにアクセス  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 http://thetree.hatenadiary.jp/entry/google_apps_script_twitter001[参考サイト]
 
