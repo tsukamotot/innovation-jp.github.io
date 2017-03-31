@@ -11,7 +11,7 @@ image::kohe/gasTweet4.png[]
 
 ↑のTweet内容をランダムでTweetしたい！！
 
-ちなみにA６セルはイノベーション株価を取得する関数が入ってます。↓
+ちなみにA６セルは銘柄番号3970の株価を取得する関数が入ってます。↓
 
 
    =ImportXML("http://stocks.finance.yahoo.co.jp/stocks/history/?code=3970","//td[@class='stoksPrice']") 
@@ -102,7 +102,7 @@ function getTweetContet(){
   var values = ss.getDataRange().getValues();
   var maxNum = values.length;
   
-  var randNum = Math.floor(Math.random()*maxNum -2);
+  var randNum = Math.floor(Math.random()*maxNum -2) + 1;
   randNum += 2;
   var message = values[randNum][0];
   
@@ -123,21 +123,28 @@ function getTweetContet(){
 
 
 
+ getTweetContet()
+ 
+ 
+でスプレッドシートからランダムにTweet内容を取得
+
+数値だったら、銘柄番号3970の株価と判定し、文言を追加
+
+ postUpdateStatus()
+ 
+でAPIを叩く。
+
+
+image::kohe/gasTweet5.png[]
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+ツイートできた！！！
+適当にニュースサイトとかクローリングして、ニュースをTweetするBot
+や、株の損益をつぶやくBotを作ってみたい。
 
 
 http://thetree.hatenadiary.jp/entry/google_apps_script_twitter001[参考サイト]
 
+
+[red]#お# [blue]#わ# [yellow]#り#
