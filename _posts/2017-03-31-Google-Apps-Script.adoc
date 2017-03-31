@@ -4,8 +4,9 @@
 :hp-tags: GAS,Google Apps Script,Twitter,kohe
 
 皆様こんばんはこへです。
+そろそろGASでTweetしたくなる時期が来たので作成。
 
-
-
+## 下準備
 
 http://thetree.hatenadiary.jp/entry/google_apps_script_twitter001[参考サイト]
+
