@@ -11,7 +11,7 @@ image::kohe/gasTweet4.png[]
 
 ↑のTweet内容をランダムでTweetしたい！！
 
-ちなみにA６セルは銘柄番号3970の株価を取得する関数が入ってます。↓
+ちなみにA６セルは銘柄番号3970（弊社）の株価を取得する関数が入ってます。↓
 
 
    =ImportXML("http://stocks.finance.yahoo.co.jp/stocks/history/?code=3970","//td[@class='stoksPrice']") 
@@ -43,6 +43,8 @@ Twitter API 用のLibraryをぶち込む
 
 
   MFE2ytR_vQqYfZ9VodecRE0qO0XQ_ydfb 
+  
+のIDで検索するとTwitter API の　Libraryを使えるようになります。
   
 image::kohe/gasTweet3.png[]
 
