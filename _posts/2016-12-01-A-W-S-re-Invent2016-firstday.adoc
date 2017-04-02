@@ -15,7 +15,7 @@
 
 毎年ラスベガスで開催されているそうでして、今年もラスベガスにて開催されます。
 
-image::nakamura/reInvent/IMG_2928.png[]
+//image::nakamura/reInvent/IMG_2928.png[]
 
 空港にもre:Inventの広告が出ていたのでテンションあがりました！
 ちなみにスロットマシンもありました(笑)
@@ -50,13 +50,13 @@ registrationブースに行き、パスポートを提出すると顔写真付�
 
 image::nakamura/reInvent/IMG_3027.png[]
 
-image::nakamura/reInvent/IMG_2954.png[]
+//image::nakamura/reInvent/IMG_2954.png[]
 
 image::nakamura/reInvent/IMG_2959.png[]
 
 registorationブースの隣ではDJがいました！
 
-image::nakamura/reInvent/IMG_2956.png[]
+//image::nakamura/reInvent/IMG_2956.png[]
 
 
 そしてお待ちかねのグッツを。。。と思っていたのですが、何もくれません！
@@ -105,7 +105,7 @@ re:Inventの流れ簡単に説明すると、
 完璧に失敗です。
 re:Invent2017に行く方は会場をなるべく合わせておくことをお勧めします。。。
 
-image::nakamura/reInvent/IMG_2990.png[]
+//image::nakamura/reInvent/IMG_2990.png[]
 
 
 ### セッションの雰囲気
@@ -114,19 +114,19 @@ image::nakamura/reInvent/IMG_2990.png[]
 
 image::nakamura/reInvent/IMG_2961.png[]
 
-image::nakamura/reInvent/IMG_2974.png[]
+//image::nakamura/reInvent/IMG_2974.png[]
 
 
 
 ちなみに一部のセッションでは翻訳機での同時通訳もあるのですが、基本的には英語のみ。
 ただAWSのアイコンが出てくるので、全く分からないことはありませんでした。
 
-image::nakamura/reInvent/IMG_2971.png[]
+//image::nakamura/reInvent/IMG_2971.png[]
 
 
 個人的にはDatadogのMatt Williams氏（Evangelist)のスピーチが分かりやすく、所々にジョークを挟んでいてとても気に入りました。
 
-image::nakamura/reInvent/IMG_2978.png[]
+//image::nakamura/reInvent/IMG_2978.png[]
 
 
 ### TuesdayNight!
