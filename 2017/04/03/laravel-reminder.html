@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Laravelでリマインダーを作ってみた - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Laravelでリマインダーを作ってみた">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Laravelでリマインダーを作ってみた">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/04/03/laravel-reminder.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Laravelでリマインダーを作ってみた" />
+    <meta property="og:description" content="こんにちは、そろそろ二年目になる小柳津です。 もう4月には新しい一年生が入ってきますね。 先輩になるので、流石に忘れん坊は卒業しようと思い、 自分で簡単なリマインダーを作成しました。 見た目と機能紹介 見た目はこのようにしました。 Bootstrapを使用しています。 主に入力部分と一覧表示部分に分かれています。 アドレスとリマインド内容、リマインドしたい時間を登録します。 登録をしたら、送信されるのを待ちます。緊張の一瞬。。。 届いた！成功！！ 実装 それでは、中身についてお話します！ Routing ・route/web.php ## Remind..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/04/03/laravel-reminder.html" />
+    <meta property="article:published_time" content="2017-04-02T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-04-03T01:29:43.090Z" />
+    <meta property="article:tag" content="yaizu" />
+    <meta property="article:tag" content="PHP" />
+    <meta property="article:tag" content="Laravel" />
+    <meta property="article:tag" content="Bootstrap" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Laravelでリマインダーを作ってみた" />
+    <meta name="twitter:description" content="こんにちは、そろそろ二年目になる小柳津です。 もう4月には新しい一年生が入ってきますね。 先輩になるので、流石に忘れん坊は卒業しようと思い、 自分で簡単なリマインダーを作成しました。 見た目と機能紹介 見た目はこのようにしました。 Bootstrapを使用しています。 主に入力部分と一覧表示部分に分かれています。 アドレスとリマインド内容、リマインドしたい時間を登録します。 登録をしたら、送信されるのを待ちます。緊張の一瞬。。。 届いた！成功！！ 実装 それでは、中身についてお話します！ Routing ・route/web.php ## Remind..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/04/03/laravel-reminder.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars0.githubusercontent.com/u/16201452?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Laravelでリマインダーを作ってみた",
+    "url": "http://tech.innovation.co.jp/2017/04/03/laravel-reminder.html",
+    "datePublished": "2017-04-02T15:00:00.000Z",
+    "dateModified": "2017-04-03T01:29:43.090Z",
+    "keywords": "yaizu, PHP, Laravel, Bootstrap",
+    "description": "こんにちは、そろそろ二年目になる小柳津です。 もう4月には新しい一年生が入ってきますね。 先輩になるので、流石に忘れん坊は卒業しようと思い、 自分で簡単なリマインダーを作成しました。 見た目と機能紹介 見た目はこのようにしました。 Bootstrapを使用しています。 主に入力部分と一覧表示部分に分かれています。 アドレスとリマインド内容、リマインドしたい時間を登録します。 登録をしたら、送信されるのを待ちます。緊張の一瞬。。。 届いた！成功！！ 実装 それでは、中身についてお話します！ Routing ・route/web.php ## Remind..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-yaizu tag-P-H-P tag-Laravel tag-Bootstrap no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="03 Apr 2017" class="post-meta__date date">03 Apr 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/yaizu">yaizu</a>, <a href="http://tech.innovation.co.jp/tag/P-H-P">PHP</a>, <a href="http://tech.innovation.co.jp/tag/Laravel">Laravel</a>, <a href="http://tech.innovation.co.jp/tag/Bootstrap">Bootstrap</a></span>
+        <span class="post-meta__author author"><img src="https://avatars0.githubusercontent.com/u/16201452?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">Laravelでリマインダーを作ってみた</h1>
+    </header>
+
+    <section class="post tag-yaizu tag-P-H-P tag-Laravel tag-Bootstrap">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは、そろそろ二年目になる小柳津です。<br></p>
+</div>
+<div class="paragraph">
+<p>もう4月には新しい一年生が入ってきますね。<br></p>
+</div>
+<div class="paragraph">
+<p>先輩になるので、流石に忘れん坊は卒業しようと思い、<br></p>
+</div>
+<div class="paragraph">
+<p>自分で簡単なリマインダーを作成しました。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">見た目と機能紹介</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/remainder1.png" alt="remainder1.png">
+</div>
+</div>
+<div class="paragraph">
+<p>見た目はこのようにしました。 Bootstrapを使用しています。<br>
+主に入力部分と一覧表示部分に分かれています。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/remainder2.png" alt="remainder2.png">
+</div>
+</div>
+<div class="paragraph">
+<p>アドレスとリマインド内容、リマインドしたい時間を登録します。<br></p>
+</div>
+<div class="paragraph">
+<p>登録をしたら、送信されるのを待ちます。緊張の一瞬。。。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/remainder3.png" alt="remainder3.png">
+</div>
+</div>
+<div class="paragraph">
+<p>届いた！成功！！<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">実装</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>それでは、中身についてお話します！<br></p>
+</div>
+<div class="sect2">
+<h3 id="_routing">Routing</h3>
+<div class="paragraph">
+<p>・route/web.php</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>## RemindController ##
+Route::get('reminder', 'ReminderController@index')-&gt;name('reminder');
+Route::patch('reminder/update', 'ReminderController@update')-&gt;name('reminder.update');</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>URLは以下の2つを割り振ります。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>"http://{domain_name}/reminder" &#8658; 入力＆一覧画面｜<code>RemindController.php</code>の<code>index()</code>を指定</p>
+</li>
+<li>
+<p>"http://{domain_name}/reminder/update" &#8658; 更新処理｜<code>RemindController.php</code>の<code>update()</code>を指定</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_table">Table</h3>
+<div class="paragraph">
+<p>使用するDBのテーブルは1つです。</p>
+</div>
+<div class="paragraph">
+<p>remindsテーブル</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 14%;">
+<col style="width: 14%;">
+<col style="width: 14%;">
+<col style="width: 14%;">
+<col style="width: 14%;">
+<col style="width: 14%;">
+<col style="width: 14%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Field</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Type</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Null</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Key</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Default</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Extra</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">id</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">int(10) unsigned</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PRI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NULL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auto_increment</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">email</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">varchar(255)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NO</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NULL</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">body</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">varchar(255)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NO</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NULL</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">send_at</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">datetime</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NO</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NULL</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">created_at</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">timestamp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">YES</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NULL</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">updated_at</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">timestamp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">YES</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NULL</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_controller">Controller</h3>
+<div class="paragraph">
+<p>・app/Http/Controllers/ReminderController</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>namespace App\Http\Controllers;
+
+use App\Remind;
+use Illuminate\Http\Request;
+
+class ReminderController extends Controller
+{
+    function index()
+    {
+        $reminds = Remind::get();
+
+        return view('reminder', compact('reminds'));
+    }
+
+    function update(Request $request)
+    {
+        $remind = new Remind();
+        $remind-&gt;email   = $request-&gt;email;
+        $remind-&gt;body    = $request-&gt;body;
+        $remind-&gt;send_at = $request-&gt;send_at;
+        $remind-&gt;save();
+
+        return redirect(route('reminder'));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Controlloerでは2つのfunctionを設定。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>index()</code>：remindsテーブルからデータ取得し、Viewを表示する</p>
+</li>
+<li>
+<p><code>update()</code>：POSTされた値を受け取り、DBを更新する。"http://{domain_name}/reminder" にリダイレクトする</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_view">View</h3>
+<div class="paragraph">
+<p>・resources/views/remaider.blade.php</p>
+</div>
+<div class="paragraph">
+<p>※bodyタグ内のみ</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;div class="container"&gt;
+  &lt;div class="col-xs-8 col-xs-offset-2"&gt;
+    &lt;h3 class="text-center mb40 mt60"&gt;What are you likely to forget??&lt;/h3&gt;
+    {{ Form::open(['method' =&gt; 'post', 'route' =&gt; ['reminder.update']]) }}
+    {{ method_field('patch') }}
+    &lt;div class="form-group col-xs-8 col-xs-offset-2 mb40"&gt;
+      {{ Form::text('email', '', ['placeholder' =&gt; 'email', 'class' =&gt; 'form-control']) }}
+      &lt;span class="fui-mail"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group col-xs-8 col-xs-offset-2 mb40"&gt;
+      {{ Form::text('body', '', ['placeholder' =&gt; 'task', 'class' =&gt; 'form-control']) }}
+      &lt;span class="fui-new"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class="form-group col-xs-8 col-xs-offset-2 mb60"&gt;
+      {{ Form::text('send_at', '', ['placeholder' =&gt; 'send_at', 'class' =&gt; 'form-control']) }}
+      &lt;span class="fui-calendar"&gt;&lt;/span&gt;
+    &lt;/div&gt;
+
+    &lt;div class="col-xs-3"&gt;
+      {{ Form::submit('Update!', ['class' =&gt; 'btn btn-block origin-btn-grn']) }}
+    &lt;/div&gt;
+    {{ Form::close() }}
+    &lt;div class="col-xs-3"&gt;
+      &lt;a href="{{ route('posts.index') }}" class="btn btn-block origin-btn-red"&gt;Back&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="col-xs-12"&gt;
+    &lt;h3 class="text-center mb40 mt60"&gt;We remind. You recall.&lt;/h3&gt;
+    &lt;table class="table"&gt;
+      &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;#&lt;/th&gt;
+        &lt;th&gt;email&lt;/th&gt;
+        &lt;th&gt;body&lt;/th&gt;
+        &lt;th&gt;send_at&lt;/th&gt;
+      &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+      @foreach ($reminds as $remind)
+        &lt;tr&gt;
+          &lt;th scope="row"&gt;{{ $remind-&gt;id }}&lt;/th&gt;
+          &lt;td&gt;{{ $remind-&gt;email }}&lt;/td&gt;
+          &lt;td&gt;{{ $remind-&gt;body }}&lt;/td&gt;
+          &lt;td&gt;{{ $remind-&gt;send_at }}&lt;/td&gt;
+        &lt;/tr&gt;
+      @endforeach
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>パーツ毎に紹介していきます。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Formの送信先を /reminder/updateにする</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>{{ Form::open(['method' =&gt; 'post', 'route' =&gt; ['reminder.update']]) }}
+~~~
+{{ Form::close() }}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>route/web.phpで
+<code>route::get('reminder', 'ReminderController@index')&#8594;name('reminder');</code>
+と設定しているため、
+<code>'route' &#8658; ['reminder.update']</code>は<code>/reminder/update</code>を指定できます。<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>送信する値</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>{{ Form::text('email', '', ['placeholder' =&gt; 'email', 'class' =&gt; 'form-control']) }}
+{{ Form::text('body', '', ['placeholder' =&gt; 'task', 'class' =&gt; 'form-control']) }}
+{{ Form::text('send_at', '', ['placeholder' =&gt; 'send_at', 'class' =&gt; 'form-control']) }}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>アドレス、リマインドしたい内容、リマインドする時間のinputタグを設置</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>リマインド情報一覧の表示部分</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>    &lt;table class="table"&gt;
+      &lt;thead&gt;
+      &lt;tr&gt;
+        &lt;th&gt;#&lt;/th&gt;
+        &lt;th&gt;email&lt;/th&gt;
+        &lt;th&gt;body&lt;/th&gt;
+        &lt;th&gt;send_at&lt;/th&gt;
+      &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+      @foreach ($reminds as $remind)
+        &lt;tr&gt;
+          &lt;th scope="row"&gt;{{ $remind-&gt;id }}&lt;/th&gt;
+          &lt;td&gt;{{ $remind-&gt;email }}&lt;/td&gt;
+          &lt;td&gt;{{ $remind-&gt;body }}&lt;/td&gt;
+          &lt;td&gt;{{ $remind-&gt;send_at }}&lt;/td&gt;
+        &lt;/tr&gt;
+      @endforeach
+      &lt;/tbody&gt;
+    &lt;/table&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Controllerから受け取った<code>$remainds</code>をforeachで表示します。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_command_cron">Command＆cron</h3>
+<div class="paragraph">
+<p>上記で表示＆登録ができるようになったので、後は指定した時刻にメールを飛ばす処理を書いていきます。<br></p>
+</div>
+<div class="paragraph">
+<p>そのために自作のコマンドを登録し、それが自動で実行されるようにcronに登録をします。</p>
+</div>
+<div class="paragraph">
+<p>まずはコマンドの自作から。</p>
+</div>
+<div class="paragraph">
+<p>・app/Console/Commands/SendRemaildMail.php</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>&lt;?php
+
+namespace App\Console\Commands;
+
+use App\Remind;
+use Carbon\Carbon;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+
+class SendRemindMail extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'command:send_remind_mail';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'リマインドメールを送ります';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function handle()
+    {
+        $this-&gt;info('start');
+        $reminds = Remind::where('send_at', Carbon::now()-&gt;format('Y-m-d H:i:00'))-&gt;get();
+        foreach ($reminds as $remind) {
+            Mail::raw($remind-&gt;body . Carbon::now()-&gt;format('Y-m-d H:i:00'), function ($m) use($remind) {
+                $m-&gt;from('hello@app.com', 'Your Application');
+                $m-&gt;to($remind-&gt;email)-&gt;subject('We Reminder. You recall.');
+            });
+        }
+        $this-&gt;info(Carbon::now()-&gt;format('Y-m-d H:m:00'));
+        $this-&gt;info('Complete');
+
+    }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>$signature</code>に代入した値が実行コマンドとして登録されます。ここでは<code>command:send_remind_mail</code>を代入します。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>-<code>handle()</code>がコマンドの実行内容です。ここではリマインドしたい時間とコマンド実行時の時刻が一致したときにメールが送信されるようにしています。</p>
+</div>
+<div class="paragraph">
+<p>・app/Console/Kernel.php</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>    protected $commands = [
+        Commands\SendRemindMail::class,
+    ];
+
+    protected function schedule(Schedule $schedule)
+    {
+         $schedule-&gt;command('command:send_remind_mail')-&gt;everyMinute();
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Laravelにデフォルトで備わっているKernel.phpに先程設定したClassとコマンドを登録します。<br></p>
+</div>
+<div class="paragraph">
+<p>これによりコマンドの実行スケジュールを設定でき、ここでは1分に1回実行されます。<br></p>
+</div>
+<div class="paragraph">
+<p>・cronの設定</p>
+</div>
+<div class="paragraph">
+<p>スケジュールを設定したので後はこれらのコマンドが自動で実行されるようにcronを設定していきます。</p>
+</div>
+<div class="paragraph">
+<p><code>crontab -e</code>でcronの設定ファイルを開き、</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>* * * * * php /{実行できるパス}/artisan schedule:run &gt;&gt; /dev/null 2&gt;&amp;1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>と登録します。これにより先程登録したコマンドが1分に1回実行できるようになりました！</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___3">おわりに</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>長くなってしまいましたが、以上です。<br></p>
+</div>
+<div class="paragraph">
+<p>ユーザー登録とかバリデーション、繰り返し機能など、まだまだ足りない機能がいっぱいあるので、<br>
+どんどん拡張していきたいです！<br></p>
+</div>
+<div class="paragraph">
+<p>もう忘れないぞー！<br></p>
+</div>
+<div class="paragraph">
+<p>今回はここで失礼します。</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
