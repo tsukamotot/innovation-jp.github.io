@@ -174,10 +174,8 @@ Controlloerでは2つのfunctionを設定。
 ~~~
 {{ Form::close() }}
 ```
-route/web.phpで
-`route::get('reminder', 'ReminderController@index')->name('reminder');`
-と設定しているため、
-`'route' => ['reminder.update']`は`/reminder/update`を指定できます。 +
+route/web.phpで`route::get('reminder', 'ReminderController@index')->name('reminder');`
+と設定しているため、`'route' => ['reminder.update']`は`/reminder/update`を指定できます。 +
 
 
 - 送信する値
@@ -287,7 +285,7 @@ class SendRemindMail extends Command
 
 - `$signature`に代入した値が実行コマンドとして登録されます。ここでは`command:send_remind_mail`を代入します。
 
--`handle()`がコマンドの実行内容です。ここではリマインドしたい時間とコマンド実行時の時刻が一致したときにメールが送信されるようにしています。
+- `handle()`がコマンドの実行内容です。ここではリマインドしたい時間とコマンド実行時の時刻が一致したときにメールが送信されるようにしています。
 
 ・app/Console/Kernel.php
 
