@@ -20,7 +20,7 @@
 
 link:http://tech.innovation.co.jp/2016/06/02/Word-Press-2.html[その2]書きました。
 
-image::wordpress_logo.png[]
+//image::wordpress_logo.png[]
 
 
 == 要件
