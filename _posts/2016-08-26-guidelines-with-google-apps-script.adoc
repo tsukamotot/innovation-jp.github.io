@@ -1,4 +1,4 @@
-= GoogleAppsScriptで朝会唱和(?)の当番表をSlackに通知できるようにしてみた話
+= Google Apps Scriptで朝会唱和(?)の当番表をSlackに通知できるようにしてみた話
 :published_at: 2016-08-26
 :hp-alt-title: guidelines-with-google-apps-script
 :hp-tags: 4thPost,Ozasa,GoogleAppsScript,Guidelines,Javascript,Slack
@@ -77,10 +77,10 @@ https://api.slack.com/web
 https://api.slack.com/methods/channels.list/test
 にアクセスして諸々入力してChannelIdをゲットだぜ！！
 
-### GoogleAppsScript
+### Google Apps Script
 
 スプレッドシートのツールタブから「スクリプトエディタ」を押下して、
-Let's GoogleAppsScript！
+Let's Google Apps Script！
 
 今回は「Slack BotをGASでいい感じで書くためのライブラリ」を使わせていただきました。
 http://qiita.com/soundTricker/items/43267609a870fc9c7453
@@ -158,7 +158,7 @@ myFunctionって名前が気に入ったのでそのままにしちゃってた�
 結構雑な書き方になってますけど、こんな手軽に作れるとは驚きでした。
 
 ## まとめ
-こういう感じでサクッと作れるところがGoogleAppsScriptのいいところですかね。
+こういう感じでサクッと作れるところがGoogle Apps Scriptのいいところですかね。
 
 今回のブログは何番煎じかって内容かもわからんですが、 +
 DRYを意識するにはまず自分の手で作ってみないとね！！
