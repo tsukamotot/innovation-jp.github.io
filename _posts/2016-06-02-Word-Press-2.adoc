@@ -15,7 +15,7 @@ image::gyo-za.jpg[]
  
 今回も次回に引き続きWordPressでプラグイン作ってみた話をします！
 
-image::wordpress_logo.png[]
+//image::wordpress_logo.png[]
 
 ## おさらい
 
