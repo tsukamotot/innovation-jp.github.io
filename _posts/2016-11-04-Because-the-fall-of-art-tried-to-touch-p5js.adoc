@@ -24,7 +24,7 @@ Webサイトなどでの表現をリッチにするためには、 +
 以下の枠内を**クリックした後**、適当にキーボード入力してみてください！！
 
 ++++
-<iframe src="http://tech.innovation.co.jp/docs/ozasa/textcolor.html" width="300" height="300"></iframe>
+<iframe src="http://tech.innovation.co.jp/docs/ozasa/textcolor.html" width="300" height="300" frameborder="1"></iframe>
 ++++
 
 #### ソースと解説
