@@ -18,7 +18,7 @@ image::gyo-za_nikujiru.jpg[]
  
 今回も次回に引き続きWordPressでプラグイン作ってみた話をします！ +
 
-image::wordpress_logo.png[]
+//image::wordpress_logo.png[]
 
 ## おさらい
 
@@ -156,7 +156,7 @@ image::it-trend-labo-favorite.png[]
 
 おお！いい感じです！ +
 その他にもフィルターフックはたくさんあるようなので、機能拡張が簡単にできそうですね。 +
-さすがWordPress!
+//さすがWordPress!
 
 
 3回に渡りWordPress情報をお届けしましたが、いかがでしたでしょうか。 +
@@ -164,10 +164,10 @@ image::it-trend-labo-favorite.png[]
 
 WordPressプラグイン作成のハードルが少しでも下がれば幸いです。 +
 
-最後になりますが、今回プラグイン作成〜導入した自社サイトのご紹介です。 +
-お気に入り機能、ぜひ試してみてください！
+//最後になりますが、今回プラグイン作成〜導入した自社サイトのご紹介です。 +
+//お気に入り機能、ぜひ試してみてください！
 
-ITトレンドLabo　https://it-trend.jp/labo/ 
+//ITトレンドLabo　https://it-trend.jp/labo/ 
 
 
 
