@@ -55,7 +55,7 @@ var _trackingid = 'LFT-10003-1';
     <meta property="og:description" content="さてこんばんは。 矢ヶ崎です。 みなさんいかがお過ごしでしょうか？ ポケモンGOやってます？ いや〜 Goは最高ですよね！ そんなこんなで、Pepperの続編は次回！ということで、Go言語社内エバンジェリスト(自称)のわたくしが、Go言語に関わることを一切書いていないことに気が付きましたので、今回はGo言語にかすってることを書きたいと思います。 Go言語、みなさん使っておりますでしょうか？ わたしの場合は、社内のイベントで使うプログラムは全てGoで書くようにしております。まだまだGo言語社内エバンジェリスト力が弱いわたくし程度では、弊社のプロダクトには..." />
     <meta property="og:url" content="http://tech.innovation.co.jp/2016/08/04/lets-log-aggrigation-using-Log-Zoom-and-Filebeat.html" />
     <meta property="article:published_time" content="2016-08-03T15:00:00.000Z" />
-    <meta property="article:modified_time" content="2016-08-04T04:01:43.777Z" />
+    <meta property="article:modified_time" content="2017-04-04T09:49:28.703Z" />
     <meta property="article:tag" content="Yagasaki" />
     <meta property="article:tag" content="Go" />
     <meta property="article:tag" content="Golang" />
@@ -77,15 +77,15 @@ var _trackingid = 'LFT-10003-1';
     "publisher": "イノベーション　エンジニアブログ",
     "author": {
         "@type": "Person",
-        "name": "Akihiro YAGASAKI",
-        "image": "https://avatars.githubusercontent.com/u/13131599?v=3",
+        "name": "yuki ozasa",
+        "image": "https://avatars0.githubusercontent.com/u/8304640?v=3",
         "url": "undefined/author/undefined",
         "sameAs": null
     },
     "headline": "LogZoomとFilebeatでログ収集！",
     "url": "http://tech.innovation.co.jp/2016/08/04/lets-log-aggrigation-using-Log-Zoom-and-Filebeat.html",
     "datePublished": "2016-08-03T15:00:00.000Z",
-    "dateModified": "2016-08-04T04:01:43.777Z",
+    "dateModified": "2017-04-04T09:49:28.703Z",
     "keywords": "Yagasaki, Go, Golang, Log, LogZoom, Filebeat, Fluentd, Logstash",
     "description": "さてこんばんは。 矢ヶ崎です。 みなさんいかがお過ごしでしょうか？ ポケモンGOやってます？ いや〜 Goは最高ですよね！ そんなこんなで、Pepperの続編は次回！ということで、Go言語社内エバンジェリスト(自称)のわたくしが、Go言語に関わることを一切書いていないことに気が付きましたので、今回はGo言語にかすってることを書きたいと思います。 Go言語、みなさん使っておりますでしょうか？ わたしの場合は、社内のイベントで使うプログラムは全てGoで書くようにしております。まだまだGo言語社内エバンジェリスト力が弱いわたくし程度では、弊社のプロダクトには..."
 }
@@ -254,7 +254,7 @@ var _trackingid = 'LFT-10003-1';
     <header class="post-header">
       <div class="post-meta">
         <time datetime="04 Aug 2016" class="post-meta__date date">04 Aug 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Yagasaki">Yagasaki</a>, <a href="http://tech.innovation.co.jp/tag/Go">Go</a>, <a href="http://tech.innovation.co.jp/tag/Golang">Golang</a>, <a href="http://tech.innovation.co.jp/tag/Log">Log</a>, <a href="http://tech.innovation.co.jp/tag/Log-Zoom">LogZoom</a>, <a href="http://tech.innovation.co.jp/tag/Filebeat">Filebeat</a>, <a href="http://tech.innovation.co.jp/tag/Fluentd">Fluentd</a>, <a href="http://tech.innovation.co.jp/tag/Logstash">Logstash</a></span>
-        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/13131599?v=3" alt="profile image for Akihiro YAGASAKI" class="avatar post-meta__avatar" /> by Akihiro YAGASAKI</span>
+        <span class="post-meta__author author"><img src="https://avatars0.githubusercontent.com/u/8304640?v=3" alt="profile image for yuki ozasa" class="avatar post-meta__avatar" /> by yuki ozasa</span>
       </div>
       <h1 class="post-title">LogZoomとFilebeatでログ収集！</h1>
     </header>
@@ -308,16 +308,7 @@ var _trackingid = 'LFT-10003-1';
 <p>そこで！みなさんログ収集＆保存しているかと思います。日本のWeb系では、たぶんFluentdとかがとっても有名で、こちらを利用してログ収集していたり、Logstash使っていたり、rsyslogでがんばっていたりするかと思います。</p>
 </div>
 <div class="paragraph">
-<p>しかし！LogstashやFluentdは、個人的には重い！！！</p>
-</div>
-<div class="paragraph">
-<p>rsyslogやsyslog-ngは、シンプルすぎちゃってつらい！</p>
-</div>
-<div class="paragraph">
-<p>そんなお悩みをかかえていらっしゃるかと思いますみなさん。</p>
-</div>
-<div class="paragraph">
-<p>そこで逆に、「Goのやつって速いっていうじゃん〜」とかっていう安易なキーワードがあると思うので、それに便乗させていただき、Goで書かれたログ収集ツールを利用することにしました！</p>
+<p>しかし、「Goのやつって速いっていうじゃん〜」とかっていう安易なキーワードもあると思うので、それに便乗させていただき、Goで書かれたログ収集ツールを利用することにしました！</p>
 </div>
 </div>
 </div>
@@ -595,7 +586,7 @@ routes:
 
 
             <footer class="footer">
-                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
                 <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
                 <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
             </footer>
