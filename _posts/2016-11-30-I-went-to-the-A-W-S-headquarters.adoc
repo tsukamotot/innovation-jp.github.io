@@ -31,12 +31,12 @@ Amazon Freshについても日本での展開が期待されますね！
 AWSの技術的には
 
 * Amazon Simple Workflow
-* Lambda
+* AWS Lambda
 * Amazon Simple Notification Service
 
 などを用いてデータの管理ややりとりをすることが多いようです。
 
-また、分析には**ElasticSearch**と**kibana**を用いているとのことで、
+また、分析には**Elasticsearch**と**Kibana**を用いているとのことで、
 当然分析にも力を注いでいるようです。
 
 う〜ん、やはり今後の展開が注目されます！！
@@ -100,6 +100,6 @@ image::ozasa/reinvent.JPG[]
 
 
 #### 追伸
-なんかアメリカって色々巨大です！！
+なんかアメリカって色々巨大ですね！！
 
 image::ozasa/beer.png[]
