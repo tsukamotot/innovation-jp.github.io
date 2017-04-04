@@ -25,7 +25,7 @@ http://arxiv.org/abs/1508.06576["A Neural Algorithm of Artistic Style"]という
 ## 環境構築
 今回はAWSを使います。
 
-実はすでに諸々の環境構築までやってくれているamiがあったようなのですが、
+実はすでに諸々の環境構築までやってくれているAMIがあったようなのですが、
 僕はそれに気がつきませんで、チクチク環境構築しながら進めていきました。
 
 手順
@@ -44,8 +44,9 @@ neural-styleのGithubにやり方は書いてあるので
 https://github.com/jcjohnson/neural-style/blob/master/INSTALL.md[それ]を元に作っていきましょう。
 
 機械学習とかっていうとGPUインスタンスを使うのが普通とは思うのですが、
-NVIDIAドライバをインストールしたり色々するのは面倒なんじゃないか説や、
-その割にNVIDIAが公開しているAMIが微妙なんじゃないか説などがあり、ちょっと試してみたいだけなのでさっくりCPUモードで実行することと相成りました。
+// NVIDIAドライバをインストールしたり色々するのは面倒なんじゃないか説や、
+// その割にNVIDIAが公開しているAMIが微妙なんじゃないか説などがあり、
+ちょっと試してみたいだけなのでさっくりCPUモードで実行することと相成りました。
 
 ので、具体的には今回はSTEP3までやっています。
 
@@ -177,7 +178,7 @@ image::http://tech.innovation.co.jp/images/ozasa/kyoto_starry_night.gif[]
 
 image::http://tech.innovation.co.jp/images/ozasa/ami3.jpg[]
 
-可愛くはないスタイル画像
+スタイル画像
 
 image::https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/800px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg[]
 
