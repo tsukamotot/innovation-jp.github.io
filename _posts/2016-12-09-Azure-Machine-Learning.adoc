@@ -12,7 +12,7 @@
 どのようなシーンで利用できると思っているかというと、お客様の問合せメールを学習させ、問合せ内容からタグ付け等を自動に行い、ナレッジから最適な回答を提示するなんて事ができる…そうです。
 
 == Azure Machine Learning
-MS 派の私は 今更感がありますが Azure Machine Learning を使ってみます、Gary Ericson　さんの https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[チュートリアル] にそって学んでいきたいと思います！
+Microsoft(MS) 派の私は 今更感がありますが Azure Machine Learning を使ってみます、Gary Ericson　さんの https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[チュートリアル] にそって学んでいきたいと思います！
 
 #### チュートリアルの流れ
 ```
@@ -28,7 +28,7 @@ MS 派の私は 今更感がありますが Azure Machine Learning を使って�
 そのモデルのスコア付けとテスト
 　手順 5: 新しい自動車の価格を予測する
 ```
-https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+Microsoft https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
 
 ふむふむ、急に自動車の話が出てきましたね。
 
@@ -36,7 +36,7 @@ https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-
 ```
 Machine Learning Studio には、多数のサンプル データセットが含まれており、多様なソースからデータをインポートできます。 この例では、含まれているサンプル データセット 自動車価格データ (未加工)を使用します。 このデータセットには、製造仕様、モデル仕様、技術仕様などの情報を含む、多くの個別の自動車のエントリが含まれています。
 ```
-https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+Microsoft https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
 
 という事でまずはサンプルデータを使用しろという事なので早速ログイン、新しい実験を作成します、MS ぽくない UI な気がしますが、左下の 「+ NEW」をクリック。
 
@@ -63,7 +63,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml1/4.png[]
 image::http://tech.innovation.co.jp/images/syoga/aml1/5.png[]
 
 
-CSV ファイルですね！
+//CSV ファイルですね！
 
 image::http://tech.innovation.co.jp/images/syoga/aml1/6.png[]
 
@@ -71,7 +71,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml1/6.png[]
 ```
 通常、データセットには、分析前にある程度の前処理が必要です。 さまざまな行の中に、値が不足している列があります。 モデルがデータを正しく分析するには、これらの不足値をクリーニングする必要があります。 この例では、値が見つからない行をすべて削除します。 また、見つからない値の大部分は、正規化された損失列にあります。したがって、モデルからこの列も一緒に除外します。
 ```
-https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+Microsoft https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
 
 要約すると歯抜けになっているデータを整形するための処理が前処理という事のようです、早速やってみます。
 
@@ -123,7 +123,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml1/14.png[]
 
 予測モデルの作成に役立つ特徴を見つけるには、解決する問題に関する実験と知識が必要です。 一部の特徴は、他よりも対象を予測することに優れています。 また、特徴によっては、たとえば市内での燃費と高速道路での燃費のように、他の特徴との強い相関がある場合があります。したがって、このような特徴はモデルに新しい情報をそれほど多く追加しないので、削除できます。
 ```
-https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+Microsoft https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
 
 予測を立てやすいデータの選択が大事なんですね。
 
@@ -149,7 +149,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml1/17.png[]
 
 ここで行いたいことは価格を予測することです。価格は数値であるため、回帰モデルを使用することになります。 この例では、簡単な "線形回帰" モデルをトレーニングし、次の手順でこのモデルをテストします。
 ```
-https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+Microsoft https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
 
 あまり深く考えるなって言われてますので、とりあえずは考えない方向にします、価格の予想は連続した数値なので回帰分析を使用するという事ですね。
 
@@ -200,7 +200,7 @@ image::http://tech.innovation.co.jp/images/syoga/aml1/24.png[]
 決定係数: R-2 乗値ともいいます。どの程度モデルが高い精度でデータと適合するかを示す統計指標です。
 エラーの各統計情報を小さくすることをお勧めします。 小さい値は、予測が実際の値をより厳密に照合することを示します。 決定係数では、値が 1 (1.0) に近づくほど、予測の精度が高くなります。
 ```
-https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
+Microsoft https://docs.microsoft.com/ja-jp/azure/machine-learning/machine-learning-create-experiment[Machine Learning のチュートリアル: Azure Machine Learning Studio で初めてのデータ サイエンス実験を作成する] より
 
 う〜ん？決定係数が1に近い方が精度が高という事はわかるのですが、その他はサッパリです！
 
