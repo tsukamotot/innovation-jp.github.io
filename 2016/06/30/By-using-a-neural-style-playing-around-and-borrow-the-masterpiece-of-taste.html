@@ -55,7 +55,7 @@ var _trackingid = 'LFT-10003-1';
     <meta property="og:description" content="こんにちは。 なんちゃってファスティングに挑戦し、 復食のタイミングを見失いかけたオザサです。 今回はタイトルの通り、 jcjohnsonさんが公開している neural-styleを使って 自分で撮った写真に名画のテイストを加えてみたいと思います。 neural-styleとは Torchというニューラルネットワーク技術に特化したフレームワークを用いて &quot;A Neural Algorithm of Artistic Style&quot;という論文のアルゴリズムを実装したものになります。 ざっくり言ってしまえば、名画にある特徴的なスタイル(筆運び?)を別の画像..." />
     <meta property="og:url" content="http://tech.innovation.co.jp/2016/06/30/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste.html" />
     <meta property="article:published_time" content="2016-06-29T15:00:00.000Z" />
-    <meta property="article:modified_time" content="2016-07-01T08:49:06.565Z" />
+    <meta property="article:modified_time" content="2017-04-04T09:37:15.874Z" />
     <meta property="article:tag" content="thirdPost" />
     <meta property="article:tag" content="Oz" />
     <meta property="article:tag" content="neural-style" />
@@ -73,15 +73,15 @@ var _trackingid = 'LFT-10003-1';
     "publisher": "イノベーション　エンジニアブログ",
     "author": {
         "@type": "Person",
-        "name": "yuki ozasa",
-        "image": "https://avatars.githubusercontent.com/u/8304640?v=3",
+        "name": "Akihiro YAGASAKI",
+        "image": "https://avatars2.githubusercontent.com/u/13131599?v=3",
         "url": "undefined/author/undefined",
         "sameAs": null
     },
     "headline": "neural-styleを使い、名画のテイストを拝借して遊んでみた",
     "url": "http://tech.innovation.co.jp/2016/06/30/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste.html",
     "datePublished": "2016-06-29T15:00:00.000Z",
-    "dateModified": "2016-07-01T08:49:06.565Z",
+    "dateModified": "2017-04-04T09:37:15.874Z",
     "keywords": "thirdPost, Oz, neural-style, Art",
     "description": "こんにちは。 なんちゃってファスティングに挑戦し、 復食のタイミングを見失いかけたオザサです。 今回はタイトルの通り、 jcjohnsonさんが公開している neural-styleを使って 自分で撮った写真に名画のテイストを加えてみたいと思います。 neural-styleとは Torchというニューラルネットワーク技術に特化したフレームワークを用いて &quot;A Neural Algorithm of Artistic Style&quot;という論文のアルゴリズムを実装したものになります。 ざっくり言ってしまえば、名画にある特徴的なスタイル(筆運び?)を別の画像..."
 }
@@ -250,7 +250,7 @@ var _trackingid = 'LFT-10003-1';
     <header class="post-header">
       <div class="post-meta">
         <time datetime="30 Jun 2016" class="post-meta__date date">30 Jun 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/third-Post">thirdPost</a>, <a href="http://tech.innovation.co.jp/tag/Oz">Oz</a>, <a href="http://tech.innovation.co.jp/tag/neural-style">neural-style</a>, <a href="http://tech.innovation.co.jp/tag/Art">Art</a></span>
-        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/8304640?v=3" alt="profile image for yuki ozasa" class="avatar post-meta__avatar" /> by yuki ozasa</span>
+        <span class="post-meta__author author"><img src="https://avatars2.githubusercontent.com/u/13131599?v=3" alt="profile image for Akihiro YAGASAKI" class="avatar post-meta__avatar" /> by Akihiro YAGASAKI</span>
       </div>
       <h1 class="post-title">neural-styleを使い、名画のテイストを拝借して遊んでみた</h1>
     </header>
@@ -293,7 +293,7 @@ jcjohnsonさんが公開している <a href="https://github.com/jcjohnson/neura
 <p>今回はAWSを使います。</p>
 </div>
 <div class="paragraph">
-<p>実はすでに諸々の環境構築までやってくれているamiがあったようなのですが、
+<p>実はすでに諸々の環境構築までやってくれているAMIがあったようなのですが、
 僕はそれに気がつきませんで、チクチク環境構築しながら進めていきました。</p>
 </div>
 <div class="paragraph">
@@ -330,8 +330,7 @@ jcjohnsonさんが公開している <a href="https://github.com/jcjohnson/neura
 </div>
 <div class="paragraph">
 <p>機械学習とかっていうとGPUインスタンスを使うのが普通とは思うのですが、
-NVIDIAドライバをインストールしたり色々するのは面倒なんじゃないか説や、
-その割にNVIDIAが公開しているAMIが微妙なんじゃないか説などがあり、ちょっと試してみたいだけなのでさっくりCPUモードで実行することと相成りました。</p>
+ちょっと試してみたいだけなのでさっくりCPUモードで実行することと相成りました。</p>
 </div>
 <div class="paragraph">
 <p>ので、具体的には今回はSTEP3までやっています。</p>
@@ -551,7 +550,7 @@ CPUモードなのでのらりくらりやっていたので、
 </div>
 </div>
 <div class="paragraph">
-<p>可愛くはないスタイル画像</p>
+<p>スタイル画像</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -631,7 +630,7 @@ CPUモードなのでのらりくらりやっていたので、
 
 
             <footer class="footer">
-                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
                 <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
                 <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
             </footer>
