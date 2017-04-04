@@ -55,7 +55,7 @@ var _trackingid = 'LFT-10003-1';
     <meta property="og:description" content="おはこんばんわ、中村と申します。 普段は自社サービスの開発に携わっております。 皆さんGW目前となり浮き足立っている方も多いのではないでしょうか？ 仙台に行ってきます（笑） 今回は先日WordPressで会員機能プラグインを作ってみたお話をしてみようと思います。 その2書きました。 要件 WordPressに会員機能を追加する 会員は投稿記事をお気に入りに追加でき、一覧で見れるようにする 会員データは自社サービスのDBへ保存させる こんな感じ。 （最終的には全ページSSL化とか色々増えちゃいましたが） 自社サービスとの連携が必要なので、単純にプラグイン..." />
     <meta property="og:url" content="http://tech.innovation.co.jp/2016/04/28/Word-Press-1.html" />
     <meta property="article:published_time" content="2016-04-27T15:00:00.000Z" />
-    <meta property="article:modified_time" content="2016-06-08T11:41:19.164Z" />
+    <meta property="article:modified_time" content="2017-04-04T09:21:50.530Z" />
     <meta property="article:tag" content="FirstPost" />
     <meta property="article:tag" content="WordPress" />
     <meta property="article:tag" content="Plugin" />
@@ -73,15 +73,15 @@ var _trackingid = 'LFT-10003-1';
     "publisher": "イノベーション　エンジニアブログ",
     "author": {
         "@type": "Person",
-        "name": "Akihiro YAGASAKI",
-        "image": "https://avatars.githubusercontent.com/u/13131599?v=3",
+        "name": "yuki ozasa",
+        "image": "https://avatars0.githubusercontent.com/u/8304640?v=3",
         "url": "undefined/author/undefined",
         "sameAs": null
     },
     "headline": "WordPressでプラグインを作ってみた　その1",
     "url": "http://tech.innovation.co.jp/2016/04/28/Word-Press-1.html",
     "datePublished": "2016-04-27T15:00:00.000Z",
-    "dateModified": "2016-06-08T11:41:19.164Z",
+    "dateModified": "2017-04-04T09:21:50.530Z",
     "keywords": "FirstPost, WordPress, Plugin, Nakamura",
     "description": "おはこんばんわ、中村と申します。 普段は自社サービスの開発に携わっております。 皆さんGW目前となり浮き足立っている方も多いのではないでしょうか？ 仙台に行ってきます（笑） 今回は先日WordPressで会員機能プラグインを作ってみたお話をしてみようと思います。 その2書きました。 要件 WordPressに会員機能を追加する 会員は投稿記事をお気に入りに追加でき、一覧で見れるようにする 会員データは自社サービスのDBへ保存させる こんな感じ。 （最終的には全ページSSL化とか色々増えちゃいましたが） 自社サービスとの連携が必要なので、単純にプラグイン..."
 }
@@ -218,13 +218,14 @@ var _trackingid = 'LFT-10003-1';
     		<div style="width: 112px; height: 22px; float: left;">
     			<iframe
     				scrolling="no" frameborder="0" id="fbframe"
-    				style="border: none; overflow: hidden; height: 90px;"
-    				allowTransparency="true"></iframe>
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
     		</div>
     		<script type="text/javascript">
     			(function() {
     				var url = encodeURIComponent(location.href);
-    				document.getElementById('fbframe').src="//www.facebook.com/v2.0/plugins/like.php?href=" + url + "&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=false&amp;share=false&amp;height=90&amp;appId=1613776965579453"
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
     			})();
     		</script>
     	</div>
@@ -249,7 +250,7 @@ var _trackingid = 'LFT-10003-1';
     <header class="post-header">
       <div class="post-meta">
         <time datetime="28 Apr 2016" class="post-meta__date date">28 Apr 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/First-Post">FirstPost</a>, <a href="http://tech.innovation.co.jp/tag/Word-Press">WordPress</a>, <a href="http://tech.innovation.co.jp/tag/Plugin">Plugin</a>, <a href="http://tech.innovation.co.jp/tag/Nakamura">Nakamura</a></span>
-        <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/13131599?v=3" alt="profile image for Akihiro YAGASAKI" class="avatar post-meta__avatar" /> by Akihiro YAGASAKI</span>
+        <span class="post-meta__author author"><img src="https://avatars0.githubusercontent.com/u/8304640?v=3" alt="profile image for yuki ozasa" class="avatar post-meta__avatar" /> by yuki ozasa</span>
       </div>
       <h1 class="post-title">WordPressでプラグインを作ってみた　その1</h1>
     </header>
@@ -276,11 +277,6 @@ var _trackingid = 'LFT-10003-1';
 </div>
 <div class="paragraph">
 <p><a href="http://tech.innovation.co.jp/2016/06/02/Word-Press-2.html">その2</a>書きました。</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="/images/wordpress_logo.png" alt="wordpress logo.png">
-</div>
 </div>
 </div>
 </div>
@@ -589,7 +585,7 @@ function inno_front_controller() {
 
 
             <footer class="footer">
-                <span class="footer__copyright">&copy; 2016. All rights reserved.</span>
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
                 <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
                 <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
             </footer>
