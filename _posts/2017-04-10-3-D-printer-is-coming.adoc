@@ -10,4 +10,9 @@
 ## 弊社で導入している3Dプリンター
 
 image::ami/20170410/1.png[]
+http://flashforge.co.jp/dreamer/
+
+Apple tree 株式会社のFLASHFORGE （フラッシュフォージ） 3Dプリンター Dreamer +
+熱で溶かしたフィラメントを積み上げて形をつくる、熱溶解積層タイプの3Dプリンターです。 +
+
 
