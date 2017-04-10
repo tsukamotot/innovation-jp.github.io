@@ -76,7 +76,7 @@ image::ami/20170410/2Dlist.png[]
 出力風景 +
 
 ++++
-<iframe width=“560” height=“315" src=“https://youtu.be/vQKpT-6B64c” frameborder=“0" allowfullscreen></iframe>
+<iframe width=“560” height=“315" src=“https://www.youtube.com/embed/vQKpT-6B64c” frameborder=“0" allowfullscreen></iframe>
 ++++
 
 それを出力した結果がこちら！ +
