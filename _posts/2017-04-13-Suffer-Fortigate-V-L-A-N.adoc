@@ -1,0 +1,134 @@
+
+# FortigateのVLAN設定に苦しんだ話
+:published_at: 2017-04-13
+:hp-alt-title: Suffer Fortigate VLAN
+:hp-tags: Network, Fortigate, VLAN, KTN
+
+KTNです。 +
+弊社では最新技術に触れるために新しいデバイスや、アイテムを導入しています。 +
+ついでに？社内のネットワークをパワーアップさせたい！ということで、
+ネットワーク機器も購入しました。
+
+
+
+-- FortigateでVLAN
+電源ONして、PCとFortigateのLAN1を接続します。
+リンクアップして1がピカピカしてます。
+❏画像
+
+PCのネットワークを確認すると、
+DHCPでIPとゲートウェイ（画面項目：ルーター）が取得出来ています。
+❏画像
+
+ブラウザを開いて、
+https://192.168.1.99/にアクセスすると、管理画面が出てきました。
+とっても簡単！
+❏画像
+
+設定画面にログインして、左ペイン？（とマニュアルでは呼ぶようです）から、
+Network - Interfaces を開きます。
+❏画像
+
+lanポートがスイッチモードになっているようで、1~5がひとつのグループになってます。
+今回は、
+　lan1：社内ネットワーク（VLAN100）
+　lan2：インターネット専用ネットワーク（VLAN200）
+　lan3：スイッチと接続（タグVLAN）
+という感じに設定したいので、
+lanポートをバラバラで使うインタフェースモードに変えたいと思います。
+
+マニュアルを見ると、
+CLIから設定する必要があるようなので、
+Dashboard を開いて、CLI Console を使います。
+❏画像
+
+FGT50E3U16042314 # config system global
+
+FGT50E3U16042314 (global) # set internal-switch-mode interface
+
+command parse error before 'internal-switch-mode'
+Command fail. Return code -61
+
+インターネットで調べてコマンドを発行してみたのですが、
+そんなコマンド知らないと言われてしまいました。
+Interfaces 画面から出来るのか？と探してみると、
+以下の感じで出来ることがわかりました。
+
+
+続いてVLANインタフェースを作ってみます。 +
+設定は以下の通りです。 +
+　VLAN ID：100 +
+　Interface：lan1 +
+　IP：192.168.12.1/255.255.255.0 +
+ +
+　VLAN ID：200 +
+　Interface：lan2 +
+　IP：192.168.13.1/255.255.255.0 +
+ +
+　VLAN ID：100 +
+　Interface：lan3 +
+ +
+　VLAN ID：200 +
+　Interface：lan3 +
+ +
+設定するとこんな感じになります。
+これで設定OKなはずなので、動作確認をしてみます。
+PCをlan1に接続して、IPを固定で設定して、
+https://192.168.12.1/ にアクセスすると、
+管理画面が出てきま・・・・・・せんでした。
+
+実は設定中も違和感がありまして、
+lan3にVLAN100を割り当てる際に、
+
+This name is already in use by another interface.
+
+というエラーメッセージが出たので、
+VLAN100-TRUNKという名前にしてとりあえず登録してみました。
+そもそもこんなエラーになるということは、
+設定の仕方自体に誤りがある気がして、
+マニュアル様を確認することにしました。
+※マニュアルはFortigateさんのホームページから、
+　アカウント登録する必要があります。
+
+マニュアル確認すると、
+VLANインタフェースはタグVLANを使う時だけ設定するようで、
+そもそも想定していた以下の構成では設定はできないようです。
+
+-- 
+
+なるほど〜、ということで以下の構成にすることにしました。
+
+
+
+
+interface GigabitEthernet0/1
+ switchport access vlan 100
+
+interface GigabitEthernet0/24
+ switchport mode trunk
+
+interface Vlan100
+ no ip address
+ no ip route-cache
+
+interface Vlan200
+ no ip address
+ no ip route-cache
+
+
+すると、通信ができました！！
+結果は以下のとおりです。
+
+$ ping 192.168.12.1
+PING 192.168.12.1 (192.168.12.1): 56 data bytes
+64 bytes from 192.168.12.1: icmp_seq=0 ttl=255 time=0.629 ms
+64 bytes from 192.168.12.1: icmp_seq=1 ttl=255 time=0.540 ms
+64 bytes from 192.168.12.1: icmp_seq=2 ttl=255 time=0.603 ms
+64 bytes from 192.168.12.1: icmp_seq=3 ttl=255 time=0.539 ms
+64 bytes from 192.168.12.1: icmp_seq=4 ttl=255 time=0.581 ms
+^C
+--- 192.168.12.1 ping statistics ---
+5 packets transmitted, 5 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 0.539/0.578/0.629/0.035 ms
+
+-- やっとFortigateの気持ちになれた
