@@ -46,7 +46,7 @@ PoE ＋ タグVLANに対応しているスイッチを選定 +
 
 ## FortigateでVLAN
 ということで、Fortigate 50E（以下Fortigate）のVLAN設定をしていきます。 + 
-電源ONして、PCとFortigateのLAN1を接続します。 +
+電源ONして、MACとFortigateのLAN1を接続します。 +
 
 image::kotani/20170413/2.jpg[]
 
@@ -151,7 +151,7 @@ image::kotani/20170413/12.png[]
 設定するとこんな感じになります。 +
 
 これで設定OKなはずなので、動作確認をしてみます。 +
-PCをlan1に接続して、IPを固定で設定して、 +
+MACをlan1に接続して、IPを固定で設定して、 +
 https://192.168.12.1/ にアクセスすると、 +
 管理画面が出てきま・・・・・・せんでした。 +
  +
