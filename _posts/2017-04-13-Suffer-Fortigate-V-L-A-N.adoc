@@ -16,7 +16,7 @@ image::kotani/20170413/1.jpg[]
 
 ## 何に使うの？
 ・一番下がL2スイッチ +
-型番：Cisco Catalyst 2960L-24PS-LL +
+型番：Cisco Catalyst 2960L-24PS-LL（以下 L2と呼びます） +
 社内に無線のAPが何台か設置されてまして、 +
 社内ネットワーク専用のSSIDが作成されていますが、 +
 既存のSSIDとは別に、インターネット専用のSSIDを作成したい。 +
@@ -31,7 +31,7 @@ PoE ＋ タグVLANに対応しているスイッチを選定 +
 お勉強用のルーター
 
 ・一番上がUTM +
-型番：Fortinet FortiGate-50E +
+型番：Fortinet FortiGate-50E（以下 UTMと呼びます） +
 サテライトオフィスを新設するということで、 +
 そこで利用するルータ ＋ FWとして購入。 +
 
@@ -44,9 +44,9 @@ PoE ＋ タグVLANに対応しているスイッチを選定 +
 
 
 
-## FortigateでVLAN
-ということで、Fortigate 50E（以下Fortigate）のVLAN設定をしていきます。 + 
-電源ONして、MACとFortigateのLAN1を接続します。 +
+## UTMでVLAN
+ということで、UTMのVLAN設定をしていきます。 + 
+電源ONして、MACとUTMのLAN1を接続します。 +
 
 image::kotani/20170413/2.jpg[]
 
@@ -75,18 +75,16 @@ image::kotani/20170413/6.png[]
 
 image::kotani/20170413/7.png[]
 
-設定画面にログインして、左ペイン？（とマニュアルでは呼ぶようです）から、 +
-Network - Interfaces を開きます。 +
+設定画面にログインして、Network - Interfaces を開きます。 +
 
-lanポートがスイッチモードになっているようで、1~5がひとつのグループになってます。 +
+lanポートが「Switch Mode」になっているようで、1~5がひとつのグループになってます。 +
 今回は、 +
 　lan1：社内ネットワーク（VLAN100） +
 　lan2：インターネット専用ネットワーク（VLAN200） +
 　lan3：スイッチと接続（タグVLAN） +
 という感じに設定したいので、 +
-lanポートをバラバラで使うインタフェースモードに変えたいと思います。 +
+lanポートをバラバラで使う「Interface Mode」に変えたいと思います。 +
  +
-マニュアルを見ると、 +
 CLIから設定する必要があるようなので、 +
 
 image::kotani/20170413/8.png[]
@@ -108,7 +106,8 @@ Command fail. Return code -61
 
 image::kotani/20170413/9.png[]
 
-なんだか出来そうな画面を見つけました。 + 
+Network - Interfaces を開いて、Hardware Switch欄にある lan をダブルクリックすると、 + 
+なんだか設定出来そうな画面を見つけました。 + 
 Physical Interface Members を減らしたりできそうです。
 
 image::kotani/20170413/10.png[]
@@ -212,8 +211,8 @@ PING 192.168.12.1 (192.168.12.1): 56 data bytes
 round-trip min/avg/max/stddev = 0.539/0.578/0.629/0.035 ms
 ```
 
-## やっとFortigateの気持ちになれた！？
+## やっとUTMの気持ちになれた！？
 やっぱりネットワークの設定は難しいですね。 +
 ネットワーク機器の気持ちにならないとダメだということを、改めて認識した次第です。 +
-やっぱりネットワークは楽しいですね。 +
+やっぱりネットワーク機器の設定は楽しいですね。 +
 サヨナラ、サヨナラ、サヨナラ。
