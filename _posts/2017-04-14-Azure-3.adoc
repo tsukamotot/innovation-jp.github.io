@@ -21,7 +21,7 @@ http://tech.innovation.co.jp/2016/12/09/Azure-Machine-Learning.html[Azure Machin
 
 http://tech.innovation.co.jp/2017/02/03/Azure-Machine-Learning-2.html[Azure Machine Learning のお話 その2]
 
-その2ではすでにAzure Machine Learningを利用していませんでしたが、 +
+その2ではすでに Azure Machine Learning を利用していませんでしたが、 +
 引続き Computer Vision API のお話になります。
 
 前回は PC のローカルにある画像を python を利用し +
@@ -38,14 +38,16 @@ LINE の BOT アカウント開設手順としては…
 
 という事で詳細は各自検索していただればと存じます。
 
+image:syoga/aml3/azure3_1.png[]
+
 ブログ用 bot というアカウントを作成しました、 +
 アイコンはフリー素材でおなじみの「いらすとや」さんの画像です、 +
 画像解析感のある緊迫した画像をチョイスしました。 +
 
 ##### 構成はどうする？
-構成はこうしました、LINE <=> APIGateWay <=> Lambda <=> Azure or ぐるなび
+構成はこうしました、LINE <=> APIGateWay <=> Lambda <=> Azure(Computer Vision API, Translate） or ぐるなび
 
-画像1
+2
 
 ぐるなび…！？
 
@@ -75,7 +77,7 @@ const BACKET = 'バケット名';
 const S3URL  = 'https://s3-ap-northeast-1.amazonaws.com/' + BACKET + '/';
 
 // LINE
-const CHANNEL_ACCESS_TOKEN = 'LINEで発行したキーを入れてね';
+const CHANNEL_ACCESS_TOKEN = 'LINE キー';
 
 // 画像ファイル名
 const IMAGE_NAME = crypto.randomBytes(8).toString('hex') + '.png';
@@ -474,24 +476,29 @@ callback 地獄！！
 翻訳精度が微妙なのか、画像解析結果が微妙なのか？？
 犬を飼っている事もバレている！？
 
-次はエンジニアチームのボス、Yagasaki さん。
+次はエンジニアチームの長、YAGASAKI さん。
 
 お、年齢が出ましたね！33…！？
 「机の前に立っている人」は「お…おぅ」って感じです。
 
 次は KTN さん
-画像5
+
+画像6
 
 あれ？前回より若返っている！ケーキではなくティラミスだけど、今日範囲ですね！
 
 さらに、AMIさんとKTNさん
-画像6
+
+画像7
 
 あれ？KTNさん老けた！！
+AMIさんは…これ以上は野暮なので止めます！
 
 翻訳しているのでアレですが、カップルは2人組という意味ですかね。
 
 そしてKATOさんとYAIZUさん！
+
+画像8
 
 お、年齢はほぼバッチシ！！凄い！
 キャプションは翻訳しない方がいいのかな？？
