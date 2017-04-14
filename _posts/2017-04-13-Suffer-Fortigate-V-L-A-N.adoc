@@ -1,4 +1,3 @@
-
 # FortigateのVLAN設定に苦しんだ話
 :published_at: 2017-04-13
 :hp-alt-title: Suffer Fortigate VLAN
