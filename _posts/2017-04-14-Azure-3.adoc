@@ -1,0 +1,506 @@
+= LINEとlambdaでパンケーキ！ なお話
+:hp-alt-title: Azure 3
+:hp-tags: syoga, log, Azure, Computer Vision API, node.js, AWS, lambda, LINE
+
+お久しぶりです、SREと呼ぶ方も呼ばれる方もまだ慣れていない syoga です。
+
+最近 SRE というチーム名に恥じない業務をするには何をすべきか… +
+DevOpsってなんでも自動化するだけじゃないよね…等 +
+日々の業務について悶々としていたところ、ドラゴンクエストXIの発売日が決まりました！！
+3DSとPS4 というマルチ展開なのでとりあえず両方購入する事にします！
+
+##### Azure Machine Learning のお話 その3
+Azure シリーズの第3段となります、前回までのあらすじはこちらです。
+
+```
+機械学習を学ぶため Azure Machin Training を体験したが、
+自分が「作るより使う方が好きマン」だという事に気付き、
+Computer Vision API を使ってみた syoga だった…
+```
+http://tech.innovation.co.jp/2016/12/09/Azure-Machine-Learning.html[Azure Machine Learning のお話 その1]
+
+http://tech.innovation.co.jp/2017/02/03/Azure-Machine-Learning-2.html[Azure Machine Learning のお話 その2]
+
+その2ではすでにAzure Machine Learningを利用していませんでしたが、 +
+引続き Computer Vision API のお話になります。
+
+前回は PC のローカルにある画像を python を利用し +
+Computer Vision API に送信しましたが、携帯で撮った写真を +
+いちいち PC に送るのが面倒くさいので、LINE で画像を送ったら +
+画像解析結果を返してくれたら、いいんじゃないかな〜と思いました。
+
+##### LINE の BOT アカウントを作ってみる
+LINE の BOT アカウント開設手順としては…
+
+1.LINE BUSINESS CENTERでユーザ登録 +
+2.LINE Developer でBOTアカウントを作成 +
+3.API KEY をメモ
+
+という事で詳細は各自検索していただればと存じます。
+
+ブログ用 bot というアカウントを作成しました、 +
+アイコンはフリー素材でおなじみの「いらすとや」さんの画像です、 +
+画像解析感のある緊迫した画像をチョイスしました。 +
+
+##### 構成はどうする？
+構成はこうしました、LINE <=> APIGateWay <=> Lambda <=> Azure or ぐるなび
+
+画像1
+
+ぐるなび…！？
+
+この「！？」の表現が分かる人は私と同い年だと思いますが、 +
+せっかくなのでぐるなびの API も使います。
+
+##### せっかくだから俺はこのnode.jsを選ぶぜ！！
+前回 python で実装しましたが、今回は node.js で実装します、 +
+モジュールは余り使いたくなかったのですが、無理でした！
+
+ソースは以下の通りです。
+
+```
+'use strict';
+
+// モジュールロード
+const fs     = require('fs');
+const url    = require('url');
+const https  = require('https');
+const crypto = require('crypto');
+const sleep  = require('sleep-async');
+const aws    = require('aws-sdk');
+const requestPromise = require('request-promise');
+
+// AWS
+const BACKET = 'バケット名';
+const S3URL  = 'https://s3-ap-northeast-1.amazonaws.com/' + BACKET + '/';
+
+// LINE
+const CHANNEL_ACCESS_TOKEN = 'LINEで発行したキーを入れてね';
+
+// 画像ファイル名
+const IMAGE_NAME = crypto.randomBytes(8).toString('hex') + '.png';
+
+// テキストメッセージ送信
+function pushTexeMessage(text, userId) {
+
+    console.log('Start:pushTexeMessage');
+
+    // API 呼出パラメータ(text)
+    let parmText = {
+        hostname: 'api.line.me',
+        path: '/v2/bot/message/push',
+        headers: {
+            'Content-type' : 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN
+        },
+        method: 'POST'
+    };
+
+    // Send Massage Object 設定
+    let pushMassage = JSON.stringify(
+        {
+            to: userId,
+            messages: [{type: 'text', text: text}]
+        }
+    );
+
+    console.log(pushMassage);
+
+    // POST リクエスト
+    let req = https.request(parmText, function(res) {
+        req.on('data', function(res) {
+            console.log(res.toString());
+        }).on('error', function(e) {
+            console.log(e.stack);
+        });
+    });
+
+    // メッセージをpush
+    sleep().sleep(300, function() {
+        req.write(pushMassage);
+        req.end();
+    });
+
+    console.log('End:pushTexeMessage');
+}
+
+// 受信メッセージから画像を取得
+function getMessageImage(id, callback) {
+
+    console.log('Start:getMessageImage');
+
+    // API 呼出パラメータ(image)
+    let paramImage = {
+        hostname: 'api.line.me',
+        path:     '/v2/bot/message/' + id + '/content',
+        headers: {
+            'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN
+        },
+        method: 'GET'
+    };
+
+    let resData = [];
+    let image;
+
+    // GET リクエスト
+    let req = https.request(paramImage, function(res) {
+        res.on('data', function(chunk) {
+            resData.push(new Buffer(chunk));
+        }).on('error', function(e) {
+            console.log(e.stack);
+        }).on('end', function(){
+            image = Buffer.concat(resData);
+            console.log('End:getMessageImage');
+            callback(image);
+        });
+    });
+
+    req.end();
+}
+
+// S3へ画像アップロード
+function saveImageS3(image, callback) {
+
+    console.log('Start:saveImageS3');
+
+    aws.config.region = 'ap-northeast-1';
+
+    let s3     = new aws.S3();
+    let params = {
+        Bucket: BACKET,
+        Key:    IMAGE_NAME,
+        ACL:    'public-read',
+        Body:   image
+    };
+
+    // 画像アップロード
+    s3.putObject(params, function(e, data) {
+        if(!e) {
+            console.log('End:saveImageS3');
+            callback();
+        } else {
+            console.log(e.stack);
+        }
+    });
+}
+
+// ComputerVisionAPI 呼出
+function callMSComputerVisionAPI(callback) {
+
+    console.log('Start:callMSComputerVisionAPI');
+
+    // S3 画像 URL
+    let urlImage = S3URL + IMAGE_NAME;
+
+    // ComputerVisionAPI のレスポンス指定
+    let params = 'visualFeatures=Categories, Tags, Description, Faces';
+
+    // ComputerVisionAPI
+    let urlObj = {
+        protocol: 'https',
+        hostname: 'westus.api.cognitive.microsoft.com',
+        pathname: 'vision/v1.0/analyze',
+        search  : params
+    };
+
+    let sendData = {
+        "uri"      : url.format(urlObj),
+        "method"   : "POST",
+        "type"     : "POST",
+        "encoding" : "binary",
+        "headers"  : {
+            "Content-Type": "application/json",
+            "Ocp-Apim-Subscription-Key": "Computer Vision API キー"
+        },
+        "body"     : '{"url":"' + urlImage + '"}'
+    };
+
+    // お問合わせ
+    requestPromise(sendData).then(function(result) {
+        let cvResult  = JSON.parse(result);
+        console.log('End:callMSComputerVisionAPI');
+        callback(cvResult);
+    }).catch(function(e) {
+        console.log(e.stack);
+    }).done();
+}
+
+// ぐるなび API 呼出し
+function callGurunaviAPI(latitude, longitude, callback) {
+
+    console.log('Start:callGrunaviAPI');
+
+    // リクエストパラメータ
+    let grnvParam = {
+        "keyid"       : 'ぐるなび API キー',
+        "format"      : 'json',
+        "input_coordinates_mode" : 1,
+        "latitude"    : latitude,
+        "longitude"   : longitude,
+        "hit_per_page": 3,
+        "freeword"    : 'パンケーキ'
+    };
+
+    let grnvSendDate = {
+        url     : 'https://api.gnavi.co.jp/RestSearchAPI/20150630/1',
+        headers : {'Content-Type' : 'application/json; charset=UTF-8'},
+        qs      : grnvParam,
+        json    : true
+    };
+
+    requestPromise(grnvSendDate).then(function(result) {
+        console.log('End:callGrunaviAPI');
+        callback(result);
+    }).catch(function(e) {
+        console.log(e.stack);
+    }).done();
+}
+
+// アクセストークン取得
+function getAccessToken(callback) {
+
+    console.log('Start:getAccessToken');
+
+    let accessParams  = {
+        'Content-Type': 'application/json',
+        'Accept'      : 'application/jwt',
+        'Ocp-Apim-Subscription-Key': 'Translate　キー'
+    };
+
+    let accessData = {
+         url    : 'https://api.cognitive.microsoft.com/sts/v1.0/issueToken',
+         method : 'POST',
+         headers: accessParams,
+         json   : true
+    };
+
+    requestPromise(accessData, function(e, result) {
+        if(!e) {
+            console.log('End:getAccessToken');
+            callback(result.body);
+        } else {
+            console.log(e.stack);
+        }
+    });
+}
+
+// Translate Text 呼出し
+function callTranslateAPI(accessToken, text, callback) {
+
+    console.log('Start:callTranslateAPI');
+
+    let url = 'https://api.microsofttranslator.com/v2/http.svc/Translate',
+        appid    = 'Bearer ' + accessToken,
+        from     = 'en',
+        to       = 'ja';
+
+    let uri = url + '?appid=' + appid +
+              '&text=' + text + '&from=' + from + '&to=' + to;
+
+    let header = {
+        'Accept': 'application/xml'
+    };
+
+    let option = {
+        url: encodeURI(uri),
+        method: 'GET',
+        headers: header,
+        json: true
+    };
+
+    requestPromise(option, function(e, result) {
+        if(!e) {
+            console.log('End:callTranslateAPI');
+            callback(result.body.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g, ''));
+        } else {
+            console.log(e.stack);
+        }
+    });
+}
+
+// ここから処理開始
+exports.handler = (event, context) => {
+
+    console.log('Start:LINE BOT');
+
+    let jsonObj     = JSON.parse(event.body);
+    let lineMessage = jsonObj.events[0];
+
+    // メッセージデータ取得
+    let message = lineMessage.message;
+    let type    = message.type;
+    let id      = message.id;
+
+    // ユーザID 取得
+    let source  = lineMessage.source;
+    let userId  = source.userId;
+
+    switch(type) {
+    // イメージ
+    case('image'):
+        pushTexeMessage('ちょっと待ってもらえるかな？', userId);
+
+        // 画像取得
+        getMessageImage(id, function(image) {
+            // 取得画像をS3に保存
+            saveImageS3(image, function() {
+                // Microsoft ComputerVisionAPI 呼出し
+                callMSComputerVisionAPI(function(cvResult) {
+                    // 解析結果を翻訳して送信
+                    if(cvResult.faces.length != 0) {
+                        let faces = 'この画像には以下の人が含まれていそうかな？\n';
+
+                        for(let cntFaces in cvResult.faces) {
+                            let gender = cvResult.faces[cntFaces].gender;
+                            if(gender == 'Female') {
+                                gender = '女性';
+                            } else {
+                                gender = '男性';
+                            }
+
+                            if(cntFaces != cvResult.faces.length -1) {
+                                faces += '「' + cvResult.faces[cntFaces].age + '歳の' + gender + ' 」\n';
+                            } else {
+                                faces += '「' + cvResult.faces[cntFaces].age + '歳の' + gender + ' 」';
+                            }
+                        }
+                        pushTexeMessage(faces, userId);
+                    }
+
+                    getAccessToken(function(accessToken) {
+                        callTranslateAPI(accessToken, cvResult.description.captions[0].text, function(caption) {
+                            let caption_jp = 'この画像にタイトルをつけるとしたら「' + caption + '」かな？';
+                            pushTexeMessage(caption_jp, userId);
+                        });
+                    });
+
+                    let tags_jp = 'この画像には以下の物が含まれていそうかな？\n';
+                    for(let cntTags in cvResult.tags) {
+
+                        getAccessToken(function(accessToken) {
+                            callTranslateAPI(accessToken, cvResult.tags[cntTags].name, function(tags) {
+                                sleep().sleep(500, function() {
+                                    if(cntTags != cvResult.tags.length -1) {
+                                        tags_jp += '「' + tags + '」\n';
+                                    } else {
+                                        tags_jp += '「' + tags + '」';
+                                        pushTexeMessage(tags_jp, userId);
+                                    }
+                                });
+                            });
+                        });
+                    }
+               });
+            });
+        });
+        break;
+    // 位置情報
+    case('location'):
+        // ぐるなび API 呼出し
+        callGurunaviAPI(message.latitude, message.longitude, function(grnvResult) {
+
+            if(grnvResult.rest.length != 0) {
+                pushTexeMessage('近くにパンケーキが食べられるお店があるかな。', userId);
+                let rest = '';
+                // 検索結果を送信
+                for(let cntRest = 0; cntRest < grnvResult.rest.length; cntRest++) {
+                    console.log(cntRest);
+                    rest =  '[店名] : ' + grnvResult.rest[cntRest].name + '\n';
+                    rest += '[住所] : ' + grnvResult.rest[cntRest].address + '\n';
+                    rest += '[URL] : '  + grnvResult.rest[cntRest].url;
+
+                    pushTexeMessage(rest, userId);
+                }
+            } else {
+                pushTexeMessage('近くにパンケーキが食べられるお店はないかな。', userId);
+            }
+        });
+        break;
+    // テキスト
+    case('text'):
+        pushTexeMessage('え？「' + message.text + '」？\nそんな事より画像を送ってくれないかな？', userId);
+        break;
+    // ビデオ
+    case('video'):
+        pushTexeMessage('動画もいいけど画像を送ってくれないかな？', userId);
+        break;
+    // オーディオ
+    case('audio'):
+        pushTexeMessage('音声もいいけど画像を送ってくれないかな？', userId);
+        break;
+    // その他
+    default:
+        pushTexeMessage('そんな事より画像を送ってくれないかな？', userId);
+        break;
+    }
+    console.log('End:LINE BOT');
+}
+```
+
+軽く説明します
+
+・LINEからメッセージ受信
+・メッセージのタイプを判定
+・画像だったら Computer Vison API で画像解析し、
+  翻訳したメッセージを送信者にプッシュ
+・位置情報ならぐるなび API で付近のパンケーキ店を検索し
+  検索結果をメッセージ送信者にプッシュ
+・その他のタイプは適当なメッセージを送信者にプッシュ
+
+・気になる点
+callback 地獄！！
+同期させるために async を使用…せず、無理矢理スリープさせている。
+異常系は全て無視。
+
+##### 早速動かそう！！
+まずはテキストメッセージを送ります。
+
+画像3
+
+お、なんかイラっとする返信だな…
+
+次は位置情報
+
+画像4
+
+おー、ちゃんと検索結果が来ました、ただイラっとするのは変わらず…
+
+そして画像解析 DA☆
+
+まずはうちの猫ちゃん
+
+画像5
+
+翻訳精度が微妙なのか、画像解析結果が微妙なのか？？
+犬を飼っている事もバレている！？
+
+次はエンジニアチームのボス、Yagasaki さん。
+
+お、年齢が出ましたね！33…！？
+「机の前に立っている人」は「お…おぅ」って感じです。
+
+次は KTN さん
+画像5
+
+あれ？前回より若返っている！ケーキではなくティラミスだけど、今日範囲ですね！
+
+さらに、AMIさんとKTNさん
+画像6
+
+あれ？KTNさん老けた！！
+
+翻訳しているのでアレですが、カップルは2人組という意味ですかね。
+
+そしてKATOさんとYAIZUさん！
+
+お、年齢はほぼバッチシ！！凄い！
+キャプションは翻訳しない方がいいのかな？？
+
+と言う訳で画像解析結果は、まずまずかなという気がします！
+
+メガネ型のデバイスで周りを認識して近くに何があるかや、
+相手の表情から感情を音声で教えてくれるって事が手軽にできそうですね。
+
+遠隔操作のロボットや、視覚障害がある方等に、色々と役立つ物ができそうです！
+
+完
