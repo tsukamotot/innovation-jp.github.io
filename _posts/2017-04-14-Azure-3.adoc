@@ -45,7 +45,7 @@ image:syoga/aml3/azure3_1.png[]
 画像解析感のある緊迫した画像をチョイスしました。 +
 
 ##### 構成はどうする？
-構成はこうしました、LINE <=> APIGateWay <=> Lambda <=> Azure(Computer Vision API, Translate） or ぐるなび
+構成はこうしました、LINE <--> APIGateWay <--> Lambda <--> Azure(Computer Vision API, Translate） or ぐるなび
 
 image:syoga/aml3/azure3_2.png[]
 
