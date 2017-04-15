@@ -1,6 +1,6 @@
 = LINEとlambdaでパンケーキ！ なお話
 :hp-alt-title: Azure 3
-:hp-tags: syoga, log, Azure, Computer Vision API, Node.js, AWS, lambda, LINE
+:hp-tags: syoga, log, Azure, Computer Vision API, Node.js, AWS, Lambda, LINE
 
 お久しぶりです、SREと呼ぶ方も呼ばれる方もまだ慣れていない syoga です。
 
@@ -46,7 +46,7 @@ image:syoga/aml3/azure3_1.png[]
 
 ##### 構成はどうする？
 構成はこうしました。 +
-LINE <--> APIGateWay <--> Lambda <--> Azure(Computer Vision API, Translate） or ぐるなび
+LINE <--> API Gateway <--> Lambda <--> Azure(Computer Vision API, Translate） or ぐるなび
 
 image:syoga/aml3/azure3_2.png[]
 
@@ -440,20 +440,20 @@ exports.handler = (event, context) => {
 }
 ```
 
-軽く説明します
+長いので軽く説明します
 
 ・LINEからメッセージ受信 +
 ・メッセージのタイプを判定 +
 ・画像だったら Computer Vison API で画像解析し、 +
-  翻訳したメッセージを送信者にプッシュ +
+　翻訳したメッセージを送信者にプッシュ +
 ・位置情報ならぐるなび API で付近のパンケーキ店を検索し +
-  検索結果をメッセージ送信者にプッシュ +
+　検索結果をメッセージ送信者にプッシュ +
 ・その他のタイプは適当なメッセージを送信者にプッシュ
 
-・気になる点 +
-callback 地獄！！ +
-同期させるために async を使用…せず、無理矢理スリープさせている。 +
-異常系は全て無視。
+■気になる点 +
+・callback 地獄！！ +
+・同期させるために async を使用…せず、無理矢理スリープさせている。 +
+・異常系は全て無視。
 
 ##### 早速動かそう！！
 まずはテキストメッセージを送ります。
@@ -505,7 +505,7 @@ AMIさんは…これ以上は野暮なので止めます！
 image:syoga/aml3/azure3_9.png[]
 
 お、年齢はほぼバッチシ！！凄い！ +
-キャプションは翻訳しない方がいいのかな？？ +
+キャプションは翻訳しない方がいいかもですね +
 カップル率の高さが気になります。
 
 と言う訳で画像解析結果は、まずまずかなという気がします！
