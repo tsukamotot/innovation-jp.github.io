@@ -27,7 +27,7 @@ http://tech.innovation.co.jp/2017/02/03/Azure-Machine-Learning-2.html[Azure Mach
 前回は PC のローカルにある画像を Python を利用し +
 Computer Vision API に送信しましたが、携帯で撮った写真を +
 いちいち PC に送るのが面倒くさいので、LINE で画像を送ったら +
-画像解析結果を返してくれたら、いいんじゃないかな〜と思いました。
+画像解析結果を返してくれるのが、いいんじゃないかな〜と思いました。
 
 ##### LINE の BOT アカウントを作ってみる
 LINE の BOT アカウント開設手順としては…
