@@ -475,7 +475,7 @@ image:syoga/aml3/azure3_4.png[]
 翻訳精度、画像解析結果が微妙なのか？？ +
 犬を飼っている事もバレている！？
 
-次はエンジニアチームの長、YAGASAKI さん。
+次はYAGASAKI さん。
 
 image:syoga/aml3/azure3_6.png[]
 
