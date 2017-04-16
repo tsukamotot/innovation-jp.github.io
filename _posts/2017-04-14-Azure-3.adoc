@@ -1,4 +1,4 @@
-= LINEとLambdaでパンケーキ！ なお話
+= LINEとlambdaでパンケーキ！ なお話
 :hp-alt-title: Azure 3
 :hp-tags: syoga, log, Azure, Computer Vision API, Node.js, AWS, Lambda, LINE
 
@@ -495,9 +495,8 @@ image:syoga/aml3/azure3_7.png[]
 
 image:syoga/aml3/azure3_8.png[]
 
-あれ？KTNさん老けた！！
-AMIさんは…これ以上は野暮なので止めます！
-
+あれ？KTNさん老けた！！ +
+AMIさんは…これ以上は野暮なので止めます！ +
 翻訳しているのでアレですが、カップルは2人組という意味ですかね。
 
 そしてKATOさんとYAIZUさん！
