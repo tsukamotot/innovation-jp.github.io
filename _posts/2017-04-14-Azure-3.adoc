@@ -1,4 +1,4 @@
-= LINEとlambdaでパンケーキ！ なお話
+= LINEとLambdaでパンケーキ！ なお話
 :hp-alt-title: Azure 3
 :hp-tags: syoga, log, Azure, Computer Vision API, Node.js, AWS, Lambda, LINE
 
