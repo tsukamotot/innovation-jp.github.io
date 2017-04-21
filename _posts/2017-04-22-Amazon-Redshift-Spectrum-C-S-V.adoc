@@ -2,13 +2,13 @@
 :hp-alt-title: Amazon Redshift Spectrum を CSVフォーマットで試してみた
 :hp-tags: shirota, Redshift, Redshift Spectrum
 
-SREチームの城田です。
+SREチームの城田です。 +
 先日発表された Amazon Redshift Spectrum をCSVフォーマットで試してみました。
 
 今回は、大量のgz圧縮されたCSVデータをS3に退避はしているけれど、
 必要な時に効率良く参照できない。
 
-という想定の元に、
+という想定の元に、 +
 データをS3に置いたままで、Redshift側から検索をして素早くデータを抽出できるか、
 
 というのをやってみました。
@@ -69,7 +69,7 @@ Redshiftに作成したIAMロールを関連付けて、
 image:shirota/20170422/redshiftspectrum_roleset.png[]
 
 Redshiftに付与したセキュリティグループで、
-ローカルマシンからアクセスできるように、
+ローカルマシンからアクセスできるように、 +
 5439番ポートを開けてアクセスできるようにしておきました。
 
 ##### ローカルマシンにpsqlをインストール
@@ -108,8 +108,8 @@ iam_roleに先ほど作成したものを指定しています。
 
 ##### Redshiftテーブルを作成
 
-今度はRedshiftのテーブルを作成します。
-`sample_log` というテーブル名で作成しました。
+今度はRedshiftのテーブルを作成します。 +
+`sample_log` というテーブル名で作成しました。 +
 `LOCATION` にデータを退避している（想定の）S3キーを指定してます。
 
 ```
@@ -129,7 +129,7 @@ CREATE EXTERNAL TABLE
 
 ##### ダミーデータ作成＋S3アップスクリプトを作成
 
-さて、ダミーデータを用意せねばなりません。
+さて、ダミーデータを用意せねばなりません。 +
 今回はちょっと雑ですが、以下のようなPythonスクリプトを作成して用意しました。
 
 ```
@@ -202,7 +202,7 @@ upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00099.tx
 0,999999,iqitu5k40kkmks49fufaacrsuswpawub,0vwp2l2suczgxed2lmxkjjh60drcos1hskqa
 ```
 
-1ファイル100万行のダミーデータをgzip圧縮して(容量は1ファイル50MBくらい)S3に100個アップしました。
+1ファイル100万行のダミーデータをgzip圧縮して(容量は1ファイル50MBくらい)S3に100個アップしました。 +
 1億レコードで、圧縮した状態で5GBのデータで試すという形です。
 
 ##### テスト実施
@@ -213,6 +213,6 @@ upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00099.tx
 select * from s3.sample_log where RANDOM32 like '%abcdef%' or RANDOM36 '%abcdef%';
 ```
 
-RANDOM32カラム、または、RANDOM36カラムに abcdef があるレコードを曖昧検索で抽出
+RANDOM32カラム、または、RANDOM36カラムに abcdef があるレコードを曖昧検索で抽出 +
 というだいぶ厳しそうな条件ですが、、、
 
