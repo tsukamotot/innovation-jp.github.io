@@ -46,7 +46,7 @@ SREチームの城田です。
 * AmazonAthenaFullAccess
 ```
 
-[画像]
+image:shirota/20170422/redshiftspectrum_iamrole.png[]
 
 ##### S3バケットを作成
 
@@ -61,13 +61,12 @@ SREチームの城田です。
 * Single Node
 ```
 
-[画像]
+image:shirota/20170422/redshiftspectrum_create_instance.png[]
 
 また、
 Redshiftに作成したIAMロールを関連付けて、
 
-[画像]
-
+image:shirota/20170422/redshiftspectrum_roleset.png[]
 
 Redshiftに付与したセキュリティグループで、
 ローカルマシンからアクセスできるように、
