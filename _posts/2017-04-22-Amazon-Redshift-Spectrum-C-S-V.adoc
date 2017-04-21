@@ -100,9 +100,7 @@ INFO:  External database "s3" created
 CREATE SCHEMA
 ```
 
-iam_roleに先ほど作成したものを指定して、
-
-データベースを作成できました。
+iam_roleに先ほど作成したものを指定しています。
 
 ##### Redshiftテーブルを作成
 
