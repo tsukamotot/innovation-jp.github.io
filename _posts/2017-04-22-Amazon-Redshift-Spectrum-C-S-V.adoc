@@ -70,7 +70,7 @@ Redshiftに付与したセキュリティグループで、
 
 ##### ローカルマシンにpsqlをインストール
 
-psqlコマンドが使えるようにpostgresqlをインストールしておきます。
+psqlコマンドが使えるようにPostgreSQLをインストールしておきます。
 
 ```
 brew install postgresql
