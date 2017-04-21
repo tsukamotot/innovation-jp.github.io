@@ -1,0 +1,197 @@
+= Amazon Redshift Spectrum を CSVフォーマットで試してみた
+:hp-alt-title: Amazon Redshift Spectrum を CSVフォーマットで試してみた
+:hp-tags: shirota, Redshift, Redshift Spectrum
+
+SREチームの城田です。
+先日発表された Amazon Redshift Spectrum をCSVフォーマットで試してみました。
+
+今回は、大量のgz圧縮されたCSVデータをS3に退避はしているけれど、
+必要な時に効率良く参照できない。
+
+という想定の元に、
+データをS3に置いたままで、Redshift側から検索をして素早くデータを抽出できるか、
+
+というのをやってみました。
+
+##### 前提
+
+```
+* Macを使っている
+* IAMロールの設定ができる
+* S3バケットを作成できる
+* VPC、セキュリティグループの設定ができる
+```
+
+基本的には調べながら作成できれば問題ありません。
+
+##### やったこと
+
+```
+* IAMロールを作成
+* S3バケットを作成
+* Redshiftクラスターを作成
+* ローカルマシンにpsqlをインストール
+* Redshiftスキーマを作成
+* Redshiftテーブルを作成
+* ダミーデータ作成＋S3アップロード
+* テスト実施
+```
+
+##### IAMロールを作成
+
+今回試験するのに、以下の権限付きのRedshift用IAMロールを作成しました。
+
+```
+* AmazonS3ReadOnlyAccess
+* AmazonAthenaFullAccess
+```
+
+[画像]
+
+##### S3バケットを作成
+
+大量のデータを退避しているという想定の、S3バケットを作成しました。
+
+##### Redshiftクラスターを作成
+
+以下スペックのRedshiftクラスターを作成しました。
+
+```
+* dc1.large
+* Single Node
+```
+
+[画像]
+
+また、
+Redshiftに付与したセキュリティグループで、
+ローカルマシンからアクセスできるように、
+5439番ポートを開けてアクセスできるようにしておきました。
+
+##### ローカルマシンにpsqlをインストール
+
+psqlコマンドが使えるようにpostgresqlをインストールしておきます。
+
+```
+brew install postgresql
+```
+
+brewがあるから簡単ですね。
+
+##### Redshiftテーブルを作成
+
+psqlコマンドでRedshiftクラスターに接続します。
+
+```
+$ psql -h my-dw-instance.xxxxxxxxxxxx.us-east-1.redshift.amazonaws.com -U awsuser -d dev -p 5439
+Password for user awsuser: {{ Redshift作成時に設定したパスワードを入力 }}
+```
+
+##### Redshiftスキーマを作成
+
+今回は `s3` という名前で作成します。
+
+```
+dev=# create external schema if not exists s3
+dev-# from data catalog database 's3' region 'us-east-1'
+dev-# iam_role 'arn:aws:iam::xxxxxxxxxxxx:role/mySpectrumRole'
+dev-# create external database if not exists;
+INFO:  External database "s3" created
+CREATE SCHEMA
+```
+
+iam_roleに先ほど作成したものを指定して、
+
+データベースを作成できました。
+
+##### Redshiftテーブルを作成
+
+今度はRedshiftのテーブルを作成します。
+`sample_log` というテーブル名で作成しました。
+`LOCATION` にデータを退避している（想定の）S3キーを指定してます。
+
+```
+dev=# create external table s3.sample_log
+dev-# (
+dev(# ID BIGINT,
+dev(# SUBID INT,
+dev(# RANDOM32 VARCHAR(32),
+dev(# RANDOM36 VARCHAR(36)
+dev(# )
+dev-# ROW FORMAT DELIMITED
+dev-# FIELDS TERMINATED BY ','
+dev-# STORED AS TEXTFILE
+dev-# LOCATION 's3://xxxxxxxxxxxxxxxxxx/data/';
+CREATE EXTERNAL TABLE
+```
+
+##### ダミーデータ作成＋S3アップスクリプトを作成
+
+さて、ダミーデータを用意せねばなりません。
+今回はちょっと雑ですが、以下のようなPythonスクリプトで用意しました。
+
+```
+import random
+import os
+
+def random_string(length, seq='0123456789abcdefghijklmnopqrstuvwxyz'):
+    sr = random.SystemRandom()
+    return ''.join([sr.choice(seq) for i in xrange(length)])
+
+for i in range(100):
+
+    f = open('/tmp/tmp.txt', 'w')
+    for j in range(1000000):
+        f.write(str(i) + ',' + str(j) + ',' + random_string(32) + ',' + random_string(36) + "\n")
+
+    f.close()
+
+    os.system("gzip /tmp/tmp.txt")
+    os.system("aws s3 cp /tmp/tmp.txt.gz s3://innovation-shirota/data/dummy%05d.txt.gz" % i)
+
+    os.remove('/tmp/tmp.txt.gz')
+```
+
+データサンプル
+
+```
+0,0,1zqkkjvgnakwvhg96k1mwndliw3jptv7,u991jjq04hlr573dnmmc7wpssxnig831ipbn
+0,1,k6k04g4gdx5e85yigfgtw5fvkptyolpc,h8s3j951ig4icdb4xb6dcnx4td38ybcchli4
+0,2,3a09o5nc97r9pbb5ihtpivwq1niqkp84,6uoifqv93dy12cd7eg28vomyvb59qxkc8x1u
+0,3,hfj8au2p1vewjjcal2toh068tz9kt7e5,2mps7ibn92rqz6y121ud4ehqxofkb4l1c66m
+0,4,6dg00mgvrkj6f4hnrl7i38w0ulp8p5df,dfpuqfn7bupb0lt751qbd2th58v55tdciqhk
+0,5,w393e4gvrzulhytut7tuvcdcr02swt2o,yt5me2nmyz3zx4brlicj8gfs9h0ok40xzrkl
+0,6,fpn75xlon0dwus5s8ctcsm3yz9ynsp6k,8ixdou96g0f95ta3ux7974ngoplub1c2dcnu
+0,7,4lfb2jj5lr4nax991pz6mk2ljcbykjn8,kw0k5vwg9sudkry1mu8apg956x7keckarf9k
+0,8,2t63x4v88gnu2mwxod0anxfmfemqkalb,vpwlwtgzyqe9lgwn90ybt4z8n7cpoc1iqtrw
+0,9,6la6ti0ozow73stz22c4fhn848pxtun1,4wv6avo6lttzlw7a7uuvkk85sr043owamupt
+0,10,8sidi4fgcs1fqys127g0qjp67eqr4qgn,d3f637zpajcwmxkwbrco9cnomoyzvtchea0t
+.
+.
+.
+0,999990,otgrxipdpyhxjdcp3q49nmhj7b415hhp,vjtkiobr8uh32672f9xr6oo9qhjyf492l83o
+0,999991,tpghiy111ble1z9a9jablylinfdge1hy,5r0df8nwghcv362liap2qc96ypaep0ucc359
+0,999992,hkrg6eliomboikgpwksrket8ftsr4i2q,pt7dwvkara0dpw9xhaf3t8jp8bz274gbm1b5
+0,999993,rdn8rr0gqcqir24wke4v3whyrlf2z65c,8bztjosad8ju0marle7gr7i9v4ghe27qu6es
+0,999994,ec2w2fz0k2f4d8lhidnnmm3vkthop7uj,dnwe1g673bwmsg0f7irumn3x6dvcdsub7k3s
+0,999995,mymg7v2jzrzojlapaj8k01cvgnqbnqxf,g50l8m2b9qtexwgi7r3dgyzc20ourna6syih
+0,999996,c8tlcyr9bp0yagcf7by0mgal035rrcd5,mi0zz501tszdeuf9ngo3d71n24cru0ibper6
+0,999997,1c0bcypwnp1bhqkok2lwnojg3wn7hm60,yo1e4gpfn41s9qexf901uotw7uibrx5emu6k
+0,999998,5tu0nurxvfh5kn7cfrlp7fjw73u3g6mq,5peos6w1yylk2u2wurg8ppooyo4l9ngigfmr
+0,999999,iqitu5k40kkmks49fufaacrsuswpawub,0vwp2l2suczgxed2lmxkjjh60drcos1hskqa
+```
+
+1ファイル100万行のダミーデータをgzip圧縮して(容量は1ファイル50MBくらい)S3に100個アップしました。
+1億レコードで、圧縮した状態で5GBのデータで試すという形です。
+
+##### テスト実施
+
+以下のSQL文を投げてみました。
+
+```
+select * from s3.sample_log where RANDOM32 like '%abcdef%' or RANDOM36 '%abcdef%';
+```
+
+RANDOM32カラム、または、RANDOM36カラムに abcdef があるレコードを曖昧検索で抽出
+というだいぶ厳しそうな条件ですが、、、
+
