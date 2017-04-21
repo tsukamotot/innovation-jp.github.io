@@ -145,7 +145,7 @@ for i in range(100):
     f.close()
 
     os.system("gzip /tmp/tmp.txt")
-    os.system("aws s3 cp /tmp/tmp.txt.gz s3://innovation-shirota/data/dummy%05d.txt.gz" % i)
+    os.system("aws s3 cp /tmp/tmp.txt.gz s3://xxxxxxxxxxxxxxxxxx/data/dummy%05d.txt.gz" % i)
 
     os.remove('/tmp/tmp.txt.gz')
 ```
