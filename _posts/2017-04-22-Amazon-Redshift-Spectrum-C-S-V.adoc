@@ -126,7 +126,7 @@ CREATE EXTERNAL TABLE
 ##### ダミーデータ作成＋S3アップスクリプトを作成
 
 さて、ダミーデータを用意せねばなりません。
-今回はちょっと雑ですが、以下のようなPythonスクリプトで用意しました。
+今回はちょっと雑ですが、以下のようなPythonスクリプトを作成して用意しました。
 
 ```
 import random
@@ -148,6 +148,25 @@ for i in range(100):
     os.system("aws s3 cp /tmp/tmp.txt.gz s3://xxxxxxxxxxxxxxxxxx/data/dummy%05d.txt.gz" % i)
 
     os.remove('/tmp/tmp.txt.gz')
+```
+
+`create_data.py` という名前を付けて実行。
+
+```
+$ python create_data.py
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00000.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00001.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00002.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00003.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00004.txt.gz
+.
+.
+.
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00095.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00096.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00097.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00098.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00099.txt.gz
 ```
 
 データサンプル
