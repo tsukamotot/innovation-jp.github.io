@@ -1,6 +1,6 @@
 = Amazon Redshift Spectrum を CSVフォーマットで試してみた
 :hp-alt-title: Amazon Redshift Spectrum を CSVフォーマットで試してみた
-:hp-tags: shirota, Redshift, Redshift Spectrum
+:hp-tags: Shirota, Redshift, Redshift Spectrum
 
 SREチームの城田です。 +
 先日発表された Amazon Redshift Spectrum をCSVフォーマットで試してみました。
