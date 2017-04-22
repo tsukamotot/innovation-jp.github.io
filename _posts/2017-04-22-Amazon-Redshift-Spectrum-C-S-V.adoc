@@ -207,12 +207,137 @@ upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00099.tx
 
 ##### テスト実施
 
-以下のSQL文を投げてみました。
+まずは全カウントをしてみました。
 
 ```
-select * from s3.sample_log where RANDOM32 like '%abcdef%' or RANDOM36 '%abcdef%';
+dev=# select count(*) from s3.sample_log;
+   count
+-----------
+ 100000000
+(1 row)
 ```
 
-RANDOM32カラム、または、RANDOM36カラムに abcdef があるレコードを曖昧検索で抽出 +
-というだいぶ厳しそうな条件ですが、、、
+きちんと1億レコードを認識しています。
 
+処理時間が表示されるように以下を発行後、
+
+```
+dev=# \timing
+Timing is on.
+```
+
+RANDOM32カラム または RANDOM36カラムに abcdef があるレコードを曖昧検索で抽出 +
+というだいぶ厳しそうな条件で発行してみました。
+
+```
+dev=# select count(*) from s3.sample_log where RANDOM32 like '%abcdef%' or RANDOM36 like '%abcdef%';
+ count
+-------
+     4
+(1 row)
+
+Time: 20634.836 ms
+```
+
+4件存在し、
+初回のカウントは20秒という結果でした。
+
+引き続き3回程カウントを抜かしてselectしますと、
+
+```
+dev=# select * from s3.sample_log where RANDOM32 like '%abcdef%' or RANDOM36 like '%abcdef%';
+ id | subid  |             random32             |               random36
+----+--------+----------------------------------+--------------------------------------
+ 35 | 805353 | brsf6gzhxgeweu2oaaeyt65vyh1lz3bh | i1t1pihdh9qka5yo5fabcdefab7e30sxhov7
+ 77 | 846965 | x0541r83i6abcdefmrjumgke3rkl8bsp | 5go63m8ap5ytwipuq15enqwl94bmu90ikmqx
+ 71 | 816479 | 0sbdcftufibobtzydbkfo6ip0jo94gyy | brkxgxkw8h0skagskabcdefbno20rtiwz1q3
+ 67 |  11035 | b9jcvrwygbrcb381srlosnzabcdefyhc | dnsqm6s1egq01kprky44kva535m2p0or1qjx
+(4 rows)
+
+Time: 8120.441 ms
+
+dev=# select * from s3.sample_log where RANDOM32 like '%abcdef%' or RANDOM36 like '%abcdef%';
+ id | subid  |             random32             |               random36
+----+--------+----------------------------------+--------------------------------------
+ 35 | 805353 | brsf6gzhxgeweu2oaaeyt65vyh1lz3bh | i1t1pihdh9qka5yo5fabcdefab7e30sxhov7
+ 67 |  11035 | b9jcvrwygbrcb381srlosnzabcdefyhc | dnsqm6s1egq01kprky44kva535m2p0or1qjx
+ 71 | 816479 | 0sbdcftufibobtzydbkfo6ip0jo94gyy | brkxgxkw8h0skagskabcdefbno20rtiwz1q3
+ 77 | 846965 | x0541r83i6abcdefmrjumgke3rkl8bsp | 5go63m8ap5ytwipuq15enqwl94bmu90ikmqx
+(4 rows)
+
+Time: 8253.445 ms
+
+dev=# select * from s3.sample_log where RANDOM32 like '%abcdef%' or RANDOM36 like '%abcdef%';
+ id | subid  |             random32             |               random36
+----+--------+----------------------------------+--------------------------------------
+ 35 | 805353 | brsf6gzhxgeweu2oaaeyt65vyh1lz3bh | i1t1pihdh9qka5yo5fabcdefab7e30sxhov7
+ 71 | 816479 | 0sbdcftufibobtzydbkfo6ip0jo94gyy | brkxgxkw8h0skagskabcdefbno20rtiwz1q3
+ 77 | 846965 | x0541r83i6abcdefmrjumgke3rkl8bsp | 5go63m8ap5ytwipuq15enqwl94bmu90ikmqx
+ 67 |  11035 | b9jcvrwygbrcb381srlosnzabcdefyhc | dnsqm6s1egq01kprky44kva535m2p0or1qjx
+(4 rows)
+
+Time: 8366.372 ms
+```
+
+いずれも8秒程度で抽出ができました。
+
+また、補足として以下もテスト
+
+```
+dev=# select * from s3.sample_log where RANDOM32 = 'brsf6gzhxgeweu2oaaeyt65vyh1lz3bh';
+ id | subid  |             random32             |               random36
+----+--------+----------------------------------+--------------------------------------
+ 35 | 805353 | brsf6gzhxgeweu2oaaeyt65vyh1lz3bh | i1t1pihdh9qka5yo5fabcdefab7e30sxhov7
+(1 row)
+
+Time: 7734.470 ms
+
+dev=# select * from s3.sample_log where subid = 805353;
+ id | subid  |             random32             |               random36
+----+--------+----------------------------------+--------------------------------------
+ 12 | 805353 | n53dsbz694zz89mh83du47qnv4b2nej1 | ldejx8egrl06i5qy0mww4avjjy4wst70t8cg
+ 17 | 805353 | oo7alkvelivqg6pct82matdhr5xxslhd | bvhnbn2dmqx8l6cwbppyouajtsuaksswzy53
+  9 | 805353 | 5cv5z13xczyg82pouhrj8shpejmmsr67 | eg91h26hh7uv1iin1ob3kddbvzcgxoyr514n
+  4 | 805353 | uac0hdlve3q8zp1z3crtud7qeeql970g | 2sw86zxgej4fia8lncfxjvjan7syb5bpjm1d
+  6 | 805353 | tl9zr98po4wb693m1lk5pnug2fcmivao | bgpjqpu92pvimnefagzt01tzb82bjpix8elv
+  3 | 805353 | dx33np1513y5vpkq802lzikgj63q9bpp | 8txcpvrzvs9anjkre8nutrzcsf1y75k4whr1
+ 15 | 805353 | 5a42klxrn2i76alez22emc8h4hsk4s8x | yqph5wq6g2n5redjpp68swd6yx5eee9m131v
+ 10 | 805353 | u36i65y7m01j9wom4dlc2i7tv57njbpa | zrviu7687l9yn6h1mnbbv00i1n0p976da5yb
+  1 | 805353 | 30kwf6i0inx844r6yklrbpy6lpioem6d | kiehe0088ipfd9zao63jfp9pfjesv8jm9qhq
+ 19 | 805353 | 0m1lmtkbiqhmxqalghru6zpi6r1jnc3o | admn6yo627mboxpds4v4kraqsn832zdb2zhm
+ 32 | 805353 | td9gri5l69lmfkf2jjuka3xrxjlicaob | g29gdvm71szonzg41vb47f6g99xs59knfufd
+ 27 | 805353 | 44pc6r8vsho0qaeny46krb8mbpastejb | fyfrck74liycfk7g1m9h0o43vmjnoql6gqcy
+ 35 | 805353 | brsf6gzhxgeweu2oaaeyt65vyh1lz3bh | i1t1pihdh9qka5yo5fabcdefab7e30sxhov7
+ 29 | 805353 | fwh7dfst0jr0ong0oc1deetc8nuuqiv6 | l3kkk5lzcdcr8geamuxy3288m17kgq5eehol
+ 36 | 805353 | gs0tuugtyieyom2gwkvmm0mufl32zfjs | 81ft7mjd606xqkzdzwi5upzugytpztafk0ny
+ 34 | 805353 | 4halp6flopyahph02k4ugsa59409wz2o | kd6mz096qu6osovsmv6i49f6fw8n2ivi133f
+ 33 | 805353 | 2xezecspfr7mefxqbzcvmd5ii7ofe1xo | 9fnfczevuwiz52tt4mszupo8fcr6uqjk501q
+ 22 | 805353 | 66jq4zhzvlipld2hkvgix0gyoeortkyj | j4g3r3vx0y6dkurq146167aygkpgwmy4150a
+ 38 | 805353 | vo1dtk9aabbehge3cepfe7vrznf03cvw | 2qelonyufg6zoxlimn7ua4zjyiqjiez87bfk
+ 39 | 805353 | xwpkuaozx1yj9keds0ztp3dpfwjk1n3u | fp03vzti5k66eb63z5lpyslbfpt7lqiwqhpr
+ 43 | 805353 | kh5tk35vbz9pfdko48ukumbhww17vqyi | jb1cbs4xzlbd3jt6zq7nwqhg0sih4jas07oj
+ 50 | 805353 | 0m5p1pfrg7491g623c36atptxqbb4pcd | mph287obxn958qlfuym52ktgbt4ounjechav
+ 49 | 805353 | 2q8p33mmagvaajoeyjp8fp4if4t0thuk | 9s7q1t4ud7zq00dzk8qi9z7ym9htpa4vcgnm
+ 48 | 805353 | jdrm2lwg8ifpzpx5e7gad8my028i78qs | an7ka7nv0ie7193hmcw961ts228eakfr1k24
+ 51 | 805353 | jcsmy5xy77cwfz8kwn33dsxzhobwmp28 | qcib39x7g9kxvtfkvliot9xv5t93jdblqnil
+ 56 | 805353 | exptg0l0gxvaq6tp7x7sefd06uee7hxz | 1ge6ghmyvkjxnrqjruyfm98emzm7ofx593mt
+ 52 | 805353 | b2dy2vk6mjqq4t1dl7ctvwy53irxc38r | xj1rol1lqqk7mq2c5tgqmbuxilhi914jzuoz
+ 55 | 805353 | k1i9hqfik66gua1j3m3gbw3lzkr204ff | wufhgn0cb8v7dy20v66n0f11llycb38r4nru
+ 57 | 805353 | ekgshv3i5rju6pyfijnedc234vkizozl | diyreoqqd5yonxqoz65j7h8y6i87im8tmp8a
+ 58 | 805353 | 1sg7u21snmo85vlrk7gqgk8esqyg9xrq | a0ntb1t1sbrwzmpzgezfp8stfstozycipx4w
+.
+.
+.
+Time: 7923.497 ms
+```
+
+いずれも8秒程度でデータを抽出できました。
+
+##### 感じたこと
+
+今回は一番非力なRedshiftのシングルノードで試しましたが、 +
+このスペックで、S3に圧縮退避してある1億行のCSVデータを +
+Redshiftに放り込むことなく、 +
+SQLベースで数秒でデータ抽出できるのは、とても有用だと感じました。
+
+次回機会があれば、この100倍の100億行ぐらいのデータを準備して試してみたいと思います。
