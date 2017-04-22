@@ -64,7 +64,7 @@ image:shirota/20170422/redshiftspectrum_iamrole.png[]
 image:shirota/20170422/redshiftspectrum_create_instance.png[]
 
 また、
-Redshiftに作成したIAMロールを関連付けて、
+Redshift用に作成したIAMロールを関連付けて、
 
 image:shirota/20170422/redshiftspectrum_roleset.png[]
 
