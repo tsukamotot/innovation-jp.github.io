@@ -80,7 +80,7 @@ psqlコマンドが使えるようにPostgreSQLをインストールしておき
 brew install postgresql
 ```
 
-homebrewがあるから簡単ですね。
+Homebrewがあるから簡単ですね。
 
 ##### Redshiftテーブルを作成
 
