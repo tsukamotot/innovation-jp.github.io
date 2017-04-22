@@ -45,7 +45,7 @@ image::yagasaki/pp4/4.png[width="50%",alt="4.png"]
 
 == 動作確認
 
-image::yagasaki/pp4/5.jpg[alt="5.jpg"]
+image::yagasaki/pp4/5.jpg[width="70%",alt="5.jpg"]
 
 こんな感じで、Waitボックスで設定した時間ごとに、直近３０分の予定を読み上げてくれます。
 ちょっとうざいですね笑
