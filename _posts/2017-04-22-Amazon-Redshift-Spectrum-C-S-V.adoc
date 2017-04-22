@@ -284,6 +284,7 @@ Time: 8366.372 ms
 また、補足として以下もテスト
 
 ```
+/* RANDOM32の値を指定してselect */
 dev=# select * from s3.sample_log where RANDOM32 = 'brsf6gzhxgeweu2oaaeyt65vyh1lz3bh';
  id | subid  |             random32             |               random36
 ----+--------+----------------------------------+--------------------------------------
@@ -292,6 +293,7 @@ dev=# select * from s3.sample_log where RANDOM32 = 'brsf6gzhxgeweu2oaaeyt65vyh1l
 
 Time: 7734.470 ms
 
+/* SUBIDの値を指定してselect */
 dev=# select * from s3.sample_log where subid = 805353;
  id | subid  |             random32             |               random36
 ----+--------+----------------------------------+--------------------------------------
