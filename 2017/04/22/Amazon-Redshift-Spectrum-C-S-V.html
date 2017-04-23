@@ -55,7 +55,7 @@ var _trackingid = 'LFT-10003-1';
     <meta property="og:description" content="SREチームの城田です。 先日発表された Amazon Redshift Spectrum をCSVフォーマットで試してみました。 今回は、大量のgz圧縮されたCSVデータをS3に退避はしているけれど、 必要な時に効率良く参照できない。 という想定の元に、 データをS3に置いたままで、Redshift側から検索をして素早くデータを抽出できるか、 というのをやってみました。 前提 * Macを使っている * IAMロールの設定ができる * S3バケットを作成できる * VPC、セキュリティグループの設定ができる 基本的には調べながら作成できれば問題ありま..." />
     <meta property="og:url" content="http://tech.innovation.co.jp/2017/04/22/Amazon-Redshift-Spectrum-C-S-V.html" />
     <meta property="article:published_time" content="2017-04-21T15:00:00.000Z" />
-    <meta property="article:modified_time" content="2017-04-23T03:56:45.512Z" />
+    <meta property="article:modified_time" content="2017-04-23T04:02:43.355Z" />
     <meta property="article:tag" content="Shirota" />
     <meta property="article:tag" content="Redshift" />
     <meta property="article:tag" content="Redshift Spectrum" />
@@ -80,7 +80,7 @@ var _trackingid = 'LFT-10003-1';
     "headline": "Amazon Redshift Spectrum を CSVフォーマットで試してみた",
     "url": "http://tech.innovation.co.jp/2017/04/22/Amazon-Redshift-Spectrum-C-S-V.html",
     "datePublished": "2017-04-21T15:00:00.000Z",
-    "dateModified": "2017-04-23T03:56:45.512Z",
+    "dateModified": "2017-04-23T04:02:43.355Z",
     "keywords": "Shirota,  Redshift,  Redshift Spectrum",
     "description": "SREチームの城田です。 先日発表された Amazon Redshift Spectrum をCSVフォーマットで試してみました。 今回は、大量のgz圧縮されたCSVデータをS3に退避はしているけれど、 必要な時に効率良く参照できない。 という想定の元に、 データをS3に置いたままで、Redshift側から検索をして素早くデータを抽出できるか、 というのをやってみました。 前提 * Macを使っている * IAMロールの設定ができる * S3バケットを作成できる * VPC、セキュリティグループの設定ができる 基本的には調べながら作成できれば問題ありま..."
 }
@@ -274,8 +274,8 @@ var _trackingid = 'LFT-10003-1';
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="__">前提</h5>
+<div class="sect2">
+<h3 id="__">前提</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>* Macを使っている
@@ -288,8 +288,8 @@ var _trackingid = 'LFT-10003-1';
 <p>基本的には調べながら作成できれば問題ありません。</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="___2">やったこと</h5>
+<div class="sect2">
+<h3 id="___2">やったこと</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code>* IAMロールを作成
@@ -303,8 +303,8 @@ var _trackingid = 'LFT-10003-1';
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_iam">IAMロールを作成</h5>
+<div class="sect2">
+<h3 id="_iam">IAMロールを作成</h3>
 <div class="paragraph">
 <p>今回試験するのに、以下の権限付きのRedshift用IAMロールを作成しました。</p>
 </div>
@@ -318,14 +318,14 @@ var _trackingid = 'LFT-10003-1';
 <p><span class="image"><img src="/images/shirota/20170422/redshiftspectrum_iamrole.png" alt="redshiftspectrum_iamrole.png"></span></p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_s3">S3バケットを作成</h5>
+<div class="sect2">
+<h3 id="_s3">S3バケットを作成</h3>
 <div class="paragraph">
 <p>大量のデータを退避しているという想定の、S3バケットを作成しました。</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_redshift">Redshiftクラスターを作成</h5>
+<div class="sect2">
+<h3 id="_redshift">Redshiftクラスターを作成</h3>
 <div class="paragraph">
 <p>以下スペックのRedshiftクラスターを作成しました。</p>
 </div>
@@ -351,8 +351,8 @@ Redshift用に作成したIAMロールを関連付けて、</p>
 5439番ポートを開けてアクセスできるようにしておきました。</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="__psql">ローカルマシンにpsqlをインストール</h5>
+<div class="sect2">
+<h3 id="__psql">ローカルマシンにpsqlをインストール</h3>
 <div class="paragraph">
 <p>psqlコマンドが使えるようにPostgreSQLをインストールしておきます。</p>
 </div>
@@ -365,8 +365,8 @@ Redshift用に作成したIAMロールを関連付けて、</p>
 <p>Homebrewがあるから簡単ですね。</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_redshift_2">Redshiftテーブルを作成</h5>
+<div class="sect2">
+<h3 id="_redshift_2">Redshiftテーブルを作成</h3>
 <div class="paragraph">
 <p>psqlコマンドでRedshiftクラスターに接続します。</p>
 </div>
@@ -377,8 +377,8 @@ Password for user awsuser: {{ Redshift作成時に設定したパスワードを
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_redshift_3">Redshiftスキーマを作成</h5>
+<div class="sect2">
+<h3 id="_redshift_3">Redshiftスキーマを作成</h3>
 <div class="paragraph">
 <p>今回は <code>s3</code> という名前で作成します。</p>
 </div>
@@ -396,8 +396,8 @@ CREATE SCHEMA</code></pre>
 <p>iam_roleに先ほど作成したものを指定しています。</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_redshift_4">Redshiftテーブルを作成</h5>
+<div class="sect2">
+<h3 id="_redshift_4">Redshiftテーブルを作成</h3>
 <div class="paragraph">
 <p>今度はRedshiftのテーブルを作成します。<br>
 <code>sample_log</code> というテーブル名で作成しました。<br>
@@ -420,8 +420,8 @@ CREATE EXTERNAL TABLE</code></pre>
 </div>
 </div>
 </div>
-<div class="sect4">
-<h5 id="__s3">ダミーデータ作成＋S3アップスクリプトを作成</h5>
+<div class="sect2">
+<h3 id="__s3">ダミーデータ作成＋S3アップスクリプトを作成</h3>
 <div class="paragraph">
 <p>さて、ダミーデータを用意せねばなりません。<br>
 今回はちょっと雑ですが、以下のようなPythonスクリプトを作成して用意しました。</p>
@@ -506,8 +506,8 @@ upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00099.tx
 1億レコードで、圧縮した状態で5GBのデータで試すという形です。</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="___3">テスト実施</h5>
+<div class="sect2">
+<h3 id="___3">テスト実施</h3>
 <div class="paragraph">
 <p>まずは全カウントをしてみました。</p>
 </div>
@@ -651,8 +651,8 @@ Time: 7923.497 ms</code></pre>
 <p>いずれも8秒程度でデータを抽出できました。</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="___4">感じたこと</h5>
+<div class="sect2">
+<h3 id="___4">感じたこと</h3>
 <div class="paragraph">
 <p>今回は一番非力なRedshiftのシングルノードで試しましたが、<br>
 このスペックで、S3に圧縮退避してある1億行のCSVデータを<br>
