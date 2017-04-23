@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Amazon Redshift Spectrum を CSVフォーマットで試してみた - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Amazon Redshift Spectrum を CSVフォーマットで試してみた">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Amazon Redshift Spectrum を CSVフォーマットで試してみた">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/04/22/Amazon-Redshift-Spectrum-C-S-V.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Amazon Redshift Spectrum を CSVフォーマットで試してみた" />
+    <meta property="og:description" content="SREチームの城田です。 先日発表された Amazon Redshift Spectrum をCSVフォーマットで試してみました。 今回は、大量のgz圧縮されたCSVデータをS3に退避はしているけれど、 必要な時に効率良く参照できない。 という想定の元に、 データをS3に置いたままで、Redshift側から検索をして素早くデータを抽出できるか、 というのをやってみました。 前提 * Macを使っている * IAMロールの設定ができる * S3バケットを作成できる * VPC、セキュリティグループの設定ができる 基本的には調べながら作成できれば問題ありま..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/04/22/Amazon-Redshift-Spectrum-C-S-V.html" />
+    <meta property="article:published_time" content="2017-04-21T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-04-23T04:13:47.681Z" />
+    <meta property="article:tag" content="Shirota" />
+    <meta property="article:tag" content="Redshift" />
+    <meta property="article:tag" content="Redshift Spectrum" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Amazon Redshift Spectrum を CSVフォーマットで試してみた" />
+    <meta name="twitter:description" content="SREチームの城田です。 先日発表された Amazon Redshift Spectrum をCSVフォーマットで試してみました。 今回は、大量のgz圧縮されたCSVデータをS3に退避はしているけれど、 必要な時に効率良く参照できない。 という想定の元に、 データをS3に置いたままで、Redshift側から検索をして素早くデータを抽出できるか、 というのをやってみました。 前提 * Macを使っている * IAMロールの設定ができる * S3バケットを作成できる * VPC、セキュリティグループの設定ができる 基本的には調べながら作成できれば問題ありま..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/04/22/Amazon-Redshift-Spectrum-C-S-V.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars1.githubusercontent.com/u/26893225?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Amazon Redshift Spectrum を CSVフォーマットで試してみた",
+    "url": "http://tech.innovation.co.jp/2017/04/22/Amazon-Redshift-Spectrum-C-S-V.html",
+    "datePublished": "2017-04-21T15:00:00.000Z",
+    "dateModified": "2017-04-23T04:13:47.681Z",
+    "keywords": "Shirota,  Redshift,  Redshift Spectrum",
+    "description": "SREチームの城田です。 先日発表された Amazon Redshift Spectrum をCSVフォーマットで試してみました。 今回は、大量のgz圧縮されたCSVデータをS3に退避はしているけれど、 必要な時に効率良く参照できない。 という想定の元に、 データをS3に置いたままで、Redshift側から検索をして素早くデータを抽出できるか、 というのをやってみました。 前提 * Macを使っている * IAMロールの設定ができる * S3バケットを作成できる * VPC、セキュリティグループの設定ができる 基本的には調べながら作成できれば問題ありま..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Shirota tag-Redshift tag-Redshift-Spectrum no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="22 Apr 2017" class="post-meta__date date">22 Apr 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Shirota">Shirota</a>, <a href="http://tech.innovation.co.jp/tag/Redshift"> Redshift</a>, <a href="http://tech.innovation.co.jp/tag/Redshift-Spectrum"> Redshift Spectrum</a></span>
+        <span class="post-meta__author author"><img src="https://avatars1.githubusercontent.com/u/26893225?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">Amazon Redshift Spectrum を CSVフォーマットで試してみた</h1>
+    </header>
+
+    <section class="post tag-Shirota tag-Redshift tag-Redshift-Spectrum">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>SREチームの城田です。<br>
+先日発表された Amazon Redshift Spectrum をCSVフォーマットで試してみました。</p>
+</div>
+<div class="paragraph">
+<p>今回は、大量のgz圧縮されたCSVデータをS3に退避はしているけれど、
+必要な時に効率良く参照できない。</p>
+</div>
+<div class="paragraph">
+<p>という想定の元に、<br>
+データをS3に置いたままで、Redshift側から検索をして素早くデータを抽出できるか、</p>
+</div>
+<div class="paragraph">
+<p>というのをやってみました。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">前提</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>* Macを使っている
+* IAMロールの設定ができる
+* S3バケットを作成できる
+* VPC、セキュリティグループの設定ができる</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>基本的には調べながら作成できれば問題ありません。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">やったこと</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>* IAMロールを作成
+* S3バケットを作成
+* Redshiftクラスターを作成
+* ローカルマシンにpsqlをインストール
+* Redshiftスキーマを作成
+* Redshiftテーブルを作成
+* ダミーデータ作成＋S3アップロード
+* テスト実施</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_iam">IAMロールを作成</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回試験するのに、以下の権限付きのRedshift用IAMロールを作成しました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>* AmazonS3ReadOnlyAccess
+* AmazonAthenaFullAccess</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170422/redshiftspectrum_iamrole.png" alt="redshiftspectrum_iamrole.png"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_s3">S3バケットを作成</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>大量のデータを退避しているという想定の、S3バケットを作成しました。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_redshift">Redshiftクラスターを作成</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以下スペックのRedshiftクラスターを作成しました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>* dc1.large
+* Single Node</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170422/redshiftspectrum_create_instance.png" alt="redshiftspectrum_create_instance.png"></span></p>
+</div>
+<div class="paragraph">
+<p>また、
+Redshift用に作成したIAMロールを関連付けて、</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170422/redshiftspectrum_roleset.png" alt="redshiftspectrum_roleset.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Redshiftに付与したセキュリティグループで、
+ローカルマシンからアクセスできるように、<br>
+5439番ポートを開けてアクセスできるようにしておきました。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__psql">ローカルマシンにpsqlをインストール</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>psqlコマンドが使えるようにPostgreSQLをインストールしておきます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>brew install postgresql</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Homebrewがあるから簡単ですね。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_redshift_2">Redshiftテーブルを作成</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>psqlコマンドでRedshiftクラスターに接続します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ psql -h my-dw-instance.xxxxxxxxxxxx.us-east-1.redshift.amazonaws.com -U awsuser -d dev -p 5439
+Password for user awsuser: {{ Redshift作成時に設定したパスワードを入力 }}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_redshift_3">Redshiftスキーマを作成</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回は <code>s3</code> という名前で作成します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>dev=# create external schema if not exists s3
+dev-# from data catalog database 's3' region 'us-east-1'
+dev-# iam_role 'arn:aws:iam::xxxxxxxxxxxx:role/mySpectrumRole'
+dev-# create external database if not exists;
+INFO:  External database "s3" created
+CREATE SCHEMA</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>iam_roleに先ほど作成したものを指定しています。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_redshift_4">Redshiftテーブルを作成</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今度はRedshiftのテーブルを作成します。<br>
+<code>sample_log</code> というテーブル名で作成しました。<br>
+<code>LOCATION</code> にデータを退避している（想定の）S3キーを指定してます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>dev=# create external table s3.sample_log
+dev-# (
+dev(# ID BIGINT,
+dev(# SUBID INT,
+dev(# RANDOM32 VARCHAR(32),
+dev(# RANDOM36 VARCHAR(36)
+dev(# )
+dev-# ROW FORMAT DELIMITED
+dev-# FIELDS TERMINATED BY ','
+dev-# STORED AS TEXTFILE
+dev-# LOCATION 's3://xxxxxxxxxxxxxxxxxx/data/';
+CREATE EXTERNAL TABLE</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__s3">ダミーデータ作成＋S3アップスクリプトを作成</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>さて、ダミーデータを用意せねばなりません。<br>
+今回はちょっと雑ですが、以下のようなPythonスクリプトを作成して用意しました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>import random
+import os
+
+def random_string(length, seq='0123456789abcdefghijklmnopqrstuvwxyz'):
+    sr = random.SystemRandom()
+    return ''.join([sr.choice(seq) for i in xrange(length)])
+
+for i in range(100):
+
+    f = open('/tmp/tmp.txt', 'w')
+    for j in range(1000000):
+        f.write(str(i) + ',' + str(j) + ',' + random_string(32) + ',' + random_string(36) + "\n")
+
+    f.close()
+
+    os.system("gzip /tmp/tmp.txt")
+    os.system("aws s3 cp /tmp/tmp.txt.gz s3://xxxxxxxxxxxxxxxxxx/data/dummy%05d.txt.gz" % i)
+
+    os.remove('/tmp/tmp.txt.gz')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>create_data.py</code> という名前を付けて実行。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ python create_data.py
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00000.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00001.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00002.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00003.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00004.txt.gz
+.
+.
+.
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00095.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00096.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00097.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00098.txt.gz
+upload: ../../../../tmp/tmp.txt.gz to s3://xxxxxxxxxxxxxxxxxx/data/dummy00099.txt.gz</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>データサンプル</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>0,0,1zqkkjvgnakwvhg96k1mwndliw3jptv7,u991jjq04hlr573dnmmc7wpssxnig831ipbn
+0,1,k6k04g4gdx5e85yigfgtw5fvkptyolpc,h8s3j951ig4icdb4xb6dcnx4td38ybcchli4
+0,2,3a09o5nc97r9pbb5ihtpivwq1niqkp84,6uoifqv93dy12cd7eg28vomyvb59qxkc8x1u
+0,3,hfj8au2p1vewjjcal2toh068tz9kt7e5,2mps7ibn92rqz6y121ud4ehqxofkb4l1c66m
+0,4,6dg00mgvrkj6f4hnrl7i38w0ulp8p5df,dfpuqfn7bupb0lt751qbd2th58v55tdciqhk
+0,5,w393e4gvrzulhytut7tuvcdcr02swt2o,yt5me2nmyz3zx4brlicj8gfs9h0ok40xzrkl
+0,6,fpn75xlon0dwus5s8ctcsm3yz9ynsp6k,8ixdou96g0f95ta3ux7974ngoplub1c2dcnu
+0,7,4lfb2jj5lr4nax991pz6mk2ljcbykjn8,kw0k5vwg9sudkry1mu8apg956x7keckarf9k
+0,8,2t63x4v88gnu2mwxod0anxfmfemqkalb,vpwlwtgzyqe9lgwn90ybt4z8n7cpoc1iqtrw
+0,9,6la6ti0ozow73stz22c4fhn848pxtun1,4wv6avo6lttzlw7a7uuvkk85sr043owamupt
+0,10,8sidi4fgcs1fqys127g0qjp67eqr4qgn,d3f637zpajcwmxkwbrco9cnomoyzvtchea0t
+.
+.
+.
+0,999990,otgrxipdpyhxjdcp3q49nmhj7b415hhp,vjtkiobr8uh32672f9xr6oo9qhjyf492l83o
+0,999991,tpghiy111ble1z9a9jablylinfdge1hy,5r0df8nwghcv362liap2qc96ypaep0ucc359
+0,999992,hkrg6eliomboikgpwksrket8ftsr4i2q,pt7dwvkara0dpw9xhaf3t8jp8bz274gbm1b5
+0,999993,rdn8rr0gqcqir24wke4v3whyrlf2z65c,8bztjosad8ju0marle7gr7i9v4ghe27qu6es
+0,999994,ec2w2fz0k2f4d8lhidnnmm3vkthop7uj,dnwe1g673bwmsg0f7irumn3x6dvcdsub7k3s
+0,999995,mymg7v2jzrzojlapaj8k01cvgnqbnqxf,g50l8m2b9qtexwgi7r3dgyzc20ourna6syih
+0,999996,c8tlcyr9bp0yagcf7by0mgal035rrcd5,mi0zz501tszdeuf9ngo3d71n24cru0ibper6
+0,999997,1c0bcypwnp1bhqkok2lwnojg3wn7hm60,yo1e4gpfn41s9qexf901uotw7uibrx5emu6k
+0,999998,5tu0nurxvfh5kn7cfrlp7fjw73u3g6mq,5peos6w1yylk2u2wurg8ppooyo4l9ngigfmr
+0,999999,iqitu5k40kkmks49fufaacrsuswpawub,0vwp2l2suczgxed2lmxkjjh60drcos1hskqa</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>1ファイル100万行のダミーデータをgzip圧縮して(容量は1ファイル50MBくらい)S3に100個アップしました。<br>
+1億レコードで、圧縮した状態で5GBのデータで試すという形です。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___3">テスト実施</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>まずは全カウントをしてみました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>dev=# select count(*) from s3.sample_log;
+   count
+-----------
+ 100000000
+(1 row)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>きちんと1億レコードを認識しています。</p>
+</div>
+<div class="paragraph">
+<p>処理時間が表示されるように以下を発行後、</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>dev=# \timing
+Timing is on.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>RANDOM32カラム または RANDOM36カラムに abcdef があるレコードを曖昧検索で抽出<br>
+というだいぶ厳しそうな条件で発行してみました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>dev=# select count(*) from s3.sample_log where RANDOM32 like '%abcdef%' or RANDOM36 like '%abcdef%';
+ count
+-------
+     4
+(1 row)
+
+Time: 20634.836 ms</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>4件存在し、
+初回のカウントは20秒という結果でした。</p>
+</div>
+<div class="paragraph">
+<p>引き続き3回程カウントを抜かしてselectしますと、</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>dev=# select * from s3.sample_log where RANDOM32 like '%abcdef%' or RANDOM36 like '%abcdef%';
+ id | subid  |             random32             |               random36
+----+--------+----------------------------------+--------------------------------------
+ 35 | 805353 | brsf6gzhxgeweu2oaaeyt65vyh1lz3bh | i1t1pihdh9qka5yo5fabcdefab7e30sxhov7
+ 77 | 846965 | x0541r83i6abcdefmrjumgke3rkl8bsp | 5go63m8ap5ytwipuq15enqwl94bmu90ikmqx
+ 71 | 816479 | 0sbdcftufibobtzydbkfo6ip0jo94gyy | brkxgxkw8h0skagskabcdefbno20rtiwz1q3
+ 67 |  11035 | b9jcvrwygbrcb381srlosnzabcdefyhc | dnsqm6s1egq01kprky44kva535m2p0or1qjx
+(4 rows)
+
+Time: 8120.441 ms
+
+dev=# select * from s3.sample_log where RANDOM32 like '%abcdef%' or RANDOM36 like '%abcdef%';
+ id | subid  |             random32             |               random36
+----+--------+----------------------------------+--------------------------------------
+ 35 | 805353 | brsf6gzhxgeweu2oaaeyt65vyh1lz3bh | i1t1pihdh9qka5yo5fabcdefab7e30sxhov7
+ 67 |  11035 | b9jcvrwygbrcb381srlosnzabcdefyhc | dnsqm6s1egq01kprky44kva535m2p0or1qjx
+ 71 | 816479 | 0sbdcftufibobtzydbkfo6ip0jo94gyy | brkxgxkw8h0skagskabcdefbno20rtiwz1q3
+ 77 | 846965 | x0541r83i6abcdefmrjumgke3rkl8bsp | 5go63m8ap5ytwipuq15enqwl94bmu90ikmqx
+(4 rows)
+
+Time: 8253.445 ms
+
+dev=# select * from s3.sample_log where RANDOM32 like '%abcdef%' or RANDOM36 like '%abcdef%';
+ id | subid  |             random32             |               random36
+----+--------+----------------------------------+--------------------------------------
+ 35 | 805353 | brsf6gzhxgeweu2oaaeyt65vyh1lz3bh | i1t1pihdh9qka5yo5fabcdefab7e30sxhov7
+ 71 | 816479 | 0sbdcftufibobtzydbkfo6ip0jo94gyy | brkxgxkw8h0skagskabcdefbno20rtiwz1q3
+ 77 | 846965 | x0541r83i6abcdefmrjumgke3rkl8bsp | 5go63m8ap5ytwipuq15enqwl94bmu90ikmqx
+ 67 |  11035 | b9jcvrwygbrcb381srlosnzabcdefyhc | dnsqm6s1egq01kprky44kva535m2p0or1qjx
+(4 rows)
+
+Time: 8366.372 ms</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>いずれも8秒程度で抽出ができました。</p>
+</div>
+<div class="paragraph">
+<p>また、補足として以下もテスト</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>/* RANDOM32の値を指定してselect */
+dev=# select * from s3.sample_log where RANDOM32 = 'brsf6gzhxgeweu2oaaeyt65vyh1lz3bh';
+ id | subid  |             random32             |               random36
+----+--------+----------------------------------+--------------------------------------
+ 35 | 805353 | brsf6gzhxgeweu2oaaeyt65vyh1lz3bh | i1t1pihdh9qka5yo5fabcdefab7e30sxhov7
+(1 row)
+
+Time: 7734.470 ms
+
+/* SUBIDの値を指定してselect */
+dev=# select * from s3.sample_log where subid = 805353;
+ id | subid  |             random32             |               random36
+----+--------+----------------------------------+--------------------------------------
+ 12 | 805353 | n53dsbz694zz89mh83du47qnv4b2nej1 | ldejx8egrl06i5qy0mww4avjjy4wst70t8cg
+ 17 | 805353 | oo7alkvelivqg6pct82matdhr5xxslhd | bvhnbn2dmqx8l6cwbppyouajtsuaksswzy53
+  9 | 805353 | 5cv5z13xczyg82pouhrj8shpejmmsr67 | eg91h26hh7uv1iin1ob3kddbvzcgxoyr514n
+  4 | 805353 | uac0hdlve3q8zp1z3crtud7qeeql970g | 2sw86zxgej4fia8lncfxjvjan7syb5bpjm1d
+  6 | 805353 | tl9zr98po4wb693m1lk5pnug2fcmivao | bgpjqpu92pvimnefagzt01tzb82bjpix8elv
+  3 | 805353 | dx33np1513y5vpkq802lzikgj63q9bpp | 8txcpvrzvs9anjkre8nutrzcsf1y75k4whr1
+ 15 | 805353 | 5a42klxrn2i76alez22emc8h4hsk4s8x | yqph5wq6g2n5redjpp68swd6yx5eee9m131v
+ 10 | 805353 | u36i65y7m01j9wom4dlc2i7tv57njbpa | zrviu7687l9yn6h1mnbbv00i1n0p976da5yb
+  1 | 805353 | 30kwf6i0inx844r6yklrbpy6lpioem6d | kiehe0088ipfd9zao63jfp9pfjesv8jm9qhq
+ 19 | 805353 | 0m1lmtkbiqhmxqalghru6zpi6r1jnc3o | admn6yo627mboxpds4v4kraqsn832zdb2zhm
+ 32 | 805353 | td9gri5l69lmfkf2jjuka3xrxjlicaob | g29gdvm71szonzg41vb47f6g99xs59knfufd
+ 27 | 805353 | 44pc6r8vsho0qaeny46krb8mbpastejb | fyfrck74liycfk7g1m9h0o43vmjnoql6gqcy
+ 35 | 805353 | brsf6gzhxgeweu2oaaeyt65vyh1lz3bh | i1t1pihdh9qka5yo5fabcdefab7e30sxhov7
+ 29 | 805353 | fwh7dfst0jr0ong0oc1deetc8nuuqiv6 | l3kkk5lzcdcr8geamuxy3288m17kgq5eehol
+ 36 | 805353 | gs0tuugtyieyom2gwkvmm0mufl32zfjs | 81ft7mjd606xqkzdzwi5upzugytpztafk0ny
+ 34 | 805353 | 4halp6flopyahph02k4ugsa59409wz2o | kd6mz096qu6osovsmv6i49f6fw8n2ivi133f
+ 33 | 805353 | 2xezecspfr7mefxqbzcvmd5ii7ofe1xo | 9fnfczevuwiz52tt4mszupo8fcr6uqjk501q
+ 22 | 805353 | 66jq4zhzvlipld2hkvgix0gyoeortkyj | j4g3r3vx0y6dkurq146167aygkpgwmy4150a
+ 38 | 805353 | vo1dtk9aabbehge3cepfe7vrznf03cvw | 2qelonyufg6zoxlimn7ua4zjyiqjiez87bfk
+ 39 | 805353 | xwpkuaozx1yj9keds0ztp3dpfwjk1n3u | fp03vzti5k66eb63z5lpyslbfpt7lqiwqhpr
+ 43 | 805353 | kh5tk35vbz9pfdko48ukumbhww17vqyi | jb1cbs4xzlbd3jt6zq7nwqhg0sih4jas07oj
+ 50 | 805353 | 0m5p1pfrg7491g623c36atptxqbb4pcd | mph287obxn958qlfuym52ktgbt4ounjechav
+ 49 | 805353 | 2q8p33mmagvaajoeyjp8fp4if4t0thuk | 9s7q1t4ud7zq00dzk8qi9z7ym9htpa4vcgnm
+ 48 | 805353 | jdrm2lwg8ifpzpx5e7gad8my028i78qs | an7ka7nv0ie7193hmcw961ts228eakfr1k24
+ 51 | 805353 | jcsmy5xy77cwfz8kwn33dsxzhobwmp28 | qcib39x7g9kxvtfkvliot9xv5t93jdblqnil
+ 56 | 805353 | exptg0l0gxvaq6tp7x7sefd06uee7hxz | 1ge6ghmyvkjxnrqjruyfm98emzm7ofx593mt
+ 52 | 805353 | b2dy2vk6mjqq4t1dl7ctvwy53irxc38r | xj1rol1lqqk7mq2c5tgqmbuxilhi914jzuoz
+ 55 | 805353 | k1i9hqfik66gua1j3m3gbw3lzkr204ff | wufhgn0cb8v7dy20v66n0f11llycb38r4nru
+ 57 | 805353 | ekgshv3i5rju6pyfijnedc234vkizozl | diyreoqqd5yonxqoz65j7h8y6i87im8tmp8a
+ 58 | 805353 | 1sg7u21snmo85vlrk7gqgk8esqyg9xrq | a0ntb1t1sbrwzmpzgezfp8stfstozycipx4w
+.
+.
+.
+Time: 7923.497 ms</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>いずれも8秒程度でデータを抽出できました。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">感じたこと</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回は一番非力なRedshiftのシングルノードで試しましたが、<br>
+このスペックで、S3に圧縮退避してある1億行のCSVデータを<br>
+Redshiftに放り込むことなく、<br>
+SQLベースで数秒でデータ抽出できるのは、とても有用だと感じました。</p>
+</div>
+<div class="paragraph">
+<p>次回機会があれば、この100倍の100億行ぐらいのデータを準備して試してみたいと思います。</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
