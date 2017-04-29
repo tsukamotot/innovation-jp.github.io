@@ -1,4 +1,4 @@
-= AliExpressで買った安いCNCで生基板を掘削してみる
+= 安いCNCで生基板を掘削してみる
 :published_at: 2017-04-29
 :hp-alt-title: I drill dough with cheap CNC I bought at AliExpress
 :hp-tags: KatoK,CNC,CNC1610,bCNC,Inkscape
@@ -271,7 +271,9 @@ Autolevel機能で、歪みを計測します。 +
 
 Autolevelの測定が動作している様子はこんな感じです。
 
-[動画]
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RSo8akVMQ3E" frameborder="0" allowfullscreen></iframe>
+++++
 
 また、測定が完了すると、歪みが画面上に表示されます。 +
 組み立てたCNCマシンは、結構歪んでいるようです。。。
@@ -296,7 +298,10 @@ image::kato/8/31.jpg[]
 
 動作している様子はこんな感じです。 +
 どこまで進んでいるのかリアルタイムで確認できて、いい感じです♪
-[どうが]
+
+++++
+<iframe width="560" height="315" src="https://www.youtube.com/embed/K4EgaISKc3A" frameborder="0" allowfullscreen></iframe>
+++++
 
 
 #### 結果
