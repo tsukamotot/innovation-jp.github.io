@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>安いCNCで生基板を掘削してみる - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="安いCNCで生基板を掘削してみる">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="安いCNCで生基板を掘削してみる">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/04/29/I-drill-dough-with-cheap-C-N-C-I-bought-at-Ali-Express.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="安いCNCで生基板を掘削してみる" />
+    <meta property="og:description" content="こんにちは。 弊社に3Dプリンターが来てから、モノ作り欲が高まっている加藤です。 PCの画面上で動作するものも良いですが、出来上がったものを実際に手にとって見れる良さは格別です。 本日は、勢いで買ってしまったCNCで生基板を削ってみる実験をしてみます。 (なお、本記事の実践は自己責任の上お願いします。怪我・事故など起きても責任は負いかねます。) 買ったもの CNCは、AliExpressで探しました。 購入のポイントは、 安い 構造がシンプル(最低限の構成になっていて、勉強材料になる) 作業領域は小さくて良い AliExpressでの評価が高く、購入者..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/04/29/I-drill-dough-with-cheap-C-N-C-I-bought-at-Ali-Express.html" />
+    <meta property="og:image" content="http://tech.innovation.co.jp/images/kato/8/33.png" />
+    <meta property="article:published_time" content="2017-04-28T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-04-30T07:43:03.165Z" />
+    <meta property="article:tag" content="KatoK" />
+    <meta property="article:tag" content="CNC" />
+    <meta property="article:tag" content="CNC1610" />
+    <meta property="article:tag" content="bCNC" />
+    <meta property="article:tag" content="Inkscape" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="安いCNCで生基板を掘削してみる" />
+    <meta name="twitter:description" content="こんにちは。 弊社に3Dプリンターが来てから、モノ作り欲が高まっている加藤です。 PCの画面上で動作するものも良いですが、出来上がったものを実際に手にとって見れる良さは格別です。 本日は、勢いで買ってしまったCNCで生基板を削ってみる実験をしてみます。 (なお、本記事の実践は自己責任の上お願いします。怪我・事故など起きても責任は負いかねます。) 買ったもの CNCは、AliExpressで探しました。 購入のポイントは、 安い 構造がシンプル(最低限の構成になっていて、勉強材料になる) 作業領域は小さくて良い AliExpressでの評価が高く、購入者..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/04/29/I-drill-dough-with-cheap-C-N-C-I-bought-at-Ali-Express.html" />
+    <meta name="twitter:image:src" content="http://tech.innovation.co.jp/images/kato/8/33.png" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "katoK",
+        "image": "https://avatars3.githubusercontent.com/u/70055?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "安いCNCで生基板を掘削してみる",
+    "url": "http://tech.innovation.co.jp/2017/04/29/I-drill-dough-with-cheap-C-N-C-I-bought-at-Ali-Express.html",
+    "datePublished": "2017-04-28T15:00:00.000Z",
+    "dateModified": "2017-04-30T07:43:03.165Z",
+    "image": "http://tech.innovation.co.jp/images/kato/8/33.png",
+    "keywords": "KatoK, CNC, CNC1610, bCNC, Inkscape",
+    "description": "こんにちは。 弊社に3Dプリンターが来てから、モノ作り欲が高まっている加藤です。 PCの画面上で動作するものも良いですが、出来上がったものを実際に手にとって見れる良さは格別です。 本日は、勢いで買ってしまったCNCで生基板を削ってみる実験をしてみます。 (なお、本記事の実践は自己責任の上お願いします。怪我・事故など起きても責任は負いかねます。) 買ったもの CNCは、AliExpressで探しました。 購入のポイントは、 安い 構造がシンプル(最低限の構成になっていて、勉強材料になる) 作業領域は小さくて良い AliExpressでの評価が高く、購入者..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Kato-K tag-C-N-C tag-C-N-C1610 tag-b-C-N-C tag-Inkscape no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="29 Apr 2017" class="post-meta__date date">29 Apr 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Kato-K">KatoK</a>, <a href="http://tech.innovation.co.jp/tag/C-N-C">CNC</a>, <a href="http://tech.innovation.co.jp/tag/C-N-C1610">CNC1610</a>, <a href="http://tech.innovation.co.jp/tag/b-C-N-C">bCNC</a>, <a href="http://tech.innovation.co.jp/tag/Inkscape">Inkscape</a></span>
+        <span class="post-meta__author author"><img src="https://avatars3.githubusercontent.com/u/70055?v=3" alt="profile image for katoK" class="avatar post-meta__avatar" /> by katoK</span>
+      </div>
+      <h1 class="post-title">安いCNCで生基板を掘削してみる</h1>
+    </header>
+
+    <section class="post tag-Kato-K tag-C-N-C tag-C-N-C1610 tag-b-C-N-C tag-Inkscape">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは。<br>
+弊社に3Dプリンターが来てから、モノ作り欲が高まっている加藤です。<br>
+PCの画面上で動作するものも良いですが、出来上がったものを実際に手にとって見れる良さは格別です。<br>
+本日は、勢いで買ってしまったCNCで生基板を削ってみる実験をしてみます。<br>
+<br>
+(なお、本記事の実践は自己責任の上お願いします。怪我・事故など起きても責任は負いかねます。)<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">買ったもの</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>CNCは、AliExpressで探しました。<br>
+購入のポイントは、<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>安い</p>
+</li>
+<li>
+<p>構造がシンプル(最低限の構成になっていて、勉強材料になる)</p>
+</li>
+<li>
+<p>作業領域は小さくて良い</p>
+</li>
+<li>
+<p>AliExpressでの評価が高く、購入者数が多い</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>としました。<br>
+検討の結果、送料込みで約20,000円のCNC1610+ER11スピンドルの下記の商品を購入しました。</p>
+</div>
+<div class="paragraph">
+<p>2017年4月29日現在、商品ページを確認した所、何やらセール中で少し安くなっているようです。<br>
+<a href="https://www.aliexpress.com/store/product/2016-New-GRBL-mini-CNC-machine-3-Axis-Pcb-Milling-cnc-Machine-1610-Diy-Wood-Carving/1941516_32642146694.html?spm=2114.12010108.1000023.17.qDgkid" class="bare">https://www.aliexpress.com/store/product/2016-New-GRBL-mini-CNC-machine-3-Axis-Pcb-Milling-cnc-Machine-1610-Diy-Wood-Carving/1941516_32642146694.html?spm=2114.12010108.1000023.17.qDgkid</a></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/01.png" alt="01.png">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">注文から受取</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>注文から受取まで、9日でした。<br>
+AliExpressで注文すると受取まで1ヶ月以上かかる場合もあったので、9日で到着はかなり早い感じがします。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>2017年4月9日 注文</p>
+</li>
+<li>
+<p>2017年4月13日 発送</p>
+</li>
+<li>
+<p>2017年4月18日 受取</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/02.png" alt="02.png">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___3">開封</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>テープでぐるぐる巻きの箱が届きました。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/03.png" alt="03.png">
+</div>
+</div>
+<div class="paragraph">
+<p>箱を開けると、２段に分かれていて、<br>
+１段目はこんな感じ。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/04.jpg" alt="04.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>２段めはこんな感じ。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/05.jpg" alt="05.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>部品を広げると、こんな感じです。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/06.png" alt="06.png">
+</div>
+</div>
+<div class="paragraph">
+<p>3Dプリンターで出力したと思われる部品もありました。<br>
+表面がボコボコしている上に、若干出力に失敗しているようなのですが、大丈夫なんだろうか・・・</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/07.jpg" alt="07.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>コントローラーはこんな感じ。<br>
+AVRマイコンは、ATMEGA328P-AU <br>
+シリアル通信は、CH340G<br>
+ステッピングモーター制御は、4988ET<br>
+でした。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/08.jpg" alt="08.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>ここで、ER11スピンドルが同封されていないことに気づき、ストアーに連絡を取ることに。。。</p>
+</div>
+<div class="paragraph">
+<p>AliExpressのメッセージで、<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>私　「荷物が届いたけど、ER11スピンドルが同封されてませんでした。追加で送ってください（上記の部品を広げた写真を添付）」</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>とメッセージを送った所、土曜日にも関わらず5時間後に<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>ストア　「OK 、分かりました。申し訳ございません。お詫びにドリルを10本付け、配送しました。トラッキングナンバーはxxxxxxxxです」</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>と返答がありました。<br></p>
+</div>
+<div class="paragraph">
+<p>早い！悪くないサポートです。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">組み立て</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>ER11スピンドルはまだ手元にありませんが、気を取り直して組み立てを行います。<br>
+組み立ては、付属CD内のマニュアルに沿って行います。<br>
+組み立てを行うにあたって、下記のウェブサイトを参考にさせていただきました。<br>
+非常にわかりやすく、参考になりました。<br></p>
+</div>
+<div class="paragraph">
+<p>みら太な日々 - 基板加工機 その２<br>
+<a href="http://mirata.blogspot.jp/2016/12/blog-post_18.html" class="bare">http://mirata.blogspot.jp/2016/12/blog-post_18.html</a><br></p>
+</div>
+<div class="paragraph">
+<p>組み立ては、サイズを測ってネジを締める作業になります。<br></p>
+</div>
+<div class="paragraph">
+<p>こんな感じのパーツをひたすら作り、枠を作ります。<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>(注意）
+下記の写真にはありませんが、スペーサーを入れる必要があります。
+私はこれに気づかず、スペーサーを入れずに組み立て終わってしまいました・・・・</code></pre>
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/09.jpg" alt="09.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>マニュアルのサイズと少しサイズが違う（！）ので、マニュアルのサイズに合わせるよりも歪みが少なくなる事を優先して組み立てます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/10.jpg" alt="10.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>２つ目の枠を作ります。<br>
+頑張って調整しても歪みが出ます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/11.jpg" alt="11.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>台座を付けます。<br>
+台座のサイズがマニュアルより小さい・・・汗<br>
+でも、気にせず中央になるように組み立てていきます。</p>
+</div>
+<div class="paragraph">
+<p>もちろん、スムーズには動きません！<br>
+ポイントとしては、ネジを締めすぎないようすることです。<br>
+台座がガタガタしなければOKかと思います。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/12.jpg" alt="12.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>背の部分を付けます。
+支えがプラスチックなため、完璧な90度にはなりません！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/13.jpg" alt="13.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>ステッピングモーターをつけていきます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/14.png" alt="14.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ドリル、コントローラー基板を付けて完成です。<br>
+できました！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/15.jpg" alt="15.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>早速電源にをいれよう！<br>
+と思ったのですが、付属していたケーブルだと電源からすぐ抜けてしまいました。<br>
+よく見てみると、差し込みの部分に穴が空いていません！<br>
+(穴って重要だったんですね)<br>
+仕方ないので、手持ちのケーブルで電源につなぎました。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/16.jpg" alt="16.jpg">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_g">Gコードデータを用意する</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>掘削するためには、Gコードと呼ばれるデータを用意する必要があります。</p>
+</div>
+<div class="paragraph">
+<p>Gコードの生成には、InkscapeとそのGcodetoolsを使いました。</p>
+</div>
+<div class="paragraph">
+<p>Draw Freely | Inkscape<br>
+<a href="https://inkscape.org/ja/" class="bare">https://inkscape.org/ja/</a></p>
+</div>
+<div class="paragraph">
+<p>User:BHSPitMonkey/Inkscape and Gcodetools Tutorial<br>
+(Gcodetoolsの説明があるページ)<br>
+<a href="https://www.shapeoko.com/wiki/index.php/User:BHSPitMonkey/Inkscape_and_Gcodetools_Tutorial" class="bare">https://www.shapeoko.com/wiki/index.php/User:BHSPitMonkey/Inkscape_and_Gcodetools_Tutorial</a></p>
+</div>
+<div class="paragraph">
+<p>こんな感じで、データを作ります。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/17.png" alt="17.png">
+</div>
+</div>
+<div class="paragraph">
+<p>「エクステンション」→「Gcodetools」→「Orientation points」からZ軸の掘削の深さ指定を行い、</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/18.png" alt="18.png">
+</div>
+</div>
+<div class="paragraph">
+<p>次に、「エクステンション」→「Gcodetools」→「Path to Gcode」でGcodeの生成を行います。
+場合によっては、Preferencesタブから出力先を指定する必要があります。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/19.png" alt="19.png">
+</div>
+</div>
+<div class="paragraph">
+<p>「Apply」ボタン押下で、それっぽいデータが出来上がりました。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/20.png" alt="20.png">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___5">実際に掘削してみる</h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="_bcnc">bCNCの準備</h4>
+<div class="paragraph">
+<p>私は、普段Macで作業していますが、<br>
+とりあえず、Macでも動作し雰囲気も良さそうだったためbCNCを使ってみることにしました。</p>
+</div>
+<div class="paragraph">
+<p>GitHub - vlachoudis / bCNC<br>
+<a href="https://github.com/vlachoudis/bCNC" class="bare">https://github.com/vlachoudis/bCNC</a></p>
+</div>
+<div class="paragraph">
+<p>事前にMacとCNC1610を接続しておきます。<br>
+bCNC起動後、それっぽいシリアルポートを選択し、「開く」をクリックします。<br>
+これで、bCNC上からCNC1610を制御出来るようになりました。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/21.png" alt="21.png">
+</div>
+</div>
+<div class="paragraph">
+<p>次に、先程作ったGコードを読み込みます。<br>
+EditorタブのEditメニューからインポートを行います。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/22.png" alt="22.png">
+</div>
+</div>
+<div class="paragraph">
+<p>すると、Gコードが左側に出てきます。<br>
+ここで、M3から始まる行は、ドリルの回転スピードですが、指定がなかったため「M3 S700」と変更しました。<br>
+回転スピードが早いと、結構うるさいです！！！<br>
+回転スピードを下げる場合、軸の移動速度や、1回で掘る深さなどの調整が必要そうなので、ここらへんは今後いい感じの設定を模索する事になりそうです。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/23.png" alt="23.png">
+</div>
+</div>
+<div class="paragraph">
+<p>読み込むとこんな感じになります。<br>
+(黄色やピンクの枠線は表示されていないかもしれません)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/24.png" alt="24.png">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___6">生基板セット</h4>
+<div class="paragraph">
+<p>掘削で使う素材を台座にセットします。<br>
+安全のため、電源を抜いた状態で作業するのが良いと思います。</p>
+</div>
+<div class="paragraph">
+<p>私は、板の上に生基板を置く形にしてみました。<br>
+また、動かないように「穴の開いた金属の棒?(東急ハンズ渋谷店で購入)」で固定してみました。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/25.jpg" alt="25.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>また、「生基板とモーター(ドリル部分と通電する場所)」と制御基板の「A5ピン」を繋いでおきます。<br>
+こうすることで、bCNCのAutolevel機能を使うことができます。<br>
+Autolevel機能とは、掘削対象の歪みを考慮して掘削してくれる機能です。<br>
+基板のように掘削の深さの正確さが求められるようなケースではありがたい機能です。<br>
+とくに、今回のCNC1610のように、そもそも歪んでいるマシンの場合、非常にありがたく必須の機能です。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/26.jpg" alt="26.jpg">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___7">原点調整</h4>
+<div class="paragraph">
+<p>再度、CNC1610とbCNCを接続し、原点を決めます。<br>
+Control部分で左下部分に、ドリル刃の先端が来るように調整します。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/27.png" alt="27.png">
+</div>
+</div>
+<div class="paragraph">
+<p>調整ができたら、「X=0」「Y=0」「Z=0」をクリックし、原点に設定します。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/28.png" alt="28.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ドリルの位置はこんな感じ。
+(画像の使い回しですいません)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/25.jpg" alt="25.jpg">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_autolevel">Autolevel</h4>
+<div class="paragraph">
+<p>Autolevel機能で、歪みを計測します。<br>
+メニューから「Probeタブ」「Autolevel」を選択します。<br>
+次に、左側のAutolevelのXYZ軸それぞれに対して、「Min」と「Max」「Step」を設定します。<br>
+設定が完了したら、メニューの「Scan」をクリックします。</p>
+</div>
+<div class="paragraph">
+<p>Autolevelの測定が動作している様子はこんな感じです。</p>
+</div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RSo8akVMQ3E" frameborder="0" allowfullscreen></iframe>
+<div class="paragraph">
+<p>また、測定が完了すると、歪みが画面上に表示されます。<br>
+組み立てたCNCマシンは、結構歪んでいるようです。。。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/29.png" alt="29.png">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___8">いざ、掘削！</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>ここまでできれば、後はGコードの内容で掘削できます。<br>
+メニューのControleタブを開いて、「Start」をクリックします。</p>
+</div>
+<div class="paragraph">
+<p>掘削が進んでいます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/30.jpg" alt="30.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>できました！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/31.jpg" alt="31.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>動作している様子はこんな感じです。<br>
+どこまで進んでいるのかリアルタイムで確認できて、いい感じです♪</p>
+</div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/K4EgaISKc3A" frameborder="0" allowfullscreen></iframe>
+<div class="sect3">
+<h4 id="___9">結果</h4>
+<div class="paragraph">
+<p>削りカスを取ってみました。<br>
+黒くなっている部分は、生基板の金属部分が全て削れた場所です。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/32.jpg" alt="32.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>拡大すると、こんな感じ。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kato/8/33.png" alt="33.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ロゴの横幅は、約4.5cmです。<br>
+こう見ると、Autolevelを行ったものの、歪みが出ているようです。<br>
+とはいえ、送料込で約20,000円程度のCNCと考えれば、満足です。<br>
+CNCマシンの調整進めれば、もう少しは精度を上げることが出来そうです。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___10">まとめ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回は、CNC1610の検証をしてみました。<br>
+その結果、送料込みで約20,000円という価格、また組立時に歪みが出ていたので心配していましたが、<br>
+ちゃんと動作し、そここその精度で掘削が出来ることがわかりました。</p>
+</div>
+<div class="paragraph">
+<p>また、複製コストがほぼ0のソフトウェアと違い、モノ作りはどうしても原価がかかります。<br>
+その点、今回のCNC1610には3Dプリンターで出力された精度の低いパーツが含まれていましたが、<br>
+徹底的に原価を下げるための戦略として納得し、参考になりました。</p>
+</div>
+<div class="paragraph">
+<p>とりあえず、今回の検証でCNCでプロトタイプ用の基板をサクッと作れる目処はたったため、<br>
+ガシガシ色んな回路を組んで、基板を作って遊んで行く予定です。</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
