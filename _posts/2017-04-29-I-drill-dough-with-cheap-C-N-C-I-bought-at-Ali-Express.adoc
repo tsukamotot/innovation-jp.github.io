@@ -69,7 +69,7 @@ image::kato/8/06.png[]
 image::kato/8/07.jpg[]
 
 コントローラーはこんな感じ。 +
-AVRマイコンはATMEGA328P-AU  +
+AVRマイコンは、ATMEGA328P-AU  +
 シリアル通信チップは、CH340G +
 ステッピングモーター制御は、4988ET +
 でした。
