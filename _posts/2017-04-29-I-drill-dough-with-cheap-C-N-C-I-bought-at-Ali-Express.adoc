@@ -25,7 +25,6 @@ CNCは、AliExpressで探しました。 +
 検討の結果、送料込みで約20,000円のCNC1610+ER11スピンドルの下記の商品を購入しました。
 
 2017年4月29日現在、商品ページを確認した所、何やらセール中で少し安くなっているようです。 +
-https://www.aliexpress.com/store/product/2016-New-GRBL-mini-CNC-machine-3-Axis-Pcb-Milling-cnc-Machine-1610-Diy-Wood-Carving/1941516_32642146694.html?spm=2114.12010108.1000023.17.qDgkid
 
 
 image::kato/8/01.png[]
