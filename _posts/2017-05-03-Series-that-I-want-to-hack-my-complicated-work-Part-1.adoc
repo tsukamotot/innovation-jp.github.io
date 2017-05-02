@@ -37,6 +37,8 @@ https://trello.com/1/appKey/generate
 上記URLのTokenという文字がリンクになっていますからそこにアクセスしましょう！ +
 許可すれば以下の画面になるかと思います。
 
+image::ozasa/trelloToken.png[]
+
 Tokenが表示されますので記録しておきましょう。
 
 ここまで完了すればAPIを叩く準備は完了です。 +
@@ -51,15 +53,15 @@ https://developers.trello.com/advanced-reference
 
 #### とりあえずボードの情報を取得
 
-curl "https://trello.com/1/members/yukiozasa1/boards?key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e&fields=name"
-
+[source, rust]
+----
 curl "https://trello.com/1/members/[username]/boards?key=[key]&token=[token]&fields=name"
+----
 
+さて、この時点で思ったのですが、 +
+そのままの形式だと返り値がコンソール上で見にくいです。(あくまで個人的な感想です)
 
-さて、この時点で思ったのですが、
-そのままの形式だと返り値が見にくいです。(あくまで個人的な感想です)
-
-ちょっと本題とは脱線しますが、
+ちょっと本題とは脱線しますが、 +
 JSON形式のデータをいい感じに加工するjqコマンドを使いましょう。
 
 #### jqコマンド
@@ -68,42 +70,60 @@ JSON形式のデータをいい感じに加工するjqコマンドを使いま�
 
 先ほどのボード取得のコマンドにパイプでjqコマンドをつなげてみましょう。
 
-curl "https://trello.com/1/members/yukiozasa1/boards?key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e&fields=name" | jq
-
+[source, rust]
+----
 curl "https://trello.com/1/members/[username]/boards?key=[key]&token=[token]&fields=name" | jq
+----
 
-うん、いい感じと思います。
-WebサービスがJSONを扱うことは多いと思いますので、
+image::ozasa/boardJq.png[]
+
+うん、いい感じと思います。 +
+WebサービスがJSONを扱うことは多いと思いますので、 +
 サクッと見やすくしてくれるだけでも重宝しそうです。
 
 
 #### ・リストの情報を取得
-curl "https://api.trello.com/1/boards/5907398e446ed838688defa7/lists?fields=name&key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e"
-
-https://api.trello.com/1/boards/[boardのID]/lists?fields=name&key=[key]&token=[token]
-
+[source, rust]
+----
+https://api.trello.com/1/boards/[boardId]/lists?fields=name&key=[key]&token=[token]
+----
 
 これによりDoingリストのIDを取得することができます。
 
 cardsをパラメータに追加すればカードの情報も取得できませすが、
 結構な量になると思うのでここではリストの情報だけを取得しておくこととします。
 
-jqコマンドを活用すればDoingリストのみを表示することも可能です。
+さらにjqコマンドを活用すればDoingリストのみを表示することも可能です。
 
+[source, rust]
+----
 curl "https://api.trello.com/1/boards/[boardsId]]/lists?fields=name&key=[key]]&token=[token]" | jq '.[] | select(.name == "Doing")'
+----
 
-curl "https://api.trello.com/1/boards/5907398e446ed838688defa7/lists?fields=name&key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e" | jq '.[] | select(.name == "Doing")'
+image::ozasa/listDoingJq.png[]
 
 #### ・Doingリストにあるカードの確認
+[source, rust]
+----
 curl "https://api.trello.com/1/lists/[listId]]?fields=name&cards=open&card_fields=name&key=[key]]&token=[token]" | jq
+----
 
-https://api.trello.com/1/lists/5907398e446ed838688defa9?fields=name&cards=open&card_fields=name&key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e
+image::ozasa/doingJq.png[]
 
-curl "https://api.trello.com/1/lists/5907398e446ed838688defa9?fields=name&cards=open&card_fields=name&key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e" | jq
+事前に追加しておいたカードが確認できますね。 +
+カードにもそれぞれIDが付与されていることがわかります。
+
 
 #### ・カードの詳細な情報を取得
 curl "https://api.trello.com//1/cards/59073e7dd0839ef4f8c5989e?key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e" | jq
-59073e7dd0839ef4f8c5989e
+
+[source, rust]
+----
+curl "https://api.trello.com//1/cards/[cardId]?key=[key]&token=[token]" | jq
+
+----
+
+image::ozasa/cardJq.png[]
 
 一つのカードに情報が複数設定できることが推察されますね。
 
@@ -113,13 +133,16 @@ curl "https://api.trello.com//1/cards/59073e7dd0839ef4f8c5989e?key=c19d26c0aa2b6
 
 #### ・カードの追加
 
-curl -X POST "https://api.trello.com/1/cards?key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e&idList=5907398e446ed838688defa9&name=temp3" | jq
+[source, rust]
+----
+curl -X POST "https://api.trello.com/1/cards?key=[key]&token=[token]&idList=[listId]&name=temp3" | jq
+----
 
-登録時にも取得時と同じようにデータを返してくれることがわかります。
+登録時にも取得時と同じようにデータを返してくれます。
 この時点で新規のカードに関してはIDが振られますので活用する際には注意が必要です。
 
 さてこんな感じでローカルからではありますが、
-ある程度TrelloのAPIを活用できる感が出てきました。
+jqコマンドを使い魔ながら、ある程度TrelloのAPIを活用できる感が出てきました。
 
 今後の流れとしては +
 ・Doingにある課題にどれくらい時間を使っているのかトラッキング +
