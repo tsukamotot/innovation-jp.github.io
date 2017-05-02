@@ -1,0 +1,131 @@
+= 自分の煩雑な業務をHackしたいシリーズ~その1~
+:published_at: 2017-05-03
+:hp-alt-title: Series that I want to hack my complicated work ~ Part 1
+:hp-tags: ozasa,Trello,API,jq
+
+こんにちは。オザサです。
+
+みなさんタスク管理には何を利用しているでしょうか。 +
+手書きのメモや付箋などアナログなやり方を使っている人もいれば、 +
+Todoアプリなどデジタルなツールを用いてタスクを管理しているかと思います。 +
+特に4月から社会人になった方々は先輩から何か指摘をもらう人もいるかもしれません。
+
+そんなタスク管理ツールの一つとしてTrelloというものがあります。 +
+(正確にはタスク管理ツールなのかカンバンツールなのか・・・？) +
+最近JIRAで有名なAttlasianに買収されてその名前を聞いた人もいるかもしれません。 +
+
+http://japan.blogs.atlassian.com/2017/01/atlassian-trello-changing-the-way-teams-work-atlassian-blogs/
+
+個人的にも使ったりしているツールなのと、 +
+最近は開発以外のタスクが様々あり、 +
+それらを管理するためにも色々と調べつつ今後の業務Hackツール作成の足がかりとしたいと思います。
+
+ということでやはりここはAPIを叩いていきましょう！
+
+まずはAPIを叩くのに必要な準備を行います。
+
+### 準備
+
+#### ・API Key の取得
+https://trello.com/1/appKey/generate
+
+上記のURLにアクセスしましょう！
+
+忘れないように記録しておきましょう。
+
+#### ・API Token の取得
+上記URLのTokenという文字がリンクになっていますからそこにアクセスしましょう！ +
+許可すれば以下の画面になるかと思います。
+
+Tokenが表示されますので記録しておきましょう。
+
+ここまで完了すればAPIを叩く準備は完了です。 +
+今回はどんなAPIがあるかを調べつつ実際の動きを確認できればいいので、 +
+リーカルからcurlコマンドを用いて叩く程度でバンバン叩いていきましょう！
+
+Trelloには複数APIがありますので、確かめるだけでも時間がかかりそうです。
+
+https://developers.trello.com/advanced-reference
+
+### やってみましょう
+
+#### とりあえずボードの情報を取得
+
+curl "https://trello.com/1/members/yukiozasa1/boards?key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e&fields=name"
+
+curl "https://trello.com/1/members/[username]/boards?key=[key]&token=[token]&fields=name"
+
+
+さて、この時点で思ったのですが、
+そのままの形式だと返り値が見にくいです。(あくまで個人的な感想です)
+
+ちょっと本題とは脱線しますが、
+JSON形式のデータをいい感じに加工するjqコマンドを使いましょう。
+
+#### jqコマンド
+
+インストールはMacOSであればHomebrewを使う下記コマンドでサクッといけるかと思います。
+
+先ほどのボード取得のコマンドにパイプでjqコマンドをつなげてみましょう。
+
+curl "https://trello.com/1/members/yukiozasa1/boards?key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e&fields=name" | jq
+
+curl "https://trello.com/1/members/[username]/boards?key=[key]&token=[token]&fields=name" | jq
+
+うん、いい感じと思います。
+WebサービスがJSONを扱うことは多いと思いますので、
+サクッと見やすくしてくれるだけでも重宝しそうです。
+
+
+#### ・リストの情報を取得
+curl "https://api.trello.com/1/boards/5907398e446ed838688defa7/lists?fields=name&key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e"
+
+https://api.trello.com/1/boards/[boardのID]/lists?fields=name&key=[key]&token=[token]
+
+
+これによりDoingリストのIDを取得することができます。
+
+cardsをパラメータに追加すればカードの情報も取得できませすが、
+結構な量になると思うのでここではリストの情報だけを取得しておくこととします。
+
+jqコマンドを活用すればDoingリストのみを表示することも可能です。
+
+curl "https://api.trello.com/1/boards/[boardsId]]/lists?fields=name&key=[key]]&token=[token]" | jq '.[] | select(.name == "Doing")'
+
+curl "https://api.trello.com/1/boards/5907398e446ed838688defa7/lists?fields=name&key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e" | jq '.[] | select(.name == "Doing")'
+
+#### ・Doingリストにあるカードの確認
+curl "https://api.trello.com/1/lists/[listId]]?fields=name&cards=open&card_fields=name&key=[key]]&token=[token]" | jq
+
+https://api.trello.com/1/lists/5907398e446ed838688defa9?fields=name&cards=open&card_fields=name&key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e
+
+curl "https://api.trello.com/1/lists/5907398e446ed838688defa9?fields=name&cards=open&card_fields=name&key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e" | jq
+
+#### ・カードの詳細な情報を取得
+curl "https://api.trello.com//1/cards/59073e7dd0839ef4f8c5989e?key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e" | jq
+59073e7dd0839ef4f8c5989e
+
+一つのカードに情報が複数設定できることが推察されますね。
+
+
+逆にAPIを用いてカードを追加してみましょう。
+
+
+#### ・カードの追加
+
+curl -X POST "https://api.trello.com/1/cards?key=c19d26c0aa2b6eb6972a56c0aacc3a2d&token=078eb37efd31d0df9f343bca35078e96941440605aa033cedc391f316b31202e&idList=5907398e446ed838688defa9&name=temp3" | jq
+
+登録時にも取得時と同じようにデータを返してくれることがわかります。
+この時点で新規のカードに関してはIDが振られますので活用する際には注意が必要です。
+
+さてこんな感じでローカルからではありますが、
+ある程度TrelloのAPIを活用できる感が出てきました。
+
+今後の流れとしては +
+・Doingにある課題にどれくらい時間を使っているのかトラッキング +
+・Slackのmessage-buttonsAPIを用いてタスクをSlackで一元管理化する +
+などなどにTryして自分の業務をHackしてみたいと思います。
+
+すでに着手はしていますので、各所切り出して少しずつアウトプットできればと思います。
+
+こちらからは以上です！！
