@@ -12,7 +12,7 @@ Todoアプリなどデジタルなツールを用いてタスクを管理して�
 
 そんなタスク管理ツールの一つとしてTrelloというものがあります。 +
 (正確にはタスク管理ツールなのかカンバンツールなのか・・・？) +
-最近JIRAで有名なAttlasianに買収されてその名前を聞いた人もいるかもしれません。 +
+最近JIRAで有名なAtlassianに買収されてその名前を聞いた人もいるかもしれません。 +
 
 http://japan.blogs.atlassian.com/2017/01/atlassian-trello-changing-the-way-teams-work-atlassian-blogs/
 
@@ -43,7 +43,7 @@ Tokenが表示されますので記録しておきましょう。
 
 ここまで完了すればAPIを叩く準備は完了です。 +
 今回はどんなAPIがあるかを調べつつ実際の動きを確認できればいいので、 +
-リーカルからcurlコマンドを用いて叩く程度でバンバン叩いていきましょう！
+ローカルからcurlコマンドを用いて叩く程度でバンバン叩いていきましょう！
 
 Trelloには複数APIがありますので、確かめるだけでも時間がかかりそうです。
 
@@ -102,7 +102,7 @@ cardsをパラメータに追加すればカードの情報も取得できませ
 
 [source, rust]
 ----
-curl "https://api.trello.com/1/boards/[boardsId]]/lists?fields=name&key=[key]]&token=[token]" | jq '.[] | select(.name == "Doing")'
+curl "https://api.trello.com/1/boards/[boardsId]/lists?fields=name&key=[key]&token=[token]" | jq '.[] | select(.name == "Doing")'
 ----
 
 image::ozasa/listDoingJq.png[]
@@ -110,7 +110,7 @@ image::ozasa/listDoingJq.png[]
 #### ・Doingリストにあるカードの確認
 [source, rust]
 ----
-curl "https://api.trello.com/1/lists/[listId]]?fields=name&cards=open&card_fields=name&key=[key]]&token=[token]" | jq
+curl "https://api.trello.com/1/lists/[listId]?fields=name&cards=open&card_fields=name&key=[key]&token=[token]" | jq
 ----
 
 image::ozasa/doingJq.png[]
@@ -124,7 +124,7 @@ image::ozasa/doingJq.png[]
 
 [source, rust]
 ----
-curl "https://api.trello.com//1/cards/[cardId]?key=[key]&token=[token]" | jq
+curl "https://api.trello.com/1/cards/[cardId]?key=[key]&token=[token]" | jq
 
 ----
 
