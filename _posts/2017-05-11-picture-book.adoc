@@ -1,0 +1,76 @@
+# 絵本アプリを作成してみた
+:hp-alt-title: picture_book
+:hp-tags: Nakamura,Monaca,app
+
+こんにちは、中村です。
+
+GWはいかがお過ごしでしたでしょうか？ + 
+中村家は子供を連れての実家巡りで終わってしまいました。 +
+
+今回は絵本アプリを作ってみたのでご紹介します。
+
+Html,CSSの知識さえあれば簡単に作成できるので、 +
+ぜひ皆さんも挑戦してみてください！
+
+
+### アプリの作り方
+
+今回アプリを「Monacaクラウド」というサービスを使って作ってみました。
+https://ja.monaca.io/cloud.html
+
+選んだ理由としては
+
+- アプリ開発に必要なものは全てクラウド上にある（必要なのはブラウザだけ）
+- iPhone, Android両方対応できる
+- Html,CSS,javascriptという慣れ親しんだ言語で開発できる（今回javascriptは不要！）
+- 実機でのデバックが簡単にできる
+- 使ったことがあるｗ
+
+です！
+
+では早速作成していきましょう〜
+
+
+### Monacaの無料会員になる
+
+まずはこちらのページから無料会員になる必要があります。
+
+https://ja.monaca.io/register/start.html
+
+メールアドレスとパスワードを入力すると、確認用メールが届きます。 +
+そちらに記載されているURLにアクセスすると、こちらのような画面が開くと思います。
+
+image::nakamura/picture_book/01.png[]
+
+まずは緑色の「新規プロジェクトの作成」をクリックします。 +
+すると、以下のようなメニューが表示されるのでここでは一番シンプルな +
+「Onsen UI V2 JS Minimum」を選択して下さい。
+
+image::nakamura/picture_book/02.png[]
+
+
+image::nakamura/picture_book/03.png[]
+image::nakamura/picture_book/04.png[]
+image::nakamura/picture_book/05.png[]
+image::nakamura/picture_book/06.png[]
+image::nakamura/picture_book/07.png[]
+image::nakamura/picture_book/08.png[]
+image::nakamura/picture_book/09.png[]
+image::nakamura/picture_book/10.png[]
+image::nakamura/picture_book/11.png[]
+image::nakamura/picture_book/12.png[]
+
+
+### 感想
+
+アプリを作るのは簡単なのですが、絵を描くのとストーリーを考えるのが +
+一番時間が掛かってしまいました。 +
+（ストーリーと言えるものではないですがｗ）
+
+自分の子供用にもせっかくなので作ってみようと思います。(ｷﾘｯ
+
+またjavascriptが必要になってきますが、選択肢によってストーリーが変わるようなものも面白そうですね！
+デザイナーの方々であればもっとクオリティが高いものが作れるはずですので是非挑戦してみてください〜
+
+こちらからは以上ですっ！
+
