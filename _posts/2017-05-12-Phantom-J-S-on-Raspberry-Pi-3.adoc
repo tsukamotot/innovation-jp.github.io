@@ -95,7 +95,7 @@ image::oyaizu/display02.JPG[]
 
 Raspberry　Piの設定からインターフェイスのタブに行き、SSHにチェックを付けます。 +
 
-これでRebbot後、SSHで接続できます。 +
+これでReboot後、SSHで接続できます。 +
 デフォルトのユーザー名とパスワードは以下。 +
 ユーザー名: `pi` +
 パスワード： `raspberry` +
