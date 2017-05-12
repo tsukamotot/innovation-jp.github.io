@@ -125,7 +125,7 @@ image::oyaizu/display05.JPG[]
 ようやくRaspberry Piの設定が完了したので、次はPhantomJSをインストールします。 +
 Macだとhomebrewでできるので、どうやってインストールするのか調べていたところ、 +
 Raspberry Pi上でソースをビルドするか、ビルド済みのものをインストールするかの2択。 +
-PhatomJSの公式サイトを見ると、ビルドに必要なスペックが以下。 +
+PhantomJSの公式サイトを見ると、ビルドに必要なスペックが以下。 +
 
 ```
 RAM: at least 4 GB
