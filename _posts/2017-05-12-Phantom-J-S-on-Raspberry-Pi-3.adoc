@@ -7,7 +7,7 @@
 
 今更かもしれませんが、先日ついにRaspberry Pi 3 Model B(以下Raspberry　Pi)を購入しました！ +
 
-image::oyaizu/raspberry01.JPG[]
+image::oyaizu/raspberry01.JPG?1[]
 
 勢いだけで買ったRaspberry Piで何をしようかなぁと考えていたのですが、 +
 最近、PhantomJSにハマっているので、 [gray]#（こちらも今更かもしれませんが...）# +
