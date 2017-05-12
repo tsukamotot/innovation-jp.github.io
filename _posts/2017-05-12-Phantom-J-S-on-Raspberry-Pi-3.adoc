@@ -136,7 +136,7 @@ CPU: 1.8 GHz, 4 cores or more
 Raspberry Piじゃちょっと厳しい?? +
 できないわけではなさそうですが、ビルド済みのものをインストールすることにしました。 +
 
-ビルド済みのものはレポジトリが公開されていたので、それを使用させて頂きました。 +
+ビルド済みのものはリポジトリが公開されていたので、それを使用させて頂きました。 +
 https://github.com/fg2it/phantomjs-on-raspberry/tree/master/rpi-2-3/wheezy-jessie/v2.1.1[phantomjs-on-raspberry/rpi-2-3/wheezy-jessie/v2.1.1] +
 
 PhantomJS Installの手順にかかれている通りに以下のコマンドを実行。  +
