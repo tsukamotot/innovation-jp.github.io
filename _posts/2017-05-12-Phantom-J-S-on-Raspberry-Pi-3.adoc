@@ -1,7 +1,7 @@
 # Raspberry Pi 3をセットアップしPhantomJSをインストールしてみる
 :published_at: 2017-05-12
 :hp-alt-title: PhantomJS on Raspberry Pi 3 
-:hp-tags: yaizu,javascript,jQuery,PhantomJS,Raspberry Pi
+:hp-tags: yaizu,javascript,PhantomJS,Raspberry Pi
 
 こんにちは、小柳津です。 +
 
