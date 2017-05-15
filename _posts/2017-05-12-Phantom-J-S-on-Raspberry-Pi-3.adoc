@@ -5,7 +5,7 @@
 
 こんにちは、小柳津です。 +
 
-今更かもしれませんが、先日ついにRaspberry Pi 3 Model B(以下Raspberry　Pi)を購入しました！ +
+今更かもしれませんが、先日ついにRaspberry Pi 3 Model B(以下Raspberry Pi)を購入しました！ +
 
 image::oyaizu/raspberry01.JPG?1[]
 
