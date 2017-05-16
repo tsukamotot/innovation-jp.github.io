@@ -93,7 +93,7 @@ image::oyaizu/display01.JPG[]
 
 image::oyaizu/display02.JPG[]
 
-Raspberry　Piの設定からインターフェイスのタブに行き、SSHにチェックを付けます。 +
+Raspberry Piの設定からインターフェイスのタブに行き、SSHにチェックを付けます。 +
 
 これでReboot後、SSHで接続できます。 +
 デフォルトのユーザー名とパスワードは以下。 +
