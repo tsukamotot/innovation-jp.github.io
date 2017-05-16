@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Raspberry Pi 3をセットアップしPhantomJSをインストールしてみる - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Raspberry Pi 3をセットアップしPhantomJSをインストールしてみる">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Raspberry Pi 3をセットアップしPhantomJSをインストールしてみる">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Raspberry Pi 3をセットアップしPhantomJSをインストールしてみる" />
+    <meta property="og:description" content="こんにちは、小柳津です。 今更かもしれませんが、先日ついにRaspberry Pi 3 Model B(以下Raspberry Pi)を購入しました！ 勢いだけで買ったRaspberry Piで何をしようかなぁと考えていたのですが、 最近、PhantomJSにハマっているので、 （こちらも今更かもしれませんが&amp;#8230;&amp;#8203;） せっかくなのでRaspberry Pi × PhantomJSでブログを書こうと思います！ Raspberry Piおよび周辺機器の購入 まず、本体・ケース・SDカード・冷却機器・5V/2.5Aの電源アダプタが必要。..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html" />
+    <meta property="article:published_time" content="2017-05-15T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-05-16T06:37:06.818Z" />
+    <meta property="article:tag" content="yaizu" />
+    <meta property="article:tag" content="PhantomJS" />
+    <meta property="article:tag" content="RaspberryPi" />
+    <meta property="article:tag" content="NOOBS" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Raspberry Pi 3をセットアップしPhantomJSをインストールしてみる" />
+    <meta name="twitter:description" content="こんにちは、小柳津です。 今更かもしれませんが、先日ついにRaspberry Pi 3 Model B(以下Raspberry Pi)を購入しました！ 勢いだけで買ったRaspberry Piで何をしようかなぁと考えていたのですが、 最近、PhantomJSにハマっているので、 （こちらも今更かもしれませんが&amp;#8230;&amp;#8203;） せっかくなのでRaspberry Pi × PhantomJSでブログを書こうと思います！ Raspberry Piおよび周辺機器の購入 まず、本体・ケース・SDカード・冷却機器・5V/2.5Aの電源アダプタが必要。..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars0.githubusercontent.com/u/16201452?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "Raspberry Pi 3をセットアップしPhantomJSをインストールしてみる",
+    "url": "http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html",
+    "datePublished": "2017-05-15T15:00:00.000Z",
+    "dateModified": "2017-05-16T06:37:06.818Z",
+    "keywords": "yaizu, PhantomJS, RaspberryPi, NOOBS",
+    "description": "こんにちは、小柳津です。 今更かもしれませんが、先日ついにRaspberry Pi 3 Model B(以下Raspberry Pi)を購入しました！ 勢いだけで買ったRaspberry Piで何をしようかなぁと考えていたのですが、 最近、PhantomJSにハマっているので、 （こちらも今更かもしれませんが&amp;#8230;&amp;#8203;） せっかくなのでRaspberry Pi × PhantomJSでブログを書こうと思います！ Raspberry Piおよび周辺機器の購入 まず、本体・ケース・SDカード・冷却機器・5V/2.5Aの電源アダプタが必要。..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-yaizu tag-Phantom-J-S tag-Raspberry-Pi tag-N-O-O-B-S no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="16 May 2017" class="post-meta__date date">16 May 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/yaizu">yaizu</a>, <a href="http://tech.innovation.co.jp/tag/Phantom-J-S">PhantomJS</a>, <a href="http://tech.innovation.co.jp/tag/Raspberry-Pi">RaspberryPi</a>, <a href="http://tech.innovation.co.jp/tag/N-O-O-B-S">NOOBS</a></span>
+        <span class="post-meta__author author"><img src="https://avatars0.githubusercontent.com/u/16201452?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">Raspberry Pi 3をセットアップしPhantomJSをインストールしてみる</h1>
+    </header>
+
+    <section class="post tag-yaizu tag-Phantom-J-S tag-Raspberry-Pi tag-N-O-O-B-S">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは、小柳津です。<br></p>
+</div>
+<div class="paragraph">
+<p>今更かもしれませんが、先日ついにRaspberry Pi 3 Model B(以下Raspberry Pi)を購入しました！<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/raspberry01.JPG?1" alt="raspberry01.JPG?1">
+</div>
+</div>
+<div class="paragraph">
+<p>勢いだけで買ったRaspberry Piで何をしようかなぁと考えていたのですが、<br>
+最近、PhantomJSにハマっているので、 <span class="gray">（こちらも今更かもしれませんが&#8230;&#8203;）</span><br>
+せっかくなのでRaspberry Pi × PhantomJSでブログを書こうと思います！<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_raspberry_pi">Raspberry Piおよび周辺機器の購入</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>まず、本体・ケース・SDカード・冷却機器・5V/2.5Aの電源アダプタが必要。<br>
+5V/2.5Aの電源アダプタは社内に持っている人がいたので、それをお借りして、<br>
+それ以外はamazon経由で以下のように購入しました。<br></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Raspberry Pi 3 Model B 冷却ファン専用ケース 3in1キット</p>
+</li>
+<li>
+<p>Transcend microSDHCカード 32GB Class10 UHS-I対応</p>
+</li>
+<li>
+<p>Raspberry Pi Model Pi2 / Pi3 用 ヒートシンクセット</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/raspberry02.JPG" alt="raspberry02.JPG">
+</div>
+</div>
+<div class="paragraph">
+<p>最初は勢いだけで買ったので、本体＋ケースだけを購入しました笑<br>
+届いて冷静に調べてみると電源アダプタやSDカードが必要ということで、<br>
+本体+ケース以外は後から購入しました。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_raspberry_pi_2">Raspberry Piのセットアップ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>次にOSのインストールなどのセットアップ。<br></p>
+</div>
+<div class="paragraph">
+<p>自分のインストール手順は以下です。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>SDカードのフォーマット</p>
+</li>
+<li>
+<p>NOOBSをダウンロード</p>
+</li>
+<li>
+<p>Raspberry PiにOS(Raspbian)をインストール</p>
+</li>
+<li>
+<p>Raspberry Piの設定</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_sd">SDカードのフォーマット</h3>
+<div class="paragraph">
+<p><a href="https://www.sdcard.org/jp/downloads/formatter_4/">SD/SDHC/SDXC用SDフォーマッター4.0</a><br>
+こちらのソフトウェアを使ってフォーマットしました。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/sdformatter.png" alt="sdformatter.png">
+</div>
+</div>
+<div class="paragraph">
+<p>フォーマッターを起動して、フォーマットしたいSDカードを選択。<br>
+フォーマットオプションはクイックフォーマットを選択しました。<br>
+カードの名前を変更するしないは任意なのでお好みで、右下のフォーマットのボタンをクリック！<br>
+フォーマット完成！<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_noobs">NOOBSをダウンロード</h3>
+<div class="paragraph">
+<p><a href="https://www.raspberrypi.org/downloads/noobs/" class="bare">https://www.raspberrypi.org/downloads/noobs/</a><br>
+上記URLからOSのインストーラであるNOOBSをZIP形式でダウンロードします。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/download.png" alt="download.png">
+</div>
+</div>
+<div class="paragraph">
+<p>(出典元: <a href="https://www.raspberrypi.org/downloads/noobs/">Download NOOBS for Raspberry Pi</a>)<br></p>
+</div>
+<div class="paragraph">
+<p>ダウンロード後、解凍してファイルの中身をフォーマットしたSDカードにコピーします。<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_raspberry_pi_os_raspbian">Raspberry PiにOS(Raspbian)をインストール</h3>
+<div class="paragraph">
+<p>NOOBSをコピーしたSDカードをRaspberry Piに差し込み、<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/raspberry03.JPG" alt="raspberry03.JPG">
+</div>
+</div>
+<div class="paragraph">
+<p>電源に接続してRaspberry Piを起動！<br></p>
+</div>
+<div class="paragraph">
+<p>モニターに接続するとNOOBSの画面が表示され、どのOSをインストールするのかを聞いてきます。<br>
+今回では、RaspbianというOSを選択します。 <span class="gray">(ここの画像を撮り忘れてしまいました&#8230;&#8203;)</span><br>
+OSを選択してインストールを開始させることでセットアップ完了です！<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_raspberry_pi_3">Raspberry Piの設定</h3>
+<div class="paragraph">
+<p>このままではSSHが使用できないので、SSHを使用できるようにします。<br></p>
+</div>
+<div class="paragraph">
+<p>また、標準だと英語の画面なので、まず画面を日本語化させました。<br>
+ついでにタイムゾーンがUTCになっているので、タイムゾーンもJapanに変更します。<br></p>
+</div>
+<div class="paragraph">
+<p>すでに画像は日本語ですが、 同じ位置に配置されているので、参考にして頂ければと思います。<br></p>
+</div>
+<div class="sect3">
+<h4 id="_ssh">SSHの設定</h4>
+<div class="paragraph">
+<p>右上のRaspberryのアイコンから以下の画像のように設定します。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/display01.JPG" alt="display01.JPG">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/display02.JPG" alt="display02.JPG">
+</div>
+</div>
+<div class="paragraph">
+<p>Raspberry　Piの設定からインターフェイスのタブに行き、SSHにチェックを付けます。<br></p>
+</div>
+<div class="paragraph">
+<p>これでReboot後、SSHで接続できます。<br>
+デフォルトのユーザー名とパスワードは以下。<br>
+ユーザー名: <code>pi</code><br>
+パスワード： <code>raspberry</code><br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="__">日本語の設定</h4>
+<div class="paragraph">
+<p>SSHの設定から引き続き、1番右のローカライゼーションのタブに行きます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/display03.JPG" alt="display03.JPG">
+</div>
+</div>
+<div class="paragraph">
+<p>ロケールの設定で言語を<code>ja</code>に設定すれば、Raspberry Piの画面が日本語になります。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___2">タイムゾーンの設定</h4>
+<div class="paragraph">
+<p>同じくローカライゼーションのタブからタイムゾーンの設定で地域をJapanに選択します。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/display04.JPG" alt="display04.JPG">
+</div>
+</div>
+<div class="paragraph">
+<p>これでセットアップ完了！最後にShutdownからRebootするのをお忘れなく！！<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/display05.JPG" alt="display05.JPG">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_phantomjs_raspberry_pi">PhantomJSをRaspberry Piにインストール</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>ようやくRaspberry Piの設定が完了したので、次はPhantomJSをインストールします。<br>
+Macだとhomebrewでできるので、どうやってインストールするのか調べていたところ、<br>
+Raspberry Pi上でソースをビルドするか、ビルド済みのものをインストールするかの2択。<br>
+PhantomJSの公式サイトを見ると、ビルドに必要なスペックが以下。<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>RAM: at least 4 GB
+Disk space: at least 3 GB
+CPU: 1.8 GHz, 4 cores or more</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Raspberry Piじゃちょっと厳しい??<br>
+できないわけではなさそうですが、ビルド済みのものをインストールすることにしました。<br></p>
+</div>
+<div class="paragraph">
+<p>ビルド済みのものはリポジトリが公開されていたので、それを使用させて頂きました。<br>
+<a href="https://github.com/fg2it/phantomjs-on-raspberry/tree/master/rpi-2-3/wheezy-jessie/v2.1.1">phantomjs-on-raspberry/rpi-2-3/wheezy-jessie/v2.1.1</a><br></p>
+</div>
+<div class="paragraph">
+<p>PhantomJS Installの手順にかかれている通りに以下のコマンドを実行。 <br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ sudo apt-get install libfontconfig1 libfreetype6 libpng12-0
+$ curl -o /tmp/phantomjs -sSL https://github.com/fg2it/phantomjs-on-raspberry/releases/download/v2.1.1-wheezy-jessie/phantomjs
+$ sudo mv /tmp/phantomjs /usr/local/bin/phantomjs
+$ sudo chmod a+x /usr/local/bin/phantomjs</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>インストールできているか確認。<br>
+<code>phantomjs --version</code>のコマンドに対して<code>2.1.1</code>と返ってきたら成功！<br></p>
+</div>
+<div class="paragraph">
+<p>結構時間がかかってしまいましたが、Raspberry PiのセットアップおよびPhantomJSインストールができました。<br>
+次回はRaspberry Pi × PhantomJSで定期的にスクレイピングコードを動かしているので、それについて書こうと思います！<br></p>
+</div>
+<div class="paragraph">
+<p>今回はここで失礼します。<br></p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
