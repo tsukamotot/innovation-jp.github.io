@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>絵本アプリを作成してみた - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="絵本アプリを作成してみた">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="絵本アプリを作成してみた">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/05/12/picture-book.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="絵本アプリを作成してみた" />
+    <meta property="og:description" content="こんにちは、中村です。 GWはいかがお過ごしでしたでしょうか？ 中村家では子供を連れての実家巡りで終わってしまいました。 今回は絵本アプリを作ってみたのでご紹介します。 HTML,CSSの知識さえあれば簡単に作成できるので、 ぜひ皆さんも挑戦してみてください！ アプリの作り方 今回アプリを「Monacaクラウド」というサービスを使って作ってみました。 https://ja.monaca.io/cloud.html 選定理由としては アプリ開発に必要なものは全てクラウド上にある(必要なのはブラウザだけ) iPhone, Android両方対応できる HT..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/05/12/picture-book.html" />
+    <meta property="article:published_time" content="2017-05-11T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-05-16T03:02:56.788Z" />
+    <meta property="article:tag" content="Nakamura" />
+    <meta property="article:tag" content="Monaca" />
+    <meta property="article:tag" content="app" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="絵本アプリを作成してみた" />
+    <meta name="twitter:description" content="こんにちは、中村です。 GWはいかがお過ごしでしたでしょうか？ 中村家では子供を連れての実家巡りで終わってしまいました。 今回は絵本アプリを作ってみたのでご紹介します。 HTML,CSSの知識さえあれば簡単に作成できるので、 ぜひ皆さんも挑戦してみてください！ アプリの作り方 今回アプリを「Monacaクラウド」というサービスを使って作ってみました。 https://ja.monaca.io/cloud.html 選定理由としては アプリ開発に必要なものは全てクラウド上にある(必要なのはブラウザだけ) iPhone, Android両方対応できる HT..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/05/12/picture-book.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "m_nakamura",
+        "image": "https://avatars2.githubusercontent.com/u/7381448?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "絵本アプリを作成してみた",
+    "url": "http://tech.innovation.co.jp/2017/05/12/picture-book.html",
+    "datePublished": "2017-05-11T15:00:00.000Z",
+    "dateModified": "2017-05-16T03:02:56.788Z",
+    "keywords": "Nakamura, Monaca, app",
+    "description": "こんにちは、中村です。 GWはいかがお過ごしでしたでしょうか？ 中村家では子供を連れての実家巡りで終わってしまいました。 今回は絵本アプリを作ってみたのでご紹介します。 HTML,CSSの知識さえあれば簡単に作成できるので、 ぜひ皆さんも挑戦してみてください！ アプリの作り方 今回アプリを「Monacaクラウド」というサービスを使って作ってみました。 https://ja.monaca.io/cloud.html 選定理由としては アプリ開発に必要なものは全てクラウド上にある(必要なのはブラウザだけ) iPhone, Android両方対応できる HT..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Nakamura tag-Monaca tag-app no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="12 May 2017" class="post-meta__date date">12 May 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Nakamura">Nakamura</a>, <a href="http://tech.innovation.co.jp/tag/Monaca">Monaca</a>, <a href="http://tech.innovation.co.jp/tag/app">app</a></span>
+        <span class="post-meta__author author"><img src="https://avatars2.githubusercontent.com/u/7381448?v=3" alt="profile image for m_nakamura" class="avatar post-meta__avatar" /> by m_nakamura</span>
+      </div>
+      <h1 class="post-title">絵本アプリを作成してみた</h1>
+    </header>
+
+    <section class="post tag-Nakamura tag-Monaca tag-app">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは、中村です。</p>
+</div>
+<div class="paragraph">
+<p>GWはいかがお過ごしでしたでしょうか？<br>
+中村家では子供を連れての実家巡りで終わってしまいました。<br></p>
+</div>
+<div class="paragraph">
+<p>今回は絵本アプリを作ってみたのでご紹介します。</p>
+</div>
+<div class="paragraph">
+<p>HTML,CSSの知識さえあれば簡単に作成できるので、<br>
+ぜひ皆さんも挑戦してみてください！</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__">アプリの作り方</h3>
+<div class="paragraph">
+<p>今回アプリを「Monacaクラウド」というサービスを使って作ってみました。
+<a href="https://ja.monaca.io/cloud.html" class="bare">https://ja.monaca.io/cloud.html</a></p>
+</div>
+<div class="paragraph">
+<p>選定理由としては</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>アプリ開発に必要なものは全てクラウド上にある(必要なのはブラウザだけ)</p>
+</li>
+<li>
+<p>iPhone, Android両方対応できる</p>
+</li>
+<li>
+<p>HTML,CSS,JavaScriptという慣れ親しんだ言語で開発できる(今回JavaScriptは不要！)</p>
+</li>
+<li>
+<p>実機でのデバックが簡単にできる</p>
+</li>
+<li>
+<p>使ったことがある(笑)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>です！</p>
+</div>
+<div class="paragraph">
+<p>では早速作成していきましょう〜</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___2">用意するもの</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>絵本で使用する画像（1ページ1ファイルにしてください）</p>
+</li>
+<li>
+<p>ブラウザ</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>今回のアプリを簡単に説明すると、画像をスワイプすると次の画像が表示されるものです。</p>
+</div>
+<div class="paragraph">
+<p>もちろんHTMLの知識があれば、キャラクターの画像や背景画像を別々に保存することも可能ですが<br>
+今回はアプリ作成手順をなるべく簡単に説明するため、1ページ1画像で作成することにします。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">プロジェクトの作成</h3>
+<div class="paragraph">
+<p>まずはこちらのページから無料会員になる必要があります。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://ja.monaca.io/register/start.html" class="bare">https://ja.monaca.io/register/start.html</a></p>
+</div>
+<div class="paragraph">
+<p>メールアドレスとパスワードを入力すると、確認用メールが届きます。<br>
+そちらに記載されているURLにアクセスすると、こちらのような画面が開くと思います。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/01.png" alt="01.png">
+</div>
+</div>
+<div class="paragraph">
+<p>次に緑色の「新規プロジェクトの作成」をクリックします。<br>
+すると、以下のようなメニューが表示されるのでここでは一番シンプルな<br>
+「Onsen UI V2 JS Minimum」を選択して下さい。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/02.png" alt="02.png">
+</div>
+</div>
+<div class="paragraph">
+<p>プロジェクト名を入力し、作成ボタンをクリックすれば完了です。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/03.png" alt="03.png" width="250">
+</div>
+</div>
+<div class="paragraph">
+<p>最初に表示された画面に新しく作成したプロジェクトが作成されています。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/04.png" alt="04.png">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___4">アプリを作成する</h3>
+<div class="paragraph">
+<p>新規作成したアプリの「開く」ボタンをクリックすると、以下のような画面になります。<br>
+(index.htmlのタブをクリックした状態です)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/05.png" alt="05.png">
+</div>
+</div>
+<div class="paragraph">
+<p>コードエリアで編集したものを保存すると、右側のプレビューエリアですぐに確認することができるため非常に便利ですが、上手く表示されない場合もあるためなるべく実機で確認することをオススメします。<br>
+（実機でのデバック方法は後ほど説明します）</p>
+</div>
+<div class="paragraph">
+<p>では早速コードを編集していきましょう。</p>
+</div>
+<div class="paragraph">
+<p>左側にあるファイルツリー（メニュー）のindex.htmlをダブルクリックすると、以下のコードが表示されます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/06.png" alt="06.png">
+</div>
+</div>
+<div class="paragraph">
+<p>今回赤線の箇所は不要なので削除します。<br>
+次に&lt;body&gt;タグの間に以下のコードを追加して下さい。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/07.png" alt="07.png">
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;ons-carousel&gt;というタグを使用することで、簡単にスワイプでコンテンツを切り替えることが可能になります。</p>
+</div>
+<div class="paragraph">
+<p>まずは試しに「あああああ」「いいいいい」「ううううう」という文字がスワイプで切り替えられるようにしてみます。</p>
+</div>
+<div class="paragraph">
+<p>最後に&lt;style&gt;を追加して見た目を整えます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/07_2.png" alt="07 2.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ここまでで一度保存してみて下さい。<br>
+プレビューエリアにて表示できてますでしょうか？</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___5">実機でのデバック方法</h3>
+<div class="paragraph">
+<p>次に実際に実機で確認する方法を説明します。</p>
+</div>
+<div class="paragraph">
+<p>まずアプリ検索で「Monaca」と入力して検索してください。<br>
+以下のアプリが見つかると思いますので、インストールして下さい。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/08.png" alt="08.png" width="250">
+</div>
+</div>
+<div class="paragraph">
+<p>アプリを起動すると、ログインフォームが表示されますので<br>
+会員登録した情報を入力し、ログインします。</p>
+</div>
+<div class="paragraph">
+<p>すると以下のように作成したプロジェクトが見つかると思います。<br>
+こちらをタップすることで、作成中のアプリをデバックすることができます。</p>
+</div>
+<div class="paragraph">
+<p>非常に簡単ですね！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/09.png" alt="09.png" width="250">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___6">アプリ完成まで</h3>
+<div class="paragraph">
+<p>アプリ完成まであと少しです！</p>
+</div>
+<div class="paragraph">
+<p>次は絵本になる画像をアップロードしていきましょう。<br>
+左側にあるファイルツリー（メニュー）をよくみると、すでに「css」というフォルダーはありますが、<br>
+画像を保存するフォルダーがありません。</p>
+</div>
+<div class="paragraph">
+<p>まずは以下の画像を参考にして、画像用のフォルダー「img」を作成しましょう。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/10.png" alt="10.png">
+</div>
+</div>
+<div class="paragraph">
+<p>次に作成した「img」フォルダーを選択し、アップロードアイコンをクリックするとアップロード用の画面が表示されます。</p>
+</div>
+<div class="paragraph">
+<p>こちらに必要な画像ファイルをドロップして下さい。<br>
+（複数ファイルを一度にアップロードできます）</p>
+</div>
+<div class="paragraph">
+<p>ファイル名は日本語を含まない半角英数字にしておいた方が無難だと思います。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/11.png" alt="11.png">
+</div>
+</div>
+<div class="paragraph">
+<p>これで画像がアップロードできました。</p>
+</div>
+<div class="paragraph">
+<p>最後に先ほど作成したコードの一部を以下の画像を参考に変更して下さい。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/nakamura/picture_book/12.png" alt="12.png">
+</div>
+</div>
+<div class="paragraph">
+<p>※絵本のページ数に応じて&lt;ons-carousel-item&gt;の数は変更してください<br>
+※アップロードした画像名を指定してください</p>
+</div>
+<div class="paragraph">
+<p>私が今回作成したものはこちら</p>
+</div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/LAHfjgivTWA" frameborder="0" allowfullscreen></iframe>
+<div class="paragraph">
+<p>いかがでしょうか？</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___7">感想</h3>
+<div class="paragraph">
+<p>アプリを作るのは簡単なのですが、絵を描くのとストーリーを考えるのが<br>
+一番時間が掛かってしまいました。<br>
+（ストーリーと言えるものではないですが）</p>
+</div>
+<div class="paragraph">
+<p>自分の子供用にもせっかくなので作ってみようと思います。</p>
+</div>
+<div class="paragraph">
+<p>またJavaScriptが必要になってきますが、選択肢によってストーリーが変わるようなものも面白そうですね！
+デザイナーの方々であればもっとクオリティが高いものが作れるはずですので是非挑戦してみてください〜</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上ですっ！</p>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
