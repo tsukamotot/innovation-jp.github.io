@@ -1,0 +1,155 @@
+# 【Swift3】ランダムマッチチャットアプリを作ったお話。
+:published_at: 2017-05-19
+:hp-alt-title: swift chat
+:hp-tags: kohe,swift3,chat
+
+こんにちは、小柳津です。 +
+
+今更かもしれませんが、先日ついにRaspberry Pi 3 Model B(以下Raspberry Pi)を購入しました！ +
+
+image::oyaizu/raspberry01.JPG?1[]
+
+勢いだけで買ったRaspberry Piで何をしようかなぁと考えていたのですが、 +
+最近、PhantomJSにハマっているので、 [gray]#（こちらも今更かもしれませんが...）# +
+せっかくなのでRaspberry Pi × PhantomJSでブログを書こうと思います！ +
+
+## Raspberry Piおよび周辺機器の購入
+
+まず、本体・ケース・SDカード・冷却機器・5V/2.5Aの電源アダプタが必要。 +
+5V/2.5Aの電源アダプタは社内に持っている人がいたので、それをお借りして、 +
+それ以外はamazon経由で以下のように購入しました。 +
+
+- Raspberry Pi 3 Model B +冷却ファン+専用ケース 3in1キット
+
+- Transcend microSDHCカード 32GB Class10 UHS-I対応
+
+- Raspberry Pi Model Pi2 / Pi3 用 ヒートシンクセット
+
+image::oyaizu/raspberry02.JPG[]
+
+最初は勢いだけで買ったので、本体＋ケースだけを購入しました笑 +
+届いて冷静に調べてみると電源アダプタやSDカードが必要ということで、 +
+本体+ケース以外は後から購入しました。 +
+
+## Raspberry Piのセットアップ
+
+次にOSのインストールなどのセットアップ。 +
+
+自分のインストール手順は以下です。
+
+1. SDカードのフォーマット
+2. NOOBSをダウンロード
+3. Raspberry PiにOS(Raspbian)をインストール
+4. Raspberry Piの設定
+
+### SDカードのフォーマット
+
+https://www.sdcard.org/jp/downloads/formatter_4/[SD/SDHC/SDXC用SDフォーマッター4.0] +
+こちらのソフトウェアを使ってフォーマットしました。 +
+
+image::oyaizu/sdformatter.png[]
+
+フォーマッターを起動して、フォーマットしたいSDカードを選択。 +
+フォーマットオプションはクイックフォーマットを選択しました。 +
+カードの名前を変更するしないは任意なのでお好みで、右下のフォーマットのボタンをクリック！ +
+フォーマット完成！ +
+
+### NOOBSをダウンロード
+
+https://www.raspberrypi.org/downloads/noobs/ +
+上記URLからOSのインストーラであるNOOBSをZIP形式でダウンロードします。
+
+image::oyaizu/download.png[]
+(出典元: https://www.raspberrypi.org/downloads/noobs/[Download NOOBS for Raspberry Pi]) +
+
+ダウンロード後、解凍してファイルの中身をフォーマットしたSDカードにコピーします。 +
+
+### Raspberry PiにOS(Raspbian)をインストール
+
+NOOBSをコピーしたSDカードをRaspberry Piに差し込み、 +
+
+image::oyaizu/raspberry03.JPG[]
+
+電源に接続してRaspberry Piを起動！ +
+
+モニターに接続するとNOOBSの画面が表示され、どのOSをインストールするのかを聞いてきます。 +
+今回では、RaspbianというOSを選択します。 [gray]#(ここの画像を撮り忘れてしまいました...)# +
+OSを選択してインストールを開始させることでセットアップ完了です！ +
+
+### Raspberry Piの設定
+
+このままではSSHが使用できないので、SSHを使用できるようにします。 +
+
+また、標準だと英語の画面なので、まず画面を日本語化させました。 +
+ついでにタイムゾーンがUTCになっているので、タイムゾーンもJapanに変更します。 +
+
+すでに画像は日本語ですが、 同じ位置に配置されているので、参考にして頂ければと思います。 +
+
+#### SSHの設定
+
+左上のRaspberryのアイコンから以下の画像のように設定します。 +
+
+image::oyaizu/display01.JPG[]
+
+image::oyaizu/display02.JPG[]
+
+Raspberry Piの設定からインターフェイスのタブに行き、SSHにチェックを付けます。 +
+
+これでReboot後、SSHで接続できます。 +
+デフォルトのユーザー名とパスワードは以下。 +
+ユーザー名： `pi` +
+パスワード： `raspberry` +
+
+#### 日本語の設定
+
+SSHの設定から引き続き、1番右のローカライゼーションのタブに行きます。
+
+image::oyaizu/display03.JPG[]
+
+ロケールの設定で言語を`ja`に設定すれば、Raspberry Piの画面が日本語になります。
+
+#### タイムゾーンの設定
+
+同じくローカライゼーションのタブからタイムゾーンの設定で地域をJapanに選択します。
+
+image::oyaizu/display04.JPG[]
+
+
+
+これでセットアップ完了！最後にShutdownからRebootするのをお忘れなく！！ +
+
+image::oyaizu/display05.JPG[]
+
+## PhantomJSをRaspberry Piにインストール
+
+ようやくRaspberry Piの設定が完了したので、次はPhantomJSをインストールします。 +
+Macだとhomebrewでできるので、どうやってインストールするのか調べていたところ、 +
+Raspberry Pi上でソースをビルドするか、ビルド済みのものをインストールするかの2択。 +
+PhantomJSの公式サイトを見ると、ビルドに必要なスペックが以下。 +
+
+```
+RAM: at least 4 GB
+Disk space: at least 3 GB
+CPU: 1.8 GHz, 4 cores or more
+```
+
+Raspberry Piじゃちょっと厳しい?? +
+できないわけではなさそうですが、ビルド済みのものをインストールすることにしました。 +
+
+ビルド済みのものはリポジトリが公開されていたので、それを使用させて頂きました。 +
+https://github.com/fg2it/phantomjs-on-raspberry/tree/master/rpi-2-3/wheezy-jessie/v2.1.1[phantomjs-on-raspberry/rpi-2-3/wheezy-jessie/v2.1.1] +
+
+PhantomJS Installの手順にかかれている通りに以下のコマンドを実行。  +
+```
+$ sudo apt-get install libfontconfig1 libfreetype6 libpng12-0
+$ curl -o /tmp/phantomjs -sSL https://github.com/fg2it/phantomjs-on-raspberry/releases/download/v2.1.1-wheezy-jessie/phantomjs
+$ sudo mv /tmp/phantomjs /usr/local/bin/phantomjs
+$ sudo chmod a+x /usr/local/bin/phantomjs
+```
+インストールできているか確認。 +
+`phantomjs --version`のコマンドに対して`2.1.1`と返ってきたら成功！ +
+
+結構時間がかかってしまいましたが、Raspberry PiのセットアップおよびPhantomJSインストールができました。 +
+次回はRaspberry Pi × PhantomJSで定期的にスクレイピングコードを動かしているので、それについて書こうと思います！ +
+
+今回はここで失礼します。 +
