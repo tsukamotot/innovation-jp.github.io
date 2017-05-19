@@ -490,3 +490,5 @@ class ViewController: JSQMessagesViewController {
 # 動き
 image::kohe/swiftchat.gif[]
 
+これに色々と機能をつけてリリースしますんでそのときはおなしゃす:)
+
