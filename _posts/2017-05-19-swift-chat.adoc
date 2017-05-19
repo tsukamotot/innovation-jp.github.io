@@ -1,15 +1,33 @@
 # 【Swift3】ランダムマッチチャットアプリを作ったお話。
 :published_at: 2017-05-19
 :hp-alt-title: swift chat
-:hp-tags: kohe,swift3,chat
+:hp-tags: kohe,swift3,chat,FIrebase
 
-こんにちは、小柳津です。 +
+こんばんは、こへです。 +
 
-今更かもしれませんが、先日ついにRaspberry Pi 3 Model B(以下Raspberry Pi)を購入しました！ +
 
-image::oyaizu/raspberry01.JPG?1[]
+そろそろ、Swift3とFIrebaseを使って、完全匿名ランダムマッチングチャットを作りたい時期が来ましたので作成。 +
 
-勢いだけで買ったRaspberry Piで何をしようかなぁと考えていたのですが、 +
+ 
+ #やりこと
+ * 1対1のチャット
+ * 匿名
+ *　ランダムにマッチング
+ 
+
+# 画面イメージ設計
+
+image::kohe/randomChat.002.png[]
+
+ロード中くるくる回すインテグレーションだけにはこだわりたい。
+
+# DB設計
+image::kohe/randomChat.001.png[]
+
+枠から文字がはみ出ているのはご愛嬌。
+
+
+勢いだけで買ったRaspberry Piで何をしようかなぁと考えていた	ですが、 +
 最近、PhantomJSにハマっているので、 [gray]#（こちらも今更かもしれませんが...）# +
 せっかくなのでRaspberry Pi × PhantomJSでブログを書こうと思います！ +
 
