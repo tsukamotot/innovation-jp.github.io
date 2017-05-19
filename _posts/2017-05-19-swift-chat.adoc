@@ -488,4 +488,5 @@ class ViewController: JSQMessagesViewController {
 ```
 
 # 動き
+image::kohe/swiftchat.gif[]
 
