@@ -1,155 +1,491 @@
 # 【Swift3】ランダムマッチチャットアプリを作ったお話。
 :published_at: 2017-05-19
 :hp-alt-title: swift chat
-:hp-tags: kohe,swift3,chat
+:hp-tags: kohe,swift3,chat,FIrebase
 
-こんにちは、小柳津です。 +
+こんばんは、こへです。 +
 
-今更かもしれませんが、先日ついにRaspberry Pi 3 Model B(以下Raspberry Pi)を購入しました！ +
 
-image::oyaizu/raspberry01.JPG?1[]
+そろそろ、Swift3とFIrebaseを使って、完全匿名ランダムマッチングチャットを作りたい時期が来ましたので作成。 +
 
-勢いだけで買ったRaspberry Piで何をしようかなぁと考えていたのですが、 +
-最近、PhantomJSにハマっているので、 [gray]#（こちらも今更かもしれませんが...）# +
-せっかくなのでRaspberry Pi × PhantomJSでブログを書こうと思います！ +
+# やりたいこと
+ 
+ * 1対1のチャット
+ * 匿名
+ * ランダムにマッチング 
 
-## Raspberry Piおよび周辺機器の購入
+*以上！！*    
 
-まず、本体・ケース・SDカード・冷却機器・5V/2.5Aの電源アダプタが必要。 +
-5V/2.5Aの電源アダプタは社内に持っている人がいたので、それをお借りして、 +
-それ以外はamazon経由で以下のように購入しました。 +
+# 画面イメージ設計
 
-- Raspberry Pi 3 Model B +冷却ファン+専用ケース 3in1キット
+image::kohe/randomChat.002.png[]
 
-- Transcend microSDHCカード 32GB Class10 UHS-I対応
+ロード中(マッチング相手を探し中)くるくる回すインテグレーションだけにはこだわりたい。
 
-- Raspberry Pi Model Pi2 / Pi3 用 ヒートシンクセット
+# DB設計
+Firebase　を使うためこんな感じにカキカキ。
 
-image::oyaizu/raspberry02.JPG[]
+image::kohe/randomChat.001.png[]
 
-最初は勢いだけで買ったので、本体＋ケースだけを購入しました笑 +
-届いて冷静に調べてみると電源アダプタやSDカードが必要ということで、 +
-本体+ケース以外は後から購入しました。 +
-
-## Raspberry Piのセットアップ
-
-次にOSのインストールなどのセットアップ。 +
-
-自分のインストール手順は以下です。
-
-1. SDカードのフォーマット
-2. NOOBSをダウンロード
-3. Raspberry PiにOS(Raspbian)をインストール
-4. Raspberry Piの設定
-
-### SDカードのフォーマット
-
-https://www.sdcard.org/jp/downloads/formatter_4/[SD/SDHC/SDXC用SDフォーマッター4.0] +
-こちらのソフトウェアを使ってフォーマットしました。 +
-
-image::oyaizu/sdformatter.png[]
-
-フォーマッターを起動して、フォーマットしたいSDカードを選択。 +
-フォーマットオプションはクイックフォーマットを選択しました。 +
-カードの名前を変更するしないは任意なのでお好みで、右下のフォーマットのボタンをクリック！ +
-フォーマット完成！ +
-
-### NOOBSをダウンロード
-
-https://www.raspberrypi.org/downloads/noobs/ +
-上記URLからOSのインストーラであるNOOBSをZIP形式でダウンロードします。
-
-image::oyaizu/download.png[]
-(出典元: https://www.raspberrypi.org/downloads/noobs/[Download NOOBS for Raspberry Pi]) +
-
-ダウンロード後、解凍してファイルの中身をフォーマットしたSDカードにコピーします。 +
-
-### Raspberry PiにOS(Raspbian)をインストール
-
-NOOBSをコピーしたSDカードをRaspberry Piに差し込み、 +
-
-image::oyaizu/raspberry03.JPG[]
-
-電源に接続してRaspberry Piを起動！ +
-
-モニターに接続するとNOOBSの画面が表示され、どのOSをインストールするのかを聞いてきます。 +
-今回では、RaspbianというOSを選択します。 [gray]#(ここの画像を撮り忘れてしまいました...)# +
-OSを選択してインストールを開始させることでセットアップ完了です！ +
-
-### Raspberry Piの設定
-
-このままではSSHが使用できないので、SSHを使用できるようにします。 +
-
-また、標準だと英語の画面なので、まず画面を日本語化させました。 +
-ついでにタイムゾーンがUTCになっているので、タイムゾーンもJapanに変更します。 +
-
-すでに画像は日本語ですが、 同じ位置に配置されているので、参考にして頂ければと思います。 +
-
-#### SSHの設定
-
-左上のRaspberryのアイコンから以下の画像のように設定します。 +
-
-image::oyaizu/display01.JPG[]
-
-image::oyaizu/display02.JPG[]
-
-Raspberry Piの設定からインターフェイスのタブに行き、SSHにチェックを付けます。 +
-
-これでReboot後、SSHで接続できます。 +
-デフォルトのユーザー名とパスワードは以下。 +
-ユーザー名： `pi` +
-パスワード： `raspberry` +
-
-#### 日本語の設定
-
-SSHの設定から引き続き、1番右のローカライゼーションのタブに行きます。
-
-image::oyaizu/display03.JPG[]
-
-ロケールの設定で言語を`ja`に設定すれば、Raspberry Piの画面が日本語になります。
-
-#### タイムゾーンの設定
-
-同じくローカライゼーションのタブからタイムゾーンの設定で地域をJapanに選択します。
-
-image::oyaizu/display04.JPG[]
+枠から文字がはみ出ているのはご愛嬌。
 
 
 
-これでセットアップ完了！最後にShutdownからRebootするのをお忘れなく！！ +
+# FIrebase
 
-image::oyaizu/display05.JPG[]
+GoogleアカウントでFirebaseに登録。
+※ココらへんの設定はググれば大量に出てくるため割愛。
 
-## PhantomJSをRaspberry Piにインストール
-
-ようやくRaspberry Piの設定が完了したので、次はPhantomJSをインストールします。 +
-Macだとhomebrewでできるので、どうやってインストールするのか調べていたところ、 +
-Raspberry Pi上でソースをビルドするか、ビルド済みのものをインストールするかの2択。 +
-PhantomJSの公式サイトを見ると、ビルドに必要なスペックが以下。 +
+書き込み読み込みのルールもパブリックにしてしまってはいかんので認証を必要にする。
 
 ```
-RAM: at least 4 GB
-Disk space: at least 3 GB
-CPU: 1.8 GHz, 4 cores or more
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write":"auth != null"
+  }
+}
 ```
 
-Raspberry Piじゃちょっと厳しい?? +
-できないわけではなさそうですが、ビルド済みのものをインストールすることにしました。 +
+そしてまずは、ルーム作成の際に与える数値を持つ keyとvalueを作成。
 
-ビルド済みのものはリポジトリが公開されていたので、それを使用させて頂きました。 +
-https://github.com/fg2it/phantomjs-on-raspberry/tree/master/rpi-2-3/wheezy-jessie/v2.1.1[phantomjs-on-raspberry/rpi-2-3/wheezy-jessie/v2.1.1] +
+image::kohe/swiftchat1.png[]
 
-PhantomJS Installの手順にかかれている通りに以下のコマンドを実行。  +
+初期値は適当。 +
+今回はなんとなく「２０」を選択。
+
+ランダムチャットがマッチングするたびに、この値をインクリメントし、その数値を名前としてroomを作っていくよーん。
+
+
+# ライブラリ
+
+* Firebase
+* Firebase/Database
+* Firebase/Core
+* JSQMessagesViewController
+* Firebase/Auth
+* SVProgressHUD
+* ChameleonFramework/Swift
+
+上記のこやつらをpodの野郎で取り込んでいく。 +
+ライブラリって素晴らしい… :0
+
+# 上が終わったらやっとこさXcodeさ！
+
+画面設計の通り、色々配していく。
+
+image::kohe/swiftchat2.png[]
+
+チャットスタートボタンはひよこの絵を、絵がうまい同期の子に依頼。
+
+後はナビゲーションコントローラーをつけて楽をする。
+
+ストーリーボードの設定はこれで終わり！
+
+## Code
+
+### 最初に開かれる画面
+
 ```
-$ sudo apt-get install libfontconfig1 libfreetype6 libpng12-0
-$ curl -o /tmp/phantomjs -sSL https://github.com/fg2it/phantomjs-on-raspberry/releases/download/v2.1.1-wheezy-jessie/phantomjs
-$ sudo mv /tmp/phantomjs /usr/local/bin/phantomjs
-$ sudo chmod a+x /usr/local/bin/phantomjs
+
+
+import UIKit
+import SVProgressHUD
+
+class StartViewController: UIViewController {
+
+    //AppDelegateのインスタンスを作り、AppDelegateの変数を使えるようにする。
+    let app:AppDelegate =
+        (UIApplication.shared.delegate as! AppDelegate)
+  
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.app.roomId = "0"
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
+}
+
+
 ```
-インストールできているか確認。 +
-`phantomjs --version`のコマンドに対して`2.1.1`と返ってきたら成功！ +
 
-結構時間がかかってしまいましたが、Raspberry PiのセットアップおよびPhantomJSインストールができました。 +
-次回はRaspberry Pi × PhantomJSで定期的にスクレイピングコードを動かしているので、それについて書こうと思います！ +
 
-今回はここで失礼します。 +
+### AppDelegate
+
+```
+    var window: UIWindow?
+    var deiceToken:String?
+    var roomId:String?
+    var newRoomId:String?
+    var targetId:String?
+    var chatStartFlg:Bool?
+
+```
+スーパグローバル変数的なものを定義。
+
+
+### チャットの部分の画面の
+
+```
+import UIKit
+import Firebase
+import JSQMessagesViewController
+import SVProgressHUD
+
+class ViewController: JSQMessagesViewController {
+    
+    var messages: [JSQMessage]?
+    
+    var incomingBubble: JSQMessagesBubbleImage!
+    var outgoingBubble: JSQMessagesBubbleImage!
+    var exitcomingBubble:JSQMessagesBubbleImage!
+    
+    
+    var incomingAvatar: JSQMessagesAvatarImage!
+    var outgoingAvatar: JSQMessagesAvatarImage!
+    
+    var uid:String = UUID().uuidString
+    
+    let userRef  = FIRDatabase.database().reference().child("users")
+    let rootRef  = FIRDatabase.database().reference()
+    
+    let userDefaults = UserDefaults.standard
+    
+    //AppDelegateのインスタンスを作り、AppDelegateの変数を使えるようにする。
+    let app:AppDelegate =
+        (UIApplication.shared.delegate as! AppDelegate)
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+      
+        
+        //初回時のみ自分のIDを保存しておく、それ移行は使い回し
+        if(userDefaults.string(forKey: "uid") != nil){
+            uid = userDefaults.string(forKey: "uid")!
+        }else{
+            userDefaults.set(uid, forKey: "uid")
+        }
+        
+        print("自分のuid→\(self.uid)")
+        
+        //Indicatorを回す
+        SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.dark)
+        //↓の処理を入れるとIndicatorが回っている間は背後のuiが非活性になる。
+   //     SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.black)
+        SVProgressHUD.show(withStatus: "チャット相手をさがしています")
+        
+        self.app.chatStartFlg = false
+
+        //表示される名前(未実装)
+        self.senderDisplayName = "hoge"
+        setupFirebase()
+        getRoom()
+        setupChatUi()
+        
+        self.messages = []
+    }
+    
+    func setupFirebase() {
+        
+        //匿名アカウントを認証する
+        FIRAuth.auth()?.signInAnonymously() { (user, error) in
+            if error != nil {
+                //エラー時の処理
+                print("失敗")
+                return
+            }
+            //成功時の処理
+            print("成功")
+       
+        }
+    }
+    
+    func getRoom(){
+        
+        let user = ["name": senderDisplayName,
+                        "inRoom": "0",
+                        "waitingFlg": "0"]
+        
+        userRef.child(self.uid
+            ).setValue(user)
+        
+        
+        //一回だけwaitingFlgが１のユーザを取得
+        userRef.queryOrdered(byChild: "waitingFlg").queryEqual(toValue: "1").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+                        
+            if(value != nil){
+                if (value!.count >= 1) {
+                    //ルームを作る側の処理
+                    print(value!.count);
+                    print("value \(value!)")
+                    print("↑初回ボタン押下時に、waitingFlgが１のユーザ")
+                    
+                    self.createRoom(value: value as! Dictionary<AnyHashable, Any>)
+                }
+            } else {
+                //ルームを作られるのを待つ側の処理
+                self.userRef.child(self.uid).updateChildValues(["waitingFlg":"1"])
+                self.checkMyWaitingFlg();
+            }
+        });
+        
+        
+    }
+    
+    //他のユーザが自分とマッチするまで待機する。
+    func checkMyWaitingFlg(){
+        userRef.child(self.uid).observe(FIRDataEventType.childChanged, with: { (snapshot) in
+            print(snapshot)
+            let snapshotVal = snapshot.value as! String
+            let snapshotKey = snapshot.key 
+            
+            if (snapshotVal == "0" && snapshotKey == "waitingFlg"){
+                self.getJoinRoom()
+            }
+        })
+    }
+    
+    
+    //自信のjoinする（している）roomIdを取得
+    func getJoinRoom(){
+        userRef.child(self.uid).child("inRoom").observeSingleEvent(of: .value, with: { (snapshot) in
+            //帰ってくる値が１つしか無いからstr型になる
+            let snapshotValue = snapshot.value as! String
+            self.app.roomId   = snapshotValue
+            
+            if(self.app.roomId != "0"){
+                print("roomId→ \(self.app.roomId!)")
+                print("チャットを開始します")
+                self.getMessages()
+            }
+          
+        })
+        
+    }
+    
+    //roomIdからそのroomのmessage情報を取得する
+    //chatが始まる際必ず呼ばれるmethod
+    func getMessages(){
+        
+        //Indicatorを止める
+        SVProgressHUD.dismiss()
+        
+        SVProgressHUD.showSuccess(withStatus: "マッチングしました！")
+        
+        self.app.chatStartFlg = true
+        
+
+        //【非同期】子要素が増えるたびにmessageに値を追加する。
+        rootRef.child("rooms").child(self.app.roomId!).queryLimited(toLast: 100).observe(FIRDataEventType.childAdded, with: { (snapshot) in
+            let snapshotValue = snapshot.value as! NSDictionary
+            let text          = snapshotValue["text"] as! String
+            let sender        = snapshotValue["from"] as! String
+            let name          = snapshotValue["name"] as! String
+            
+            print("display名前→\(name)")
+            let message       = JSQMessage(senderId: sender, displayName: name, text: text)
+            self.messages?.append(message!)
+            self.finishReceivingMessage()
+        })
+    
+    }
+    
+    
+    func createRoom(value:Dictionary<AnyHashable, Any>){
+        
+        //chatを始めるユーザを取得。
+        
+        for (key,val) in value {
+            
+            //自分のidと違うユーザを取得
+            if (key as! String != self.uid){
+                
+                //待機中のユーザがいた場合(必ずこの処理で居るが)の処理
+                print("待機中のユーザId\(key)")
+                self.app.targetId = key as? String
+                
+            }
+        }
+        
+        
+        print("チャット開始するユーザId\(self.app.targetId!)")
+       
+        //新規のRoomを作るための数値を取得
+        getNewRoomId()
+     
+        
+    }
+    
+    var count:Int = 1
+    
+    //新しくルームを作る際の数値を取得、そしてDBも更新
+    func getNewRoomId(){
+        
+        FIRDatabase.database().reference().child("roomKeyNum").observeSingleEvent(of: .value, with: { (snapshot) in
+            
+            if !(snapshot.value is NSNull){
+                self.count = (snapshot.value as! Int) + 1
+            }
+            FIRDatabase.database().reference()
+                .child("roomKeyNum")
+                .setValue(self.count)
+            
+            self.app.newRoomId = String(self.count)
+            self.updateEachUserInfo()
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+        
+    }
+    
+    //one2oneでマッチした場合、お互いの情報を更新する。
+    func updateEachUserInfo(){
+        
+        self.app.roomId = self.app.newRoomId
+        
+        print (self.app.roomId!)
+        print (self.app.newRoomId!)
+        //ユーザ情報を書き換えていく。
+        userRef.child(self.app.targetId!).updateChildValues(["inRoom":self.app.roomId!])
+        userRef.child(self.app.targetId!).updateChildValues(["waitingFlg":"0"])
+        userRef.child(self.uid).updateChildValues(["inRoom":self.app.roomId!])
+        userRef.child(self.uid).updateChildValues(["waitingFlg":"0"])
+        
+        //新しく作ったルームのidの情報を取ってくる処理【非同期】
+        getMessages()
+    }
+    
+    func setupChatUi() {
+        inputToolbar!.contentView!.leftBarButtonItem = nil
+        automaticallyScrollsToMostRecentMessage = true
+        
+        //firebaseのfromカラムに入る値
+        self.senderId = self.uid
+        
+        //       self.incomingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named:"icon_default"), diameter: 64)
+        
+        //       self.outgoingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named:"icon_default"), diameter: 64)
+        
+        self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
+        
+        self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
+        
+        
+        let bubbleFactory = JSQMessagesBubbleImageFactory()
+        self.incomingBubble = bubbleFactory?.incomingMessagesBubbleImage(
+            with: UIColor.gray)
+        self.outgoingBubble = bubbleFactory?.outgoingMessagesBubbleImage(
+            with: UIColor.jsq_messageBubbleGreen())
+        self.exitcomingBubble = bubbleFactory?.incomingMessagesBubbleImage(
+            with: UIColor.jsq_messageBubbleRed())
+    }
+    
+    
+    
+    //別の画面に遷移する直前に実行される処理
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("ViewController/viewWillDisappear/別の画面に遷移する直前")
+        
+    }
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        print("ViewController/viewDidDisappear/別の画面に遷移した直後")
+        
+        userRef.child(self.uid).updateChildValues(["waitingFlg":"0"])
+        
+        //Indicatorを止める
+        SVProgressHUD.dismiss()
+        
+        if(self.app.roomId != "0"){
+            //相手に退室のメッセージを送るようにする。
+            let endMsg = "~相手が退出したよ!!~"
+            sendTextToDb(text: endMsg,exitFlg: true)
+            self.app.roomId = "0"
+        }
+    }
+    
+    
+    
+    //====================↓JSQMessageの色々======================//
+    
+    
+    //メッセージの送信
+    override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
+        
+        self.finishSendingMessage(animated: true)
+        
+        if(self.app.chatStartFlg! == true){
+            sendTextToDb(text: text)
+        }else{
+            print("チャット相手検索中です。")
+        }
+        
+    }
+    
+    func sendTextToDb(text: String,exitFlg:Bool = false) {
+        //データベースへの送信（後述）
+        
+        let rootRef = FIRDatabase.database().reference()
+        
+        var tmpSenderId = senderId as String
+        if(exitFlg){
+            tmpSenderId = "exit"
+        }
+        
+        let post:Dictionary<String, Any>? = ["from": tmpSenderId,
+                                             "name": senderDisplayName,
+                                             "text": text]
+       
+        let postRef = rootRef.child("rooms").child(self.app.roomId!).childByAutoId()
+       
+        postRef.setValue(post)
+        
+        
+    }
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
+        return self.messages?[indexPath.item]
+    }
+    
+    //バブルの色を返す。
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
+        let message = self.messages?[indexPath.item]
+        if message?.senderId == self.senderId {
+            return self.outgoingBubble
+        } else if message?.senderId == "exit"{
+            return self.exitcomingBubble
+        }
+        return self.incomingBubble
+    }
+    
+    //アバター（サムネを返す）
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!,
+                                 avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
+        let message = self.messages?[indexPath.item]
+        if message?.senderId == self.senderId {
+            return self.outgoingAvatar
+        }
+        return self.incomingAvatar
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return (self.messages?.count)!
+    }
+}
+
+
+```
+
+# 動き
+
