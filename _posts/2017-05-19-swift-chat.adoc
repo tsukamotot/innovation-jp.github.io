@@ -57,4 +57,21 @@ image::kohe/swiftchat1.png[]
 ランダムチャットがマッチングするたびに、この値をインクリメントし、その数値を名前としてroomを作っていくよーん。
 
 
+# ライブラリ
+
+* Firebase
+* Firebase/Database
+* Firebase/Core
+* JSQMessagesViewController
+* Firebase/Auth
+* SVProgressHUD
+* ChameleonFramework/Swift
+
+上記のこやつらをpodの野郎で取り込んでいく。 +
+ライブラリって素晴らしい… :0
+
+
+
+
+
 
