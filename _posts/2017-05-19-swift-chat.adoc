@@ -1,12 +1,12 @@
 # 【Swift3】ランダムマッチチャットアプリを作ったお話。
 :published_at: 2017-05-19
 :hp-alt-title: swift chat
-:hp-tags: kohe,swift3,chat,FIrebase
+:hp-tags: kohe,swift3,chat,Firebase
 
 こんばんは、こへです。 +
 
 
-そろそろ、Swift3とFIrebaseを使って、完全匿名ランダムマッチングチャットを作りたい時期が来ましたので作成。 +
+そろそろ、Swift3とFirebaseを使って、完全匿名ランダムマッチングチャットを作りたい時期が来ましたので作成。 +
 
 # やりたいこと
  
@@ -31,7 +31,7 @@ image::kohe/randomChat.001.png[]
 
 
 
-# FIrebase
+# Firebase
 
 GoogleアカウントでFirebaseに登録。
 ※ココらへんの設定はググれば大量に出てくるため割愛。
@@ -488,4 +488,10 @@ class ViewController: JSQMessagesViewController {
 ```
 
 # 動き
+image::kohe/swiftchat.gif[]
+
+これに色々と機能をつけてリリースしますんでそのときはおなしゃす:)
+
+
+[red]#お# [orange]#わ# [yellow]#り#
 
