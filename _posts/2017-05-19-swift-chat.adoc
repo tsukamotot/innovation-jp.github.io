@@ -492,3 +492,6 @@ image::kohe/swiftchat.gif[]
 
 これに色々と機能をつけてリリースしますんでそのときはおなしゃす:)
 
+
+[red]#終# [orange]#わ# [yellow]#り#
+
