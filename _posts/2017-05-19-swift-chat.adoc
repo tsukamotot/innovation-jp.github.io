@@ -13,6 +13,8 @@
  * 1対1のチャット
  * 匿名
  * ランダムにマッチング 
+ * Iphoneアプリ
+ * 確認はシミュレータと実機でチャットをする
 
 *以上！！*    
 
@@ -62,10 +64,14 @@ image::kohe/swiftchat10.png[]
 * Firebase
 * Firebase/Database
 * Firebase/Core
-* JSQMessagesViewController
 * Firebase/Auth
+** ↑4つはFirebaseを使うために必須のやつ
+* JSQMessagesViewController
+** チャットをするための画面、（吹き出しなど）を簡単に実装できそうなやつ 
 * SVProgressHUD
+** インジケータをいい感じに出してくれる
 * ChameleonFramework/Swift
+** いい感じの配色を楽に出してくれる
 
 上記のこやつらをpodの野郎で取り込んでいく。 +
 ライブラリって素晴らしい… :0
