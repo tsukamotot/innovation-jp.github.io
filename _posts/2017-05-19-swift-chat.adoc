@@ -134,7 +134,7 @@ class StartViewController: UIViewController {
 スーパグローバル変数的なものを定義。
 
 
-### チャットの部分の画面の
+### チャット部分の画面
 
 ```
 import UIKit
@@ -259,10 +259,10 @@ class ViewController: JSQMessagesViewController {
     }
     
     
-    //自信のjoinする（している）roomIdを取得
+    //自身のjoinする（している）roomIdを取得
     func getJoinRoom(){
         userRef.child(self.uid).child("inRoom").observeSingleEvent(of: .value, with: { (snapshot) in
-            //帰ってくる値が１つしか無いからstr型になる
+            //返ってくる値が１つしか無いからstr型になる
             let snapshotValue = snapshot.value as! String
             self.app.roomId   = snapshotValue
             
@@ -352,7 +352,7 @@ class ViewController: JSQMessagesViewController {
         
     }
     
-    //one2oneでマッチした場合、お互いの情報を更新する。
+    //1to1でマッチした場合、お互いの情報を更新する。
     func updateEachUserInfo(){
         
         self.app.roomId = self.app.newRoomId
@@ -376,10 +376,7 @@ class ViewController: JSQMessagesViewController {
         //firebaseのfromカラムに入る値
         self.senderId = self.uid
         
-        //       self.incomingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named:"icon_default"), diameter: 64)
-        
-        //       self.outgoingAvatar = JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named:"icon_default"), diameter: 64)
-        
+ 
         self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         
         self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
