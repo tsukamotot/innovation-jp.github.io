@@ -211,12 +211,6 @@ var _trackingid = 'LFT-10003-1';
 
     <ol class="post-list">
       <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/04/09/What-is-needed-for-good-engineering.html" title="link to 良いプロダクトを作るために必要なものについて考えてみました">良いプロダクトを作るために必要なものについて考えてみました</a></h2>
-        <p class="excerpt">はじめに こんばんは。bigenです。 突然ですが、「良いプロダクトを作るために必要なもの」について考えてみました。 結論は、「プロダクトに関わる全員が、自社のプロダクトがどのようにして作られるかを知っていること」です。 コトの始まり 「教育とかマネジメントとか興味あるんで、手始めに新人向けエンジニア研修を僕にやらせてください！」 物は試しと思い、上司に進言してみました。 すると、「いいね」って感じの二つ返事で話は進み、 ３日間の研修を任せてもらえることになりました。 まだ入社半年の未経験エンジニアに、本当にありがたいなぁと思いました。 何を教えるか考える というわけで、新人全員（といっても８人）に教えるということで、 エンジニアだからこそ教えられるもの 非エンジニアにとっても大事なこと&hellip;</p>
-        <div class="post-list__meta"><time datetime="09 Apr 2017" class="post-list__meta--date date">09 Apr 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Engineering">Engineering</a>, <a href="http://tech.innovation.co.jp/tag/Organization"> Organization</a>, <a href="http://tech.innovation.co.jp/tag/bigen"> bigen</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/04/03/laravel-reminder.html" title="link to Laravelでリマインダーを作ってみた">Laravelでリマインダーを作ってみた</a></h2>
         <p class="excerpt">こんにちは、そろそろ二年目になる小柳津です。 もう4月には新しい一年生が入ってきますね。 先輩になるので、流石に忘れん坊は卒業しようと思い、 自分で簡単なリマインダーを作成しました。 見た目と機能紹介 見た目はこのようにしました。 Bootstrapを使用しています。 主に入力部分と一覧表示部分に分かれています。 アドレスとリマインド内容、リマインドしたい時間を登録します。 登録をしたら、送信されるのを待ちます。緊張の一瞬。。。 届いた！成功！！ 実装 それでは、中身についてお話します！ Routing ・route/web.php ## RemindController ## Route::get('reminder', 'ReminderController@index')-&gt;n&hellip;</p>
         <div class="post-list__meta"><time datetime="03 Apr 2017" class="post-list__meta--date date">03 Apr 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/yaizu">yaizu</a>, <a href="http://tech.innovation.co.jp/tag/P-H-P">PHP</a>, <a href="http://tech.innovation.co.jp/tag/Laravel">Laravel</a>, <a href="http://tech.innovation.co.jp/tag/Bootstrap">Bootstrap</a></span></div>
@@ -268,6 +262,12 @@ var _trackingid = 'LFT-10003-1';
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/03/03/C-S-S-triangle.html" title="link to CSSの三角形でいろいろ作る">CSSの三角形でいろいろ作る</a></h2>
         <p class="excerpt">こんにちはAMIです 最近、CSSで三角形を作る方法を覚えたので、三角形を使って幾つか作ってみようと思います。 borderの一辺を使って、三角形を作ります 三角形の作り方の流れは以下のとおりです。 ・四角形にborderを設定する ・4辺をそれぞれ違う色に設定するとこんなふうになっているので ・四角形のwidthとheightを0にして ・bottom以外の辺を透明にすると、三角形の完成！ HTML &lt;div class="sample"&gt;&lt;/div&gt; CSS .sample {     width: 0px;     height: 0px;     border: 50px solid;     border-color: transparent;     b&hellip;</p>
         <div class="post-list__meta"><time datetime="03 Mar 2017" class="post-list__meta--date date">03 Mar 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/C-S-S">CSS</a>, <a href="http://tech.innovation.co.jp/tag/triangle">triangle</a>, <a href="http://tech.innovation.co.jp/tag/A-M-I">AMI</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/02/25/image-File-Reader.html" title="link to FileReaderを使ってローカルにある画像をブラウザに読み込ませる方法">FileReaderを使ってローカルにある画像をブラウザに読み込ませる方法</a></h2>
+        <p class="excerpt">こんにちは、widthが192cmの小柳津です。 今回はローカルのファイルをブラウザに読み込ませる方法を習得したので、そちらを取り扱っていこうと思います。 方法はJavaScriptのFileReaderオブジェクトを使用します。 サンプルとして画像をリアルタイムでブラウザに反映できるものを作ってみました。 動作 百聞は一見にしかず、動作は以下のようになります。 See the Pen image-FileReader by yuma oyaizu (@yaizuuuu) on CodePen. 画像を選択できる箇所が５つあり、選択するとそれぞれの直下に画像がリアルタイムで追加されます。 さらに、今回は選択できる画像を'image/jpeg', 'image/png', 'image/gi&hellip;</p>
+        <div class="post-list__meta"><time datetime="25 Feb 2017" class="post-list__meta--date date">25 Feb 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/yaizu">yaizu</a>, <a href="http://tech.innovation.co.jp/tag/javascript">javascript</a>, <a href="http://tech.innovation.co.jp/tag/j-Query">jQuery</a>, <a href="http://tech.innovation.co.jp/tag/File-Reader">FileReader</a></span></div>
         <hr class="post-list__divider" />
       </li>
     </ol>
