@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>【Swift3】ランダムマッチチャットアプリを作ったお話。 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="【Swift3】ランダムマッチチャットアプリを作ったお話。">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="【Swift3】ランダムマッチチャットアプリを作ったお話。">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/05/24/swift-chat.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="【Swift3】ランダムマッチチャットアプリを作ったお話。" />
+    <meta property="og:description" content="こんばんは、こへです。 そろそろ、Swift3とFirebaseを使って、完全匿名ランダムマッチングチャットを作りたい時期が来ましたので作成。 やりたいこと 1対1のチャット 匿名 ランダムにマッチング iPhoneアプリ 確認はシミュレータと実機でチャットをする 以上！！ 画面イメージ設計 ロード中(マッチング相手を探し中)くるくる回すインテグレーションだけにはこだわりたい。 DB設計 Firebase　を使うためこんな感じにカキカキ。 枠から文字がはみ出ているのはご愛嬌。 Firebase GoogleアカウントでFirebaseに登録。 ※ココら..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/05/24/swift-chat.html" />
+    <meta property="article:published_time" content="2017-05-23T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-05-24T08:27:50.210Z" />
+    <meta property="article:tag" content="kohe" />
+    <meta property="article:tag" content="swift3" />
+    <meta property="article:tag" content="chat" />
+    <meta property="article:tag" content="Firebase" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="【Swift3】ランダムマッチチャットアプリを作ったお話。" />
+    <meta name="twitter:description" content="こんばんは、こへです。 そろそろ、Swift3とFirebaseを使って、完全匿名ランダムマッチングチャットを作りたい時期が来ましたので作成。 やりたいこと 1対1のチャット 匿名 ランダムにマッチング iPhoneアプリ 確認はシミュレータと実機でチャットをする 以上！！ 画面イメージ設計 ロード中(マッチング相手を探し中)くるくる回すインテグレーションだけにはこだわりたい。 DB設計 Firebase　を使うためこんな感じにカキカキ。 枠から文字がはみ出ているのはご愛嬌。 Firebase GoogleアカウントでFirebaseに登録。 ※ココら..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/05/24/swift-chat.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "kohe",
+        "image": "https://avatars2.githubusercontent.com/u/17563192?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "【Swift3】ランダムマッチチャットアプリを作ったお話。",
+    "url": "http://tech.innovation.co.jp/2017/05/24/swift-chat.html",
+    "datePublished": "2017-05-23T15:00:00.000Z",
+    "dateModified": "2017-05-24T08:27:50.210Z",
+    "keywords": "kohe, swift3, chat, Firebase",
+    "description": "こんばんは、こへです。 そろそろ、Swift3とFirebaseを使って、完全匿名ランダムマッチングチャットを作りたい時期が来ましたので作成。 やりたいこと 1対1のチャット 匿名 ランダムにマッチング iPhoneアプリ 確認はシミュレータと実機でチャットをする 以上！！ 画面イメージ設計 ロード中(マッチング相手を探し中)くるくる回すインテグレーションだけにはこだわりたい。 DB設計 Firebase　を使うためこんな感じにカキカキ。 枠から文字がはみ出ているのはご愛嬌。 Firebase GoogleアカウントでFirebaseに登録。 ※ココら..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-kohe tag-swift3 tag-chat tag-Firebase no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="24 May 2017" class="post-meta__date date">24 May 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/kohe">kohe</a>, <a href="http://tech.innovation.co.jp/tag/swift3">swift3</a>, <a href="http://tech.innovation.co.jp/tag/chat">chat</a>, <a href="http://tech.innovation.co.jp/tag/Firebase">Firebase</a></span>
+        <span class="post-meta__author author"><img src="https://avatars2.githubusercontent.com/u/17563192?v=3" alt="profile image for kohe" class="avatar post-meta__avatar" /> by kohe</span>
+      </div>
+      <h1 class="post-title">【Swift3】ランダムマッチチャットアプリを作ったお話。</h1>
+    </header>
+
+    <section class="post tag-kohe tag-swift3 tag-chat tag-Firebase">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんばんは、こへです。<br></p>
+</div>
+<div class="paragraph">
+<p>そろそろ、Swift3とFirebaseを使って、完全匿名ランダムマッチングチャットを作りたい時期が来ましたので作成。<br></p>
+</div>
+</div>
+</div>
+<h1 id="__" class="sect0">やりたいこと</h1>
+<div class="ulist">
+<ul>
+<li>
+<p>1対1のチャット</p>
+</li>
+<li>
+<p>匿名</p>
+</li>
+<li>
+<p>ランダムにマッチング</p>
+</li>
+<li>
+<p>iPhoneアプリ</p>
+</li>
+<li>
+<p>確認はシミュレータと実機でチャットをする</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>以上！！</strong></p>
+</div>
+<h1 id="___2" class="sect0">画面イメージ設計</h1>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kohe/randomChat.002.png" alt="randomChat.002.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ロード中(マッチング相手を探し中)くるくる回すインテグレーションだけにはこだわりたい。</p>
+</div>
+<h1 id="_db" class="sect0">DB設計</h1>
+<div class="paragraph">
+<p>Firebase　を使うためこんな感じにカキカキ。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kohe/randomChat.001.png" alt="randomChat.001.png">
+</div>
+</div>
+<div class="paragraph">
+<p>枠から文字がはみ出ているのはご愛嬌。</p>
+</div>
+<h1 id="_firebase" class="sect0">Firebase</h1>
+<div class="paragraph">
+<p>GoogleアカウントでFirebaseに登録。
+※ココらへんの設定はググれば大量に出てくるため割愛。</p>
+</div>
+<div class="paragraph">
+<p>書き込み読み込みのルールもパブリックにしてしまってはいかんので認証を必要にする。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>{
+  "rules": {
+    ".read": "auth != null",
+    ".write":"auth != null"
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>そしてまずは、ルーム作成の際に与える数値を持つ keyとvalueを作成。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kohe/swiftchat10.png" alt="swiftchat10.png">
+</div>
+</div>
+<div class="paragraph">
+<p>初期値は適当。<br>
+今回はなんとなく「２０」を選択。</p>
+</div>
+<div class="paragraph">
+<p>ランダムチャットがマッチングするたびに、この値をインクリメントし、その数値を名前としてroomを作っていくよーん。</p>
+</div>
+<h1 id="___3" class="sect0">ライブラリ</h1>
+<div class="ulist">
+<ul>
+<li>
+<p>Firebase</p>
+</li>
+<li>
+<p>Firebase/Database</p>
+</li>
+<li>
+<p>Firebase/Core</p>
+</li>
+<li>
+<p>Firebase/Auth</p>
+<div class="ulist">
+<ul>
+<li>
+<p>↑4つはFirebaseを使うために必須のやつ</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>JSQMessagesViewController</p>
+<div class="ulist">
+<ul>
+<li>
+<p>チャットをするための画面、（吹き出しなど）を簡単に実装できそうなやつ</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>SVProgressHUD</p>
+<div class="ulist">
+<ul>
+<li>
+<p>インジケータをいい感じに出してくれる</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>ChameleonFramework/Swift</p>
+<div class="ulist">
+<ul>
+<li>
+<p>いい感じの配色を楽に出してくれる</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>上記のこやつらをpodの野郎で取り込んでいく。<br>
+ライブラリって素晴らしい… :0</p>
+</div>
+<h1 id="__xcode" class="sect0">上が終わったらやっとこさXcodeさ！</h1>
+<div class="paragraph">
+<p>画面設計の通り、色々配していく。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kohe/swiftchat2.png" alt="swiftchat2.png">
+</div>
+</div>
+<div class="paragraph">
+<p>チャットスタートボタンはひよこの絵を、絵がうまい同期の子に依頼。</p>
+</div>
+<div class="paragraph">
+<p>後はナビゲーションコントローラーをつけて楽をする。</p>
+</div>
+<div class="paragraph">
+<p>ストーリーボードの設定はこれで終わり！</p>
+</div>
+<div class="sect1">
+<h2 id="_code">Code</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="___4">最初に開かれる画面</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>import UIKit
+import SVProgressHUD
+
+class StartViewController: UIViewController {
+
+    //AppDelegateのインスタンスを作り、AppDelegateの変数を使えるようにする。
+    let app:AppDelegate =
+        (UIApplication.shared.delegate as! AppDelegate)
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.app.roomId = "0"
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_appdelegate">AppDelegate</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>    var window: UIWindow?
+    var deiceToken:String?
+    var roomId:String?
+    var newRoomId:String?
+    var targetId:String?
+    var chatStartFlg:Bool?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>スーパグローバル変数的なものを定義。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___5">チャット部分の画面</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>import UIKit
+import Firebase
+import JSQMessagesViewController
+import SVProgressHUD
+
+class ViewController: JSQMessagesViewController {
+
+    var messages: [JSQMessage]?
+
+    var incomingBubble: JSQMessagesBubbleImage!
+    var outgoingBubble: JSQMessagesBubbleImage!
+    var exitcomingBubble:JSQMessagesBubbleImage!
+
+
+    var incomingAvatar: JSQMessagesAvatarImage!
+    var outgoingAvatar: JSQMessagesAvatarImage!
+
+    var uid:String = UUID().uuidString
+
+    let userRef  = FIRDatabase.database().reference().child("users")
+    let rootRef  = FIRDatabase.database().reference()
+
+    let userDefaults = UserDefaults.standard
+
+    //AppDelegateのインスタンスを作り、AppDelegateの変数を使えるようにする。
+    let app:AppDelegate =
+        (UIApplication.shared.delegate as! AppDelegate)
+
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+
+        //初回時のみ自分のIDを保存しておく、それ移行は使い回し
+        if(userDefaults.string(forKey: "uid") != nil){
+            uid = userDefaults.string(forKey: "uid")!
+        }else{
+            userDefaults.set(uid, forKey: "uid")
+        }
+
+        print("自分のuid→\(self.uid)")
+
+        //Indicatorを回す
+        SVProgressHUD.setDefaultStyle(SVProgressHUDStyle.dark)
+        //↓の処理を入れるとIndicatorが回っている間は背後のuiが非活性になる。
+   //     SVProgressHUD.setDefaultMaskType(SVProgressHUDMaskType.black)
+        SVProgressHUD.show(withStatus: "チャット相手をさがしています")
+
+        self.app.chatStartFlg = false
+
+        //表示される名前(未実装)
+        self.senderDisplayName = "hoge"
+        setupFirebase()
+        getRoom()
+        setupChatUi()
+
+        self.messages = []
+    }
+
+    func setupFirebase() {
+
+        //匿名アカウントを認証する
+        FIRAuth.auth()?.signInAnonymously() { (user, error) in
+            if error != nil {
+                //エラー時の処理
+                print("失敗")
+                return
+            }
+            //成功時の処理
+            print("成功")
+
+        }
+    }
+
+    func getRoom(){
+
+        let user = ["name": senderDisplayName,
+                        "inRoom": "0",
+                        "waitingFlg": "0"]
+
+        userRef.child(self.uid
+            ).setValue(user)
+
+
+        //一回だけwaitingFlgが１のユーザを取得
+        userRef.queryOrdered(byChild: "waitingFlg").queryEqual(toValue: "1").observeSingleEvent(of: .value, with: { (snapshot) in
+
+            let value = snapshot.value as? NSDictionary
+
+            if(value != nil){
+                if (value!.count &gt;= 1) {
+                    //ルームを作る側の処理
+                    print(value!.count);
+                    print("value \(value!)")
+                    print("↑初回ボタン押下時に、waitingFlgが１のユーザ")
+
+                    self.createRoom(value: value as! Dictionary&lt;AnyHashable, Any&gt;)
+                }
+            } else {
+                //ルームを作られるのを待つ側の処理
+                self.userRef.child(self.uid).updateChildValues(["waitingFlg":"1"])
+                self.checkMyWaitingFlg();
+            }
+        });
+
+
+    }
+
+    //他のユーザが自分とマッチするまで待機する。
+    func checkMyWaitingFlg(){
+        userRef.child(self.uid).observe(FIRDataEventType.childChanged, with: { (snapshot) in
+            print(snapshot)
+            let snapshotVal = snapshot.value as! String
+            let snapshotKey = snapshot.key
+
+            if (snapshotVal == "0" &amp;&amp; snapshotKey == "waitingFlg"){
+                self.getJoinRoom()
+            }
+        })
+    }
+
+
+    //自身のjoinする（している）roomIdを取得
+    func getJoinRoom(){
+        userRef.child(self.uid).child("inRoom").observeSingleEvent(of: .value, with: { (snapshot) in
+            //返ってくる値が１つしか無いからstr型になる
+            let snapshotValue = snapshot.value as! String
+            self.app.roomId   = snapshotValue
+
+            if(self.app.roomId != "0"){
+                print("roomId→ \(self.app.roomId!)")
+                print("チャットを開始します")
+                self.getMessages()
+            }
+
+        })
+
+    }
+
+    //roomIdからそのroomのmessage情報を取得する
+    //chatが始まる際必ず呼ばれるmethod
+    func getMessages(){
+
+        //Indicatorを止める
+        SVProgressHUD.dismiss()
+
+        SVProgressHUD.showSuccess(withStatus: "マッチングしました！")
+
+        self.app.chatStartFlg = true
+
+
+        //【非同期】子要素が増えるたびにmessageに値を追加する。
+        rootRef.child("rooms").child(self.app.roomId!).queryLimited(toLast: 100).observe(FIRDataEventType.childAdded, with: { (snapshot) in
+            let snapshotValue = snapshot.value as! NSDictionary
+            let text          = snapshotValue["text"] as! String
+            let sender        = snapshotValue["from"] as! String
+            let name          = snapshotValue["name"] as! String
+
+            print("display名前→\(name)")
+            let message       = JSQMessage(senderId: sender, displayName: name, text: text)
+            self.messages?.append(message!)
+            self.finishReceivingMessage()
+        })
+
+    }
+
+
+    func createRoom(value:Dictionary&lt;AnyHashable, Any&gt;){
+
+        //chatを始めるユーザを取得。
+
+        for (key,val) in value {
+
+            //自分のidと違うユーザを取得
+            if (key as! String != self.uid){
+
+                //待機中のユーザがいた場合(必ずこの処理で居るが)の処理
+                print("待機中のユーザId\(key)")
+                self.app.targetId = key as? String
+
+            }
+        }
+
+
+        print("チャット開始するユーザId\(self.app.targetId!)")
+
+        //新規のRoomを作るための数値を取得
+        getNewRoomId()
+
+
+    }
+
+    var count:Int = 1
+
+    //新しくルームを作る際の数値を取得、そしてDBも更新
+    func getNewRoomId(){
+
+        FIRDatabase.database().reference().child("roomKeyNum").observeSingleEvent(of: .value, with: { (snapshot) in
+
+            if !(snapshot.value is NSNull){
+                self.count = (snapshot.value as! Int) + 1
+            }
+            FIRDatabase.database().reference()
+                .child("roomKeyNum")
+                .setValue(self.count)
+
+            self.app.newRoomId = String(self.count)
+            self.updateEachUserInfo()
+
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+
+    }
+
+    //1to1でマッチした場合、お互いの情報を更新する。
+    func updateEachUserInfo(){
+
+        self.app.roomId = self.app.newRoomId
+
+        print (self.app.roomId!)
+        print (self.app.newRoomId!)
+        //ユーザ情報を書き換えていく。
+        userRef.child(self.app.targetId!).updateChildValues(["inRoom":self.app.roomId!])
+        userRef.child(self.app.targetId!).updateChildValues(["waitingFlg":"0"])
+        userRef.child(self.uid).updateChildValues(["inRoom":self.app.roomId!])
+        userRef.child(self.uid).updateChildValues(["waitingFlg":"0"])
+
+        //新しく作ったルームのidの情報を取ってくる処理【非同期】
+        getMessages()
+    }
+
+    func setupChatUi() {
+        inputToolbar!.contentView!.leftBarButtonItem = nil
+        automaticallyScrollsToMostRecentMessage = true
+
+        //firebaseのfromカラムに入る値
+        self.senderId = self.uid
+
+
+        self.collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
+
+        self.collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
+
+
+        let bubbleFactory = JSQMessagesBubbleImageFactory()
+        self.incomingBubble = bubbleFactory?.incomingMessagesBubbleImage(
+            with: UIColor.gray)
+        self.outgoingBubble = bubbleFactory?.outgoingMessagesBubbleImage(
+            with: UIColor.jsq_messageBubbleGreen())
+        self.exitcomingBubble = bubbleFactory?.incomingMessagesBubbleImage(
+            with: UIColor.jsq_messageBubbleRed())
+    }
+
+
+
+    //別の画面に遷移する直前に実行される処理
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("ViewController/viewWillDisappear/別の画面に遷移する直前")
+
+    }
+
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        print("ViewController/viewDidDisappear/別の画面に遷移した直後")
+
+        userRef.child(self.uid).updateChildValues(["waitingFlg":"0"])
+
+        //Indicatorを止める
+        SVProgressHUD.dismiss()
+
+        if(self.app.roomId != "0"){
+            //相手に退室のメッセージを送るようにする。
+            let endMsg = "~相手が退出したよ!!~"
+            sendTextToDb(text: endMsg,exitFlg: true)
+            self.app.roomId = "0"
+        }
+    }
+
+
+
+    //====================↓JSQMessageの色々======================//
+
+
+    //メッセージの送信
+    override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
+
+        self.finishSendingMessage(animated: true)
+
+        if(self.app.chatStartFlg! == true){
+            sendTextToDb(text: text)
+        }else{
+            print("チャット相手検索中です。")
+        }
+
+    }
+
+    func sendTextToDb(text: String,exitFlg:Bool = false) {
+        //データベースへの送信（後述）
+
+        let rootRef = FIRDatabase.database().reference()
+
+        var tmpSenderId = senderId as String
+        if(exitFlg){
+            tmpSenderId = "exit"
+        }
+
+        let post:Dictionary&lt;String, Any&gt;? = ["from": tmpSenderId,
+                                             "name": senderDisplayName,
+                                             "text": text]
+
+        let postRef = rootRef.child("rooms").child(self.app.roomId!).childByAutoId()
+
+        postRef.setValue(post)
+
+
+    }
+
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -&gt; JSQMessageData! {
+        return self.messages?[indexPath.item]
+    }
+
+    //バブルの色を返す。
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -&gt; JSQMessageBubbleImageDataSource! {
+        let message = self.messages?[indexPath.item]
+        if message?.senderId == self.senderId {
+            return self.outgoingBubble
+        } else if message?.senderId == "exit"{
+            return self.exitcomingBubble
+        }
+        return self.incomingBubble
+    }
+
+    //アバター（サムネを返す）
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!,
+                                 avatarImageDataForItemAt indexPath: IndexPath!) -&gt; JSQMessageAvatarImageDataSource! {
+        let message = self.messages?[indexPath.item]
+        if message?.senderId == self.senderId {
+            return self.outgoingAvatar
+        }
+        return self.incomingAvatar
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -&gt; Int {
+        return (self.messages?.count)!
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h1 id="___6" class="sect0">動き</h1>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kohe/swiftchat.gif" alt="swiftchat.gif">
+</div>
+</div>
+<div class="paragraph">
+<p>これに色々と機能をつけてリリースしますんでそのときはおなしゃす:)</p>
+</div>
+<div class="paragraph">
+<p><span class="red">お</span> <span class="orange">わ</span> <span class="yellow">り</span></p>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
