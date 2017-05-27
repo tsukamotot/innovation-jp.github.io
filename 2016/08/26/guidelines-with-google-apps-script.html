@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Google Apps Scriptで朝会唱和(?)の当番表をSlackに通知できるようにしてみた話 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Google Apps Scriptで朝会唱和(?)の当番表をSlackに通知できるようにしてみた話">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Google Apps Scriptで朝会唱和(?)の当番表をSlackに通知できるようにしてみた話">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2016/08/26/guidelines-with-google-apps-script.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Google Apps Scriptで朝会唱和(?)の当番表をSlackに通知できるようにしてみた話" />
+    <meta property="og:description" content="どうも。Linuxと同い年のオザサです。 最近は一層朝が辛いんですが、朝会ネタについて書いてみます。 朝会 弊社ではスクラム風の開発に取り組んでいるので、 毎朝デイリーミーティングをホワイトボードの前で立って行っています。 そのミーティングの後に2点ほど各担当者が小噺をすることになっています。 その2点とは、 技術系話の共有 エンジニア行動指針に対する自分の考えや行動について です。 技術系話の共有 1個目の技術系話の共有は毎朝メンバーの中からランダムに発表者が選定され、 Slackで通知が来るようになっています。 エンジニアたるもの情報を常に取りに行..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2016/08/26/guidelines-with-google-apps-script.html" />
+    <meta property="article:published_time" content="2016-08-25T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-05-27T17:28:22.565Z" />
+    <meta property="article:tag" content="4thPost" />
+    <meta property="article:tag" content="Ozasa" />
+    <meta property="article:tag" content="GoogleAppsScript" />
+    <meta property="article:tag" content="Guidelines" />
+    <meta property="article:tag" content="Javascript" />
+    <meta property="article:tag" content="Slack" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Google Apps Scriptで朝会唱和(?)の当番表をSlackに通知できるようにしてみた話" />
+    <meta name="twitter:description" content="どうも。Linuxと同い年のオザサです。 最近は一層朝が辛いんですが、朝会ネタについて書いてみます。 朝会 弊社ではスクラム風の開発に取り組んでいるので、 毎朝デイリーミーティングをホワイトボードの前で立って行っています。 そのミーティングの後に2点ほど各担当者が小噺をすることになっています。 その2点とは、 技術系話の共有 エンジニア行動指針に対する自分の考えや行動について です。 技術系話の共有 1個目の技術系話の共有は毎朝メンバーの中からランダムに発表者が選定され、 Slackで通知が来るようになっています。 エンジニアたるもの情報を常に取りに行..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2016/08/26/guidelines-with-google-apps-script.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "kohe",
+        "image": "https://avatars2.githubusercontent.com/u/17563192?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "Google Apps Scriptで朝会唱和(?)の当番表をSlackに通知できるようにしてみた話",
+    "url": "http://tech.innovation.co.jp/2016/08/26/guidelines-with-google-apps-script.html",
+    "datePublished": "2016-08-25T15:00:00.000Z",
+    "dateModified": "2017-05-27T17:28:22.565Z",
+    "keywords": "4thPost, Ozasa, GoogleAppsScript, Guidelines, Javascript, Slack",
+    "description": "どうも。Linuxと同い年のオザサです。 最近は一層朝が辛いんですが、朝会ネタについて書いてみます。 朝会 弊社ではスクラム風の開発に取り組んでいるので、 毎朝デイリーミーティングをホワイトボードの前で立って行っています。 そのミーティングの後に2点ほど各担当者が小噺をすることになっています。 その2点とは、 技術系話の共有 エンジニア行動指針に対する自分の考えや行動について です。 技術系話の共有 1個目の技術系話の共有は毎朝メンバーの中からランダムに発表者が選定され、 Slackで通知が来るようになっています。 エンジニアたるもの情報を常に取りに行..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-4th-Post tag-Ozasa tag-Google-Apps-Script tag-Guidelines tag-Javascript tag-Slack no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="26 Aug 2016" class="post-meta__date date">26 Aug 2016</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/4th-Post">4thPost</a>, <a href="http://tech.innovation.co.jp/tag/Ozasa">Ozasa</a>, <a href="http://tech.innovation.co.jp/tag/Google-Apps-Script">GoogleAppsScript</a>, <a href="http://tech.innovation.co.jp/tag/Guidelines">Guidelines</a>, <a href="http://tech.innovation.co.jp/tag/Javascript">Javascript</a>, <a href="http://tech.innovation.co.jp/tag/Slack">Slack</a></span>
+        <span class="post-meta__author author"><img src="https://avatars2.githubusercontent.com/u/17563192?v=3" alt="profile image for kohe" class="avatar post-meta__avatar" /> by kohe</span>
+      </div>
+      <h1 class="post-title">Google Apps Scriptで朝会唱和(?)の当番表をSlackに通知できるようにしてみた話</h1>
+    </header>
+
+    <section class="post tag-4th-Post tag-Ozasa tag-Google-Apps-Script tag-Guidelines tag-Javascript tag-Slack">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>どうも。Linuxと同い年のオザサです。<br>
+最近は一層朝が辛いんですが、朝会ネタについて書いてみます。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">朝会</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>弊社ではスクラム風の開発に取り組んでいるので、<br>
+毎朝デイリーミーティングをホワイトボードの前で立って行っています。</p>
+</div>
+<div class="paragraph">
+<p>そのミーティングの後に2点ほど各担当者が小噺をすることになっています。<br>
+その2点とは、</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>技術系話の共有</p>
+</li>
+<li>
+<p>エンジニア行動指針に対する自分の考えや行動について</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>です。</p>
+</div>
+<div class="sect2">
+<h3 id="___2">技術系話の共有</h3>
+<div class="paragraph">
+<p>1個目の技術系話の共有は毎朝メンバーの中からランダムに発表者が選定され、<br>
+Slackで通知が来るようになっています。</p>
+</div>
+<div class="paragraph">
+<p>エンジニアたるもの情報を常に取りに行こうという思いのもと、そんな仕組みを入れています。<br>
+(あまりに連続で当たってしまうとネタがどんどんなくなってくるんですが)</p>
+</div>
+<div class="paragraph">
+<p>例えば、「こんなニュースを読んでこんなことを思いました〜」とか
+「先日こんなイベントに行ってこんな話を聞きました〜」とか
+ソフトハードなど特に問わず技術系の話を毎朝するようにしており、当たるかどうかもあってドキドキです。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___3">エンジニア行動指針</h3>
+<div class="paragraph">
+<p>初回のポストにもありました通り弊社においてエンジニア組織が出来上がったのはまだつい最近のことで、<br>
+エンジニアとして、特にイノベーションという会社にいるエンジニアとしてどうありたいか、<br>
+という話は今まであまりされてきませんでした。</p>
+</div>
+<div class="paragraph">
+<p>しかし組織を大きくしていくに当たっては我々がどうあるべきか、もしくはどうあってはいけないかを
+明確にすることで個々人の行動指針を示し、同じ方向を見ながら成長したいという思いがあり、
+エンジニアメンバーで合宿を行い、この度<strong>エンジニア行動指針</strong>というものを策定いたしました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-rust" data-lang="rust">【イノベーションエンジニア行動指針】
+・ 迷ったらチャレンジ
+・ DRYを意識する
+・ 情報感度を高める
+・ こだわる
+・ 勇気を持ってアウトプットする
+・ スピードを重視する
+・ 学び続ける</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ここからブラッシュアップや調整も必要かとは思いますが、いい感じのものができたのではと思っています。</p>
+</div>
+<div class="paragraph">
+<p>ただ、これをしっかり根付かせ行動を起こせるようにしなくては意味がありません。<br>
+ということでまさに今週から朝会の小噺としてエンジニア行動指針に触れて行くことになりました。</p>
+</div>
+<div class="paragraph">
+<p>こちらは技術系の話とは目的が違うため当番制で発表していくこととなりました。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">作ってみた話</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>やっぱり当番に毎朝Slackで通知きたりすると楽だよな！作ろう！！ってことです。</p>
+</div>
+<div class="sect2">
+<h3 id="___5">当番表の作成</h3>
+<div class="paragraph">
+<p>まずGoogleスプレッドシートで当番表を作成いたします。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/no10.png" alt="当番表">
+</div>
+</div>
+<div class="paragraph">
+<p>こんな感じで、内容メモ欄も何となくつけておきます。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_slack">Slackの設定</h3>
+<div class="paragraph">
+<p><a href="https://api.slack.com/web" class="bare">https://api.slack.com/web</a>
+にアクセスしてAuthenticationでtokenゲットだぜ！！</p>
+</div>
+<div class="paragraph">
+<p><a href="https://api.slack.com/methods/channels.list/test" class="bare">https://api.slack.com/methods/channels.list/test</a>
+にアクセスして諸々入力してChannelIdをゲットだぜ！！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_google_apps_script">Google Apps Script</h3>
+<div class="paragraph">
+<p>スプレッドシートのツールタブから「スクリプトエディタ」を押下して、
+Let&#8217;s Google Apps Script！</p>
+</div>
+<div class="paragraph">
+<p>今回は「Slack BotをGASでいい感じで書くためのライブラリ」を使わせていただきました。
+<a href="http://qiita.com/soundTricker/items/43267609a870fc9c7453" class="bare">http://qiita.com/soundTricker/items/43267609a870fc9c7453</a></p>
+</div>
+<div class="paragraph">
+<p>とっても楽させてもらいました！！
+以下が今回のソースです！！</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-rust" data-lang="rust">var url = "対象のスプレッドシートのURL";
+var spreadsheet = SpreadsheetApp.openByUrl(url);
+var sheet = spreadsheet.getSheetByName('対象のシートの名前');
+
+//slack定義
+var slack = {
+  postUrl: "https://slack.com/api/chat.postMessage",
+  token: "xxxxxxxxxxxxx",  //取得したSlackWebAPIのtoken
+  ChannelId: "xxxxxxxx",  //投稿するチャンネルのChannelId
+  userName: "Guide",  //botの名前
+  iconEmoji: ":sunglasses:",  //botのアイコン
+}
+
+function myFunction() {
+
+  var today = Utilities.formatDate(new Date(), "Asia/Tokyo", "yyyy/MM/dd");
+  //日付の欄を取得します
+  var data = sheet.getRange(2,1,63).getValues();
+  var cnt = 0;
+  var rawnum = 0;
+  data.forEach(function(value){
+    if (value == today) {
+      //超微妙な実装ですが行番号の取得
+      rawnum = cnt + 2;
+    }
+    cnt++;
+  });
+
+  if (rawnum != 0) {
+  　//担当者と発表する内容、ユーザネームを行番号指定で取得
+    var member  = sheet.getRange(rawnum, 2).getValue();
+    var guide   = sheet.getRange(rawnum, 3).getValue();
+    var mention = '@' + sheet.getRange(rawnum, 4).getValue();
+
+    //slackにメッセージを送ります
+    var slackApp = SlackApp.create(slack["token"]);
+    var Message = slackApp.postMessage(
+      slack["ChannelId"], mention + ":本日の発表者は" + member + "さんで、内容は「" + guide　+ "」です", {
+        username : slack["userName"],
+        icon_emoji: slack["iconEmoji"],
+        link_names: 1
+      }
+    );
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ソースがいい感じ(？)なら<br>
+GASのリソースタブからトリガーを設定しましょう！！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/trigger.png" alt="trigger">
+</div>
+</div>
+<div class="paragraph">
+<p>朝会用なので早い時間に設定しました。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___6">完成</h3>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/syogasan.png" alt="syogasan">
+</div>
+</div>
+<div class="paragraph">
+<p>※テスト画面です。最後やっとこさ成功してますね。</p>
+</div>
+<div class="paragraph">
+<p>link_namesを指定しないとメンション飛ばないってところがつまりましたが、<br>
+それ以外はかなりサックサクでした。</p>
+</div>
+<div class="paragraph">
+<p>うん、GAS楽すぎます……<br>
+myFunctionって名前が気に入ったのでそのままにしちゃってたりしますし、
+結構雑な書き方になってますけど、こんな手軽に作れるとは驚きでした。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___7">まとめ</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>こういう感じでサクッと作れるところがGoogle Apps Scriptのいいところですかね。</p>
+</div>
+<div class="paragraph">
+<p>今回のブログは何番煎じかって内容かもわからんですが、<br>
+DRYを意識するにはまず自分の手で作ってみないとね！！</p>
+</div>
+<div class="sect4">
+<h5 id="___8">ちなみに</h5>
+<div class="paragraph">
+<p>本稿を社内メンバー読んでもらった際、<br>
+<strong>myFunction忌み嫌うおじさん</strong>に<br>
+「myFunction()とは何事だ！」と責められましたが、<br>
+「俺の」感があっていい！ということで押し切りましたとさ。</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です。</p>
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
