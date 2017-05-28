@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>お客様用インターネットの設定をした時のメモ - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="お客様用インターネットの設定をした時のメモ">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="お客様用インターネットの設定をした時のメモ">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/05/28/Network-construction.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="お客様用インターネットの設定をした時のメモ" />
+    <meta property="og:description" content="AMIです 先日、会社にお客様用Wi-Fiが利用できるように設定をしました。 弊社のネットワーク魔術師であるKTN先生※を講師に 小柳津くんと一緒に、ネットワークの基礎から教えていただいたので、その時のことを忘れないようにメモします。 ※KTN先生の前回の記事：http://tech.innovation.co.jp/2017/04/13/Suffer-Fortigate-V-L-A-N.html ■現状を知る まずは現在使われている機器の紹介 ・UTM　：FortiGate80C 　社内のLANをWANに繋いでくれるやつ ・L2スイッチ 　OSI参照..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/05/28/Network-construction.html" />
+    <meta property="article:published_time" content="2017-05-27T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-05-28T06:37:01.852Z" />
+    <meta property="article:tag" content="Network" />
+    <meta property="article:tag" content="Wi-Fi" />
+    <meta property="article:tag" content="AMI" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="お客様用インターネットの設定をした時のメモ" />
+    <meta name="twitter:description" content="AMIです 先日、会社にお客様用Wi-Fiが利用できるように設定をしました。 弊社のネットワーク魔術師であるKTN先生※を講師に 小柳津くんと一緒に、ネットワークの基礎から教えていただいたので、その時のことを忘れないようにメモします。 ※KTN先生の前回の記事：http://tech.innovation.co.jp/2017/04/13/Suffer-Fortigate-V-L-A-N.html ■現状を知る まずは現在使われている機器の紹介 ・UTM　：FortiGate80C 　社内のLANをWANに繋いでくれるやつ ・L2スイッチ 　OSI参照..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/05/28/Network-construction.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "AMI",
+        "image": "https://avatars1.githubusercontent.com/u/17684148?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "お客様用インターネットの設定をした時のメモ",
+    "url": "http://tech.innovation.co.jp/2017/05/28/Network-construction.html",
+    "datePublished": "2017-05-27T15:00:00.000Z",
+    "dateModified": "2017-05-28T06:37:01.852Z",
+    "keywords": "Network, Wi-Fi, AMI",
+    "description": "AMIです 先日、会社にお客様用Wi-Fiが利用できるように設定をしました。 弊社のネットワーク魔術師であるKTN先生※を講師に 小柳津くんと一緒に、ネットワークの基礎から教えていただいたので、その時のことを忘れないようにメモします。 ※KTN先生の前回の記事：http://tech.innovation.co.jp/2017/04/13/Suffer-Fortigate-V-L-A-N.html ■現状を知る まずは現在使われている機器の紹介 ・UTM　：FortiGate80C 　社内のLANをWANに繋いでくれるやつ ・L2スイッチ 　OSI参照..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Network tag-Wi-Fi tag-A-M-I no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="28 May 2017" class="post-meta__date date">28 May 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Network">Network</a>, <a href="http://tech.innovation.co.jp/tag/Wi-Fi">Wi-Fi</a>, <a href="http://tech.innovation.co.jp/tag/A-M-I">AMI</a></span>
+        <span class="post-meta__author author"><img src="https://avatars1.githubusercontent.com/u/17684148?v=3" alt="profile image for AMI" class="avatar post-meta__avatar" /> by AMI</span>
+      </div>
+      <h1 class="post-title">お客様用インターネットの設定をした時のメモ</h1>
+    </header>
+
+    <section class="post tag-Network tag-Wi-Fi tag-A-M-I">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>AMIです<br>
+先日、会社にお客様用Wi-Fiが利用できるように設定をしました。<br>
+弊社のネットワーク魔術師であるKTN先生※を講師に<br>
+小柳津くんと一緒に、ネットワークの基礎から教えていただいたので、その時のことを忘れないようにメモします。<br>
+※KTN先生の前回の記事：http://tech.innovation.co.jp/2017/04/13/Suffer-Fortigate-V-L-A-N.html<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">■現状を知る</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>まずは現在使われている機器の紹介<br></p>
+</div>
+<div class="paragraph">
+<p>・UTM　：FortiGate80C<br>
+　社内のLANをWANに繋いでくれるやつ<br>
+<br>
+・L2スイッチ<br>
+　OSI参照モデルの、Layer2の原理を使って情報を振り分ける機器<br>
+　LANケーブルを刺す穴を増やしてくれたりする<br>
+<br>
+・アクセスポイント　：ゼブラ AP7522<br>
+　無線でインターネットに繋げられるようにWi-Fiを飛ばしてくれるやつ<br>
+<br>
+3つの機器を使った構成図はこんな感じです<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ami/20170519/1.png" alt="1.png">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">■構成を考えてみる</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>現状の図を見ていただくと分かるように、<br>
+現在はアクセスポイントから社内用のネット1つだけが接続できる状態ですが、<br>
+新たにゲスト用のWi-Fiに繋げられるように考えてみます。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ami/20170519/2.png" alt="2.png">
+</div>
+</div>
+<div class="paragraph">
+<p>通常、一つのLANケーブル接続口から通信できるネットワーク（社内用・お客様用等）は1つです。<br>
+アクセスポイントから2つのインターネット通信を実現しようとした場合、<br>
+アクセスポイントとL2スイッチをつなぐLANケーブルを一つ増やさなければいけません！<br>
+<br>
+そんな時に、トランクという技術があります。<br>
+トランクとは、一つのLANポートで複数のインターネット通信を扱うことができるようになる技術です。<br>
+LANケーブルは通常と変わらず、LANケーブルを挟む2つの機器が、トランクに対応している必要があります。<br>
+<br>
+現在使っているL2スイッチがトランク対応しておらず、ピンチ！だったのですが、そこで<br>
+トランクに対応しているスイッチ（Cisco Catalyst 2960L-24PS-LL）を購入いたしました。<br>
+KTN先生記事参照：http://tech.innovation.co.jp/2017/04/13/Suffer-Fortigate-V-L-A-N.html<br>
+<br>
+それを踏まえた上で、以下のように設定しようと思います。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ami/20170519/3.png" alt="3.png">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___3">■設定してみる</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>まずはL2スイッチの設定をします。<br>
+L2と、PCをLANで接続します。<br>
+<br>
+アクセスポイントとつなぐ1〜6番ポートと、UTMとつなぐ24番ポートをTRUNKの設定にします。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ami/20170519/4.png" alt="4.png">
+</div>
+</div>
+<div class="paragraph">
+<p>L2スイッチ内に、VLANの設定を行います。<br>
+VLANとは、複数のポートを同じネットワークで使う際にグルーピングするために使うタグのようなものです。<br>
+社内用と、お客様用のネットワーク2つ分のVLANを作成します。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ami/20170519/5.png" alt="5.png">
+</div>
+</div>
+<div class="paragraph">
+<p>VLAN100を社内用、VLAN200をお客様用ネットワークとして使うこととします。<br>
+<br>
+<br>
+次にUTMの設定を行います。<br>
+FortiGate80Cは、ブラウザ上で設定を行うことができます。<br>
+各ポートの設定をみてみると<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ami/20170519/5.png" alt="5.png">
+</div>
+</div>
+<div class="paragraph">
+<p>1〜6まであるLANポートが、internal設定（どこに繋いでも一緒）設定になっていることがわかりました。<br>
+そこで、internalの中にVLAN100、VLAN200をそれぞれ作成し、社内用・お客様用の2つの通信を受け取れる設定にしようとしました。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ami/20170519/6.png" alt="6.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ですが、internal内にVLAN100を設定しようとすると、internalとVLAN100でローカルアドレスが被ってしまい設定することができず、<br>
+internalからIPアドレスの設定を外し、VLAN100に既存のローカルIPアドレスを振るともともと使用していた通信（各デスクに繋いでいる有線のLANケーブルなど）を<br>
+一度停止しなければならないという問題にぶつかりました。<br>
+このままでは、お客様用のWi-Fiは繋がっても、社内の人が通信できなくなってしまいます！<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ami/20170519/7.png" alt="7.png">
+</div>
+</div>
+<div class="paragraph">
+<p>そこで使ったのが、「ネイティブVLAN設定」というものです。<br>
+ネイティブVLANの設定を行うと、通信にVLANのタグを付けずに通信を行うようになります。<br>
+L2の24番ポートのネイティブVLANをVLAN100にすると、以下のようになります。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/ami/20170519/8.png" alt="8.png">
+</div>
+</div>
+<div class="paragraph">
+<p>L2はVLAN100がnativeVLANなのでVLANのタグをとってUTMに通信を送り、<br>
+UTMは、VLANタグがついていない通信が来るので、internalで受け取ることができるようになります！<br>
+その後、SSID名やパスワードを設定し、無事にゲストWi-Fiを作ることができました！<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">■終わりに</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>日常の業務ではなかなかできない経験ができ、とても楽しかったです。<br>
+ネットワークを作ったときが、ちょうど最近オープンした弊社のサテライトオフィスである<br>
+SalesTechLab（https://prtimes.jp/main/html/rd/p/000000037.000014573.html）の<br>
+使用前のUTMやアクセスポイントがあったことで試しにやってみて、PC同士を繋いで・・・<br>
+という練習をすることができたのもタイムリーでラッキーでした！<br>
+KTN先生ありがとうございました！<br>
+<br>
+おわり<br></p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
