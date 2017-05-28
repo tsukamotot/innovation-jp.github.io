@@ -1,5 +1,5 @@
 # お客様用インターネットの設定をした時のメモ
-:published_at: 2017-05-19
+:published_at: 2017-05-28
 :hp-alt-title: Network construction
 :hp-tags: Network,Wi-Fi,AMI
 
