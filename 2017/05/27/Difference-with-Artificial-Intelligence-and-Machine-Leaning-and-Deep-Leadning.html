@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>人工知能（AI）と機械学習（ML）とディープラーニング（DL）の関係について - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="人工知能（AI）と機械学習（ML）とディープラーニング（DL）の関係について">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="人工知能（AI）と機械学習（ML）とディープラーニング（DL）の関係について">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/05/27/Difference-with-Artificial-Intelligence-and-Machine-Leaning-and-Deep-Leadning.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="人工知能（AI）と機械学習（ML）とディープラーニング（DL）の関係について" />
+    <meta property="og:description" content="こんばんは。bigenです。 先日、社内のマーケターの方に 「bigenくん、AIと機械学習とディープラーニングの違いってなんなの？」 と聞かれました。 調べてみると、今流行りの機械学習の手法とかについてはたくさんの情報があるんですが、 人工知能と機械学習の関係や、各手法がなぜ「機械学習」と呼ばれて一括りにされているのか、 そういった体系的な情報が意外と少なかったので僕の考える範囲でまとめてみます。 はじめにお断りしておきますが、 人工知能や機械学習という言葉は、科学的に厳密に定義された言葉ではないため、 それぞれの言葉が持つ細かな意味は話者によって変..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/05/27/Difference-with-Artificial-Intelligence-and-Machine-Leaning-and-Deep-Leadning.html" />
+    <meta property="article:published_time" content="2017-05-26T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-05-30T02:35:03.549Z" />
+    <meta property="article:tag" content="AI" />
+    <meta property="article:tag" content="Machine Leaning" />
+    <meta property="article:tag" content="Deep Leaning" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="人工知能（AI）と機械学習（ML）とディープラーニング（DL）の関係について" />
+    <meta name="twitter:description" content="こんばんは。bigenです。 先日、社内のマーケターの方に 「bigenくん、AIと機械学習とディープラーニングの違いってなんなの？」 と聞かれました。 調べてみると、今流行りの機械学習の手法とかについてはたくさんの情報があるんですが、 人工知能と機械学習の関係や、各手法がなぜ「機械学習」と呼ばれて一括りにされているのか、 そういった体系的な情報が意外と少なかったので僕の考える範囲でまとめてみます。 はじめにお断りしておきますが、 人工知能や機械学習という言葉は、科学的に厳密に定義された言葉ではないため、 それぞれの言葉が持つ細かな意味は話者によって変..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/05/27/Difference-with-Artificial-Intelligence-and-Machine-Leaning-and-Deep-Leadning.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars2.githubusercontent.com/u/23183770?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "人工知能（AI）と機械学習（ML）とディープラーニング（DL）の関係について",
+    "url": "http://tech.innovation.co.jp/2017/05/27/Difference-with-Artificial-Intelligence-and-Machine-Leaning-and-Deep-Leadning.html",
+    "datePublished": "2017-05-26T15:00:00.000Z",
+    "dateModified": "2017-05-30T02:35:03.549Z",
+    "keywords": "AI,  Machine Leaning,  Deep Leaning",
+    "description": "こんばんは。bigenです。 先日、社内のマーケターの方に 「bigenくん、AIと機械学習とディープラーニングの違いってなんなの？」 と聞かれました。 調べてみると、今流行りの機械学習の手法とかについてはたくさんの情報があるんですが、 人工知能と機械学習の関係や、各手法がなぜ「機械学習」と呼ばれて一括りにされているのか、 そういった体系的な情報が意外と少なかったので僕の考える範囲でまとめてみます。 はじめにお断りしておきますが、 人工知能や機械学習という言葉は、科学的に厳密に定義された言葉ではないため、 それぞれの言葉が持つ細かな意味は話者によって変..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-A-I tag-Machine-Leaning tag-Deep-Leaning no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="27 May 2017" class="post-meta__date date">27 May 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/A-I">AI</a>, <a href="http://tech.innovation.co.jp/tag/Machine-Leaning"> Machine Leaning</a>, <a href="http://tech.innovation.co.jp/tag/Deep-Leaning"> Deep Leaning</a></span>
+        <span class="post-meta__author author"><img src="https://avatars2.githubusercontent.com/u/23183770?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">人工知能（AI）と機械学習（ML）とディープラーニング（DL）の関係について</h1>
+    </header>
+
+    <section class="post tag-A-I tag-Machine-Leaning tag-Deep-Leaning">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんばんは。bigenです。<br>
+<br>
+先日、社内のマーケターの方に<br>
+「bigenくん、<strong>AI</strong>と<strong>機械学習</strong>と<strong>ディープラーニング</strong>の違いってなんなの？」<br>
+と聞かれました。<br>
+<br>
+調べてみると、今流行りの機械学習の手法とかについてはたくさんの情報があるんですが、<br>
+<strong>人工知能と機械学習</strong>の関係や、各手法が<strong>なぜ「機械学習」と呼ばれて一括りにされているのか</strong>、<br>
+そういった体系的な情報が意外と少なかったので僕の考える範囲でまとめてみます。<br>
+<br>
+はじめにお断りしておきますが、<br>
+人工知能や機械学習という言葉は、科学的に厳密に定義された言葉ではないため、<br>
+それぞれの言葉が持つ細かな意味は話者によって変わります。<br>
+<br>
+今回の記事も、「僕が考える人工知能と機械学習」でしかないことをご注意いただき、<br>
+ご自身の考える人工知能と機械学習の参考にしてください。<br>
+<br>
+また、各概念とその関係を概説するだけの記事ですので、<br>
+何故機械学習が流行っているのか、機械学習って具体的にどうやっているのか、<br>
+といった詳細には踏み込みませんので、ご注意ください。</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="__">今回のまとめ</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>人工知能（AI）と機械学習（ML）と深層学習（DL）の違いが分かる</p>
+</li>
+<li>
+<p>人工知能って何かが分かる</p>
+</li>
+<li>
+<p>機械学習って何かが分かる</p>
+</li>
+<li>
+<p>深層学習って何かが分かる（ちょっと難しい）</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__ai_ml_dl">人工知能（AI）と機械学習（ML）と深層学習（DL）の違い</h2>
+<div class="sectionbody">
+<div class="sect3">
+<h4 id="_1_ai">1. 人工知能(AI)とは</h4>
+<div class="paragraph">
+<p><strong>「人工知能(Artificial Inteligence)」</strong>という言葉が定義する概念は、<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>人間のもつ知能という機能を再現する為に作られた機械のこと</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>です。<br>
+<br>
+理想的な人工知能のイメージはターミネーターとか、ああいうやつですね。<br>
+ ここについては特に説明は必要ないと思います。<br>
+<br>
+ さて、「知能を再現する」と言うは簡単ですが、<br>
+ 皆さんは「そもそも知能ってなに？」という質問に答えられますか？<br>
+ <br>
+ ここはもちろん諸説入り乱れるところなわけですが、<br>
+ Wikipediaの力を借りると、以下のようなものだそうです。</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>知能（ちのう）は、論理的に考える、計画を立てる、問題解決する、抽象的に考える、
+考えを把握する、言語機能、学習機能などさまざまな知的活動を含む心の特性
+（引用: https://ja.wikipedia.org/wiki/%E7%9F%A5%E8%83%BD/)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>上記のうち、「論理的に考える」「計画を立てる」「問題解決する」、といった能力は、<br>
+人間が自分の思考回路を振り返り、理解し、そのまま機械に再現させることが可能です。<br>
+そして、一度再現してしまえば、いまや計算器のほうが得意な分野になりつつあります。<br>
+<br>
+しかし、「抽象的に考える」「言語機能」「考えを把握する」「学習機能」といった能力は、<br>
+どのようなメカニズムで行われているのか、人間自身が分かっていないため再現できずにきました。<br>
+<br>
+中でも、「学習機能」は、そういった複雑かつ高次な能力を習得し、高めていくための<br>
+根源的な能力の一つであるとして、理想的な人工知能が持つべき最も重要な能力<br>
+の一つであると考えられてきました。<br>
+<br>
+このような一連の流れから、<br>
+「人間の知能を再現するための重要な機能の一つ」として、<br>
+<strong>機械学習</strong>というテーマが研究対象として存在していました。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_2">2.機械学習とは</h4>
+<div class="paragraph">
+<p>ここで「<strong>機械学習(Machine Leaning)</strong>」を定義しておくと、</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>人間の学習機能を再現するために作られた機械の機能のこと</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>となります。人工知能は機械そのものをさしているのに対し、<br>
+機械学習は機械のもつ機能をさしていることにご注意ください。<br>
+<br>
+「<strong>学習機能</strong>って何？」という話もまた諸説なんたらって感じなんですが、<br>
+共通する大事な要素を抜き出すと、<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>過去に起こった出来事の結果から、まだ起きていない出来事の結果を予測すること</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>である、というのが基本的な考え方です。<br>
+<br>
+この学習機能を再現するために、様々な機械（アルゴリズム）が考えられてきました。<br>
+代表的なものでは、「ディープラーニング」「サポートベクターマシン」<br>
+「パーセプトロン」などがあり、このあたりは名前的にかっこよくて好きです。<br>
+<br>
+しかし、それらの全ての手法が、まだ人間の学習機能には遠く及んでいないというのが現実です。<br>
+特に<strong>抽象化</strong>と呼ばれる能力は、人間の学習に大きな役割を果たすと考えられてる一方で、<br>
+その仕組みは解明されず、機械での再現もできずにいます。<br>
+<br>
+ほとんどのアルゴリズムは、学習する分野に合わせて「どの点を重点的に見れば良いか」を<br>
+(人間もよく分かっていないのに推測で)人間が指示し、<br>
+大量のデータからその点に関する傾向を探る手法をとっています。<br></p>
+</div>
+<div class="paragraph">
+<p>そのため、同じ内容の学習をするのに、機械は人間より膨大な量のデータを必要としたり、<br>
+ある分野での学習を別の分野に活かすことができなかったり（結果、更に大量のデータが必要になる）しています。<br>
+<br>
+つまり、理想的な機械学習の機能のうち、部分的しか再現できていないのが現在の機械学習となります。<br>
+もちろん、部分的とはいえ応用範囲は十分に広く、その影響は昨今の機械学習ブームから伺えると思います。<br>
+<br>
+余談ですが、Webをただよっていると、<br>
+「機械学習とは、大量のデータから規則性を発見し、次のデータを予測することである」<br>
+といった記事をよく見かけるのですが、 個人的にはこれは狭義的だと思っています。<br>
+<br>
+現在は学習機能の再現のために、技術的なハードルから大量のデータに頼るしかないのは事実ですが、<br>
+「機械学習」という言葉がもつ本来の意味は何も大量データの処理を前提とはしていないからです。<br>
+<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3">3.ディープラーニングとは</h4>
+<div class="paragraph">
+<p>少し話はそれましたが、最後に<strong>ディープラーニング(Deep Leaning)</strong>の話をしたいと思います。<br>
+ディープラーニングとは、上述でもでてきたように、機械学習アルゴリズムのうちの１つです。<br>
+<br>
+ディープラーニングは、日本語で深層学習と訳され、<br>
+人間の脳神経の仕組みを応用して作られたアルゴリズムの１つです。<br>
+<br>
+人間の学習や思考は、まず見たもの、聞いたものを記憶に残し、<br>
+それらの様々な記憶を材料に学習や思考を行っています。<br>
+<br>
+しかし、人間はほとんどの場面で、見たもの、聞いたもの全てを記憶しているのではなく、<br>
+深層心理の中にそれらの情報のうち特徴的な部分のみを記憶しているらしい、ということが分かっています。<br>
+ （例えば人の顔だったら、目と目の間の距離や、骨格、髪の色など。）</p>
+</div>
+<div class="paragraph">
+<p>また、人間の脳を構造的な視点から見ると、<br>
+「ニューロン」という無数の細胞が網の目のように互いに結びつき、<br>
+ネットワークを構成して情報を処理しているらしいことが分かっています。<br>
+<br>
+ニューロンは、結びついた複数のニューロンから電気信号を受取り、<br>
+それぞれの電気信号がある基準を超えるまでは何もせず、<br>
+基準を超えると次のニューロンへまた電気信号を送ります。<br>
+<br>
+このニューロンの働きが、実は人間の深層心理の思考や学習を実現しているのではないか、<br>
+という発想がディープラーニングの出発点であり、深層学習と呼ばれる由来です。<br>
+<br>
+つまり、あるニューロンは、例えば別のニューロンから<br>
+「右目の位置は顔の右端から7cmだよ」<br>
+「左目の位置は顔の左端から7cmだよ」<br>
+というような情報を受取り、ある基準を超えていれば<br>
+「目と目が<strong>離れている</strong>顔だよ」<br>
+といった抽象的な情報に集約して情報伝達を行っているのではないか、という推測です。<br>
+<br>
+この推測が真実かどうかはまだ解明されていませんが、<br>
+ディープラーニングのアルゴリズム自体は既存の理論的な枠組みで説明できない部分を残しつつも、<br>
+これまでの機械学習より非常に高い性能を発揮し、現在爆発的な注目を集めています。<br>
+<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_4">4.まとめ</h4>
+<div class="paragraph">
+<p>というわけで、「1.人工知能とは」「2.機械学習とは」「3.ディープラーニングとは」<br>
+についてそれぞれの関係を踏まえて概説してみました。<br>
+<br>
+大雑把には、<br>
+「機械学習は、人工知能を構成する要素の１つ」であり、<br>
+ 「ディープラーニングは、機械学習のアルゴリズムの１つ」であるということです。<br>
+<br>
+また現在、別にそんなに学習っぽくはないただの大量データ処理の機能が、なぜ機械<strong>学習</strong>と呼ばれているのかも、<br>
+少し理解していただけたかと思います。<br>
+<br>
+更に、昨今は「機械学習といえばディープラーニング！！」という風潮もあり、<br>
+機械学習とディープラーニングを混同してしまうケースもあるようですが、<br>
+その違いも説明できたかと思います。<br>
+<br>
+この記事でよく理解できた皆さんは、もし社内で<br>
+「大量データがあるから人工知能で何か予測しようぜ！」<br>
+などと言っている人がいたら、<br>
+「それって人工知能っていうか機械学習のことですよね？」<br>
+ってドヤ顔しながら説明してあげてください。<br>
+<br>
+きっと嫌な顔されると思いますので。<br></p>
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
