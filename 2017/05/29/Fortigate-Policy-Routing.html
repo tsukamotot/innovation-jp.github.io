@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Fortigateにプロバイダを追加した時のメモ - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Fortigateにプロバイダを追加した時のメモ">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Fortigateにプロバイダを追加した時のメモ">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/05/29/Fortigate-Policy-Routing.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Fortigateにプロバイダを追加した時のメモ" />
+    <meta property="og:description" content="KTNです。 先日、新しくネットワークの魔術師になったばかりの、 亜美さん、小柳津さんにお客様用Wi-Fiの設定をしてもらいましたが、 そのさらに続きで、プロバイダを追加したときのお話を書きたいと思います。 なんでプロバイダ追加したの？ 既にプロバイダ設定してあるのに、なんで更に追加するの？ という感じではあるのですが、 外部公開しているサーバがあってグローバルIPが足りなくなったからではないです。 マーケティングの情報取得のためにツールでGoogleに頻繁にアクセスしていて、 そのせいで社内の人が何かをググる時に、ロボットではないか？と疑われ、 都度..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/05/29/Fortigate-Policy-Routing.html" />
+    <meta property="article:published_time" content="2017-05-28T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-06-02T01:20:18.434Z" />
+    <meta property="article:tag" content="Network" />
+    <meta property="article:tag" content="Fortigate" />
+    <meta property="article:tag" content="Policy Routing" />
+    <meta property="article:tag" content="KTN" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Fortigateにプロバイダを追加した時のメモ" />
+    <meta name="twitter:description" content="KTNです。 先日、新しくネットワークの魔術師になったばかりの、 亜美さん、小柳津さんにお客様用Wi-Fiの設定をしてもらいましたが、 そのさらに続きで、プロバイダを追加したときのお話を書きたいと思います。 なんでプロバイダ追加したの？ 既にプロバイダ設定してあるのに、なんで更に追加するの？ という感じではあるのですが、 外部公開しているサーバがあってグローバルIPが足りなくなったからではないです。 マーケティングの情報取得のためにツールでGoogleに頻繁にアクセスしていて、 そのせいで社内の人が何かをググる時に、ロボットではないか？と疑われ、 都度..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/05/29/Fortigate-Policy-Routing.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars3.githubusercontent.com/u/24905783?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "Fortigateにプロバイダを追加した時のメモ",
+    "url": "http://tech.innovation.co.jp/2017/05/29/Fortigate-Policy-Routing.html",
+    "datePublished": "2017-05-28T15:00:00.000Z",
+    "dateModified": "2017-06-02T01:20:18.434Z",
+    "keywords": "Network,  Fortigate,  Policy Routing,  KTN",
+    "description": "KTNです。 先日、新しくネットワークの魔術師になったばかりの、 亜美さん、小柳津さんにお客様用Wi-Fiの設定をしてもらいましたが、 そのさらに続きで、プロバイダを追加したときのお話を書きたいと思います。 なんでプロバイダ追加したの？ 既にプロバイダ設定してあるのに、なんで更に追加するの？ という感じではあるのですが、 外部公開しているサーバがあってグローバルIPが足りなくなったからではないです。 マーケティングの情報取得のためにツールでGoogleに頻繁にアクセスしていて、 そのせいで社内の人が何かをググる時に、ロボットではないか？と疑われ、 都度..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Network tag-Fortigate tag-Policy-Routing tag-K-T-N no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="29 May 2017" class="post-meta__date date">29 May 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Network">Network</a>, <a href="http://tech.innovation.co.jp/tag/Fortigate"> Fortigate</a>, <a href="http://tech.innovation.co.jp/tag/Policy-Routing"> Policy Routing</a>, <a href="http://tech.innovation.co.jp/tag/K-T-N"> KTN</a></span>
+        <span class="post-meta__author author"><img src="https://avatars3.githubusercontent.com/u/24905783?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">Fortigateにプロバイダを追加した時のメモ</h1>
+    </header>
+
+    <section class="post tag-Network tag-Fortigate tag-Policy-Routing tag-K-T-N">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>KTNです。<br>
+先日、新しくネットワークの魔術師になったばかりの、<br>
+亜美さん、小柳津さんにお客様用Wi-Fiの設定をしてもらいましたが、<br>
+そのさらに続きで、プロバイダを追加したときのお話を書きたいと思います。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">なんでプロバイダ追加したの？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>既にプロバイダ設定してあるのに、なんで更に追加するの？<br>
+という感じではあるのですが、<br>
+外部公開しているサーバがあってグローバルIPが足りなくなったからではないです。<br>
+マーケティングの情報取得のためにツールでGoogleに頻繁にアクセスしていて、<br>
+そのせいで社内の人が何かをググる時に、ロボットではないか？と疑われ、<br>
+都度認証が必要になって面倒くさいから。<br>
+社内の人が使うグローバルIPと、ツールが使うグローバルIPを分けたい！となりまして、<br>
+たまたま利用可能なプロバイダ契約があったので追加で設定してみた、という感じです。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">こんな感じにしたい</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170529/2.jpg" alt="2.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>完成形の構成イメージはこんな感じになります。<br>
+　社内用からの通信　　　　　→　プロバイダA<br>
+　お客様用からの通信　　　　→　プロバイダA<br>
+　別プロバイダ用からの通信　→　プロバイダB<br>
+を使うようにしたい！<br>
+なので、作業は簡単です。<br>
+Fortigate（UTM）のWAN2ポートに追加プロバイダ分のPPPoEの設定をしてVLANを追加して、<br>
+L2とAPにもVLAN追加してやればほぼ完了ですね。<br>
+あとはFortigateのルーティングを書くぐらいです。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___3">設定してみました</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>といっても、<br>
+&gt; FortigateのWAN2ポートに追加プロバイダ分のPPPoEの設定をしてVLANを追加して、<br>
+&gt; L2とAPにもVLAN追加してやればほぼ完了ですね。<br>
+ここについては前回の亜美さんの記事でも書いている内容ですので、<br>
+省略しちゃいます。決して手抜きでは無いです。<br>
+図のVLAN300を各機器に設定していきます。<br>
+最後のルーティングの部分だけ設定を説明したいと思います。<br>
+<br>
+Fortigateの設定画面の「ポリシー」→「ポリシー」を開きます。<br>
+本当は画面を貼りたいところなのですが、社内の機器のポリシーを貼るのははばかられるので、<br>
+文字で失礼します。<br>
+設定するのは以下のイメージ<br>
+　・社内用<br>
+　　incomingインターフェース：internal<br>
+　　outgoingインターフェース：wan1<br>
+　　サービス：HTTP、HTTPS<br>
+　　アクション：NAT有効<br>
+　・お客様用<br>
+　　incomingインターフェース：VLAN200<br>
+　　outgoingインターフェース：wan1<br>
+　　サービス：HTTP、HTTPS<br>
+　　アクション：NAT有効<br>
+　・別プロバイダ用<br>
+　　incomingインターフェース：VLAN300<br>
+　　outgoingインターフェース：wan2<br>
+　　サービス：HTTP、HTTPS<br>
+　　アクション：NAT有効<br>
+上記の感じでポリシーを設定しておけば、<br>
+それに従ってルーティングをいい感じにやってくれるのでは！？という期待を持って設定してみます。<br>
+結果は、、、すべての通信がwan1を使おうとしているようで上手く動作しませんでした。。。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">ポリシーベースルーティングが欲しい</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>上記の結果になることは若干予想してまして、<br>
+宛先だけではルーティングを書くことが出来ないので（両方宛先がインターネットになるので）、<br>
+ソースを元に振り分けをする必要があるかなと。<br>
+Fortigateのポリシーに設定すれば、いい感じにやってれると思ったのですが、<br>
+そんなことは無いことがわかったので、対応方法を考えます。<br>
+<br>
+マニュアルをちら見すると「ポリシールート」という項目があり、<br>
+設定内容を見るとIncoming（ルートポリシーの対象となるパケットを受信するインタフェース）<br>
+とありました。<br>
+ただしこれを使うには「高度なルーティング」を有効にする必要があるとのことなので、<br>
+Fortigateの「ダッシュボード」→「Status」から有効にしちゃいます。<br>
+<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170529/3.png" alt="3.png">
+</div>
+</div>
+<div class="paragraph">
+<p>有効にすると「ルータ」という項目がメニューに追加されるので、<br>
+「ルータ」→「ポリシールート」から設定します。<br>
+　・社内用<br>
+　　受信インターフェース：internal<br>
+　　送信インターフェース：wan1<br>
+　・お客様用<br>
+　　受信インターフェース：VLAN200<br>
+　　送信インターフェース：wan1<br>
+　・別プロバイダ用<br>
+　　受信インターフェース：VLAN300<br>
+　　送信インターフェース：wan2<br>
+上記の感じでポリシールートを設定して動作確認すると、<br>
+期待通りに動作しました！！<br>
+さすがFortigate様、結構値段はするかもですが、<br>
+その分欲しい機能を提供してくれます。ありがとう！！<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___5">終わりに</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>ネットワーク機器の設定する際には、<br>
+事前にしっかり機能を確認しないといけないですね、<br>
+安いルータとかだったらポリシールート無いと思うので。<br>
+今回はFortigateなので論理的に機器を分割するVDOMを使えば設定出来ることを知っていたので、<br>
+最悪そっちで設定しようと思ってましたが、<br>
+VDOMを作成するのは結構面倒なのでポリシールートで設定できて良かったです。<br>
+もうしばらくはネットワークの設定変更はなさそうですが、<br>
+また何かあれば書きたいと思います。では〜。<br></p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
