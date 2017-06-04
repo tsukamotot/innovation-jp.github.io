@@ -75,6 +75,12 @@ image:shirota/20170604/cap011.png[]
 
 これで、受信したいメールアドレス宛のメールを受信して、S3に保存されるようになりました。
 
+また、SESから自分のGmailへメールを送信できるように、 +
+Email Addresses -> Verify a New Email Address -> 自身のGmailアドレスを入力 -> Verify This Email Address +
+で、Gmailへのメール配信を許可しておきます。
+
+image:shirota/20170604/cap015.png[]
+
 ## Lambdaスクリプトを作成
 
 S3 Putをトリガーとして、メールを一部パースし、SESでGmailにメール送信するLambdaスクリプトを作成します。
