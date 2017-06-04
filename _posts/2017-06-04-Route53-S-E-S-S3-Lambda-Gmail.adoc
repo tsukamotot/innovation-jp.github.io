@@ -32,19 +32,19 @@ SREチームの城田です。 +
 
 AWSコンソールのSESから、Domains -> Verify New Domain と進みます。
 
-cap001
+image:shirota/20170604/cap001.png[]
 
 Domain: {{ 独自ドメイン名 }} を入力して、 Generate DKIM Settings にチェック
 
-cap002
+image:shirota/20170604/cap002.png[]
 
 Verify This Domain -> Use Route 53
 
-cap004
+image:shirota/20170604/cap004.png[]
 
 Email Receiving Record にチェック -> Create Record Sets と進みます。
 
-cap003
+image:shirota/20170604/cap003.png[]
 
 これで、独自ドメインのMXレコードとおまけにDKIMの設定も出来てしまいました。
 Route53でドメインを管理するととても簡単です。
@@ -53,25 +53,25 @@ Route53でドメインを管理するととても簡単です。
 
 AWSコンソールのSESから、Email Receiving -> Rule Sets -> Create a Receipt Rule と進みます。
 
-cap005
+image:shirota/20170604/cap005.png[]
 
 受信したいメールアドレス（例：shirota@hoge.com）を Add Receipient して、Next Step へ
 
-cap006
-cap007
+image:shirota/20170604/cap006.png[]
+image:shirota/20170604/cap007.png[]
 
 Add Action から S3 を選択します。
 
-cap008
+image:shirota/20170604/cap008.png[]
 
 S3 bucket から Create S3 bucket からバケットを作成し、作成したバケットを選択して Next Step へ
 
-cap009
-cap010
+image:shirota/20170604/cap009.png[]
+image:shirota/20170604/cap010.png[]
 
 ルール名を設定して Next Step の確認画面で Create Rule からルールを作成します。
 
-cap011
+image:shirota/20170604/cap011.png[]
 
 これで、受信したいメールアドレス宛のメールが、S3に保存されるようになりました。
 
@@ -79,7 +79,7 @@ cap011
 
 S3 Putをトリガーとして、メールを一部パースし、SESでGmailにメール送信するLambdaスクリプトを作成します。
 
-cap012
+image:shirota/20170604/cap012.png[]
 
 * 関数名：SES-Forwarder
 * ランタイム：Python2.7
@@ -88,7 +88,7 @@ cap012
 * 既存のロール：SES Full Accessの付いたIAMロール
 * タイムアウト：1分
 
-cap013
+image:shirota/20170604/cap013.png[]
 
 ソースコード
 
