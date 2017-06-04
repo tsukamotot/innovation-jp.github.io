@@ -45,7 +45,7 @@ Email Receiving Record にチェック -> Create Record Sets と進みます。
 
 image:shirota/20170604/cap003.png[]
 
-これで、独自ドメインのMXレコードとおまけにDKIMの設定も出来てしまいました。
+これで、独自ドメインのMXレコードとおまけにDKIMの設定も出来てしまいました。 +
 Route53でドメインを管理するととても簡単です。
 
 ## SESで独自ドメインメールの受信設定（+ 受信したメールをS3に保存）
