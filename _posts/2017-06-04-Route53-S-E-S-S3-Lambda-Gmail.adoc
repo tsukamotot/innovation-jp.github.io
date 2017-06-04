@@ -55,20 +55,21 @@ AWSコンソールのSESから、Email Receiving -> Rule Sets -> Create a Receip
 
 image:shirota/20170604/cap005.png[]
 
-受信したいメールアドレスを Add Receipient して、Next Step へ
+受信したいメールアドレスを Add Recipient して、Next Step へ
 
 image:shirota/20170604/cap007.png[]
 
-Add Action から S3 を選択します。
+Add action から S3 を選択します。
 
 image:shirota/20170604/cap008.png[]
 
-S3 bucket から Create S3 bucket からバケットを作成し、作成したバケットを選択して Next Step へ
+S3 bucket の Create S3 bucket からバケットを作成し、 +
+作成したバケットを選択して Next Step へ
 
 image:shirota/20170604/cap009.png[]
 image:shirota/20170604/cap010.png[]
 
-ルール名を設定して Next Step の確認画面で Create Rule からルールを作成します。
+ルール名を設定して Next Step クリック後の確認画面で Create Rule をクリックして、ルールを作成します。
 
 image:shirota/20170604/cap011.png[]
 
