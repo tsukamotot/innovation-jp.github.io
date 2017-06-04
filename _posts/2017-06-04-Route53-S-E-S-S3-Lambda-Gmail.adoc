@@ -39,7 +39,7 @@ image:shirota/20170604/cap002.png[]
 
 Verify This Domain -> Use Route 53
 
-image:shirota/20170604/cap004.png[]
+image:shirota/20170604/cap014.png[]
 
 Email Receiving Record にチェック -> Create Record Sets と進みます。
 
