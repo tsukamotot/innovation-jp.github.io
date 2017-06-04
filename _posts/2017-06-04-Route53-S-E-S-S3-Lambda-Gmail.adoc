@@ -52,7 +52,7 @@ AWSコンソールのSESから、Email Receiving -> Rule Sets -> Create a Receip
 
 image:shirota/20170604/cap005.png[]
 
-受信したいメールアドレス（例：shirota@hoge.com）を Add Receipient して、Next Step へ
+受信したいメールアドレスを Add Receipient して、Next Step へ
 
 image:shirota/20170604/cap006.png[]
 image:shirota/20170604/cap007.png[]
