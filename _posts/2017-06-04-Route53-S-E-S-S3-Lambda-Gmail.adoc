@@ -1,26 +1,144 @@
-= Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する
+# Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する
 :hp-alt-title:　Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する
 :hp-tags: Shirota, Route53, SES, S3, Lambda
 
 SREチームの城田です。 +
 
+今回は独自ドメイン宛のメールの転送を行ってみたいと思います。
 
-== 前提
+## 背景
 
-```
-* 
-* 
-* 
-* 
-```
 
-== やったこと
+* 独自ドメイン（例：hoge.com）宛のメール受信を、某ドメインレジストラのメール転送機能を使って、Gmailアドレス宛(例：hoge@gmail.com)に転送していた。
+* その某ドメインレジストラからAWS Route53にドメイン移管したので、そのメール転送機能が使えなくなった。
+* メール転送だけの為にEC2にMTAを入れてメール転送設定するということはしたくない。
 
-```
-* 
-* 
-* 
-```
 
-== 
+ということで、メール転送機能（と同等なもの）をサーバーレスで実装してみたいと思います。
 
+## やったこと
+
+
+* SESで独自ドメインメールの受信設定
+* 受信したメールをS3に保存
+* Lambdaスクリプトを作成
+** 内容：S3 Putをトリガーとして、メールを一部パースし、SESでGmailにメール送信
+
+
+## SESで独自ドメインメールの受信設定
+
+独自ドメインのメールをSESで受信するためのドメイン設定を行います。
+
+
+AWSコンソールのSESから、Domains -> Verify New Domain と進みます。
+
+cap001
+
+Domain: {{ 独自ドメイン名 }} を入力して、 Generate DKIM Settings にチェック
+
+cap002
+
+Verify This Domain -> Use Route 53
+
+cap004
+
+Email Receiving Record にチェック -> Create Record Sets と進みます。
+
+cap003
+
+これで、独自ドメインのMXレコードとおまけにDKIMの設定も出来てしまいました。
+Route53でドメインを管理するととても簡単です。
+
+## 受信したメールをS3に保存
+
+AWSコンソールのSESから、Email Receiving -> Rule Sets -> Create a Receipt Rule と進みます。
+
+cap005
+
+受信したいメールアドレス（例：shirota@hoge.com）を Add Receipient して、Next Step へ
+
+cap006
+cap007
+
+Add Action から S3 を選択します。
+
+cap008
+
+S3 bucket から Create S3 bucket からバケットを作成し、作成したバケットを選択して Next Step へ
+
+cap009
+cap010
+
+ルール名を設定して Next Step の確認画面で Create Rule からルールを作成します。
+
+cap011
+
+これで、受信したいメールアドレス宛のメールが、S3に保存されるようになりました。
+
+## Lambdaスクリプトを作成
+
+S3 Putをトリガーとして、メールを一部パースし、SESでGmailにメール送信するLambdaスクリプトを作成します。
+
+cap012
+
+* 関数名：SES-Forwarder
+* ランタイム：Python2.7
+* Lambda関数のコード：※後述のソースコード
+* ロール：既存のロールを選択
+* 既存のロール：SES Full Accessの付いたIAMロール
+* タイムアウト：1分
+
+cap013
+
+ソースコード
+
+[source, python]
+----
+import boto3
+import email
+import re
+
+ORIGIN_TO  = "{{ 独自ドメインのメールアドレス }}"
+FORWARD_TO = "{{ 転送先のGmailアドレス }}"
+SES_REGION = "us-east-1"
+S3_BUCKET  = "{{ メールを保存するバケット名 }}"
+
+def parse_mail(raw_message):
+
+    replaced_message = raw_message.replace(ORIGIN_TO, FORWARD_TO)
+    replaced_message = re.sub("From:.+?\n", "From: %s\r\n" % ORIGIN_TO, replaced_message)
+    replaced_message = re.sub("Return-Path:.+?\n", "Return-Path: %s\r\n" % ORIGIN_TO, replaced_message)
+
+    return replaced_message
+
+def send_mail(message):
+    
+    ses = boto3.client('ses', region_name=SES_REGION)
+
+    ses.send_raw_email(
+        Source = FORWARD_TO,
+        Destinations=[
+            FORWARD_TO
+        ],
+        RawMessage={
+            'Data': message
+        }
+    )
+
+def lambda_handler(event, context):
+    try:
+        s3_key = event['Records'][0]['s3']['object']['key']
+        
+        s3 = boto3.client('s3')
+        response = s3.get_object(
+            Bucket = S3_BUCKET,
+            Key    = s3_key
+        )
+        raw_message = response['Body'].read()
+        message = parse_mail(raw_message)
+        
+        send_mail(message)
+
+    except Exception as e:
+        print(e)
+----
