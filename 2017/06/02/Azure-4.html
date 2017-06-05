@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Custom Vision Service は犬派？猫派？どっちも派？ - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Custom Vision Service は犬派？猫派？どっちも派？">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Custom Vision Service は犬派？猫派？どっちも派？">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/06/02/Azure-4.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Custom Vision Service は犬派？猫派？どっちも派？" />
+    <meta property="og:description" content="皆様いかがお過ごしでしょうか、反省中の syoga です、早いもので今年も後半年となりましたね、 全力でログ出力していますでしょうか？ 私も頑張っていきたいと思います。 そんな中、Microsoftの開発者向けカンファレンス「Build 2017」が 5/10 （現地時間）から開催され、色々な新技術やサービスが発表されましたよ。 個人的に気になった事 ・Visual Studio for Mac が一般公開 ・Azure Cosmos DB（非構造化データベース）の発表 ・Cognitive Services 関連 ・Cloud-Powered Cli..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/06/02/Azure-4.html" />
+    <meta property="article:published_time" content="2017-06-01T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-06-05T03:54:24.700Z" />
+    <meta property="article:tag" content="syoga" />
+    <meta property="article:tag" content="log" />
+    <meta property="article:tag" content="Azure" />
+    <meta property="article:tag" content="Custom Vision Service" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Custom Vision Service は犬派？猫派？どっちも派？" />
+    <meta name="twitter:description" content="皆様いかがお過ごしでしょうか、反省中の syoga です、早いもので今年も後半年となりましたね、 全力でログ出力していますでしょうか？ 私も頑張っていきたいと思います。 そんな中、Microsoftの開発者向けカンファレンス「Build 2017」が 5/10 （現地時間）から開催され、色々な新技術やサービスが発表されましたよ。 個人的に気になった事 ・Visual Studio for Mac が一般公開 ・Azure Cosmos DB（非構造化データベース）の発表 ・Cognitive Services 関連 ・Cloud-Powered Cli..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/06/02/Azure-4.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars0.githubusercontent.com/u/20530620?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "Custom Vision Service は犬派？猫派？どっちも派？",
+    "url": "http://tech.innovation.co.jp/2017/06/02/Azure-4.html",
+    "datePublished": "2017-06-01T15:00:00.000Z",
+    "dateModified": "2017-06-05T03:54:24.700Z",
+    "keywords": "syoga,  log,  Azure,  Custom Vision Service",
+    "description": "皆様いかがお過ごしでしょうか、反省中の syoga です、早いもので今年も後半年となりましたね、 全力でログ出力していますでしょうか？ 私も頑張っていきたいと思います。 そんな中、Microsoftの開発者向けカンファレンス「Build 2017」が 5/10 （現地時間）から開催され、色々な新技術やサービスが発表されましたよ。 個人的に気になった事 ・Visual Studio for Mac が一般公開 ・Azure Cosmos DB（非構造化データベース）の発表 ・Cognitive Services 関連 ・Cloud-Powered Cli..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-syoga tag-log tag-Azure tag-Custom-Vision-Service no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="02 Jun 2017" class="post-meta__date date">02 Jun 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/syoga">syoga</a>, <a href="http://tech.innovation.co.jp/tag/log"> log</a>, <a href="http://tech.innovation.co.jp/tag/Azure"> Azure</a>, <a href="http://tech.innovation.co.jp/tag/Custom-Vision-Service"> Custom Vision Service</a></span>
+        <span class="post-meta__author author"><img src="https://avatars0.githubusercontent.com/u/20530620?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">Custom Vision Service は犬派？猫派？どっちも派？</h1>
+    </header>
+
+    <section class="post tag-syoga tag-log tag-Azure tag-Custom-Vision-Service">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>皆様いかがお過ごしでしょうか、反省中の syoga です、早いもので今年も後半年となりましたね、<br>
+全力でログ出力していますでしょうか？ 私も頑張っていきたいと思います。</p>
+</div>
+<div class="paragraph">
+<p>そんな中、Microsoftの開発者向けカンファレンス「Build 2017」が<br>
+5/10 （現地時間）から開催され、色々な新技術やサービスが発表されましたよ。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">個人的に気になった事</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>・Visual Studio for Mac が一般公開
+・Azure Cosmos DB（非構造化データベース）の発表
+・Cognitive Services 関連
+・Cloud-Powered Clipboard
+（クリップボードのクラウド化、PCでコピしたテキストをスマホにペできる）
+・iTunes がWindowsストアに登場!!
+・Microsoft製のVR対応モーションコントローラー発表</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>といった感じですが、周りでは話題に上がることは特になかったので、<br>
+今回は Cognitive Services 関連で発表された、Custom Vision Service を<br>
+触ってみようと思います。</p>
+</div>
+<div class="paragraph">
+<p>詳細は Microsoft の以下ページを参照下さい。</p>
+</div>
+<div class="paragraph">
+<p><a href="https://azure.microsoft.com/ja-jp/services/cognitive-services/custom-vision-service/">Custom Vision Service</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_custom_vision_service">Custom Vision Service とは？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>画像を機械学習させ評価させる事が出来るサービスです、GUIでアップロードする事が<br>
+可能なので、コードを書く手間や Azure Machine Learning のような学習セットの設定も<br>
+必要なく、手軽に試す事ができます。</p>
+</div>
+<div class="paragraph">
+<p>機械学習については bigen 君の記事で説明されていますので、そちらもご確認下さい！</p>
+</div>
+<div class="paragraph">
+<p><a href="http://tech.innovation.co.jp/2017/05/27/Difference-with-Artificial-Intelligence-and-Machine-Leaning-and-Deep-Leadning.html">人工知能（AI）と機械学習（ML）とディープラーニング（DL）の関係について</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">さっそく始めてみよう</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/1.png" alt="1.png"></span>
+上記リンクにもある、Custom Vision Service のページから「はじめる」ボタンをポチります。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/2.png" alt="2.png"></span>
+Project を作成するため 「New Project」をポチります。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/3.png" alt="3.png"></span>
+Project 名等を入力します、Domains は学習シナリオに合ったカテゴリを選択するようですが、<br>
+今回は「General」で良いかな、そして「Create Project」ボタンをポチります。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/4.png" alt="4.png"></span>
+プロジェクトが作成されたので、「Add Images」 ボタンをポチりと押して…</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/5.png" alt="5.png"></span>
+ここから画像を追加します。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___3">犬派のあなたに</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/6.png" alt="6.png"></span>
+まずは犬の画像をアップロード、犬のタグに分類します。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">猫派のあなたに</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/7.png" alt="7.png"></span>
+次に猫の画像をアップロードして、同様に猫のタグに分類します。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/8.png" alt="8.png"></span>
+こんな感じです。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___5">特訓開始！！</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/9.png" alt="9.png"></span>
+「Train」ボタンをポチります。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/10.png" alt="10.png"></span>
+円グラフは「Precision（予測）」と「Recall（想起）」の率となり、
+画像を多く用意しておくほうが精度が上がるようです。</p>
+</div>
+<div class="paragraph">
+<p>また、何回もトレーニングを実施する事でも精度がUPするそうです、<br>
+10枚くらいだとアレなので、犬、猫をさらに10枚…倍プッシュだ！！</p>
+</div>
+<div class="paragraph">
+<p>さらなる特訓開始！！</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/11.png" alt="11.png"></span>
+お、Recallが100%になりました。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___6">まずコレは？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/9.png" alt="9.png"></span>
+右上の「Quick Test」から評価したい画像を上げます。</p>
+</div>
+<div class="paragraph">
+<p>とりあえず、馬を上げてみます。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/12.png" alt="12.png"></span>
+どちらも 0% に！？ なるほど、犬っぽくはないんですね。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___7">じゃあコレは？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>次はひっかけですね、ライオン。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/13.png" alt="13.png"></span>
+猫が95.4%になってますね〜、犬と猫しか知らない中で<br>
+猫に寄せてきてるのは、凄い気がします！</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___8">そしてコレは？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>KTN さんです。
+<span class="image"><img src="/images/syoga/aml4/14.png" alt="14.png"></span>
+まぁそりゃそうですね。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___9">答え合わせをしてあげる</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><span class="image"><img src="/images/syoga/aml4/15.png" alt="15.png"></span>
+テストで上げた画像に正解のタグを付与してあげ、さらに精度を上げます<br>
+これはライオンだよ。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___10">うちのペットを見抜けるか！？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>我が家の猫1号を5枚、犬2号を5枚追加して、トレーニングしてみました。
+<span class="image"><img src="/images/syoga/aml4/16.png" alt="16.png"></span>
+猫1号、犬2号の精度は5枚しか画像がないので、こんなもんですかね。</p>
+</div>
+<div class="paragraph">
+<p>では、猫1号の学習させていない写真を。
+<span class="image"><img src="/images/syoga/aml4/17.png" alt="17.png"></span>
+かろうじて猫1号と認識してくれたようです、立ち上がっている画像は学習して<br>
+なかったからか猫の精度も低いですね。</p>
+</div>
+<div class="paragraph">
+<p>次に、犬2号の学習させていない写真を。
+<span class="image"><img src="/images/syoga/aml4/18.png" alt="18.png"></span>
+うーん、Precisionも、Recallも低い数値だったので、犬2号の判定は1.3%でした。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___11">感想</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>ふと思ったのですが、Computer Vision API が自動でタグ付けしてくれれば楽なのでは…<br>
+まぁそれは置いといて、上部のPrediction URLボタンをポチると、作成したプロジェクトの<br>
+API用URLをこっそり教えてくれる、素敵な仕組みも搭載されています。</p>
+</div>
+<div class="paragraph">
+<p>人間の顔を学習させておきAPIで呼び出す等、色々な方向性で利用が出来そうです。</p>
+</div>
+<div class="paragraph">
+<p>余談ですがbuild 2017では Microsoft の音声認識パーソナルアシスタント<br>
+「Cortana」さんと会話をするセッションがありました。</p>
+</div>
+<div class="paragraph">
+<p>Google 検索すると、「Cortana 停止」、「Cortana 邪魔」、「Cortana 削除」等、<br>
+悲惨な検索ワードが並ぶ彼女ですが、Microsoft が発売しているゲームハード Xbox を<br>
+代表する FPS ゲーム 「HALO」 シリーズに登場する AI のキャラクターの名前が利用<br>
+されております。</p>
+</div>
+<div class="paragraph">
+<p>最新のナンバリングタイトルでは人類を滅ぼそうとしていますが、上記のように<br>
+邪険にされている事が原因かは定かではありません…。</p>
+</div>
+<div class="paragraph">
+<p>完</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
