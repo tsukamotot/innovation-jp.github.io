@@ -213,6 +213,15 @@ var _trackingid = 'LFT-10003-1';
 
     <ol class="post-list">
       <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/04/Route53-S-E-S-S3-Lambda-Gmail.html" title="link to Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する">Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する</a></h2>
+        <p class="excerpt">SREチームの城田です。 今回は城田のプライベート環境の話ですが、 AWSを使った独自ドメイン宛のメールの転送設定を行ったので紹介します。 ※当記事の内容はSESを利用しますが、何らかの理由でメールがループしてしまった場合の料金増加など、 当記事内容を利用したことによるトラブルに関して一切責任を負えませんのでご注意ください。 背景 独自ドメイン宛のメール受信は、某ドメインレジストラのメール転送機能を使って、Gmailアドレス宛に転送していた。 その某ドメインレジストラからAWS Route53にドメイン移管したので、そのメール転送機能が使えなくなった。 メール転送をAWSで行うが、それだけの為にEC2にMTAを入れてメール転送するということはしたくない。 ということで、メール転送機能（と同&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="04 Jun 2017" class="post-list__meta--date date">04 Jun 2017</time> &#8226;
+            <span class="post-list__meta--tags tags"><a href="#blog" title="Shirota">Shirota</a>, <a href="#blog" title=" Route53"> Route53</a>, <a href="#blog" title=" SES"> SES</a>, <a href="#blog" title=" S3"> S3</a>, <a href="#blog" title=" Lambda"> Lambda</a></span>
+        </div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/04/22/Amazon-Redshift-Spectrum-C-S-V.html" title="link to Amazon Redshift Spectrum を CSVフォーマットで試してみた">Amazon Redshift Spectrum を CSVフォーマットで試してみた</a></h2>
         <p class="excerpt">SREチームの城田です。 先日発表された Amazon Redshift Spectrum をCSVフォーマットで試してみました。 今回は、大量のgz圧縮されたCSVデータをS3に退避はしているけれど、 必要な時に効率良く参照できない。 という想定の元に、 データをS3に置いたままで、Redshift側から検索をして素早くデータを抽出できるか、 というのをやってみました。 前提 * Macを使っている * IAMロールの設定ができる * S3バケットを作成できる * VPC、セキュリティグループの設定ができる 基本的には調べながら作成できれば問題ありません。 やったこと * IAMロールを作成 * S3バケットを作成 * Redshiftクラスターを作成 * ローカルマシンにpsqlをイン&hellip;</p>
         <div class="post-list__meta">
