@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/06/04/Route53-S-E-S-S3-Lambda-Gmail.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する" />
+    <meta property="og:description" content="SREチームの城田です。 今回は城田のプライベート環境の話ですが、 AWSを使った独自ドメイン宛のメールの転送設定を行ったので紹介します。 ※当記事の内容はSESを利用しますが、何らかの理由でメールがループしてしまった場合の料金増加など、 当記事内容を利用したことによるトラブルに関して一切責任を負えませんのでご注意ください。 背景 独自ドメイン宛のメール受信は、某ドメインレジストラのメール転送機能を使って、Gmailアドレス宛に転送していた。 その某ドメインレジストラからAWS Route53にドメイン移管したので、そのメール転送機能が使えなくなった。..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/06/04/Route53-S-E-S-S3-Lambda-Gmail.html" />
+    <meta property="article:published_time" content="2017-06-03T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-06-06T07:41:09.754Z" />
+    <meta property="article:tag" content="Shirota" />
+    <meta property="article:tag" content="Route53" />
+    <meta property="article:tag" content="SES" />
+    <meta property="article:tag" content="S3" />
+    <meta property="article:tag" content="Lambda" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する" />
+    <meta name="twitter:description" content="SREチームの城田です。 今回は城田のプライベート環境の話ですが、 AWSを使った独自ドメイン宛のメールの転送設定を行ったので紹介します。 ※当記事の内容はSESを利用しますが、何らかの理由でメールがループしてしまった場合の料金増加など、 当記事内容を利用したことによるトラブルに関して一切責任を負えませんのでご注意ください。 背景 独自ドメイン宛のメール受信は、某ドメインレジストラのメール転送機能を使って、Gmailアドレス宛に転送していた。 その某ドメインレジストラからAWS Route53にドメイン移管したので、そのメール転送機能が使えなくなった。..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/06/04/Route53-S-E-S-S3-Lambda-Gmail.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "Junichi Shirota",
+        "image": "https://avatars1.githubusercontent.com/u/26893225?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する",
+    "url": "http://tech.innovation.co.jp/2017/06/04/Route53-S-E-S-S3-Lambda-Gmail.html",
+    "datePublished": "2017-06-03T15:00:00.000Z",
+    "dateModified": "2017-06-06T07:41:09.754Z",
+    "keywords": "Shirota,  Route53,  SES,  S3,  Lambda",
+    "description": "SREチームの城田です。 今回は城田のプライベート環境の話ですが、 AWSを使った独自ドメイン宛のメールの転送設定を行ったので紹介します。 ※当記事の内容はSESを利用しますが、何らかの理由でメールがループしてしまった場合の料金増加など、 当記事内容を利用したことによるトラブルに関して一切責任を負えませんのでご注意ください。 背景 独自ドメイン宛のメール受信は、某ドメインレジストラのメール転送機能を使って、Gmailアドレス宛に転送していた。 その某ドメインレジストラからAWS Route53にドメイン移管したので、そのメール転送機能が使えなくなった。..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Shirota tag-Route53 tag-S-E-S tag-S3 tag-Lambda no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="04 Jun 2017" class="post-meta__date date">04 Jun 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Shirota">Shirota</a>, <a href="http://tech.innovation.co.jp/tag/Route53"> Route53</a>, <a href="http://tech.innovation.co.jp/tag/S-E-S"> SES</a>, <a href="http://tech.innovation.co.jp/tag/S3"> S3</a>, <a href="http://tech.innovation.co.jp/tag/Lambda"> Lambda</a></span>
+        <span class="post-meta__author author"><img src="https://avatars1.githubusercontent.com/u/26893225?v=3" alt="profile image for Junichi Shirota" class="avatar post-meta__avatar" /> by Junichi Shirota</span>
+      </div>
+      <h1 class="post-title">Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する</h1>
+    </header>
+
+    <section class="post tag-Shirota tag-Route53 tag-S-E-S tag-S3 tag-Lambda">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>SREチームの城田です。<br></p>
+</div>
+<div class="paragraph">
+<p>今回は城田のプライベート環境の話ですが、<br>
+AWSを使った独自ドメイン宛のメールの転送設定を行ったので紹介します。</p>
+</div>
+<div class="paragraph">
+<p>※当記事の内容はSESを利用しますが、何らかの理由でメールがループしてしまった場合の料金増加など、<br>
+当記事内容を利用したことによるトラブルに関して一切責任を負えませんのでご注意ください。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">背景</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>独自ドメイン宛のメール受信は、某ドメインレジストラのメール転送機能を使って、Gmailアドレス宛に転送していた。</p>
+</li>
+<li>
+<p>その某ドメインレジストラからAWS Route53にドメイン移管したので、そのメール転送機能が使えなくなった。</p>
+</li>
+<li>
+<p>メール転送をAWSで行うが、それだけの為にEC2にMTAを入れてメール転送するということはしたくない。</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ということで、メール転送機能（と同等なもの）をサーバーレスで実装してみました。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">やったこと</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>Route53でMXレコードの設定</p>
+</li>
+<li>
+<p>SESで独自ドメインメールの受信設定</p>
+</li>
+<li>
+<p>受信したメールをS3に保存するよう設定</p>
+</li>
+<li>
+<p>Lambdaスクリプトを作成</p>
+<div class="ulist">
+<ul>
+<li>
+<p>スクリプト内容：S3 Putをトリガーとして、メールを一部パース・置換し、SESでGmailにメール送信する</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/route53+ses+s3+lambda.png" alt="route53+ses+s3+lambda.png"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_route53_mx">Route53でMXレコードの設定</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AWSコンソールのSESから、Domains &#8594; Verify New Domain と進みます。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap001.png" alt="cap001.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Domain: {{ 独自ドメイン名 }} を入力して、 Generate DKIM Settings にチェック</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap002.png" alt="cap002.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Verify This Domain &#8594; Use Route 53</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap014.png" alt="cap014.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Email Receiving Record にチェック &#8594; Create Record Sets と進みます。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap003.png" alt="cap003.png"></span></p>
+</div>
+<div class="paragraph">
+<p>これで、独自ドメインのMXレコードとおまけにDKIMの設定も出来てしまいました。<br>
+Route53でドメインを管理するととても簡単です。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ses_s3">SESで独自ドメインメールの受信設定（+ 受信したメールをS3に保存）</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AWSコンソールのSESから、Email Receiving &#8594; Rule Sets &#8594; Create a Receipt Rule と進みます。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap005.png" alt="cap005.png"></span></p>
+</div>
+<div class="paragraph">
+<p>受信したいメールアドレスを Add Recipient して、Next Step へ</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap007.png" alt="cap007.png"></span></p>
+</div>
+<div class="paragraph">
+<p>Add action から S3 を選択します。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap008.png" alt="cap008.png"></span></p>
+</div>
+<div class="paragraph">
+<p>S3 bucket の Create S3 bucket からバケットを作成し、<br>
+作成したバケットを選択して Next Step へ</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap009.png" alt="cap009.png"></span>
+<span class="image"><img src="/images/shirota/20170604/cap010.png" alt="cap010.png"></span></p>
+</div>
+<div class="paragraph">
+<p>ルール名を設定して Next Step クリック後の確認画面で Create Rule をクリックして、ルールを作成します。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap011.png" alt="cap011.png"></span></p>
+</div>
+<div class="paragraph">
+<p>これで、受信したいメールアドレス宛のメールを受信して、S3に保存されるようになりました。</p>
+</div>
+<div class="paragraph">
+<p>また、SESから自分のGmailへメールを送信できるように、<br>
+Email Addresses &#8594; Verify a New Email Address &#8594; 自身のGmailアドレスを入力 &#8594; Verify This Email Address<br>
+で、Gmailへのメール配信を許可しておきましょう。</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap015.png" alt="cap015.png"></span></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_lambda">Lambdaスクリプトを作成</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>S3 Putをトリガーとして、メールを一部パースし、SESでGmailにメール送信するLambdaスクリプトを作成します。</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>バケット：先ほど作成したバケットを選択</p>
+</li>
+<li>
+<p>イベントタイプ：オブジェクトの作成（すべて）を選択</p>
+</li>
+<li>
+<p>トリガーの有効化にチェック</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>次へをクリック</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap012.png" alt="cap012.png"></span></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>関数名：SES-Forwarder</p>
+</li>
+<li>
+<p>ランタイム：Python2.7</p>
+</li>
+<li>
+<p>Lambda関数のコード：※後述のソースコード</p>
+</li>
+<li>
+<p>ロール：既存のロールを選択</p>
+</li>
+<li>
+<p>既存のロール：SES Full Accessの付いたIAMロール</p>
+</li>
+<li>
+<p>タイムアウト：1分</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="/images/shirota/20170604/cap013.png" alt="cap013.png"></span></p>
+</div>
+<div class="sect2">
+<h3 id="___3">ソースコード</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">import boto3
+import email
+import re
+
+ORIGIN_TO  = "{{ 独自ドメインのメールアドレス }}"
+FORWARD_TO = "{{ 転送先のGmailアドレス }}"
+SES_REGION = "us-east-1"
+S3_BUCKET  = "{{ メールを保存するバケット名 }}"
+
+def parse_mail(raw_message):
+
+    replaced_message = raw_message.replace(ORIGIN_TO, FORWARD_TO)
+    replaced_message = re.sub("From:.+?\n", "From: %s\r\n" % ORIGIN_TO, replaced_message)
+    replaced_message = re.sub("Return-Path:.+?\n", "Return-Path: %s\r\n" % ORIGIN_TO, replaced_message)
+
+    return replaced_message
+
+def send_mail(message):
+
+    ses = boto3.client('ses', region_name=SES_REGION)
+
+    ses.send_raw_email(
+        Source = FORWARD_TO,
+        Destinations=[
+            FORWARD_TO
+        ],
+        RawMessage={
+            'Data': message
+        }
+    )
+
+def lambda_handler(event, context):
+    try:
+        s3_key = event['Records'][0]['s3']['object']['key']
+
+        s3 = boto3.client('s3')
+        response = s3.get_object(
+            Bucket = S3_BUCKET,
+            Key    = s3_key
+        )
+        raw_message = response['Body'].read()
+        message = parse_mail(raw_message)
+
+        send_mail(message)
+
+    except Exception as e:
+        print(e)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___4">ソースコード説明</h3>
+<div class="paragraph">
+<p>以下の部分でS3イベントから該当のS3キーを取得して、<br>
+それをもとにS3に保存されたEml形式のデータを取得しています。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>s3_key = event['Records'][0]['s3']['object']['key']
+
+s3 = boto3.client('s3')
+response = s3.get_object(
+    Bucket = S3_BUCKET,
+    Key    = s3_key
+)
+raw_message = response['Body'].read()</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以下の部分でメールのパースを行っています。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>message = parse_mail(raw_message)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>やっていることは、<br>
+実はパース的なことがメインでなくて、メールの送信先をGmailに置換して、<br>
+メールヘッダーの From と Return-Path を、<br>
+送信者メールアドレスから独自ドメインのメールアドレスへ変更しています。<br>
+※Return-toヘッダーはそのままです。<br>
+※こうしないとSESの成りすまし制限に引っかかってしまいました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>def parse_mail(raw_message):
+
+    replaced_message = raw_message.replace(ORIGIN_TO, FORWARD_TO)
+    replaced_message = re.sub("From:.+?\n", "From: %s\r\n" % ORIGIN_TO, replaced_message)
+    replaced_message = re.sub("Return-Path:.+?\n", "Return-Path: %s\r\n" % ORIGIN_TO, replaced_message)
+
+    return replaced_message</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>以下の部分でメールを送信しています。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>send_mail(message)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Eml形式のデータそのままで送信可能な、boto3 SDK の send_raw_email を使っているので、<br>
+大分簡単に書けました。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>ses.send_raw_email(
+        Source = FORWARD_TO,
+        Destinations=[
+            FORWARD_TO
+        ],
+        RawMessage={
+            'Data': message
+        }
+    )</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>これで、サーバレスでRoute53管理ドメイン宛のメールをGmailに転送することができました。<br>
+※問題としては、純粋な転送ではなく、再送信を行っている為、メールのFromが自分になってしまうという部分です。。<br>
+※Reply-toヘッダーはそのまま送信者のメールアドレスなので、届いたメールに返信する時はもちろん送信者宛に返信できます。</p>
+</div>
+</div>
+</div>
+</div>
+<h1 id="___5" class="sect0">所感</h1>
+<div class="paragraph">
+<p>プライベートでの利用でしたらこれで良いのですが、<br>
+ビジネスでの利用となりますと、やはりメールサーバを立てるか専用サービスを使うべきと思いました。</p>
+</div>
+<div class="paragraph">
+<p>以上です。</p>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
