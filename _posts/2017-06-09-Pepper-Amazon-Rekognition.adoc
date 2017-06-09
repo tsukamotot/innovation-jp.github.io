@@ -34,13 +34,13 @@ http://dev.classmethod.jp/cloud/aws/amazon-rekognition-searchfacesbyimage/[Amazo
 === S3にBucketを作る
 
 これは、いくらでもある情報なので割愛しますが、注意点はRekognitionが使えるRegionにBucketを作っておくことです。 +
-今回は、us-west-2に作成しました。
+今回は、us-west-2に作成しました。 +
 ここで、AWS CLIも使えるようにIAMユーザなどの設定をしておきます。
 
 === 学習用の元写真をとる
 
 自分の写真、他の人の写真など、デジタルカメラ等で撮りまくります。 +
-今回は、うちの社員５名を３枚づつ撮影しました。
+とりあえず今回は、うちの社員５名を３枚づつ撮影しました。
 
 === S3にアップロードする
 
@@ -101,6 +101,17 @@ $ LIST=$(aws s3 ls s3://rektest/rekognition/trainingdata/ | awk '{print $4}'); f
 という感じにしてみます。
 
 顔の学習や、画像と名前のマッピングは完全手動という漢らしい感じで行きます。
+
+ファイル名と名前のマッピング配列を、直接Pepperに実装します笑
+[source,python]
+----
+        cnames = {"a_yagasaki": "やがさき",
+            "n_syoga": "しょが",
+            "y_kotani": "こたに",
+            "a_yamamoto": "あみ",
+            "j_shirota": "しろた",
+        }
+----
 
 ==== コレグラフで作ったやつ
 
