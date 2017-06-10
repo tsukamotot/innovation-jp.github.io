@@ -166,7 +166,6 @@ class MyClass(GeneratedClass):
         try:
             ACCESS_KEY_ID = 'accesskey'
             SECRET_ACCESS_KEY = 'seckey'
-            BUCKET_NAME = 'bucketname'
 
             load_filename = 'image2.jpg'
 
