@@ -182,7 +182,7 @@ class MyClass(GeneratedClass):
             fh.close()
 
             response = rek.search_faces_by_image(
-                CollectionId='dtutest',
+                CollectionId='pchan',
                 Image={
                     'Bytes': img,
                 },
