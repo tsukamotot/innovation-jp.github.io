@@ -94,7 +94,7 @@ $ LIST=$(aws s3 ls s3://rektest/rekognition/trainingdata/ | awk '{print $4}'); f
 
 今回は、
 
-* 誰かの顔を認識すると、写真を撮る
+* ひとの顔を認識すると、写真を撮る
 * 頭をさわると判別を開始する
 * 判別できたら名前を呼んでくれる
 
@@ -117,19 +117,98 @@ $ LIST=$(aws s3 ls s3://rektest/rekognition/trainingdata/ | awk '{print $4}'); f
 
 こんな感じです！
 
-【ここにコレグラフの画像】
+image::/images/yagasaki/pp5/chore.png[代替テキスト]
+
 
 Pepper上でboto3を動かすために、手動でこんな感じのライブラリをいろいろ入れました。
 
-【ここにソースツリーの画像】
+image::/images/yagasaki/pp5/libdir.png[代替テキスト]
 
-ソースコード一式はこちら
 
-【ここにGitHubへのリンク】
+Pythonボックスの中身は、だいたいこんな感じ！
 
-==== 動かした感じ
+[source,python]
+----
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
 
-【ここに動画を入れる】
+    def onLoad(self):
+        #put initialization code here
+        self.framemanager = ALProxy("ALFrameManager")
+        self.tts = ALProxy("ALTextToSpeech")
+        self.folderName = None
+
+    def onUnload(self):
+        self.framemanager = None
+        self.tts = None
+        self.folderName = None
+
+    def onInput_onStart(self):
+        import sys, os
+        self.folderName = os.path.join(self.framemanager.getBehaviorPath(self.behaviorId), "../lib")
+        if self.folderName not in sys.path:
+            sys.path.append(self.folderName)
+
+        self.recordFolder = os.path.join(self.framemanager.getBehaviorPath(self.behaviorId), "../html")
+
+        import boto3
+
+        cnames = {"a_yagasaki": "やがさき",
+            "n_syoga": "しょが",
+            "y_kotani": "こたに",
+            "a_yamamoto": "あみ",
+            "j_shirota": "しろた",
+            "m_kasai": "びげん",
+            "y_oyaidu": "やいづ",
+        }
+
+        try:
+            ACCESS_KEY_ID = 'accesskey'
+            SECRET_ACCESS_KEY = 'seckey'
+            BUCKET_NAME = 'bucketname'
+
+            load_filename = 'image2.jpg'
+
+            rek = boto3.client(
+                'rekognition',
+                aws_access_key_id=ACCESS_KEY_ID,
+                aws_secret_access_key=SECRET_ACCESS_KEY,
+                region_name='us-west-2',
+            )
+
+            fh = open(self.recordFolder + '/' + load_filename, 'rb')
+            img = bytearray(fh.read())
+            fh.close()
+
+            response = rek.search_faces_by_image(
+                CollectionId='dtutest',
+                Image={
+                    'Bytes': img,
+                },
+                MaxFaces=1,
+            )
+            # ExternalImageIdの"-"より前の部分と名前をマッピングするという仕様
+            fname = response["FaceMatches"][0]["Face"]["ExternalImageId"].encode("utf-8")
+            aname = fname.split("-", 1)[0]
+
+            self.logger.info(cnames[aname])
+            mes = cnames[aname] + "さん、こんにちは"
+            self.tts.say(mes)
+        except:
+            self.logger.error("Error!!!!!")
+            mes = "ごめんなさい。どなたかわかりません。"
+            self.tts.say(mes)
+            traceback.print_exc()
+
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
+        self.onStopped() #activate the output of the box
+----
+
+
 
 == その後の予定
 
