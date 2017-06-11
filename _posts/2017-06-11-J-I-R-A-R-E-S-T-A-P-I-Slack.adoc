@@ -1,0 +1,275 @@
+= JIRAのREST APIから作業の記録取得してSlackに通知してみる
+:published_at: 2017-06-11
+:hp-tags: Kato,JIRA,Slack
+
+こんにちは、加藤です。 +
+弊社ではJIRAを導入しており、課題に対して時間を記録しています。 +
+ただ、時間を記録しても一覧で見る方法見つからず、記録つけっぱなしな状態でした。 +
+(ご存知の方居ましたら、教えていただきたいです。） +
+そこで、今回はこのJIRAの作業記録の部分をREST API経由取得し、Slackに「今日どの課題を何時間やったのか？」を通知する仕組みを作ってみます。
+
+
+
+# 検証環境
+
+検証環境は、下記の通りです。
+
+* macOS Sierra(10.12.4)
+* Lumen 5.4 + Homestead 4.0.0 (PHP7.1)
+* JIRA Cloud REST API 1000.1045.2
+
+
+# JIRAの開発者用アカウントの取得
+
+下記URLから、JIRAのdeveloperアカウントが取得できます。 +
+開発用にアカウントを取得し、この環境で動作確認を行います。 +
+https://developer.atlassian.com/static/connect/docs/latest/guides/development-setup.html
+
+アカウント取得を行うと、専用のURLが発行されるので、メモしておきます。 +
+
+```
+https://[自分で決めた文字列].atlassian.net
+```
+
+
+# Composerのインストール
+
+下記ドキュメントにそって、macOSにComposerをインストールします。 +
+
+https://getcomposer.org/doc/00-intro.md
+
+
+```
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+php composer-setup.php
+php -r "unlink('composer-setup.php');"
+
+php composer-setup.php --install-dir=bin --filename=composer
+mv composer.phar /usr/local/bin/composer
+```
+
+# Lumenプロジェクトの作成
+
+今回は、軽量フレームワークのLumenで作成してみました。 +
+プロジェクト名は、jira-slackとしました。 +
+下記のコマンドで、jira-skackプロジェクトの雛形を作成します。 +
+
+```
+composer create-project --prefer-dist laravel/lumen jira-slack
+```
+
+
+# Homesteadのインストール
+
+Homesteadのインストールを行います。 +
+事前に、VirtualBox( https://www.virtualbox.org/ )と +
+Vagrant( https://www.vagrantup.com/ )のインストールをしておきます。 +
+インストール後、下記コマンドでHomesteadのインストールを行います。 +
+
+```
+cd jira-slack
+composer require laravel/homestead --dev
+php vendor/bin/homestead make
+```
+
+実行後、ルートディレクトリに、「Homestead.yaml」「Vagrantfile」が生成されていればOKです。
+
+次に、macOSの/etc/hostsに下記1行を追加します。
+
+```
+192.168.10.10 jira-slack.app
+```
+
+これでインストールが完了ですので、起動します。
+
+```
+vagrant up
+```
+
+起動後、http://jira-slack.appにブラウザからアクセスし、「Lumen (5.4.6) (Laravel Components 5.4.*)」と表示されればOKです。
+
+
+# ライブラリの追加
+
+今回は、REST APIを呼び出すために、guzzle( http://guzzlephp.org/ )と +
+slack連携ライブラリ(maknz/slack)を追加します。
+
+
+```
+composer require guzzlehttp/guzzle
+composer require maknz/slack
+```
+
+
+# 実装
+
+修正箇所は、３箇所です。
+
+*.env*
+
+```
+APP_TIMEZONE=Asia/Tokyo
+```
+
+*app/Console/Commands/JiraTimetrackingNotification.php* +
+JIRAの課題を検索して、Slackにメッセージを送信する部分です。 +
+動作確認用なので、Basic HTTP認証で処理をしています。 +
+実運用をする場合は、他の認証方法への変更や、ソースコードのリファクタリングの必要があると思います。 +
+【】の部分は、自分のものに置き換えて下さい。
+
+```
+<?php
+
+namespace App\Console\Commands;
+
+
+use Illuminate\Console\Command;
+use GuzzleHttp\Client as HttpClient;
+use Maknz\Slack\Client as SlackClient;
+
+
+class JiraTimetrackingNotification extends Command
+{
+    protected $signature   = 'jira:timetracking-notification';
+    protected $description = '';
+
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * JIRAから作業記録を取得してSlackに通知
+     * @param \GuzzleHttp\Client $client
+     */
+    public function handle(HttpClient $client)
+    {
+
+        $username = '【JIRAのユーザー名】';
+        $password = '【JIRAのパスワード】';
+
+        //対象の課題を検索
+        $url = 'https://【JIRAの組織ID】.atlassian.net/rest/api/2/search';
+        $res = $client->request('POST', $url, [
+            'auth'    => [$username, $password],
+            'headers' => [
+                'Content-Type' => 'application/json'
+            ],
+            'json'    => [
+                "jql"          => "【課題検索用のJQLを指定】",
+                "startAt"      => 0,
+                "maxResults"   => 50,
+                "fields"       => [
+                    "summary",
+                    "status",
+                ],
+                "fieldsByKeys" => false
+            ],
+        ]);
+        $issues = json_decode((string)$res->getBody(), true)['issues'];
+
+        //課題に対して、本日分の作業ログを取得
+        $target_from = new \DateTime('today');
+        $target_to   = new \DateTime('today last sec');
+        $logs = [];
+        foreach ($issues as &$issue) {
+            $url      = 'https://【JIRAの組織ID】.atlassian.net/rest/api/2/issue/'.$issue['id'].'/worklog';
+            $res      = $client->request('GET', $url, [
+                'auth'    => [$username, $password],
+                'headers' => [
+                    'Content-Type' => 'application/json'
+                ]
+            ]);
+            $worklogs = json_decode((string)$res->getBody(), true)['worklogs'];
+
+            foreach($worklogs as $worklog){
+                $started = new \DateTime($worklog['started']);
+                //今日の作業記録
+                if($target_from <= $started && $started >= $target_to) {
+                    $display_name = $worklog['author']['displayName'];
+                    if(!isset($logs[$display_name])) {
+                        $logs[$display_name] = [];
+                    }
+
+                    $body = sprintf('%-6s ', $worklog['timeSpent'])."{$issue['key']} {$issue['fields']['summary']}";
+                    if($worklog['comment']) {
+                        $body .= "\n        " . str_replace(["\r\n", "\r", "\n"], "\n    ", $worklog['comment']);
+                    }
+                    $logs[$display_name][] = $body;
+                }
+            }
+        }
+        unset($issue);
+
+        //ログを整形
+        $message = '';
+        foreach ($logs as $display_name => $log) {
+            $message .= "【{$display_name}】\n";
+            $message .= implode("\n", $log) . "\n\n";
+        }
+        $message = "本日の内容\n```{$message}\n```";
+
+        //slackに送信
+        $slack = new SlackClient('https://hooks.slack.com/services/【SlackのIncoming WebhooksのURLを指定】');
+        $slack->send($message);
+    }
+}
+```
+
+*app/Console/Kernel.php* +
+$commandsプロパティー部に一行追加
+
+```
+protected $commands = [
+    Commands\JiraTimetrackingNotification::class,
+];
+```
+
+
+# 動作確認
+
+ここからは、仮想環境内で行います。 +
+プロジェクトのルートディレクトリで下記コマンドを実行し、仮想環境に接続します。 +
+
+```
+vagrant ssh
+```
+
+接続後、プロジェクトのマウント位置に移動します。
+
+```
+cd /home/vagrant/Code/jira-slack
+```
+
+下記コマンドで先程作った処理を実行します。
+
+```
+php artisan jira:timetracking-notification
+```
+
+うまくできていれば、Slackに下記のような通知が来るはずです。
+
+```
+本日の内容
+
+【田中 太郎】
+1h     HOGE-1 課題タイトル1
+3h     HOGE-2 課題タイトル2
+
+
+【鈴木 太郎】
+1h     HOGE-1 課題タイトル1
+1h     HOGE-3 課題タイトル3
+```
+
+
+# まとめ
+
+JIRAの作業記録を、Slackに通知することができました。 +
+なかなか見える化しないとやる気が起きないものですが、 +
+これで、ちゃんと作業記録をつけよう！という気になりそうです。
+
+
+
