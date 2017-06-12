@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/06/09/Pepper-Amazon-Rekognition.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編" />
+    <meta property="og:description" content="みなさまいかがお過ごしでしょうか？ そろそろあれの季節ですね。 矢ヶ崎です。 前回のPちゃん(うちのPepperのこと)ブログでは、Googleカレンダーの予定を定期的に読み上げてもらう、という無難なことをやってみましたが、今回は顔を認識してもらって名前を呼んでもらうという、もっと無難なことをやってみたいと思います。 前回のブログで、 次回は、予定を聞くと教えてくれるようにしてみたいと思います。とうとうPちゃん復活なるか？！ と書きましたが、まずはPちゃんに覚えてもらってから予定を聞かないとあれなので、あえてスルーして行きます。 Pepperのデフォル..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/06/09/Pepper-Amazon-Rekognition.html" />
+    <meta property="article:published_time" content="2017-06-08T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-06-12T00:41:52.812Z" />
+    <meta property="article:tag" content="Yagasaki" />
+    <meta property="article:tag" content="Pepper" />
+    <meta property="article:tag" content="Rekognition" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編" />
+    <meta name="twitter:description" content="みなさまいかがお過ごしでしょうか？ そろそろあれの季節ですね。 矢ヶ崎です。 前回のPちゃん(うちのPepperのこと)ブログでは、Googleカレンダーの予定を定期的に読み上げてもらう、という無難なことをやってみましたが、今回は顔を認識してもらって名前を呼んでもらうという、もっと無難なことをやってみたいと思います。 前回のブログで、 次回は、予定を聞くと教えてくれるようにしてみたいと思います。とうとうPちゃん復活なるか？！ と書きましたが、まずはPちゃんに覚えてもらってから予定を聞かないとあれなので、あえてスルーして行きます。 Pepperのデフォル..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/06/09/Pepper-Amazon-Rekognition.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "Akihiro YAGASAKI",
+        "image": "https://avatars2.githubusercontent.com/u/13131599?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編",
+    "url": "http://tech.innovation.co.jp/2017/06/09/Pepper-Amazon-Rekognition.html",
+    "datePublished": "2017-06-08T15:00:00.000Z",
+    "dateModified": "2017-06-12T00:41:52.812Z",
+    "keywords": "Yagasaki, Pepper, Rekognition",
+    "description": "みなさまいかがお過ごしでしょうか？ そろそろあれの季節ですね。 矢ヶ崎です。 前回のPちゃん(うちのPepperのこと)ブログでは、Googleカレンダーの予定を定期的に読み上げてもらう、という無難なことをやってみましたが、今回は顔を認識してもらって名前を呼んでもらうという、もっと無難なことをやってみたいと思います。 前回のブログで、 次回は、予定を聞くと教えてくれるようにしてみたいと思います。とうとうPちゃん復活なるか？！ と書きましたが、まずはPちゃんに覚えてもらってから予定を聞かないとあれなので、あえてスルーして行きます。 Pepperのデフォル..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Yagasaki tag-Pepper tag-Rekognition no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="09 Jun 2017" class="post-meta__date date">09 Jun 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Yagasaki">Yagasaki</a>, <a href="http://tech.innovation.co.jp/tag/Pepper">Pepper</a>, <a href="http://tech.innovation.co.jp/tag/Rekognition">Rekognition</a></span>
+        <span class="post-meta__author author"><img src="https://avatars2.githubusercontent.com/u/13131599?v=3" alt="profile image for Akihiro YAGASAKI" class="avatar post-meta__avatar" /> by Akihiro YAGASAKI</span>
+      </div>
+      <h1 class="post-title">Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編</h1>
+    </header>
+
+    <section class="post tag-Yagasaki tag-Pepper tag-Rekognition">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>みなさまいかがお過ごしでしょうか？<br>
+そろそろあれの季節ですね。<br>
+矢ヶ崎です。</p>
+</div>
+<div class="paragraph">
+<p>前回のPちゃん(うちのPepperのこと)ブログでは、Googleカレンダーの予定を定期的に読み上げてもらう、という無難なことをやってみましたが、今回は顔を認識してもらって名前を呼んでもらうという、もっと無難なことをやってみたいと思います。<br>
+前回のブログで、</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>次回は、予定を聞くと教えてくれるようにしてみたいと思います。とうとうPちゃん復活なるか？！</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>と書きましたが、まずはPちゃんに覚えてもらってから予定を聞かないとあれなので、あえてスルーして行きます。
+Pepperのデフォルトで、そんな感じのことをできる機能があるのですが、結構他の人と間違えられちゃってショックでなんか微妙なので、今回は最近よくあるお話でクラウド提供されているAI関連のサービスのうち、Amazon Rekognitionを使ってPちゃんに、ぼくのことを他の人と間違えないでもらいたいと存じます。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">覚えてもらうためにすべき努力</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>RekognitionをS3を使う権限をもった、IAMユーザなりなんなりを作成</p>
+</li>
+<li>
+<p>S3にBucketを作る</p>
+</li>
+<li>
+<p>学習用の元写真をとる</p>
+</li>
+<li>
+<p>S3にアップロードする</p>
+</li>
+<li>
+<p>RekognitionのCollectionを作成</p>
+</li>
+<li>
+<p>RekognitionのIndexFacesを使って、元画像を覚えてもらう</p>
+</li>
+<li>
+<p>Pepperに、RekognitionのSearchFacesByImageを使って顔認識する実装をする</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>今回はこんな感じで、がんばってPちゃんに覚えてもらおうと思います。</p>
+</div>
+<div class="paragraph">
+<p>Rekognitionの基礎的な部分やCLIのコマンド等は、クラスメソッドさんのブログ、Developers.IOの<br>
+<a href="http://dev.classmethod.jp/cloud/aws/amazon-rekognition-searchfacesbyimage/">Amazon Rekognitionで類似顔画像検索を行う #reinvent</a><br>
+を参考にさせていただきました！ありがとうございます！</p>
+</div>
+<div class="sect2">
+<h3 id="_rekognition_s3_iam">RekognitionとS3を使う権限をもった、IAMユーザなりなんなりを作成</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_s3_bucket">S3にBucketを作る</h3>
+<div class="paragraph">
+<p>これは、いくらでもある情報なので割愛しますが、注意点はRekognitionが使えるRegionにBucketを作っておくことです。<br>
+今回は、us-west-2に作成しました。<br>
+ここで、AWS CLIも使えるようにIAMユーザなどの設定をしておきます。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___2">学習用の元写真をとる</h3>
+<div class="paragraph">
+<p>自分の写真、他の人の写真など、デジタルカメラ等で撮りまくります。<br>
+とりあえず今回は、うちの社員５名を３枚づつ撮影しました。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_s3">S3にアップロードする</h3>
+<div class="paragraph">
+<p>S3にアップロードする前に、あとでファイル名から人を特定できるように、ファイル名を変更しておきます。<br>
+例： a_yagasaki-1.jpg</p>
+</div>
+<div class="paragraph">
+<p>その後、S3の特定の場所にアップロードします。</p>
+</div>
+<div class="paragraph">
+<p>例：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ LIST=$(ls); for FILE in $LIST
+do
+  aws s3 cp $FILE s3://rektest/rekognition/trainingdata/
+done</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rekognition_collection">RekognitionのCollectionを作成</h3>
+<div class="paragraph">
+<p>Rekognitionでは、画像ファイルの特徴をCollectionというものに格納します。<br>
+まずは、その空のCollectionを作成します。</p>
+</div>
+<div class="paragraph">
+<p>例：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ aws --region us-west-2 rekognition create-collection \
+      --collection-id "pchan"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rekognition_indexfaces">RekognitionのIndexFacesを使って、元画像を覚えてもらう</h3>
+<div class="paragraph">
+<p>上で作成した、pchanという名前のコレクションに、画像の特徴を格納していきます。<br>
+先ほどS3に上げたファイルを、端から全部格納しましょう。</p>
+</div>
+<div class="paragraph">
+<p>例：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-sh" data-lang="sh">$ LIST=$(aws s3 ls s3://rektest/rekognition/trainingdata/ | awk '{print $4}'); for OBJECT in $LIST
+  do
+    echo $OBJECT
+      aws --region us-west-2 rekognition index-faces \
+          --image '{"S3Object":{"Bucket":"rektest","Name":"'/rekognition/trainingdata/$OBJECT'"}}' \
+          --collection-id "pchan" \
+          --external-image-id $OBJECT
+  done</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pepper_rekognition_searchfacesbyimage">Pepperに、RekognitionのSearchFacesByImageを使って顔認識する実装をする</h3>
+<div class="paragraph">
+<p>いよいよPちゃんに、ぼくのことを判別してもらいます。</p>
+</div>
+<div class="paragraph">
+<p>今回は、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ひとの顔を認識すると、写真を撮る</p>
+</li>
+<li>
+<p>頭をさわると判別を開始する</p>
+</li>
+<li>
+<p>判別できたら名前を呼んでくれる</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>という感じにしてみます。</p>
+</div>
+<div class="paragraph">
+<p>顔の学習や、画像と名前のマッピングは完全手動という漢らしい感じで行きます。</p>
+</div>
+<div class="paragraph">
+<p>ファイル名と名前のマッピング配列を、直接Pepperに実装します笑</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">        cnames = {"a_yagasaki": "やがさき",
+            "n_syoga": "しょが",
+            "y_kotani": "こたに",
+            "a_yamamoto": "あみ",
+            "j_shirota": "しろた",
+        }</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___3">コレグラフで作ったやつ</h4>
+<div class="paragraph">
+<p>こんな感じです！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/yagasaki/pp5/chore.png" alt="代替テキスト">
+</div>
+</div>
+<div class="paragraph">
+<p>Pepper上でboto3を動かすために、手動でこんな感じのライブラリをいろいろ入れました。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/yagasaki/pp5/libdir.png" alt="代替テキスト">
+</div>
+</div>
+<div class="paragraph">
+<p>Pythonボックスの中身は、だいたいこんな感じ！</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #put initialization code here
+        self.framemanager = ALProxy("ALFrameManager")
+        self.tts = ALProxy("ALTextToSpeech")
+        self.folderName = None
+
+    def onUnload(self):
+        self.framemanager = None
+        self.tts = None
+        self.folderName = None
+
+    def onInput_onStart(self):
+        import sys, os
+        self.folderName = os.path.join(self.framemanager.getBehaviorPath(self.behaviorId), "../lib")
+        if self.folderName not in sys.path:
+            sys.path.append(self.folderName)
+
+        self.recordFolder = os.path.join(self.framemanager.getBehaviorPath(self.behaviorId), "../html")
+
+        import boto3
+
+        cnames = {"a_yagasaki": "やがさき",
+            "n_syoga": "しょが",
+            "y_kotani": "こたに",
+            "a_yamamoto": "あみ",
+            "j_shirota": "しろた",
+            "m_kasai": "びげん",
+            "y_oyaidu": "やいづ",
+        }
+
+        try:
+            ACCESS_KEY_ID = 'accesskey'
+            SECRET_ACCESS_KEY = 'seckey'
+
+            load_filename = 'image2.jpg'
+
+            rek = boto3.client(
+                'rekognition',
+                aws_access_key_id=ACCESS_KEY_ID,
+                aws_secret_access_key=SECRET_ACCESS_KEY,
+                region_name='us-west-2',
+            )
+
+            fh = open(self.recordFolder + '/' + load_filename, 'rb')
+            img = bytearray(fh.read())
+            fh.close()
+
+            response = rek.search_faces_by_image(
+                CollectionId='pchan',
+                Image={
+                    'Bytes': img,
+                },
+                MaxFaces=1,
+            )
+            # ExternalImageIdの"-"より前の部分と名前をマッピングするという仕様
+            fname = response["FaceMatches"][0]["Face"]["ExternalImageId"].encode("utf-8")
+            aname = fname.split("-", 1)[0]
+
+            self.logger.info(cnames[aname])
+            mes = cnames[aname] + "さん、こんにちは"
+            self.tts.say(mes)
+        except:
+            self.logger.error("Error!!!!!")
+            mes = "ごめんなさい。どなたかわかりません。"
+            self.tts.say(mes)
+            traceback.print_exc()
+
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
+        self.onStopped() #activate the output of the box</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">その後の予定</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>やっとPちゃんに、ぼくのことを認識してもらえたので、次回は、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pepperに「おはよう」っていうと、出勤打刻をしてくれる</p>
+</li>
+<li>
+<p>Pepperに「会議室どこ？」と聞くと、次の会議の会議室を教えてくれる</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>という感じにして、Pちゃんが居ない会社が考えられなくなるくらい、Pちゃんに頼って行きたいと思います。<br>
+ひとつよろしくお願いいたします。</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です。</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
