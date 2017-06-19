@@ -1,0 +1,78 @@
+= デジャヴか単なる忘却か教えてくれたりするかもしれないChrome拡張機能
+:published_at: 2017-06-19
+:hp-alt-title: I-may-tell-me-whether-it-is-a-Deja-vu-or-easy-oblivion-Chrome-extension
+:hp-tags: ozasa,Chrome Extension
+
+こんにちは、クロームの綴りをいつまでも間違えているオザサです。
+
+梅雨入りも果たしてジメジメしてまいりましたが、 +
+皆様はいかがお過ごしでしょう。 +
+こうも暑いとなかなか外に出るのも億劫になるというもので、 +
+日がなネットサーフィンしちゃうなんて御仁もいらっしゃるのではないでしょうか。
+
+そんな時にありがちなのが(?)、 +
+「あれ、このページなんか見たことあるかも？」 +
+という感覚ですよね？！！
+
+何かの前触れのデジャヴか、 +
+はたまた健忘症の前触れか、 +
+ここは一つきっちりさせなくてはなりません。
+
+ということで +
+「今開いているページの表示回数をバッチで教えてくれる」拡張機能を作りました。
+
+##　実装
+
+[source,json]
+----
+{
+ "manifest_version": 2,
+ "name": "deja vu checker",
+ "version": "0.1.0",
+ "description": "Access to browser history. Displays the number of times you saw the page.",
+ "author": "Yuki Ozasa",
+ "background": {
+  "scripts": ["background.js"],
+  "persistent": false
+ },
+ "browser_action": {
+  "default_icon": "test.png",
+  "default_title": "test"
+ },
+ "content_scripts": [{
+  "matches": [ "http://*/*", "https://*/*" ],
+  "js": [ "script.js" ]
+ }],
+ "permissions": [
+  "tabs",
+  "history"
+ ]
+}
+
+----
+
+
+たったこれだけ・・・ +
+調べつつだったのもあり結構時間かかったのにそんな感がないですね。
+すっきりしていい！！
+
+image::/images/yagasaki/pp5/libdir.png[代替テキスト]
+
+image::/images/yagasaki/pp5/libdir.png[代替テキスト]
+
+
+## 地味にハマったポイント
++ setBadgeTextはiconが設定されていないと動かない。
+→横着して画像なども作らず色々やろうとしたのですが、ダメでした。
+
++ backgroundのscripts実行タイミングとcontent_scriptsのscripts実行タイミングを正しく理解できてなかった
+→コンテンツのリロードとエクステンションのリロードを勘違いしてまして、ちょっとハマってしまいました。
+
+
+
+## 課題と今後
++ 関数のロードのタイミングによっては先にhistoryにデータが格納されてしまい意図しない動作になる
++ 業務で使うページなど表示回数が多すぎるものは数字が見えなくなる
+
+一つ課題をクリアしてまた一つ課題を見つけていくって進歩してる感じでいいですね。
+Chrome Extensionがお手軽に実装できるので、私自身牛歩ではありますが、ちょこちょこ作っていこうと思います。
