@@ -95,9 +95,9 @@ chrome.runtime.onMessage.addListener(function( message, sender, sendResponse ) {
 調べつつだったのもあり結構時間かかったのにそんな感がないですね。
 逆にすっきりしていい！！
 
-image::/images/yagasaki/pp5/libdir.png[代替テキスト]
+image::/images/ozasa/0619-1.png[代替テキスト]
 
-image::/images/yagasaki/pp5/libdir.png[代替テキスト]
+image::/images/ozasa/0619-2.png[代替テキスト]
 
 わーい
 
