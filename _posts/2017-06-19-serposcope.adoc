@@ -1,0 +1,136 @@
+# AWS(EC2)にSERPOSCOPEを導入してみた
+:hp-alt-title: serposcope
+:hp-tags: SERPOSCOPE,SEO,AWS,EC2,Gyo-za,Nakamura
+
+こんにちは、中村です。
+
+6月なのに最近めちゃくちゃ暑いですね〜 +
+私が子供の頃の梅雨は毎日雨がデフォルトでしたが、すっかり変わってしまいました。。。
+
+ちゃんと夏バテ対策(餃子)してくださいね！
+
+image::nakamura/serposcope/00.png[]
+
+さて今回はSEO順位計測をしてくれる「link:https://serposcope.serphacker.com/en/[SERPOSCOPE]」というツールを +
+EC2に導入した話をしたいと思います。
+
+### きっかけ
+
+SEO順位計測といえば「link:http://seopro.jp/grc/[GRC]」というツールがとても有名なようで +
+社内でもそちらを使っているようです。
+
+ただこちらのツール、なんと、、、windowsツールなんです！
+
+そして、毎日順位計測を行うように専用のPCがあり、 +
+24時間365日稼働しているとか。。。
+
+ひょえ〜！！
+
+何か別な方法が無いかとマーケチームに聞いたところ、 +
+「SERPOSCOPEというのがあるけど導入のハードルが高くて試していない」 +
+とのことなので、今回試してみることにしました。
+
+### SERPOSCOPEとは？
+
+image::nakamura/serposcope/01.png[]
+
+
+```
+・キーワード登録が無制限に可能
+・特定キーワードにおける競合サイトの順位計測可能
+・多数のOSに導入可能
+　...
+```
+
+だそうです。
+
+ぶっちゃけ良く分かりませんが、無料で使えてLinux環境に導入できるのはいいですね！ +
+早速導入していきましょう〜
+
+### ①EC2インスタンス作成
+
+AMIはAmazonLinuxを指定、あとはお好きなように作成してください。 +
+ただし7134番のポートを使用するため、そこだけセキュリティグループで設定を追加してください。
+
+EC2インスタンス作成って何？っていう方はこちら +
+https://www.skyarch.net/blog/?p=883[5分でできる!? AWS EC2 インスタンス作成]
+
+
+### ②SERPOSCOPEをインストール
+
+作成したEC2にSSHでログインした後、以下作業を行います。
+
+SSHログインって何？っていう人はこちら +
+http://dev.classmethod.jp/cloud/aws/aws-beginner-ec2-ssh/[【初心者向け】Amazon EC2にSSH接続する【Windows、Macintosh】]
+
+##### 時刻を日本時間へ変更
+
+http://qiita.com/drapon/items/2fc5b21a9cdc31ddb152[Amazon EC2のタイムゾーンを日本時間に変更する方法]
+
+##### javaのバージョンを1.8以上にする
+
+2017/06/19時点ではデフォルトで1.7になっていたため、バージョンをあげる必要がありました。
+
+```
+$ java -version ← バージョンを確認
+$ sudo yum install java-1.8.0
+$ sudo yum remove java-1.7.0-openjdk
+```
+
+##### SERPOSCOPEをダウンロード
+
+今回は/opt配下にDIRを作成し、そこにダウンロードします。
+
+```
+$ sudo mkdir /opt/serposcope
+$ sudo cd /opt/serposcope
+$ wget https://serposcope.serphacker.com/download/2.7.1/serposcope-2.7.1.jar
+```
+
+##### SERPOSCOPEを起動
+
+```
+$ sudo nohup java -jar serposcope-2.7.1.jar&
+```
+
+「パブリックIP + :7134」でブラウザからアクセスし、以下のような画面が表示されれば無事完了です！
+
+image::nakamura/serposcope/03.png[]
+
+さっそくエンジニアブログの順位計測をしてみると・・・
+
+「イノベーション　ブログ」ではなんと1位！ +
+「エンジニアブログ」でもなんと41位！頑張ってる！ +
+
+image::nakamura/serposcope/04.png[,300]
+
+
+そしてなんとなんと、「エンジニア　ブログ　餃子」で私の記事がTOP3独占！(笑)
+
+image::nakamura/serposcope/05.png[,300]
+
+image::nakamura/serposcope/06.png[,300]
+
+※TOP5目指して今回の記事にもひさびさに餃子画像UPしてみました
+
+「エンジニア　餃子」では圏外なので、100位以内に入れるよう頑張ります！
+
+
+
+詳しいSERPOSCOPEの使い方はこちら +
+http://thesaibase.com/seo/serposcope +
+https://nelog.jp/how-to-install-serposcope +
+
+### 感想
+
+SEO対策（内部対策）などの依頼をよく対応するのですが、 +
+実際に自分で順位などをそこまで気にしていなかったなと反省してます。
+
+また今回のツールを実際に導入するかは分かりませんが、 +
+PCを稼働し続けるという危険な行為の改善&作業効率UPになりそうな気がします。
+
+同様のケースが他にもたくさんあるかもしれないので、 +
+エンジニアとしてもっと出来ることが無いか、社内外問わずアンテナを張っていきたいですね！
+
+
+こちらからは以上です！
