@@ -21,7 +21,11 @@
 ということで +
 「今開いているページの表示回数をバッチで教えてくれる」拡張機能を作りました。
 
-##　実装
+
+## 実装
+
+
+**manifest.json**
 
 [source,json]
 ----
@@ -51,6 +55,32 @@
 
 ----
 
+**script.js**
+
+[source,javascript]
+----
+chrome.runtime.sendMessage({ message: "メッセージ！" });
+----
+
+**background.js**
+
+[source,javascript]
+----
+chrome.runtime.onMessage.addListener(function( message, sender, sendResponse ) {
+    if( message.message ){
+        chrome.tabs.getSelected(null, function(tab) {
+                var url = tab.url;
+                var id  = tab.id;
+                obj = {url:url};
+                chrome.history.getVisits(obj, function(visitItems){
+                        itemCount = visitItems.length;
+                        chrome.browserAction.setBadgeText({text:String(itemCount),tabId:id});
+                });
+        });
+    }
+});
+----
+
 
 たったこれだけ・・・ +
 調べつつだったのもあり結構時間かかったのにそんな感がないですね。
@@ -62,17 +92,17 @@ image::/images/yagasaki/pp5/libdir.png[代替テキスト]
 
 
 ## 地味にハマったポイント
-+ setBadgeTextはiconが設定されていないと動かない。
+**・setBadgeTextはiconが設定されていないと動かない。** +
 →横着して画像なども作らず色々やろうとしたのですが、ダメでした。
 
-+ backgroundのscripts実行タイミングとcontent_scriptsのscripts実行タイミングを正しく理解できてなかった
+**・backgroundのscripts実行タイミングとcontent_scriptsのscripts実行タイミングを正しく理解できてなかった** +
 →コンテンツのリロードとエクステンションのリロードを勘違いしてまして、ちょっとハマってしまいました。
 
 
 
-## 課題と今後
-+ 関数のロードのタイミングによっては先にhistoryにデータが格納されてしまい意図しない動作になる
-+ 業務で使うページなど表示回数が多すぎるものは数字が見えなくなる
+### 今後の課題
+* 関数のロードのタイミングによっては先にhistoryにデータが格納されてしまい意図しない動作になる
+* 業務で使うページなど表示回数が多すぎるものは数字が見えなくなる
 
 一つ課題をクリアしてまた一つ課題を見つけていくって進歩してる感じでいいですね。
 Chrome Extensionがお手軽に実装できるので、私自身牛歩ではありますが、ちょこちょこ作っていこうと思います。
