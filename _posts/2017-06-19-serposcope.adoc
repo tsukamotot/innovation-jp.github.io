@@ -19,20 +19,19 @@ EC2に導入した話をしたいと思います。
 SEO順位計測といえば「link:http://seopro.jp/grc/[GRC]」というツールがとても有名なようで +
 社内でもそちらを使っているようです。
 
-ただこちらのツール、なんと、、、windowsツールなんです！
+ただこちらのツール、なんと、、、Windowsツールなんです！
 
 そして、毎日順位計測を行うように専用のPCがあり、 +
 24時間365日稼働しているとか。。。
 
-ひょえ〜！！
+ひょえ〜！！ +
+PCがフリーズしてデータ取得できていなくても気づけないのは怖いですね。
 
 何か別な方法が無いかとマーケチームに聞いたところ、 +
 「SERPOSCOPEというのがあるけど導入のハードルが高くて試していない」 +
 とのことなので、今回試してみることにしました。
 
 ### SERPOSCOPEとは？
-
-image::nakamura/serposcope/01.png[]
 
 
 ```
@@ -49,7 +48,7 @@ image::nakamura/serposcope/01.png[]
 
 ### ①EC2インスタンス作成
 
-AMIはAmazonLinuxを指定、あとはお好きなように作成してください。 +
+AMIはAmazon Linuxを指定、あとはお好きなように作成してください。 +
 ただし7134番のポートを使用するため、そこだけセキュリティグループで設定を追加してください。
 
 EC2インスタンス作成って何？っていう方はこちら +
@@ -67,7 +66,7 @@ http://dev.classmethod.jp/cloud/aws/aws-beginner-ec2-ssh/[【初心者向け】A
 
 http://qiita.com/drapon/items/2fc5b21a9cdc31ddb152[Amazon EC2のタイムゾーンを日本時間に変更する方法]
 
-##### javaのバージョンを1.8以上にする
+##### Javaのバージョンを1.8以上にする
 
 2017/06/19時点ではデフォルトで1.7になっていたため、バージョンをあげる必要がありました。
 
@@ -90,7 +89,7 @@ $ wget https://serposcope.serphacker.com/download/2.7.1/serposcope-2.7.1.jar
 ##### SERPOSCOPEを起動
 
 ```
-$ sudo nohup java -jar serposcope-2.7.1.jar&
+$ sudo nohup java -jar serposcope-2.7.1.jar &
 ```
 
 「パブリックIP + :7134」でブラウザからアクセスし、以下のような画面が表示されれば無事完了です！
@@ -117,9 +116,9 @@ image::nakamura/serposcope/06.png[,300]
 
 
 
-詳しいSERPOSCOPEの使い方はこちら +
+詳しいSERPOSCOPEの使い方はこちらを参考にさせていただきました。 +
 http://thesaibase.com/seo/serposcope +
-https://nelog.jp/how-to-install-serposcope +
+
 
 ### 感想
 
