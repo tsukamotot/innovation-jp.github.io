@@ -1,0 +1,170 @@
+# PhantomJS × Raspberry PiでBotを作る(前編)
+:published_at: 2017-06-23
+:hp-alt-title: Making Bot with Raspberry Pi and PhatomJS
+:hp-tags: yaizu,PhantomJS,scraping,Raspberry
+
+こんにちは、最近腕の長さを測ってみたら196cmだった小柳津です。 +
+2年前くらいに測ったときは192cmでしたが、伸びていました！ +
+
+前回のブログでは、Raspberry Pi 3 Model B(以下、Raspberry Pi)にPhantomJSをインストールしました。 +
+http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html +
+
+今回はSlack上で動くPhantomJSでスクレイピングした結果を返してくれるBotを作成したので、そちらをご紹介します！ +
+
+## Botの概要
+
+今回Botを作るにあたっての用意は以下です。 +
+
+1. Raspberry Pi側の準備
+    - PhantomJSのインストール(前回ブログで済)
+    - Node.jsのインストール
+    - hubotのインストールとセットアップ
+2. Slack側の準備
+    - アクセストークンの取得
+    - Botの登録
+
+PhatomJSのインストールは済んでいるので、飛ばしていこうと思います。 +
+
+以下の画像は、Botの構成と動作フローのイメージ図です。 +
+image::oyaizu/bot_images01.JPG[] +
+image::oyaizu/bot_images02.JPG[] +
+
+イメージ図に沿って、弊社が使っているグループウェアから自分の予定をスクレイピングして、 +
+Slackに送信するBotを作っていきたいと思います。 +
+
+image::oyaizu/schedule_01.png[]
+※実際のBotの動き
+今日の予定は？と聞くと、グループウェアをスクレイピングして予定を教えてくれる。 +
+
+## Raspberry Pi側の準備
+
+それでは早速Raspberry Pi側で必要な準備していきます。 +
+Raspberry Pi にssh接続しましょう。 +
+
+### Node.jsのインストール
+
+Slackを監視するためのhubotにはNode.jsが必要なので、インストールをしていきます。 +
+
+```
+#nmpのインストールとアップデート
+$ sudo apt-get install npm
+$ sudo npm install -g npm
+
+#Node.jsのバージョン管理である`n`をインストール
+$ sudo npm install -g n
+
+#Node.jsの安定版をインストール
+$ n stable
+```
+
+上記のコマンドでNode.jsをインストール出来ます。 +
+
+### hubotのインストールとセットアップ
+
+Node.jsがインストールできたところでhubotのインストールとセットアップを行います。 +
+
+https://hubot.github.com/docs/[公式ドキュメント]に従って行っていきます。
+
+```
+#必要なモジュールをインストール
+$ sudo npm install -g yo generator-hubot coffee-script
+
+#Bot用のディレクトリを作成し、その中にBotを作成(ディレクトリ名は好きな名前で大丈夫です！)
+$ mkdir myhubot
+$ cd myhubot
+$ yo hubot
+```
+
+そうすると以下のことを聞かれますので、それぞれ適当な返答をします。 +
+
+```
+? ==========================================================================
+We're constantly looking for ways to make yo better!
+May we anonymously report usage statistics to improve the tool over time?
+More info: https://github.com/yeoman/insight & http://yeoman.io
+========================================================================== (Y/n) 
+
+#Yと返答
+```
+```
+? Owner 
+? Bot name 
+? Description A simple helpful robot for your Company
+? Bot adapter
+
+#名前とメールアドレス
+#付けたいBot名
+#任意
+#slackと返答
+```
+
+上記のように返答すると、 +
+```
+Procfile		bin			hubot-scripts.json	package-lock.json	scripts
+README.md		external-scripts.json	node_modules		package.json
+```
+Bot用のディレクトリの中身がこうなるはずです。 +
+
+## Slack側の準備
+
+Slack側にも準備をしていきます。 +
+
+まずSlackのチームにログインし、hubotのintegrationを追加します。 +
+追加すると`HUBOT_SLACK_TOKEN`が発行されるので、それを控えておきます。 +
+
+image::oyaizu/slack_01.png[] +
+Apps & integretionsから遷移出来ます。 +
+image::oyaizu/slack_02.png[] +
+image::oyaizu/slack_03.png[] +
+
+## Botの設定
+
+再びRaspberry Piに戻ります。 +
+控えていた`HUBOT_SLACK_TOKEN`を`bin/hubot`のファイルに追加します。 +
+
+```
+#!/bin/sh
+
+set -e
+
+npm install
+export PATH="node_modules/.bin:node_modules/hubot/node_modules/.bin:$PATH"
+#この下に追加
+export HUBOT_SLACK_TOKEN={控えていたHUBOT_SLACK_TOKEN}
+```
+
+また、`script`のディレクトリに`hello.coffee`を作成します。 +
+`hello.coffee`の中身は以下です。
+```
+module.exports = (robot) ->
+    robot.hear /^hello$/i, (msg) ->
+        msg.send "hello!"
+```
+ファイルを作成した状態からBotを作成したディレクトリで、 +
+hubotの起動コマンド`bin/hubot -a slack`を実行。 +
+そして、Slackで`hello`と送ってみます！
+
+image::oyaizu/bot_images02.JPG[]
+
+`hello`と返してきました！ +
+hubotでは正規表現でマッチしたワードがSlack上に見受けられると、特定のメッセージが返せます。 +
+
+これを利用して冒頭の予定を教えてくれるBotを作っていきます。 +
+設定は以下。 +
+```
+module.exports = (robot) ->
+    robot.hear /今日の予定は？$/, (msg) ->
+        @exec = require('child_process').exec
+        command = "phantomjs {ファイルの実行パス}/schedule.js"
+        @exec command, (error, stdout, stderr) ->
+            msg.send stdout
+```
+特定のメッセージを返すだけでなくコマンドを実行してその結果を返すことができます。 +
+今日の予定は？と聞かれたら予定をスクレイピングして取得する`schdule.js`をPhantomJSで実行し、 +
+その結果をSlackに返すことでBotの完成です！ +
+
+スクレイピングしたいものを増やして、Slackに返すメッセージのバリエーションも増やしていく予定です！ +
+
+後編はPhantomJSでスクレイピングする方法やRaspberry Pi を起動した時にhubotも起動させる設定などをご紹介します。 +
+
+今回はここで失礼します。
