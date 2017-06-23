@@ -1,0 +1,14 @@
+= 本当にvimmerになりたくて~1年後~
+:published_at: 2017-06-11
+:hp-tags: kohe,vim
+
+
+
+
+[options="header"]
+|=======================
+|Col 1|Col 2      |Col 3
+|1    |Item 1     |a
+|2    |Item 2     |b
+|3    |Item 3     |c
+|=======================
