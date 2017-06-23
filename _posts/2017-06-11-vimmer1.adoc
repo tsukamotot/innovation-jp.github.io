@@ -63,7 +63,7 @@ vi の基礎入力方法を覚えた上で↑のコマンドを覚えれば圧�
 |bronson/vim-trailing-whitespace      | 末尾の空白を赤くハイライト,FixWhitespaceでそれらを全て削除してくれる。
 |Yggdroot/indentLine     | インデントの可視化
 |tpope/vim-fugitive     |gitを使っているなら必須のプラグイン。変更箇所に+-~をつけてくれる。GBlameでそのコードを誰がコミットしたのかも表示してくれる。
-|hougo/neocomplete.vim'       | コードの自動補完をしてくれる。
+|hougo/neocomplete.vim       | コードの自動補完をしてくれる。
 
 |=======================
 
