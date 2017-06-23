@@ -26,8 +26,12 @@ http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html +
 PhatomJSのインストールは済んでいるので、飛ばしていこうと思います。 +
 
 以下の画像は、Botの構成と動作フローのイメージ図です。 +
-image::oyaizu/bot_images01.JPG[] +
-image::oyaizu/bot_images02.JPG[] +
+
+### Slack監視〜スクレイピング実行まで
+image::oyaizu/bot_images01.png[]
+
+### スクレイピング結果取得〜セメッセージ送信まで
+image::oyaizu/bot_images02.png[]
 
 イメージ図に沿って、弊社が使っているグループウェアから自分の予定をスクレイピングして、 +
 Slackに送信するBotを作っていきたいと思います。 +
@@ -112,10 +116,13 @@ Slack側にも準備をしていきます。 +
 まずSlackのチームにログインし、hubotのintegrationを追加します。 +
 追加すると`HUBOT_SLACK_TOKEN`が発行されるので、それを控えておきます。 +
 
-image::oyaizu/slack_01.png[] +
+image::oyaizu/slack_01.png[] 
+
 Apps & integretionsから遷移出来ます。 +
-image::oyaizu/slack_02.png[] +
-image::oyaizu/slack_03.png[] +
+
+image::oyaizu/slack_02.png[]
+
+image::oyaizu/slack_03.png[]
 
 ## Botの設定
 
@@ -144,7 +151,7 @@ module.exports = (robot) ->
 hubotの起動コマンド`bin/hubot -a slack`を実行。 +
 そして、Slackで`hello`と送ってみます！
 
-image::oyaizu/bot_images02.JPG[]
+image::oyaizu/hello.png[]
 
 `hello`と返してきました！ +
 hubotでは正規表現でマッチしたワードがSlack上に見受けられると、特定のメッセージが返せます。 +
