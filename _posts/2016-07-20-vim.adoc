@@ -1,9 +1,9 @@
-= 「本当にvimerになりたくて」
+= 「本当にvimmerになりたくて」
 :published_at:2016-07-20
 :hp-alt-title: vim
 :hp-tags: vi,vim,study,kohe,kondo
 皆様こんにちは。
-イノベーションのvimerの卵のこへです。
+イノベーションのvimmerの卵のこへです。
 今までsublimetextを使っていたのですが、
 *[red]#vim#*が最強のテキストエディタという話を小耳にはさみまして覚えることにしました。
 
