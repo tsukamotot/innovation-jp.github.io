@@ -1,7 +1,7 @@
 # PhantomJS × Raspberry PiでBotを作る(前編)
 :published_at: 2017-06-23
-:hp-alt-title: Making Bot with Raspberry Pi and PhatomJS
-:hp-tags: yaizu,PhantomJS,scraping,Raspberry
+:hp-alt-title: Making Bot with Raspberry Pi and PhantomJS
+:hp-tags: yaizu,PhantomJS,scraping,RaspberryPi,Hubot
 
 こんにちは、最近腕の長さを測ってみたら196cmだった小柳津です。 +
 2年前くらいに測ったときは192cmでしたが、伸びていました！ +
@@ -24,7 +24,7 @@ Slack上で動くPhantomJSでスクレイピングした結果を返してくれ
     - アクセストークンの取得
     - Botの登録
 
-PhatomJSのインストールは済んでいるので、飛ばしていこうと思います。 +
+PhantomJSのインストールは済んでいるので、飛ばしていこうと思います。 +
 
 以下の画像は、Botの構成と動作フローのイメージ図です。 +
 
@@ -41,7 +41,7 @@ image::oyaizu/schedule_01.png[]
 ※実際のBotの動き
 今日の予定は？と聞くと、グループウェアをスクレイピングして予定を教えてくれる。 +
 
-EC2やGCEなどのクラウドサーバでも同じようなものが作れますが、 +
+Amazon EC2 やGoogle Compute Engineなどのクラウドサーバでも同じようなものが作れますが、 +
 以下の理由からRaspberry Piを使用しました。 +
 
 1. Bot化するのに問題ない性能を持っている
