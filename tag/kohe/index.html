@@ -213,11 +213,38 @@ var _trackingid = 'LFT-10003-1';
 
     <ol class="post-list">
       <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2016/11/24/G-A-S.html" title="link to 誕生日を覚えるのも、メールを送るのも忘れてしまいがちな私がGASを使って全自動化した話">誕生日を覚えるのも、メールを送るのも忘れてしまいがちな私がGASを使って全自動化した話</a></h2>
-        <p class="excerpt">こんばんはこへです。 下準備 まずはスプレットシートに必要な情報を記入していく。 こ～んな感じで、 A列に日付 B列に誕生日の人の名前 C列に誕生日の人のメアド D列にメールの件名 E列にメール本文 F列にデフォルトのメールの件名 G列にデフォルトのメールの本文 を書いていく。 これで表側の準備終了！ 仕組みとしては簡単！ 誕生日の日に指定したメアドにメールを送る。 何も指定がなければ、デフォルトの件名と内容が自動的に入る。 指定すれば、指定した件名と内容が送信される！! コードを書いていこう 全部で40行もかからない。なんとお手軽。 ってことで解説。  var sh_id    =　 SpreadsheetApp.openById('ここにスプレットシートのIDが入るよ') まず、どのシ&hellip;</p>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/05/24/swift-chat.html" title="link to 【Swift3】ランダムマッチチャットアプリを作ったお話。">【Swift3】ランダムマッチチャットアプリを作ったお話。</a></h2>
+        <p class="excerpt">こんばんは、こへです。 そろそろ、Swift3とFirebaseを使って、完全匿名ランダムマッチングチャットを作りたい時期が来ましたので作成。 やりたいこと 1対1のチャット 匿名 ランダムにマッチング iPhoneアプリ 確認はシミュレータと実機でチャットをする 以上！！ 画面イメージ設計 ロード中(マッチング相手を探し中)くるくる回すインテグレーションだけにはこだわりたい。 DB設計 Firebase　を使うためこんな感じにカキカキ。 枠から文字がはみ出ているのはご愛嬌。 Firebase GoogleアカウントでFirebaseに登録。 ※ココらへんの設定はググれば大量に出てくるため割愛。 書き込み読み込みのルールもパブリックにしてしまってはいかんので認証を必要にする。 {   "r&hellip;</p>
         <div class="post-list__meta">
-            <time datetime="24 Nov 2016" class="post-list__meta--date date">24 Nov 2016</time> &#8226;
-            <span class="post-list__meta--tags tags"><a href="#blog" title="GooleAppScript">GooleAppScript</a>, <a href="#blog" title="GAS">GAS</a>, <a href="#blog" title="gas">gas</a>, <a href="#blog" title=" kohe"> kohe</a></span>
+            <time datetime="24 May 2017" class="post-list__meta--date date">24 May 2017</time> &#8226;
+            <span class="post-list__meta--tags tags"><a href="#blog" title="kohe">kohe</a>, <a href="#blog" title="swift3">swift3</a>, <a href="#blog" title="chat">chat</a>, <a href="#blog" title="Firebase">Firebase</a></span>
+        </div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/02/24/Chrome-Extension.html" title="link to ChromeのExtensionで来客情報を取得したお話。">ChromeのExtensionで来客情報を取得したお話。</a></h2>
+        <p class="excerpt">こんばんはこへです。 弊社では新人が毎朝GRIDYの来客情報を確認し、全社員の前で広報している。 私も自分が担当のときは毎朝GRIDYを確認し朝会に備えている。 しかし、来客情報を確認してそれをいちいち紙にメモを取る行為は繰り返し作業かつ非効率的で非生産的だと感じたので自動化してみた。 GRIDY グループウェアは、企業等の組織、さらには企業間を飛び越えたグループ会社や協力会社まで、社内外での情報共有を活性化し、コミュニケーションを強化するグループウェアアプリケーションです。 &#8212; GRIDYグループウェアとは GRIDYから「今日の来客情報」のみを取得したい！ ↑の画像の赤丸の情報を取得したい。 具体的に説明すると、 取得したい情報は上記画像の今日と同じ日の列にある(このブロ&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="24 Feb 2017" class="post-list__meta--date date">24 Feb 2017</time> &#8226;
+            <span class="post-list__meta--tags tags"><a href="#blog" title="ChromeExtension">ChromeExtension</a>, <a href="#blog" title="kohe">kohe</a>, <a href="#blog" title="js">js</a>, <a href="#blog" title="html">html</a></span>
+        </div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/01/19/Swift-Web-View.html" title="link to 【Swift】WebViewで遊んでみたお話">【Swift】WebViewで遊んでみたお話</a></h2>
+        <p class="excerpt">こんばんは。こへです。 IOSでWebを閲覧するアプリを簡単に作ってみたので紹介いたします。 画面準備 ざっくりんこんな感じ。 オブジェクトの説明。 そして、ViewController.swiftにコードを書いていく。 import UIKit class ViewController: UIViewController ,UIWebViewDelegate{     @IBOutlet weak var webView: UIWebView!     @IBOutlet weak var indicator: UIActivityIndicatorView!     @IBOutlet weak var hamBtn: UIButton!     var googleURL = "ht&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="19 Jan 2017" class="post-list__meta--date date">19 Jan 2017</time> &#8226;
+            <span class="post-list__meta--tags tags"><a href="#blog" title="Swift">Swift</a>, <a href="#blog" title="WebView">WebView</a>, <a href="#blog" title="kohe">kohe</a></span>
+        </div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2016/07/20/vim.html" title="link to 「本当にvimmerになりたくて」">「本当にvimmerになりたくて」</a></h2>
+        <p class="excerpt">イノベーションのvimmerの卵のこへです。 今までsublimetextを使っていたのですが、 vimが最強のテキストエディタという話を小耳にはさみまして覚えることにしました。 実際使ってみるとちょー使いにくい…。 移動に「 h j k l 」を使うって何だ！！わけわからん！ これでは、食わず嫌いが多く出てきそうだ…。 ということでvimの勉強サイト、コマンド等々をまとめました。 その１,「ゲームで覚えろ！」 最初から、vimも覚えてプログラミングもやるなんて大変すぎる。 頭の中が疲れてしまいます。ということで、一旦プログラミングはおいて、ゲームで覚えちゃおう！下記のURLからvimコマンドを使ったゲームができます。 http://vim-adventures.com/ ゲームをしながら&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="20 Jul 2016" class="post-list__meta--date date">20 Jul 2016</time> &#8226;
+            <span class="post-list__meta--tags tags"><a href="#blog" title="vi">vi</a>, <a href="#blog" title="vim">vim</a>, <a href="#blog" title="study">study</a>, <a href="#blog" title="kohe">kohe</a>, <a href="#blog" title="kondo">kondo</a></span>
         </div>
         <hr class="post-list__divider" />
       </li>
