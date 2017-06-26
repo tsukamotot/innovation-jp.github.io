@@ -9,7 +9,8 @@
 前回のブログでは、Raspberry Pi 3 Model B(以下、Raspberry Pi)にPhantomJSをインストールしました。 +
 http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html +
 
-今回はそのRaspberry Piを使ってSlack上で動くPhantomJSでスクレイピングした結果を返してくれるBotを作成したので、そちらをご紹介します！ +
+今回はそのRaspberry Piを使って、 +
+Slack上で動くPhantomJSでスクレイピングした結果を返してくれるBotを作成したので、そちらをご紹介します！ +
 
 ## Botの概要
 
