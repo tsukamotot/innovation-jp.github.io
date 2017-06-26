@@ -19,7 +19,7 @@ Slack上で動くPhantomJSでスクレイピングした結果を返してくれ
 1. Raspberry Pi側の準備
     - PhantomJSのインストール(前回ブログで済)
     - Node.jsのインストール
-    - hubotのインストールとセットアップ
+    - Hubotのインストールとセットアップ
 2. Slack側の準備
     - アクセストークンの取得
     - Botの登録
@@ -48,7 +48,7 @@ Raspberry Piにssh接続しましょう。 +
 
 ### Node.jsのインストール
 
-Slackを監視するためのhubotにはNode.jsが必要なので、インストールをしていきます。 +
+Slackを監視するためのHubotにはNode.jsが必要なので、インストールをしていきます。 +
 
 ```
 #npmのインストールとアップデート
@@ -64,20 +64,20 @@ $ n stable
 
 上記のコマンドでNode.jsをインストール出来ます。 +
 
-### hubotのインストールとセットアップ
+### Hubotのインストールとセットアップ
 
-Node.jsがインストールできたところでhubotのインストールとセットアップを行います。 +
+Node.jsがインストールできたところでHubotのインストールとセットアップを行います。 +
 
-https://hubot.github.com/docs/[公式ドキュメント]に従って行っていきます。
+https://Hubot.github.com/docs/[公式ドキュメント]に従って行っていきます。
 
 ```
 #必要なモジュールをインストール
-$ sudo npm install -g yo generator-hubot coffee-script
+$ sudo npm install -g yo generator-Hubot coffee-script
 
 #Bot用のディレクトリを作成し、その中にBotを作成(ディレクトリ名は好きな名前で大丈夫です！)
-$ mkdir myhubot
-$ cd myhubot
-$ yo hubot
+$ mkdir myHubot
+$ cd myHubot
+$ yo Hubot
 ```
 
 そうすると以下のことを聞かれますので、それぞれ適当な返答をします。 +
@@ -105,8 +105,8 @@ More info: https://github.com/yeoman/insight & http://yeoman.io
 
 上記のように返答すると、 +
 ```
-Procfile		bin			hubot-scripts.json	package-lock.json	scripts
-README.md		external-scripts.json	node_modules		package.json
+Procfile        bin         Hubot-scripts.json  package-lock.json   scripts
+README.md       external-scripts.json   node_modules        package.json
 ```
 Bot用のディレクトリの中身がこうなるはずです。 +
 
@@ -114,7 +114,7 @@ Bot用のディレクトリの中身がこうなるはずです。 +
 
 Slack側にも準備をしていきます。 +
 
-まずSlackのチームにログインし、hubotのintegrationを追加します。 +
+まずSlackのチームにログインし、Hubotのintegrationを追加します。 +
 追加すると`HUBOT_SLACK_TOKEN`が発行されるので、それを控えておきます。 +
 
 image::oyaizu/slack_01.png[] 
@@ -128,7 +128,7 @@ image::oyaizu/slack_03.png[]
 ## Botの設定
 
 再びRaspberry Piに戻ります。 +
-控えていた`HUBOT_SLACK_TOKEN`を`bin/hubot`のファイルに追加します。 +
+控えていた`HUBOT_SLACK_TOKEN`を`bin/Hubot`のファイルに追加します。 +
 
 ```
 #!/bin/sh
@@ -136,7 +136,7 @@ image::oyaizu/slack_03.png[]
 set -e
 
 npm install
-export PATH="node_modules/.bin:node_modules/hubot/node_modules/.bin:$PATH"
+export PATH="node_modules/.bin:node_modules/Hubot/node_modules/.bin:$PATH"
 #この下に追加
 export HUBOT_SLACK_TOKEN={控えていたHUBOT_SLACK_TOKEN}
 ```
@@ -149,13 +149,13 @@ module.exports = (robot) ->
         msg.send "hello!"
 ```
 ファイルを作成した状態からBotを作成したディレクトリで、 +
-hubotの起動コマンド`bin/hubot -a slack`を実行。 +
+Hubotの起動コマンド`bin/Hubot -a slack`を実行。 +
 そして、Slackで`hello`と送ってみます！
 
 image::oyaizu/hello.png[]
 
 `hello`と返してきました！ +
-hubotでは正規表現でマッチしたワードがSlack上に見受けられると、特定のメッセージが返せます。 +
+Hubotでは正規表現でマッチしたワードがSlack上に見受けられると、特定のメッセージが返せます。 +
 
 これを利用して冒頭の予定を教えてくれるBotを作っていきます。 +
 設定は以下。 +
@@ -173,6 +173,6 @@ module.exports = (robot) ->
 
 スクレイピングしたいものを増やして、Slackに返すメッセージのバリエーションも増やしていく予定です！ +
 
-後編はPhantomJSでスクレイピングする方法やRaspberry Piを起動した時にhubotも起動させる設定などをご紹介します。 +
+後編はPhantomJSでスクレイピングする方法やRaspberry Piを起動した時にHubotも起動させる設定などをご紹介します。 +
 
 今回はここで失礼します。
