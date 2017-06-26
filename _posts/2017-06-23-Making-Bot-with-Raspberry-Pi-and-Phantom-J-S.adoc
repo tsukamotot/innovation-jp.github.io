@@ -10,7 +10,7 @@
 http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html +
 
 今回はそのRaspberry Piを使って、 +
-Slack上で動くPhantomJSでスクレイピングした結果を返してくれるBotを作成したので、そちらをご紹介します！ +
+Slack上で動き、PhantomJSでスクレイピングした結果を返してくれるBotを作成したので、そちらをご紹介します！ +
 
 ## Botの概要
 
@@ -38,14 +38,15 @@ image::oyaizu/bot_images02.png[]
 Slackに送信するBotを作っていきたいと思います。 +
 
 image::oyaizu/schedule_01.png[]
-※実際のBotの動き
-今日の予定は？と聞くと、グループウェアをスクレイピングして予定を教えてくれる。 +
+※実際のBotの動き +
+~今日の予定は？と聞くと、グループウェアをスクレイピングして予定を教えてくれる。~ +
 
 Amazon EC2 やGoogle Compute Engineなどのクラウドサーバでも同じようなものが作れますが、 +
 以下の理由からRaspberry Piを使用しました。 +
 
 1. Bot化するのに問題ない性能を持っている
 2. 安価な値段かつ買い切りでサーバとして使用できる
+3. せっかく買ったので使いたい
 
 ## Raspberry Pi側の準備
 
@@ -180,6 +181,6 @@ module.exports = (robot) ->
 
 スクレイピングしたいものを増やして、Slackに返すメッセージのバリエーションも増やしていく予定です！ +
 
-後編はPhantomJSでスクレイピングする方法やRaspberry Piを起動した時にHubotも起動させる設定などをご紹介します。 +
+後編はPhantomJSでスクレイピングする方法やRaspberry Piを起動した時にHubotも自動的に起動させる設定などをご紹介します。 +
 
 今回はここで失礼します。
