@@ -9,7 +9,7 @@
 前回のブログでは、Raspberry Pi 3 Model B(以下、Raspberry Pi)にPhantomJSをインストールしました。 +
 http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html +
 
-今回はSlack上で動くPhantomJSでスクレイピングした結果を返してくれるBotを作成したので、そちらをご紹介します！ +
+今回はそのRaspberry Piを使ってSlack上で動くPhantomJSでスクレイピングした結果を返してくれるBotを作成したので、そちらをご紹介します！ +
 
 ## Botの概要
 
@@ -30,7 +30,7 @@ PhatomJSのインストールは済んでいるので、飛ばしていこうと
 ### Slack監視〜スクレイピング実行まで
 image::oyaizu/bot_images01.png[]
 
-### スクレイピング結果取得〜セメッセージ送信まで
+### スクレイピング結果取得〜メッセージ送信まで
 image::oyaizu/bot_images02.png[]
 
 イメージ図に沿って、弊社が使っているグループウェアから自分の予定をスクレイピングして、 +
@@ -43,14 +43,14 @@ image::oyaizu/schedule_01.png[]
 ## Raspberry Pi側の準備
 
 それでは早速Raspberry Pi側で必要な準備していきます。 +
-Raspberry Pi にssh接続しましょう。 +
+Raspberry Piにssh接続しましょう。 +
 
 ### Node.jsのインストール
 
 Slackを監視するためのhubotにはNode.jsが必要なので、インストールをしていきます。 +
 
 ```
-#nmpのインストールとアップデート
+#npmのインストールとアップデート
 $ sudo apt-get install npm
 $ sudo npm install -g npm
 
@@ -172,6 +172,6 @@ module.exports = (robot) ->
 
 スクレイピングしたいものを増やして、Slackに返すメッセージのバリエーションも増やしていく予定です！ +
 
-後編はPhantomJSでスクレイピングする方法やRaspberry Pi を起動した時にhubotも起動させる設定などをご紹介します。 +
+後編はPhantomJSでスクレイピングする方法やRaspberry Piを起動した時にhubotも起動させる設定などをご紹介します。 +
 
 今回はここで失礼します。
