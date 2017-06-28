@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>PhantomJS × Raspberry PiでBotを作る(前編) - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="PhantomJS × Raspberry PiでBotを作る(前編)">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="PhantomJS × Raspberry PiでBotを作る(前編)">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom-J-S.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="PhantomJS × Raspberry PiでBotを作る(前編)" />
+    <meta property="og:description" content="こんにちは、最近腕の長さを測ってみたら196cmだった小柳津です。 2年前くらいに測ったときは192cmでしたが、伸びていました！ 前回のブログでは、Raspberry Pi 3 Model B(以下、Raspberry Pi)にPhantomJSをインストールしました。 http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html 今回はそのRaspberry Piを使って、 Slack上で動き、PhantomJSでスクレイピングした結果を返してくれるBotを作成..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom-J-S.html" />
+    <meta property="article:published_time" content="2017-06-22T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-06-28T00:26:48.487Z" />
+    <meta property="article:tag" content="yaizu" />
+    <meta property="article:tag" content="PhantomJS" />
+    <meta property="article:tag" content="scraping" />
+    <meta property="article:tag" content="RaspberryPi" />
+    <meta property="article:tag" content="Hubot" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="PhantomJS × Raspberry PiでBotを作る(前編)" />
+    <meta name="twitter:description" content="こんにちは、最近腕の長さを測ってみたら196cmだった小柳津です。 2年前くらいに測ったときは192cmでしたが、伸びていました！ 前回のブログでは、Raspberry Pi 3 Model B(以下、Raspberry Pi)にPhantomJSをインストールしました。 http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html 今回はそのRaspberry Piを使って、 Slack上で動き、PhantomJSでスクレイピングした結果を返してくれるBotを作成..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom-J-S.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars0.githubusercontent.com/u/16201452?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "PhantomJS × Raspberry PiでBotを作る(前編)",
+    "url": "http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom-J-S.html",
+    "datePublished": "2017-06-22T15:00:00.000Z",
+    "dateModified": "2017-06-28T00:26:48.487Z",
+    "keywords": "yaizu, PhantomJS, scraping, RaspberryPi, Hubot",
+    "description": "こんにちは、最近腕の長さを測ってみたら196cmだった小柳津です。 2年前くらいに測ったときは192cmでしたが、伸びていました！ 前回のブログでは、Raspberry Pi 3 Model B(以下、Raspberry Pi)にPhantomJSをインストールしました。 http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html 今回はそのRaspberry Piを使って、 Slack上で動き、PhantomJSでスクレイピングした結果を返してくれるBotを作成..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-yaizu tag-Phantom-J-S tag-scraping tag-Raspberry-Pi tag-Hubot no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="23 Jun 2017" class="post-meta__date date">23 Jun 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/yaizu">yaizu</a>, <a href="http://tech.innovation.co.jp/tag/Phantom-J-S">PhantomJS</a>, <a href="http://tech.innovation.co.jp/tag/scraping">scraping</a>, <a href="http://tech.innovation.co.jp/tag/Raspberry-Pi">RaspberryPi</a>, <a href="http://tech.innovation.co.jp/tag/Hubot">Hubot</a></span>
+        <span class="post-meta__author author"><img src="https://avatars0.githubusercontent.com/u/16201452?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">PhantomJS × Raspberry PiでBotを作る(前編)</h1>
+    </header>
+
+    <section class="post tag-yaizu tag-Phantom-J-S tag-scraping tag-Raspberry-Pi tag-Hubot">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは、最近腕の長さを測ってみたら196cmだった小柳津です。<br>
+2年前くらいに測ったときは192cmでしたが、伸びていました！<br></p>
+</div>
+<div class="paragraph">
+<p>前回のブログでは、Raspberry Pi 3 Model B(以下、Raspberry Pi)にPhantomJSをインストールしました。<br>
+<a href="http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html" class="bare">http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html</a><br></p>
+</div>
+<div class="paragraph">
+<p>今回はそのRaspberry Piを使って、<br>
+Slack上で動き、PhantomJSでスクレイピングした結果を返してくれるBotを作成したので、そちらをご紹介します！<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bot">Botの概要</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回Botを作るにあたっての用意は以下です。<br></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Raspberry Pi側の準備</p>
+<div class="ulist">
+<ul>
+<li>
+<p>PhantomJSのインストール(前回ブログで済)</p>
+</li>
+<li>
+<p>Node.jsのインストール</p>
+</li>
+<li>
+<p>Hubotのインストールとセットアップ</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Slack側の準備</p>
+<div class="ulist">
+<ul>
+<li>
+<p>アクセストークンの取得</p>
+</li>
+<li>
+<p>Botの登録</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>PhantomJSのインストールは済んでいるので、飛ばしていこうと思います。<br></p>
+</div>
+<div class="paragraph">
+<p>以下の画像は、Botの構成と動作フローのイメージ図です。<br></p>
+</div>
+<div class="sect2">
+<h3 id="_slack">Slack監視〜スクレイピング実行まで</h3>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/bot_images01.png" alt="bot images01.png">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__">スクレイピング結果取得〜メッセージ送信まで</h3>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/bot_images02.png" alt="bot images02.png">
+</div>
+</div>
+<div class="paragraph">
+<p>イメージ図に沿って、弊社が使っているグループウェアから自分の予定をスクレイピングして、<br>
+Slackに送信するBotを作っていきたいと思います。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/schedule_01.png" alt="schedule 01.png">
+</div>
+</div>
+<div class="paragraph">
+<p>※実際のBotの動き<br>
+<sub>今日の予定は？と聞くと、グループウェアをスクレイピングして予定を教えてくれる。</sub><br></p>
+</div>
+<div class="paragraph">
+<p>Amazon EC2 やGoogle Compute Engineなどのクラウドサーバでも同じようなものが作れますが、<br>
+以下の理由からRaspberry Piを使用しました。<br></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Bot化するのに問題ない性能を持っている</p>
+</li>
+<li>
+<p>安価な値段で、かつ買い切りでサーバとして使用できる</p>
+</li>
+<li>
+<p>せっかく買ったので使いたい</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_raspberry_pi">Raspberry Pi側の準備</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>それでは早速Raspberry Pi側で必要な準備していきます。<br>
+Raspberry Piにssh接続しましょう。<br></p>
+</div>
+<div class="sect2">
+<h3 id="_node_js">Node.jsのインストール</h3>
+<div class="paragraph">
+<p>Slackを監視するためのHubotにはNode.jsが必要なので、インストールをしていきます。<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#npmのインストールとアップデート
+$ sudo apt-get install npm
+$ sudo npm install -g npm
+
+#Node.jsのバージョン管理である`n`をインストール
+$ sudo npm install -g n
+
+#Node.jsの安定版をインストール
+$ n stable</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>上記のコマンドでNode.jsをインストール出来ます。<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_hubot">Hubotのインストールとセットアップ</h3>
+<div class="paragraph">
+<p>Node.jsがインストールできたところでHubotのインストールとセットアップを行います。<br></p>
+</div>
+<div class="paragraph">
+<p><a href="https://Hubot.github.com/docs/">公式ドキュメント</a>に従って行っていきます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#必要なモジュールをインストール
+$ sudo npm install -g yo generator-Hubot coffee-script
+
+#Bot用のディレクトリを作成し、その中にBotを作成(ディレクトリ名は好きな名前で大丈夫です！)
+$ mkdir myHubot
+$ cd myHubot
+$ yo Hubot</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>そうすると以下のことを聞かれますので、それぞれ適当な返答をします。<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>? ==========================================================================
+We're constantly looking for ways to make yo better!
+May we anonymously report usage statistics to improve the tool over time?
+More info: https://github.com/yeoman/insight &amp; http://yeoman.io
+========================================================================== (Y/n)
+
+#Yと返答</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>? Owner
+? Bot name
+? Description A simple helpful robot for your Company
+? Bot adapter
+
+#名前とメールアドレス
+#付けたいBot名
+#任意
+#slackと返答</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>上記のように返答すると、<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Procfile        bin         Hubot-scripts.json  package-lock.json   scripts
+README.md       external-scripts.json   node_modules        package.json</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bot用のディレクトリの中身がこうなるはずです。<br></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_slack_2">Slack側の準備</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Slack側にも準備をしていきます。<br></p>
+</div>
+<div class="paragraph">
+<p>まずSlackのチームにログインし、Hubotのintegrationを追加します。<br>
+追加すると<code>HUBOT_SLACK_TOKEN</code>が発行されるので、それを控えておきます。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/slack_01.png" alt="slack 01.png">
+</div>
+</div>
+<div class="paragraph">
+<p>Apps &amp; integretionsから遷移出来ます。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/slack_02.png" alt="slack 02.png">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/slack_03.png" alt="slack 03.png">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_bot_2">Botの設定</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>再びRaspberry Piに戻ります。<br>
+控えていた<code>HUBOT_SLACK_TOKEN</code>を<code>bin/Hubot</code>のファイルに追加します。<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#!/bin/sh
+
+set -e
+
+npm install
+export PATH="node_modules/.bin:node_modules/Hubot/node_modules/.bin:$PATH"
+#この下に追加
+export HUBOT_SLACK_TOKEN={控えていたHUBOT_SLACK_TOKEN}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>また、<code>script</code>のディレクトリに<code>hello.coffee</code>を作成します。<br>
+<code>hello.coffee</code>の中身は以下です。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>module.exports = (robot) -&gt;
+    robot.hear /^hello$/i, (msg) -&gt;
+        msg.send "hello!"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ファイルを作成した状態からBotを作成したディレクトリで、<br>
+Hubotの起動コマンド<code>bin/Hubot -a slack</code>を実行。<br>
+そして、Slackで<code>hello</code>と送ってみます！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/hello.png" alt="hello.png">
+</div>
+</div>
+<div class="paragraph">
+<p><code>hello</code>と返してきました！<br>
+Hubotでは正規表現でマッチしたワードがSlack上に見受けられると、特定のメッセージが返せます。<br></p>
+</div>
+<div class="paragraph">
+<p>これを利用して冒頭の予定を教えてくれるBotを作っていきます。<br>
+設定は以下。<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>module.exports = (robot) -&gt;
+    robot.hear /今日の予定は？$/, (msg) -&gt;
+        @exec = require('child_process').exec
+        command = "phantomjs {ファイルの実行パス}/schedule.js"
+        @exec command, (error, stdout, stderr) -&gt;
+            msg.send stdout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>特定のメッセージを返すだけでなくコマンドを実行してその結果を返すことができます。<br>
+今日の予定は？と聞かれたら予定をスクレイピングして取得する<code>schdule.js</code>をPhantomJSで実行し、<br>
+その結果をSlackに返すことでBotの完成です！<br></p>
+</div>
+<div class="paragraph">
+<p>スクレイピングしたいものを増やして、Slackに返すメッセージのバリエーションも増やしていく予定です！<br></p>
+</div>
+<div class="paragraph">
+<p>後編はPhantomJSでスクレイピングする方法やRaspberry Piを起動した時にHubotも自動的に起動させる設定などをご紹介します。<br></p>
+</div>
+<div class="paragraph">
+<p>今回はここで失礼します。</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
