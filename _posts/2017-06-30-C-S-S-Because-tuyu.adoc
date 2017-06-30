@@ -1,0 +1,52 @@
+= 梅雨なのでCSS
+:published_at: 2017-06-30
+:hp-alt-title: CSS Because tuyu
+:hp-tags: HTML,CSS,AMI
+
+
+++++
+<iframe src="http://tech.innovation.co.jp/docs/ami/kotanisan.html" width="500" height="500" frameborder="1"></iframe>
+++++
+
+
+HTML
+
+```
+<!DCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            div.img-area {
+                background: url(josei.png) no-repeat;
+            }
+            div.img {
+                width: 394px;
+                height: 425px;
+                background: url(josei.png) no-repeat;
+            }
+            div.img:hover {
+                background: url(kotanisan.png) no-repeat;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div clss="img-area">
+            <div class="img"></div>
+        </div>
+    </body>
+</html>
+
+
+```
+
+
+++++
+<iframe src="http://tech.innovation.co.jp/docs/ami/kotanisan2.html" width="500" height="500" frameborder="1"></iframe>
+++++
+
+
+++++
+<iframe src="http://tech.innovation.co.jp/docs/ami/kotanisan3.html" width="500" height="500" frameborder="1"></iframe>
+++++
