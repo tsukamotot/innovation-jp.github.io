@@ -4,17 +4,21 @@
         <meta charset="UTF-8">
         <style>
             div.img-area {
-                background: url(kotanisanjosei.png) no-repeat;
+                background: url(josei.png) no-repeat;
             }
-            /*Click時にimgを透過させる*/
-            img:active {
-                opacity:0;
+            div.img {
+                width: 394px;
+                height: 425px;
+                background: url(josei.png) no-repeat;
+            }
+            div.img:hover {
+                background: url(kotanisan.png) no-repeat;
             }
         </style>
     </head>
     <body>
-        <div class="img">
-            <img src="josei.png">
+        <div clss="img-area">
+            <div class="img"></div>
         </div>
     </body>
 </html>
