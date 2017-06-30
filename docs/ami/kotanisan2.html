@@ -1,0 +1,25 @@
+<!DCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            div.img-area {
+                background: url(kotanisan.png) no-repeat;
+            }
+            /*hover時に画像を透明にする*/
+            img:hover {
+                opacity:0;
+            }
+            img{
+                /*切り替わるスピードを調整する*/
+                transition-property: opacity;
+                transition-duration: 1s;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="img">
+            <img src="joseiwhite.png">
+        </div>
+    </body>
+</html>
