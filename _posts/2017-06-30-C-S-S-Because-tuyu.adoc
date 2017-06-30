@@ -65,9 +65,9 @@ body部分にimgタグを書き、hover時にdisplay:none で画像を非表示�
             }
             /*hover時に画像を透明にする*/
             img:hover {
-                opacity:0;
+                opacity: 0;
             }
-            img{
+            img {
                 /*切り替わるスピードを調整する*/
                 transition-property: opacity;
                 transition-duration: 1s;
@@ -118,7 +118,7 @@ body部分にimgタグを書き、hover時にdisplay:none で画像を非表示�
             }
             /*Click時にimgを透過させる*/
             img:active {
-                opacity:0;
+                opacity: 0;
             }
         </style>
     </head>
