@@ -1,12 +1,18 @@
-= 梅雨なのでCSS
+= 梅雨なのでCSS画像切り替え3種
 :published_at: 2017-06-30
 :hp-alt-title: CSS Because tuyu
 :hp-tags: HTML,CSS,AMI
 
 
+梅雨ですね。AMIです。
+魔が差して書いてみました。よければご覧ください。
+
+## ホバーすると鋭くKTNさん
+
 ++++
-<iframe src="http://tech.innovation.co.jp/docs/ami/kotanisan.html" width="500" height="500" frameborder="1"></iframe>
+<iframe src="http://tech.innovation.co.jp/docs/ami/kotanisan.html" width="410" height="450"></iframe>
 ++++
+
 
 
 HTML
@@ -17,9 +23,6 @@ HTML
     <head>
         <meta charset="UTF-8">
         <style>
-            div.img-area {
-                background: url(josei.png) no-repeat;
-            }
             div.img {
                 width: 394px;
                 height: 425px;
@@ -38,15 +41,103 @@ HTML
     </body>
 </html>
 
+```
+
+背景画像をCSSで上書きする方法です。 +
+body部分にimgタグを書き、hover時にdisplay:none で画像を非表示にする方法もあります。 +
+
+
+## ホバーするとじんわりとKTNさん
+
+
+++++
+<iframe src="http://tech.innovation.co.jp/docs/ami/kotanisan2.html" width="410" height="450"></iframe>
+++++
+
+```
+<!DCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            div.img-area {
+                background: url(kotanisan.png) no-repeat;
+            }
+            /*hover時に画像を透明にする*/
+            img:hover {
+                opacity:0;
+            }
+            img{
+                /*切り替わるスピードを調整する*/
+                transition-property: opacity;
+                transition-duration: 1s;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="img-area">
+            <img src="joseiwhite.png">
+        </div>
+    </body>
+</html>
+
 
 ```
 
+初期状態ではimgタグで女性の画像を設置し、 +
+画像の下にbackgroundの画像をCSSで設置しています。 +
+
+`img:hover`　→　imgタグ上にマウスを置いたとき +
+`opacity:0;`　→ 不透明度を0（すけすけ状態）にしてください　という意味です +
+しかしこのままでは「ホバーすると鋭くKTNさん」と同じものができてしまうので +
+`img`内に、`transition` →　時間で変化をさせたいよ！ +
+というプロパティを設置します。 +
+`transition-property: opacity;` →　何を時間変化させたいかというと`opacity`だよ！ +
+`transition-duration: 1s;`　→　どれくらいの時間で変化させたいかと言うと１秒だよ！ +
+と記載すると、じんわりとKTNさんが現れるようになります。 +
+
+
+
+
+## クリックすると一瞬KTNさん
+
 
 ++++
-<iframe src="http://tech.innovation.co.jp/docs/ami/kotanisan2.html" width="500" height="500" frameborder="1"></iframe>
+<iframe src="http://tech.innovation.co.jp/docs/ami/kotanisan3.html" width="410" height="450"></iframe>
 ++++
 
 
-++++
-<iframe src="http://tech.innovation.co.jp/docs/ami/kotanisan3.html" width="500" height="500" frameborder="1"></iframe>
-++++
+```
+<!DCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            div.img-area {
+                background: url(kotanisanjosei.png) no-repeat;
+            }
+            /*Click時にimgを透過させる*/
+            img:active {
+                opacity:0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="img-area">
+            <img src="josei.png">
+        </div>
+    </body>
+</html>
+
+```
+
+セレクタに`:active`という擬似クラスをつけると、クリック中の要素にスタイルが適用されるようになります。 +
+
+## まとめ
+
+CSSで動きがでるやつを覚えたいな〜 +
+画像を加工して遊びたいな〜と思い、今回のブログを書きました。 +
+ダイナミックなCSSアニメーションを身につけていきたいです！ +
+もっときれいに合成の画像が作れるようになりたいです！ +
+おわり +
+
