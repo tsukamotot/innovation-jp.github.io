@@ -1,0 +1,13 @@
+= はじめてのデータサイエンス（Exploratoryで品目別国別輸出統計の分析）
+:published_at: 2017-06-30
+:hp-alt-title: First work of my data sience
+:hp-tags: dataScience, Exploratory, e-stat
+
+どうもbigenです。
+
+先日、link:https://exploratory.io/[Exploratory]が主催するlink:https://exploratory.io/training-jp[データサイエンスブートキャンプ]に参加してきました。 +
+休日コース４日間のうち、２日間消化して、色々なことを学んできたので、忘れないうちにいったんアウトプットしてみました。 +
+ +
+なにはともあれ、今回のアウトプットはこちらです。 +
+ +
+ 
