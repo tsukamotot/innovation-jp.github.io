@@ -1,10 +1,10 @@
 = 執筆中
 :hp-alt-title: Azure 5
-:hp-tags: syoga, log, Azure, Computer Vision API, Function App, node.js, LINE, Repl-AI
+:hp-tags: syoga, log, Azure, Computer Vision API, Function App, Node.js, LINE, Repl-AI
 
-お久しぶりです、SREの人 syoga です、今年も後5ヶ月ですが、ログ出して行きましょう。
+お久しぶりです、SREの人 syoga です。今年も後5ヶ月ですが、ログ出して行きましょう。
 
-皆様すでにご存知かもしれませんが「電子レンジで魚が焼ける皿」を買いました、これが凄く便利で、皿に魚（生 or 干物）を載せてレンジでチンするだけで、焼き魚が簡単に作れます！
+皆様すでにご存知かもしれませんが「電子レンジで魚が焼ける皿」を買いました。これが凄く便利で、皿に魚（生 or 干物）を載せてレンジでチンするだけで、焼き魚が簡単に作れます！
 
 個人的に感動したので、こちらで共有させていただきました！
 
@@ -12,33 +12,42 @@
 
 ## もしもAWSが使えなかったら…
 【ここから超展開】 +
-『つまり！何が起こるか分からない現在（イマ）だからこそ、地球外生命体が攻めてきて全世界のAWSデータセンターを、破壊する可能性だってあるんだ！！』
+```
+『つまり！何が起こるか分からない現在（イマ）だからこそ、
+地球外生命体が攻めてきて全世界のAWSデータセンターを、
+破壊する可能性だってあるんだ！！』
 
-ΩΩΩ < な、なんだってー!? +
+ΩΩΩ < な、なんだってー!?
+```
 【ここまで 】
+色々なクラウドサービスを利用できた方が良いかなと思い、以前の
+http://tech.innovation.co.jp/2017/04/14/Azure-3.html[記事]で、作成した「画像解析Bot」くんを、Azureに移行するための理由を無理矢理作りました。
 
-色々なクラウドサービスを利用できた方が良いかなと思い、以前のhttp://tech.innovation.co.jp/2017/04/14/Azure-3.html[記事]で、作成した「画像解析bot」くんを、Azure に移行するための理由を無理矢理作りました。
+## AWS < = > Azure
+AWS では *Lambda + API GateWay*と*S3*を利用していましたが、Azure では同等の機能として *Function App* と *Storage* があります。
 
-## AWS <=> Azure
-AWS では Lambda + API GateWayとS3を利用していましたが、Azure では同等の機能として Function Appと Storage があります。
+Function App でも Node.js が利用できますので、コードを改良しつつ載せ替えてみます。
 
-Function App では node.js が利用できますので、コードを改良しつつ載せ替えてみます。
-
-改良したい点
-・会話できるようにする
-・コールバック地獄から脱出
-・検索ワードを指定しぐるなびの検索ができるようにする
-・bot の画像と名称を変更！！
+■ 改良したい点 +
+・会話できるようにする +
+・コールバック地獄から脱出 +
+・検索ワードを指定しぐるなびの検索ができるようにする +
+・Bot の画像と名称を変更する*（緊急）*
 
 それでは早速…
 
 ## 準備します
-Azure に載せ替えるために実施した事です。
+### 1.Function App の作成 
+必要な物は Microsoft アカウントとクレジットカードと、後は勇気だけ。 +
+詳細な手順については以下の Microsoft Docs を参照下さい。 +
+https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-serverless-api[Azure Functions を使用したサーバーレス API の作成]
 
-###1.Function App の作成 
+Strage は作成しなくて良いのかと思われるかもしれませんが、なんと Function App を作成するだけで Strage も自動で作成されます。これは AWS と異なりサーバレスとい
 
-###2.Redis Cache の作成（れでぃさ〜）
+### 2.Redis Cache の作成（れでぃさ〜）
 
-###3.会話用に利用するRepl-AIのユーザ登録
+
+
+### 3.会話用に利用するRepl-AIのユーザ登録
 
 ## 会話できるようにする
