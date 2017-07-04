@@ -30,9 +30,9 @@ Function App でも Node.js が利用できますので、コードを改良し�
 
 ■ 改良したい点 +
 ・お話できるようにする +
-・コールバック地獄から脱出 +
 ・検索ワードを指定しぐるなびの検索ができるようにする +
-・Bot の画像と名称を変更する*（緊急）*
+・コールバック地獄から脱出 +
+・Bot の画像と名称を変更する
 
 それでは早速…
 
@@ -60,6 +60,13 @@ https://docs.microsoft.com/ja-jp/azure/redis-cache/cache-dotnet-how-to-use-azure
 れでぃさ〜。
 
 ### 4.会話用に利用するRepl-AIのユーザ登録
-Repl-AI という
+Repl-AI という対話式チャットボットの API を利用しお話できるようにしますので、docomo Developer support アカウントを作成し、プロジェクトを作成しておきます。
+
+会話のシナリオを GUI を利用しノンプログラミングで作成できます、今回はデフォルトのシナリオを利用し会話できるようにします。
+
+詳細については以下ページを参照下さい。 +
+https://repl-ai.jp/#docs/guides/quickstart[Repl-AI ご利用までの流れ]
+
+以上で準備完了です。
 
 ## 会話できるようにする
