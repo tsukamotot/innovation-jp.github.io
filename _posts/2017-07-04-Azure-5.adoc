@@ -70,3 +70,4 @@ https://repl-ai.jp/#docs/guides/quickstart[Repl-AI ご利用までの流れ]
 以上で準備完了です。
 
 ## 会話できるようにする
+まずは
