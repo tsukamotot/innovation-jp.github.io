@@ -29,7 +29,7 @@ AWS では *Lambda + API GateWay*と*S3*を利用していましたが、Azure �
 Function App でも Node.js が利用できますので、コードを改良しつつ載せ替えてみます。
 
 ■ 改良したい点 +
-・会話できるようにする +
+・お話できるようにする +
 ・コールバック地獄から脱出 +
 ・検索ワードを指定しぐるなびの検索ができるようにする +
 ・Bot の画像と名称を変更する*（緊急）*
@@ -39,15 +39,27 @@ Function App でも Node.js が利用できますので、コードを改良し�
 ## 準備します
 ### 1.Function App の作成 
 必要な物は Microsoft アカウントとクレジットカードと、後は勇気だけ。 +
+
 詳細な手順については以下の Microsoft Docs を参照下さい。 +
 https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-serverless-api[Azure Functions を使用したサーバーレス API の作成]
 
-Strage は作成しなくて良いのかと思われるかもしれませんが、なんと Function App を作成するだけで Strage も自動で作成されます。これは AWS と異なりサーバレスとい
+### 2.Strage の作成
+必要な物は（略）。 +
 
-### 2.Redis Cache の作成（れでぃさ〜）
+詳細な手順については以下の Microsoft Docs を参照下さい。 +
+https://docs.microsoft.com/ja-jp/azure/storage/storage-create-storage-account[Azure ストレージ アカウントについて]
 
+プランで変わってきますが、1GB ¥1.53〜¥5.10で利用できます（最初の50TB/月）。
 
+### 3.Redis Cache の作成
+ぐるなびでのキーワード指定検索や、下記の Repl-AI で利用するユーザ ID を保存するために、Redis でデータを格納したいと思います。
 
-### 3.会話用に利用するRepl-AIのユーザ登録
+詳細な手順については以下の Microsoft Docs を参照下さい。 +
+https://docs.microsoft.com/ja-jp/azure/redis-cache/cache-dotnet-how-to-use-azure-redis-cache[Azure Redis Cache の使用方法]
+
+れでぃさ〜。
+
+### 4.会話用に利用するRepl-AIのユーザ登録
+Repl-AI という
 
 ## 会話できるようにする
