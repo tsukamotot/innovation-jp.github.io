@@ -30,9 +30,8 @@ Function App でも Node.js が利用できますので、コードを改良し�
 
 ■ 改良したい点 +
 ・お話できるようにする +
-・検索ワードを指定しぐるなびの検索ができるようにする +
+・検索ワード指定でぐるなび検索 +
 ・コールバック地獄から脱出 +
-・Bot の画像と名称を変更する
 
 それでは早速…
 
@@ -67,7 +66,146 @@ Repl-AI という対話式チャットボットの API を利用しお話でき�
 詳細については以下ページを参照下さい。 +
 https://repl-ai.jp/#docs/guides/quickstart[Repl-AI ご利用までの流れ]
 
-以上で準備完了です。
+以上で準備完了です、今回もエラーハンドリングはしません。
 
-## 会話できるようにする
-まずは
+## 検索ワード指定でぐるなび検索
+苦肉の策で「◯◯が食べたい。」というメッセージの場合は、◯◯（料理名を想定）を LINE ユーザ ID をキーに Redis Cache　に保存し、位置情報せびるようにします。
+
+```
+switch(type) {
+    // テキストメッセージ受信処理
+    case('text'):
+        // テキストメッセージ取得
+        let text = lineMess.message.text;
+
+        // メッセージが「◯◯が食べたい。」の場合
+        if(text.match(/が食べたい。/)) {
+            // メッセージから料理名を取得
+            let food = text.slice(0, text.indexOf('が食'));
+            if(food) {
+                client.set('guru' + userId, food);
+                pushTexeMessage('位置情報を送ってくれないかな？', userId, context, function(result) {});
+            } else {
+                // 料理名が取得できなかった場合
+                pushTexeMessage('それは食べ物ではないんじゃないかな？', userId, context, function(result) {});
+            } 
+```
+「◯◯が食べたい。」 以外の場合は、Repl-AI とお話しますが、後ほどそちらに触れます。
+
+位置情報を受信した際に、Redis Cache に登録された料理名取得し、次回の食べたいメッセージに備えて削除し、ぐるなびの API に取得した料理名を投げ、検索結果を返信します。
+```
+// 位置情報受信処理
+case('location'):
+    async.waterfall([
+        // 「◯◯が食べたい。」のメッセージを送っているか
+        function(callback) {
+            client.get('guru' + userId, function(err, result) {
+                callback(null, result);
+            });
+        },
+        function(food, callback) {
+            // 料理が存在しない場合はパンケーキを設定
+            if(!food) {
+                food = 'パンケーキ';
+            }
+            // 料理名で店舗を検索
+            getGuruRest(latitude, longitude, food, context, function(result) {
+                callback(null, result, food);
+            });
+        },
+        function(restList, food, callback) {
+            // 店舗検索結果に応じてメッセージを送信
+            if(typeof restList.rest != 'undefined' || restList.rest.length > 0) {                
+                pushTexeMessage('近くに' + food + 'が食べられるお店があるかな。', userId, context, function(result) {
+                    callback(null, restList);
+                });
+            } else {
+                pushTexeMessage('近くに' + food + 'が食べられるお店はないかな。', userId, context, function(result) {});
+            }
+        },
+        function(restList) {
+            let rest;
+            let sendRest;
+
+            // 料理名を削除
+            client.del('guru' + userId);
+            
+            // 店名、住所、URLを LINE にプッシュ
+            restList.rest.forEach(function(rest) {
+                sendRest =  '[店名] : ' + rest.name + '\n';
+                sendRest += '[住所] : ' + rest.address + '\n';
+                sendRest += '[URL] : '  + rest.url;
+                pushTexeMessage(sendRest, userId, context, function() {});
+            });
+        }
+    ]);
+break;
+```
+何も入力がない場合は、強制的に検索ワードはパンケーキとなります。
+
+
+## お話できるようにする
+Repl-AI 用のユーザIDを払い出し、そのIDを利用する事で同一の人物として、お話できるという仕組みになっています、ですのでキーとして LINE ユーザ ID を利用し Repl-AI のユーザ　ID　を管理します。
+
+その後、払い出されたユーザIDとメッセージを API に投げる事で、レスポンスにお返事メッセージが入っていますので、お返事メッセージを LINE に プッシュします。
+```
+async.waterfall([
+	// Repl-AI のユーザID登録確認
+	function(callback) {
+	    client.get(userId, function(err, result) {
+	        callback(null, result);
+	    });
+	},
+	// 未登録なら Repl-AI ユーザID登録
+	function(replUserId, callback) {
+	    let initFlag = false;
+	    if(!replUserId) {
+	        getReplAiUserid(replUserId, context, function(result) {
+	            let initFlag = true;
+	            client.set(userId, result);
+	            callback(null, result, initFlag);
+	        });
+	    } else {
+        　　　　// 登録済ならお話
+	        callback(null, replUserId, initFlag);  
+	    } 
+	},
+	// Repl-AI とお話
+	function(replUserId, initFlag, callback) {
+	    getReplAiMessage(replUserId, text, initFlag, context, function(result) {
+	        callback(null, result);                     
+	    });
+	},
+	function(respMess) {
+    	// お返事をLINEにプッシュ
+        pushTexeMessage(respMess, userId, context, function(result) {});   
+	}
+]);
+```
+コールバック地獄でも、メンテナンスに困らなければ良いのでは？と思ったのは内緒ですが、async モジュールを利用した事により、ネストが一定より深くならなくなりました！やったね。
+
+## 使ってみた
+まずは、ぐるなび検索を利用してみます。+
+画像
+位置情報を送信してあげます。+
+画像
+こんな感じで検索結果が返ってきました。+
+画像
+
+お話もしてみましょう。
+画像 +
+
+画像解析も念のため、弊社のフリー素材 KTN さんを利用します。
+
+お。相変わらず。
+
+## 感想
+Function App ですが個人的には UI が lambda よりスマートな感じがしました、Node.js のモジュールインストールは、コンソールでの操作が出来るので npm install で普通に出来ます、サーバレスとは。
+
+async を利用し作り直した部分以外（関数等）は、コピペでいけるかと思いきや、console.log が利用できずエラーとなるという罠がありました。
+
+また、Function App は1度起動するまでが遅いという欠点がありました、あくまでも batch 用関数なのかなと思いました。
+
+総括すると、サーバレスとか関数とか言語にとらわれずに、なんでもやってみると楽しいもんだな〜と思いました、あれ？作文？？
+
+完
