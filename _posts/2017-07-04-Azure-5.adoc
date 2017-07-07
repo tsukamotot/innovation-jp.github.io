@@ -1,6 +1,6 @@
 = 執筆中
 :hp-alt-title: Azure 5
-:hp-tags: syoga, log, Azure, Computer Vision API, Function App, Node.js, LINE, Repl-AI
+:hp-tags: syoga, log, Azure, Function App, Node.js, LINE, Repl-AI
 
 お久しぶりです、SREの人 syoga です。今年も後5ヶ月ですが、ログ出して行きましょう。
 
@@ -202,6 +202,8 @@ image:syoga/aml5/azure5-3.png[]
 
 ## 感想
 Function App ですが個人的には UI が lambda よりスマートな感じがしました、Node.js のモジュールインストールは、なんとコンソールで操作出来るので npm install で普通に出来ます、サーバレスとは…。
+
+webhook + API用の関数作成を実施すれば、API GateWay のような設定は必要なく、Function APP の管理画面から利用 URL を取得できました。
 
 async を利用し作り直した部分以外（関数等）は、コピペでいけるかと思いきや、console.log が利用できずエラーとなる罠がありました、context.log じゃないとダメ！
 
