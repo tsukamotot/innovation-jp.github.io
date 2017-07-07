@@ -189,18 +189,14 @@ async.waterfall([
 ・ぐるなび検索を利用してみます。 +
 image:syoga/aml5/azure5-1.png[]
 
-・位置情報を送信してあげます。 +
+・位置情報を送信し、検索結果が返ってきました。+
 image:syoga/aml5/azure5-2.png[]
 
-・こんな感じで検索結果が返ってきました。+
-image:syoga/aml5/azure5-3.png[]
-
-・お話もしてみましょう。 +
-image:syoga/aml5/azure.
+・お話もしてみましょう +
+image:syoga/aml5/azure.gif[]
 
 ・画像解析も念のため、弊社限定フリー素材 KTN さんにお願いしました +
-image:syoga/aml5/azure5-5.png[]
-
+image:syoga/aml5/azure5-3.png[]
 
 
 ## 感想
