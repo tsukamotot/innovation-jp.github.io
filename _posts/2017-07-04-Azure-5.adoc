@@ -43,7 +43,7 @@ Function App でも Node.js が利用できますので、コードを改良し�
 詳細な手順については以下の Microsoft Docs を参照下さい。 +
 https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-serverless-api[Azure Functions を使用したサーバーレス API の作成]
 
-### 2.Strage の作成
+### 2.Storage の作成
 必要な物は（略）。 +
 
 詳細な手順については以下の Microsoft Docs を参照下さい。 +
@@ -146,7 +146,7 @@ break;
 
 
 ## お話できるようにする
-Repl-AI 用のユーザIDを払い出し、そのIDを利用する事でユニークにお話できるという仕組みになっています、なのでキーとして LINE ユーザ ID を利用し Repl-AI のユーザ　ID　を管理します。
+Repl-AI 用のユーザIDを払い出し、そのIDを利用する事でユニークにお話できるという仕組みになっています、なのでキーとして LINE ユーザ ID を利用し Repl-AI のユーザ ID を管理します。
 
 その後、払い出されたユーザIDとメッセージを API に投げる事で、お返事メッセージがレスポンスされますので、お返事メッセージを LINE に プッシュします。
 ```
@@ -201,7 +201,7 @@ image:syoga/aml5/azure5-3.png[]
 お！いい感じの年齢判定ですね、翻訳機能はやはりアレですが。
 
 ## 感想
-Function App ですが個人的には UI が lambda よりスマートな感じがしました、Node.js のモジュールインストールは、なんとコンソールで操作出来るので npm install で普通に出来ます、サーバレスとは…。
+Function App ですが個人的には UI が Lambda よりスマートな感じがしました、Node.js のモジュールインストールは、なんとコンソールで操作出来るので npm install で普通に出来ます、サーバレスとは…。
 
 webhook + API用の関数作成を実施すれば、API GateWay のような設定は必要なく、Function App の管理画面から利用 URL を取得できました。
 
@@ -213,4 +213,4 @@ Node.js で作成しましたが非同期処理に振り回された感じです
 
 統括すると、サーバレスとか、クラウドサービスとか、使用言語にとらわれずに、なんでもやってみると楽しいもんだな〜と改めて思いました。あれ？作文？？
 
-完
+*完*
