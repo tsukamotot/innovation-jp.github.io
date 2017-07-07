@@ -201,7 +201,7 @@ image:syoga/aml5/azure5-3.png[]
 お！いい感じの年齢判定ですね、翻訳機能はやはりアレですが。
 
 ## 感想
-Function App ですが個人的には UI が Lambda よりスマートな感じがしました、Node.js のモジュールインストールは、なんとコンソールで操作出来るので npm install で普通に出来ます、サーバレスとは…。
+Function App ですが個人的には UI が Lambda よりスマートな感じがしました、Node.js のモジュールインストールは、Function を作成したサーバに対しコンソールで直接操作出来るため、 npm install で普通に出来ます、サーバレスとは…。
 
 webhook + API用の関数作成を実施すれば、API GateWay のような設定は必要なく、Function App の管理画面から利用 URL を取得できます、async を利用し作り直した部分以外（関数等）は、コピペでいけるかと思いきや、console.log が利用できずエラーとなる罠がありました、context.log じゃないとダメ！
 
