@@ -211,6 +211,12 @@ var _trackingid = 'LFT-10003-1';
 
     <ol class="post-list">
       <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/05/29/Fortigate-Policy-Routing.html" title="link to Fortigateにプロバイダを追加した時のメモ">Fortigateにプロバイダを追加した時のメモ</a></h2>
+        <p class="excerpt">KTNです。 先日、新しくネットワークの魔術師になったばかりの、 亜美さん、小柳津さんにお客様用Wi-Fiの設定をしてもらいましたが、 そのさらに続きで、プロバイダを追加したときのお話を書きたいと思います。 なんでプロバイダ追加したの？ 既にプロバイダ設定してあるのに、なんで更に追加するの？ という感じではあるのですが、 外部公開しているサーバがあってグローバルIPが足りなくなったからではないです。 マーケティングの情報取得のためにツールでGoogleに頻繁にアクセスしていて、 そのせいで社内の人が何かをググる時に、ロボットではないか？と疑われ、 都度認証が必要になって面倒くさいから。 社内の人が使うグローバルIPと、ツールが使うグローバルIPを分けたい！となりまして、 たまたま利用可能な&hellip;</p>
+        <div class="post-list__meta"><time datetime="29 May 2017" class="post-list__meta--date date">29 May 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Network">Network</a>, <a href="http://tech.innovation.co.jp/tag/Fortigate"> Fortigate</a>, <a href="http://tech.innovation.co.jp/tag/Policy-Routing"> Policy Routing</a>, <a href="http://tech.innovation.co.jp/tag/K-T-N"> KTN</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/05/28/Network-construction.html" title="link to お客様用インターネットの設定をした時のメモ">お客様用インターネットの設定をした時のメモ</a></h2>
         <p class="excerpt">AMIです 先日、会社にお客様用Wi-Fiが利用できるように設定をしました。 弊社のネットワーク魔術師であるKTN先生※を講師に 小柳津くんと一緒に、ネットワークの基礎から教えていただいたので、その時のことを忘れないようにメモします。 ※KTN先生の前回の記事：http://tech.innovation.co.jp/2017/04/13/Suffer-Fortigate-V-L-A-N.html ■現状を知る まずは現在使われている機器の紹介 ・UTM　：FortiGate80C 　社内のLANをWANに繋いでくれるやつ ・L2スイッチ 　OSI参照モデルの、Layer2の原理を使って情報を振り分ける機器 　LANケーブルを刺す穴を増やしてくれたりする ・アクセスポイント　：ゼブラ AP&hellip;</p>
         <div class="post-list__meta"><time datetime="28 May 2017" class="post-list__meta--date date">28 May 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Network">Network</a>, <a href="http://tech.innovation.co.jp/tag/Wi-Fi">Wi-Fi</a>, <a href="http://tech.innovation.co.jp/tag/A-M-I">AMI</a></span></div>
@@ -262,12 +268,6 @@ var _trackingid = 'LFT-10003-1';
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/04/22/Amazon-Redshift-Spectrum-C-S-V.html" title="link to Amazon Redshift Spectrum を CSVフォーマットで試してみた">Amazon Redshift Spectrum を CSVフォーマットで試してみた</a></h2>
         <p class="excerpt">SREチームの城田です。 先日発表された Amazon Redshift Spectrum をCSVフォーマットで試してみました。 今回は、大量のgz圧縮されたCSVデータをS3に退避はしているけれど、 必要な時に効率良く参照できない。 という想定の元に、 データをS3に置いたままで、Redshift側から検索をして素早くデータを抽出できるか、 というのをやってみました。 前提 * Macを使っている * IAMロールの設定ができる * S3バケットを作成できる * VPC、セキュリティグループの設定ができる 基本的には調べながら作成できれば問題ありません。 やったこと * IAMロールを作成 * S3バケットを作成 * Redshiftクラスターを作成 * ローカルマシンにpsqlをイン&hellip;</p>
         <div class="post-list__meta"><time datetime="22 Apr 2017" class="post-list__meta--date date">22 Apr 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Shirota">Shirota</a>, <a href="http://tech.innovation.co.jp/tag/Redshift"> Redshift</a>, <a href="http://tech.innovation.co.jp/tag/Redshift-Spectrum"> Redshift Spectrum</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/04/14/Azure-3.html" title="link to LINEとLambdaでパンケーキ！ なお話">LINEとLambdaでパンケーキ！ なお話</a></h2>
-        <p class="excerpt">お久しぶりです、SREと呼ぶ方も呼ばれる方もまだ慣れていない syoga です。 最近 SRE というチーム名に恥じない業務をするには何をすべきか… DevOpsってなんでも自動化するだけじゃないよね…等 日々の業務について悶々としていたところ、ドラゴンクエストXIの発売日が決まりました！！ 3DSとPS4 というマルチ展開なのでとりあえず両方購入する事にします！ Azure Machine Learning のお話 その3 Azure シリーズの第3段となります、前回までのあらすじはこちらです。 機械学習を学ぶため Azure Machin Training を体験したが、 自分が「作るより使う方が好きマン」だという事に気付き、 Computer Vision API を使ってみた sy&hellip;</p>
-        <div class="post-list__meta"><time datetime="14 Apr 2017" class="post-list__meta--date date">14 Apr 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/syoga">syoga</a>, <a href="http://tech.innovation.co.jp/tag/log"> log</a>, <a href="http://tech.innovation.co.jp/tag/Azure"> Azure</a>, <a href="http://tech.innovation.co.jp/tag/Computer-Vision-A-P-I"> Computer Vision API</a>, <a href="http://tech.innovation.co.jp/tag/Nodejs"> Node.js</a>, <a href="http://tech.innovation.co.jp/tag/A-W-S"> AWS</a>, <a href="http://tech.innovation.co.jp/tag/Lambda"> Lambda</a>, <a href="http://tech.innovation.co.jp/tag/L-I-N-E"> LINE</a></span></div>
         <hr class="post-list__divider" />
       </li>
     </ol>
