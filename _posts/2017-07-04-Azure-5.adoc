@@ -196,9 +196,9 @@ image:syoga/aml5/azure5-2.png[]
 image:syoga/aml5/azure5-3.png[]
 
 ・お話もしてみましょう。 +
-image:syoga/aml5/azure5-4.png[]
+image:syoga/aml5/azure.
 
-・画像解析も念のため、弊社のフリー素材 KTN さんにお願いしました +
+・画像解析も念のため、弊社限定フリー素材 KTN さんにお願いしました +
 image:syoga/aml5/azure5-5.png[]
 
 
