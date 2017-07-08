@@ -1,0 +1,39 @@
+# Serverless Framework + ECMAScript2015 で サーバーレスマイクロサービスを作る その1
+:hp-alt-title:　Serverless Framework + ECMAScript2015 で サーバーレスマイクロサービスを作る その1
+:hp-tags: Shirota, Serverless Framework, ECMAScript2015, ECMAScript6, ES6
+
+SREチームの城田です。 +
+
+サーバーレスでマイクロサービスを作れるようになっておけば、
+今後役に立つこともあるかなと思いまして作ってみました。
+
+# 概要
+
+Serverless Framework という、
+AWS API Gateway や Lambda など AWSサービスに関しての設定やコーディングをローカルで行い、
+デプロイができるフレームワークを利用した。
+
+Lambdaで使用するランタイムとしては、Node.jsを採用し、
+ローカルでのコーディングはECMAScript2015（別名：ECMAScript6 以下ES6）で記述し、
+Serverless Framework の デプロイ時に BABEL という ES6からJavascriptへトランスパイルするツールを利用した。
+
+ローカル開発環境は Serverless Framework + webpack の ウェブサーバ機能 を使って、ローカルで API Gateway や Lambda の開発ができる
+
+今回作成したのは、
+アカウント認証周りのアクセストークンを発行してRDSに保存するという部分
+
+# やったこと
+
+* Serverless Framework の インストール
+* AWSアカウントの設定
+* Serverless Framework プロジェクト作成
+* npmコマンドで BABEL webpack プラグインをインストール
+* BABELの設定
+* webpackの設定
+* Serverless Frameworkの設定
+* MySQLクライアント、UUID生成プラグインをインストール
+* RDS　MySQLにテーブルを作成
+* ES6でコーディング
+* Serverless Frameworkでデプロイ
+* 動作確認
+
