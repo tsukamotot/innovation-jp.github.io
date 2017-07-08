@@ -25,7 +25,7 @@
 http://tech.innovation.co.jp/2017/04/14/Azure-3.html[記事]で作成した「画像解析Bot」くんを、Azureに移行するための理由を無理矢理作りました。
 
 ## AWS < = > Azure
-AWS では *Lambda + API GateWay*と*S3*を利用していましたが、Azure では同等の機能として *Function App* と *Storage* があります。
+AWS では *Lambda + API Gateway*と*S3*を利用していましたが、Azure では同等の機能として *Function App* と *Storage* があります。
 
 Function App でも Node.js が利用できますので、コードを改良しつつ載せ替えてみます。
 
