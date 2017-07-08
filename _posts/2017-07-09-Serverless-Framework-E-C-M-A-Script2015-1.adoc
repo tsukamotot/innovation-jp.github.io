@@ -173,9 +173,254 @@ module.exports = {
 </pre>
 ++++
 
-* Serverless Frameworkの設定
-* MySQLクライアント、UUID生成プラグインをインストール
-* RDS　MySQLにテーブルを作成
-* ES6でコーディング
-* Serverless Frameworkでデプロイ
-* 動作確認
+# Serverless Frameworkの設定
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ vi serverless.yml
+
+service: account-pf
+
+plugins:
+  - serverless-webpack
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: us-east-1
+  profile: shirox
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "ec2:CreateNetworkInterface"
+        - "ec2:DescribeNetworkInterfaces"
+        - "ec2:DeleteNetworkInterface"
+      Resource:
+        - "*"
+  vpc:
+    securityGroupIds:
+      - sg-e279f29b
+    subnetIds:
+      - subnet-ca03f1bc
+      - subnet-f64ee6cb
+      - subnet-591d0900
+      - subnet-84191eaf
+
+functions:
+  createToken:
+    handler: handler.createToken
+    events:
+      - http:
+          path: auth
+          method: post
+          cors: true
+  getToken:
+    handler: handler.getToken
+    events:
+      - http:
+          path: auth
+          method: get
+          cors: true
+</pre>
+++++
+
+# MySQLクライアント、UUID生成プラグインをインストール
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ npm install -g mysql uuid
+npm install -g mysql uuid
+/usr/local/bin/uuid -> /usr/local/lib/node_modules/uuid/bin/uuid
++ mysql@2.13.0
++ uuid@3.1.0
+added 9 packages in 0.749s
+
+$ npm install --save mysql uuid
++ uuid@3.1.0
++ mysql@2.13.0
+added 7 packages in 2.454s
+</pre>
+++++
+
+# RDS　MySQLにテーブルを作成
+
+++++
+<pre style="font-family: Menlo, Courier">
+Create Table: CREATE TABLE `clients` (
+  `client_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `password` varchar(64) DEFAULT NULL,
+  `name` varchar(128) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `tel` varchar(13) DEFAULT NULL,
+  `postal` varchar(8) DEFAULT NULL,
+  `address1` varchar(512) DEFAULT NULL,
+  `address2` varchar(512) DEFAULT NULL,
+  `token` varchar(64) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`client_id`)
+) ENGINE=InnoDB
+</pre>
+++++
+
+# ES6でコーディング
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ vi handler.js
+
+'use strict';
+
+import Mysql  from "./app/Libraries/Mysql.es6";
+import Utils from "./app/Libraries/Utils.es6";
+
+import dsn from "./conf/db.conf.es6";
+
+export const createToken = (event, context, callback) => {
+
+	let token = Utils.generateToken();
+
+	let insertData = {
+		token: token,
+	};
+
+	let db = new Mysql(dsn);
+	db.query("INSERT INTO `clients` SET ?", insertData);
+	db.end();
+
+	const response = {
+		statusCode: 200,
+		headers: {
+			"Access-Control-Allow-Origin" : "*"
+		},
+		body: JSON.stringify({
+			status: 'ok',
+			token: token,
+		}),
+	}
+
+	callback(null, response)
+}
+
+$ mkdir -p app/Libraries
+$ mkdir -p conf
+
+$ vi app/Libraries/Mysql.es6
+
+export default class Mysql {
+
+	constructor(dsn) {
+		this.mysql = require("mysql");
+		this.dsn = dsn;
+
+		return this.connect();
+	}
+
+	connect() {
+		return this.mysql.createConnection(this.dsn);
+	}
+};
+
+$ vi conf/db.conf.es6
+
+module.exports = {
+	host     : "****.****.us-east-1.rds.amazonaws.com",
+	user     : "****",
+	password : "****",
+	port     : "3306",
+	database : "****",
+}
+
+$ vi app/Libraries/Utils.es6
+
+export default class Utility {
+
+	constructor() {
+	}
+
+	static generateToken() {
+		let uuid = require("uuid/v4");
+		let token = uuid().split('-').join('');
+
+		return token;
+	}
+}
+</pre>
+++++
+
+# Serverless Frameworkでデプロイ
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ sls deploy -v
+Serverless: Bundling with Webpack...
+Time: 791ms
+     Asset    Size  Chunks                    Chunk Names
+handler.js  509 kB       0  [emitted]  [big]  main
+   [8] ./node_modules/mysql/lib/Connection.js 12.4 kB {0} [built]
+  [13] ./node_modules/mysql/lib/protocol/constants/types.js 1.8 kB {0} [built]
+  [14] ./node_modules/mysql/index.js 4.29 kB {0} [built]
+  [23] ./node_modules/mysql/lib/protocol/SqlString.js 39 bytes {0} [built]
+  [25] ./node_modules/mysql/lib/PoolConfig.js 1.06 kB {0} [built]
+  [27] ./handler.js 1.12 kB {0} [built]
+  [28] ./node_modules/babel-runtime/core-js/json/stringify.js 95 bytes {0} [built]
+  [29] ./node_modules/core-js/library/fn/json/stringify.js 242 bytes {0} [built]
+  [31] ./app/Libraries/Mysql.es6 235 bytes {0} [built]
+  [79] ./node_modules/mysql/lib/PoolCluster.js 6.47 kB {0} [built]
+  [81] ./app/Libraries/Utils.es6 206 bytes {0} [built]
+  [82] ./node_modules/uuid/v4.js 679 bytes {0} [built]
+  [83] ./node_modules/uuid/lib/rng.js 239 bytes {0} [built]
+  [84] ./node_modules/uuid/lib/bytesToUuid.js 699 bytes {0} [built]
+  [85] ./conf/db.conf.es6 186 bytes {0} [built]
+    + 71 hidden modules
+Serverless: Packaging service...
+Serverless: Uploading CloudFormation file to S3...
+Serverless: Uploading artifacts...
+Serverless: Uploading service .zip file to S3 (132.1 KB)...
+Serverless: Validating template...
+Serverless: Updating Stack...
+Serverless: Checking Stack update progress...
+CloudFormation - UPDATE_IN_PROGRESS - AWS::CloudFormation::Stack - account-pf-dev
+CloudFormation - UPDATE_IN_PROGRESS - AWS::Lambda::Function - CreateTokenLambdaFunction
+CloudFormation - UPDATE_COMPLETE - AWS::Lambda::Function - CreateTokenLambdaFunction
+CloudFormation - CREATE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment1499526468266
+CloudFormation - CREATE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment1499526468266
+CloudFormation - CREATE_COMPLETE - AWS::ApiGateway::Deployment - ApiGatewayDeployment1499526468266
+CloudFormation - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS - AWS::CloudFormation::Stack - account-pf-dev
+CloudFormation - DELETE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment1499526400013
+CloudFormation - DELETE_COMPLETE - AWS::ApiGateway::Deployment - ApiGatewayDeployment1499526400013
+CloudFormation - UPDATE_COMPLETE - AWS::CloudFormation::Stack - account-pf-dev
+Serverless: Stack update finished...
+Service Information
+service: account-pf
+stage: dev
+region: us-east-1
+api keys:
+  None
+endpoints:
+  POST - https://coftklhzwe.execute-api.us-east-1.amazonaws.com/dev/auth
+functions:
+  createToken: account-pf-dev-createToken
+
+Stack Outputs
+CreateTokenLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:251555968592:function:account-pf-dev-createToken:2
+ServiceEndpoint: https://coftklhzwe.execute-api.us-east-1.amazonaws.com/dev
+ServerlessDeploymentBucketName: account-pf-dev-serverlessdeploymentbucket-zpba4u73f7no
+
+Serverless: Removing old service versions...
+</pre>
+++++
+
+
+
+# 動作確認
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ curl -X POST https://**********.execute-api.us-east-1.amazonaws.com/dev/auth
+{"status":"ok","token":"29a35ef42a2648cf96aad0d65fcf7656"}%
+</pre>
+++++
