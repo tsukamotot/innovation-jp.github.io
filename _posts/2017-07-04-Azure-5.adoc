@@ -192,7 +192,7 @@ image:syoga/aml5/azure5-1.png[]
 ・位置情報を送信し、検索結果が返ってきました
 image:syoga/aml5/azure5-2.png[]
 
-・お話もしてみましょう 
+・お話もしてみましょう +
 image:syoga/aml5/azure.gif[]
 ドヤってますね。
 
