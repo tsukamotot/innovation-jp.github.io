@@ -2,25 +2,30 @@
 :hp-alt-title:　Serverless Framework + ECMAScript2015 で サーバーレスマイクロサービスを作る その1
 :hp-tags: Shirota, Serverless Framework, ECMAScript2015, ECMAScript6, ES6
 
+++++
+<style>*{font-family: Menlo, Courier}</style>
+++++
+
 SREチームの城田です。 +
 
-サーバーレスでマイクロサービスを作れるようになっておけば、
+サーバーレスでマイクロサービスを作れるようになっておけば、 +
 今後役に立つこともあるかなと思いまして作ってみました。
 
 # 概要
 
-Serverless Framework という、
-AWS API Gateway や Lambda など AWSサービスに関しての設定やコーディングをローカルで行い、
+Serverless Framework という、 +
+AWS API Gateway や Lambda など AWSサービスに関しての設定やコーディングをローカルで行い、 +
 デプロイができるフレームワークを利用した。
 
-Lambdaで使用するランタイムとしては、Node.jsを採用し、
-ローカルでのコーディングはECMAScript2015（別名：ECMAScript6 以下ES6）で記述し、
-Serverless Framework の デプロイ時に BABEL という ES6からJavascriptへトランスパイルするツールを利用した。
+Lambdaで使用するランタイムとしては、Node.jsを採用し、 +
+ローカルでのコーディングはECMAScript2015（別名：ECMAScript6 以下ES6）で記述し、 +
+Serverless Framework の デプロイ時に BABEL という ES6からJavascriptへ変換するツールを利用した。
 
-ローカル開発環境は Serverless Framework + webpack の ウェブサーバ機能 を使って、ローカルで API Gateway や Lambda の開発ができる
+ローカル開発環境は Serverless Framework + webpack の ウェブサーバ機能 を使って、 +
+ローカルで API Gateway や Lambda の開発ができる。
 
-今回作成したのは、
-アカウント認証周りのアクセストークンを発行してRDSに保存するという部分
+今回作成したのは、 +
+アカウント認証周りのアクセストークンを発行してRDSに保存するという部分。 
 
 # やったこと
 
@@ -37,3 +42,140 @@ Serverless Framework の デプロイ時に BABEL という ES6からJavascript�
 * Serverless Frameworkでデプロイ
 * 動作確認
 
+# Serverless Framework の インストール
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ sudo npm install -g serverless
+/usr/local/bin/slss -> /usr/local/lib/node_modules/serverless/bin/serverless
+/usr/local/bin/serverless -> /usr/local/lib/node_modules/serverless/bin/serverless
+/usr/local/bin/sls -> /usr/local/lib/node_modules/serverless/bin/serverless
+
+> serverless@1.17.0 postinstall /usr/local/lib/node_modules/serverless
+> node ./scripts/postinstall.js
+
++ serverless@1.17.0
+updated 3 packages in 11.982s
+</pre>
+++++
+
+# AWSアカウントの設定
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ aws configure
+AWS Access Key ID [None]: 作成したIAMのアクセスキーID
+AWS Secret Access Key [None]: 作成したIAMのシークレットアクセスキー
+Default region name [None]: us-east-1
+Default output format [None]: ENTER
+</pre>
+++++
+
+# Serverless Framework プロジェクト作成
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ sls create --template aws-nodejs --name account-pf
+Serverless: Generating boilerplate...
+ _______                             __
+|   _   .-----.----.--.--.-----.----|  .-----.-----.-----.
+|   |___|  -__|   _|  |  |  -__|   _|  |  -__|__ --|__ --|
+|____   |_____|__|  \___/|_____|__| |__|_____|_____|_____|
+|   |   |             The Serverless Application Framework
+|       |                           serverless.com, v1.17.0
+ -------'
+
+Serverless: Successfully generated boilerplate for template: "aws-nodejs"
+</pre>
+++++
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ ls -a
+.              ..             .gitignore     handler.js     serverless.yml
+</pre>
+++++
+
+
+handler.js と serverless.yml というファイルが出来ました。
+
+
+# npmコマンドで BABEL webpack プラグインをインストール
+
+BabelはES6をJavaScriptに変換するプラグイン
+webpackはビルドツールです。ローカル上でテストするためのウェブサーバ機能も含まれています。
+ES6はJavaScriptの中核仕様を抜き出して標準化したものです。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ npm install --save-dev babel-core babel-loader babel-plugin-transform-runtime babel-preset-es2015 serverless-webpack webpack
++ babel-preset-es2015@6.24.1
++ babel-plugin-transform-runtime@6.23.0
++ serverless-webpack@2.0.0
++ babel-core@6.25.0
++ babel-loader@7.1.1
++ webpack@3.1.0
+added 489 packages in 13.767s
+
+$ npm install --save babel-runtime
++ babel-runtime@6.23.0
+updated 1 package in 2.371s
+</pre>
+++++
+
+npm の --save-dev オプションは開発環境の為のインストールで、--save オプションは JSONファイルに設定を保存するオプションです。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ ls -a
+.                 ..                .gitignore        handler.js        node_modules      package-lock.json serverless.yml
+</pre>
+++++
+
+node_modules にインストールしたプラグインが入っています。また、package-lock.jsonにインストールされたプラグインが記載されています。
+
+# BABELの設定
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ vi .babelrc
+
+{
+  "plugins": ["transform-runtime"],
+  "presets": ["es2015"]
+}
+</pre>
+++++
+
+BABELの設定ファイルにプラグインは transform-runtime を使うこと。presetsは ES6 を利用することを記載します。
+
+# webpackの設定
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ vi webpack.config.js
+
+module.exports = {
+  entry: './handler.js',
+  target: 'node',
+  module: {
+    loaders: [{
+      test: /\.js$/,
+      loaders: ['babel-loader'],
+      include: __dirname,
+      exclude: /node_modules/,
+    }]
+  },
+  externals: {
+    'aws-sdk': 'aws-sdk'
+  }
+};
+</pre>
+++++
+
+* Serverless Frameworkの設定
+* MySQLクライアント、UUID生成プラグインをインストール
+* RDS　MySQLにテーブルを作成
+* ES6でコーディング
+* Serverless Frameworkでデプロイ
+* 動作確認
