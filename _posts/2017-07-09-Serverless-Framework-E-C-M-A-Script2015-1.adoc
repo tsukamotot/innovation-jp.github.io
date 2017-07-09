@@ -380,7 +380,7 @@ MySQLクラスとUtility関連のクラスをインポートして +
 トークンを生成しそれをMySQLにインサートして、 +
 HTTPレスポンスを返すという流れです。
 
-Serverless Framework に app conf ディレクトリを作成しておきます。
+Serverless Framework に app app/Libraries conf ディレクトリを作成しておきます。
 
 ++++
 <pre style="font-family: Menlo, Courier">
