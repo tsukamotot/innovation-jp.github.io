@@ -27,7 +27,7 @@ ECMAScript2015（別名：ECMAScript6 以下ES6）で記述し、 +
 ビルドツールは webpack を利用しました。
 
 ローカル開発環境は webpack の ウェブサーバ機能 を使って、 +
-ローカルで API Gateway や Lambda の開発もできるようなっています。
+ローカルで API Gateway や Lambda の開発もできるようになっています。
 
 # やったこと
 
