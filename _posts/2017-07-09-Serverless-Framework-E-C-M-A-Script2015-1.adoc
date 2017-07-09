@@ -17,15 +17,16 @@ Serverless Framework という、 +
 AWS API Gateway や Lambda など AWSサービスに関しての設定やコーディングをローカルで行い、 +
 デプロイができるフレームワークを利用した。
 
-Lambdaで使用するランタイムとしては、Node.jsを採用し、 +
-ローカルでのコーディングはECMAScript2015（別名：ECMAScript6 以下ES6）で記述し、 +
+Lambdaで使用するランタイムとしては Node.js を採用し、 +
+ローカルでのコーディングはJavaScriptの中核仕様を抜き出して標準化した、 +
+ECMAScript2015（別名：ECMAScript6 以下ES6）で記述し、 +
 Serverless Framework の デプロイ時に BABEL という ES6からJavascriptへ変換するツールを利用した。
 
 ローカル開発環境は Serverless Framework + webpack の ウェブサーバ機能 を使って、 +
-ローカルで API Gateway や Lambda の開発ができる。
+ローカルで API Gateway や Lambda の開発ができるようにした。
 
 今回作成したのは、 +
-アカウント認証周りのアクセストークンを発行してRDSに保存するという部分。 
+アカウント認証周りのアクセストークンを発行してRDSに保存するという部分です。 
 
 # やったこと
 
@@ -42,7 +43,17 @@ Serverless Framework の デプロイ時に BABEL という ES6からJavascript�
 * Serverless Frameworkでデプロイ
 * 動作確認
 
+# 前提
+
+* ローカル端末はMacを使う
+* npmコマンドはHomebrewなどでインストール済みである
+* awscliコマンドは同じくHomebrewなどでインストール済みである
+* AWSアカウントを持っている（今回は検証なので全権限許可IAMのクレデンシャルキーを使用）
+* AWS RDS(MySQLエンジン)のエンドポイント作成とDB作成、接続は確認済みである
+
 # Serverless Framework の インストール
+
+npmコマンドで Serverless Framework をインストールします。
 
 ++++
 <pre style="font-family: Menlo, Courier">
@@ -59,19 +70,28 @@ updated 3 packages in 11.982s
 </pre>
 ++++
 
+sudo を使った上で -g オプションで端末に対してグローバルにインストールしています。
+
 # AWSアカウントの設定
+
+あらかじめ用意しておいたAWSアカウントを設定します。
 
 ++++
 <pre style="font-family: Menlo, Courier">
 $ aws configure
-AWS Access Key ID [None]: 作成したIAMのアクセスキーID
-AWS Secret Access Key [None]: 作成したIAMのシークレットアクセスキー
+AWS Access Key ID [None]: アクセスキーID
+AWS Secret Access Key [None]: シークレットアクセスキー
 Default region name [None]: us-east-1
-Default output format [None]: ENTER
+Default output format [None]: そのままEnterキーを押す
 </pre>
 ++++
 
+aws s3 ls s3:// などでS3にアクセスできるかなどで動作確認しました。
+
 # Serverless Framework プロジェクト作成
+
+account-pf という名称で作成します。 +
+Lambdaのランタイムは Node.js を採用したのでテンプレートには aws-nodejs を指定します。
 
 ++++
 <pre style="font-family: Menlo, Courier">
@@ -97,14 +117,14 @@ $ ls -a
 ++++
 
 
-handler.js と serverless.yml というファイルが出来ました。
+handler.js と serverless.yml というファイルが生成されました。
 
 
 # npmコマンドで BABEL webpack プラグインをインストール
 
-BabelはES6をJavaScriptに変換するプラグイン
-webpackはビルドツールです。ローカル上でテストするためのウェブサーバ機能も含まれています。
-ES6はJavaScriptの中核仕様を抜き出して標準化したものです。
+BABELはES6などをJavaScriptに変換するプラグインで、 +
+webpackはビルドツールです。 +
+ローカル端末上でテストするためのウェブサーバ機能も含まれています。
 
 ++++
 <pre style="font-family: Menlo, Courier">
@@ -123,7 +143,8 @@ updated 1 package in 2.371s
 </pre>
 ++++
 
-npm の --save-dev オプションは開発環境の為のインストールで、--save オプションは JSONファイルに設定を保存するオプションです。
+--save-dev オプションで開発環境の為のインストールということを明示しています。 +
+--save オプション自体はJSONファイルに設定を保存するオプションです。
 
 ++++
 <pre style="font-family: Menlo, Courier">
@@ -132,7 +153,8 @@ $ ls -a
 </pre>
 ++++
 
-node_modules にインストールしたプラグインが入っています。また、package-lock.jsonにインストールされたプラグインが記載されています。
+node_modules というディレクトリが生成されて、そこにインストールされたプラグインが入っています。 +
+また、package-lock.jsonにインストールされたプラグインが記載されています。
 
 # BABELの設定
 
