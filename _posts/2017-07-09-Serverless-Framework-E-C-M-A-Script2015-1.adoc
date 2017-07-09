@@ -9,30 +9,29 @@
 SREチームの城田です。 +
 
 サーバーレスでマイクロサービスを作れるようになっておけば、 +
-今後役に立つこともあるかなと思いまして作ってみました。
+今後役に立つこともあるかなと思いまして作ってみます。
 
 # 概要
 
 Serverless Framework という、 +
-AWS API Gateway や Lambda など AWSサービスに関しての設定やコーディングをローカルで行い、 +
-デプロイができるフレームワークを利用した。
+API Gateway や Lambda など AWSサービスに関しての設定やコーディングをローカルで行い、 +
+デプロイができるフレームワークを利用して、 +
+アカウント認証周りのアクセストークンを発行してRDSに保存する機能を作成します。
 
-Lambdaで使用するランタイムとしては Node.js を採用し、 +
+Lambdaで使用するランタイムとしては Node.js 6.10 を採用し、 +
 ローカルでのコーディングはJavaScriptの中核仕様を抜き出して標準化した、 +
 ECMAScript2015（別名：ECMAScript6 以下ES6）で記述し、 +
-Serverless Framework の デプロイ時に BABEL という ES6からJavascriptへ変換するツールを利用した。
+デプロイ時に BABEL というES6からJavascriptへ変換するツールを利用し、 +
+ビルドツールは webpack を利用しました。
 
-ローカル開発環境は Serverless Framework + webpack の ウェブサーバ機能 を使って、 +
-ローカルで API Gateway や Lambda の開発ができるようにした。
-
-今回作成したのは、 +
-アカウント認証周りのアクセストークンを発行してRDSに保存するという部分です。 
+ローカル開発環境は webpack の ウェブサーバ機能 を使って、 +
+ローカルで API Gateway や Lambda の開発ができるようなっています。
 
 # やったこと
 
-* Serverless Framework の インストール
+* Serverless Framework のインストール
 * AWSアカウントの設定
-* Serverless Framework プロジェクト作成
+* Serverless Framework のプロジェクト作成
 * npmコマンドで BABEL webpack プラグインをインストール
 * BABELの設定
 * webpackの設定
@@ -51,7 +50,7 @@ Serverless Framework の デプロイ時に BABEL という ES6からJavascript�
 * AWSアカウントを持っている（今回は検証なので全権限許可IAMのクレデンシャルキーを使用）
 * AWS RDS(MySQLエンジン)のエンドポイント作成とDB作成、接続は確認済みである
 
-# Serverless Framework の インストール
+# Serverless Framework のインストール
 
 npmコマンドで Serverless Framework をインストールします。
 
@@ -88,7 +87,7 @@ Default output format [None]: そのままEnterキーを押す
 
 aws s3 ls s3:// などでS3にアクセスできるかなどで動作確認しました。
 
-# Serverless Framework プロジェクト作成
+# Serverless Framework のプロジェクト作成
 
 account-pf という名称で作成します。 +
 Lambdaのランタイムは Node.js を採用したのでテンプレートには aws-nodejs を指定します。
@@ -560,6 +559,34 @@ mysql> select client_id, token, created_at from clients;
 </pre>
 ++++
 
+# ローカルでの開発環境
+
+最後に補足として開発環境に関しては、
+以下のコマンドでローカルにウェブサーバが立ち上がります。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ sls webpack serve
+Serverless: Serving functions...
+  POST - http://localhost:8000/auth
+</pre>
+++++
+
+あとはcurlコマンドなどで確認できます。
+
+++++
+<pre style="font-family: Menlo, Courier">
+curl -X POST http://localhost:8000/auth
+{"status":"ok","token":"5e8a005db09d4d49a7016fcbe2f9ecad"}%
+</pre>
+++++
+
+簡単ですね。
+
+ちなみに、このウェブサーバを立ち上げた状態で、ES6のソースコードを変更したら、反映されます。 +
+即時にES6からJavaScriptへBABELが変換しているのでしょうか。 +
+どうやっているかはわかりませんが、便利ですしすごいです。
+
 # 所感
 
 とても簡単にAPI GatewayやLambdaのコーディングやデプロイができました。
@@ -587,7 +614,7 @@ Serverless Frameworkのようなフレームワークは必須と感じました
 とても面倒に感じていました。
 フレームワークを利用することでその辺も何も気にしなくて済むというのはすごいです。
 
-また、今回は出てきませんでしたが、もちろんtoken情報はRedisなどにキャッシュして、
+また、今回は出てきませんでしたが、もちろんtoken情報はElastiCache Redisなどにキャッシュして、
 APIのレスポンスを短くできなければ使い物になりません。
 
 次回その2ではRedisを組み込み、私も れでぃさ〜 になりたいと思います。
