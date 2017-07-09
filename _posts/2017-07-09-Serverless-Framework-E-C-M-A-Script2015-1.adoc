@@ -502,12 +502,10 @@ Serverless: Checking Stack update progress...
 CloudFormation - UPDATE_IN_PROGRESS - AWS::CloudFormation::Stack - account-pf-dev
 CloudFormation - UPDATE_IN_PROGRESS - AWS::Lambda::Function - CreateTokenLambdaFunction
 CloudFormation - UPDATE_COMPLETE - AWS::Lambda::Function - CreateTokenLambdaFunction
-CloudFormation - CREATE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment1499526468266
-CloudFormation - CREATE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment1499526468266
-CloudFormation - CREATE_COMPLETE - AWS::ApiGateway::Deployment - ApiGatewayDeployment1499526468266
+CloudFormation - CREATE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment0000000000000
+CloudFormation - CREATE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment0000000000000
+CloudFormation - CREATE_COMPLETE - AWS::ApiGateway::Deployment - ApiGatewayDeployment0000000000000
 CloudFormation - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS - AWS::CloudFormation::Stack - account-pf-dev
-CloudFormation - DELETE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment1499526400013
-CloudFormation - DELETE_COMPLETE - AWS::ApiGateway::Deployment - ApiGatewayDeployment1499526400013
 CloudFormation - UPDATE_COMPLETE - AWS::CloudFormation::Stack - account-pf-dev
 Serverless: Stack update finished...
 Service Information
@@ -517,14 +515,14 @@ region: us-east-1
 api keys:
   None
 endpoints:
-  POST - https://coftklhzwe.execute-api.us-east-1.amazonaws.com/dev/auth
+  POST - https://**********.execute-api.us-east-1.amazonaws.com/dev/auth
 functions:
   createToken: account-pf-dev-createToken
 
 Stack Outputs
-CreateTokenLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:251555968592:function:account-pf-dev-createToken:2
-ServiceEndpoint: https://coftklhzwe.execute-api.us-east-1.amazonaws.com/dev
-ServerlessDeploymentBucketName: account-pf-dev-serverlessdeploymentbucket-zpba4u73f7no
+CreateTokenLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:000000000000:function:account-pf-dev-createToken:2
+ServiceEndpoint: https://**********.execute-api.us-east-1.amazonaws.com/dev
+ServerlessDeploymentBucketName: account-pf-dev-serverlessdeploymentbucket-************
 
 Serverless: Removing old service versions...
 </pre>
@@ -535,9 +533,9 @@ sls deploy -v と打つだけで、 +
 
 -v はデプロイの詳細を表示してくれるオプションです。
 
-デプロイ処理の概要としては、 +
-webpack が BABEL を使って ES6スクリプトを JavaScript に変換して、 +
-mysql uuid などのブラグインも組み込んでビルドし、 +
+デプロイ処理の流れとしては、 +
+BABEL が ES6スクリプトを JavaScript に変換して、 +
+webpack が mysql uuid などのブラグインも組み込んでビルドし、 +
 CloudFormation 形式に落とし込み、それをS3に保存して、 +
 CloudFormationで API Gateway Lambda にデプロイする。 +
 
@@ -601,32 +599,32 @@ curl -X POST http://localhost:8000/auth
 
 # 所感
 
-とても簡単にAPI GatewayやLambdaのコーディングやデプロイができました。
-AWSのコンソールからブラウザベースで設定できることも魅力なのですが、
-少し規模の大きいプロダクションサービスを構築する場合、
-Serverless Frameworkのようなフレームワークは必須と感じました。
+とても簡単にAPI GatewayやLambdaのコーディングやデプロイができました。 +
+AWSのコンソールからブラウザベースで設定できることも魅力なのですが、 +
+少し規模の大きいプロダクションサービスを構築する場合、 +
+Serverless Frameworkのようなフレームワークは必須と感じました。 
 
-サーバーレスでない場合、例えばEC2がスケールアウトして台数が増えるなどした時、
-ソースコードの管理とか大変ですが、
+また、サーバーレスでない設計の場合、例えばEC2がスケールアウトして台数が増えるなどした時、 +
+ソースコードの管理とか大変ですが、 +
 サーバーレスならそこら辺気にしなくて良くなります。
 
-重たいバッチ処理があるなら、AWS Batchを利用するなどして、
-全てをインフラがない状態にできれば、
-インフラのメンテナンスはしなくて良くなります！
+また、重たいバッチ処理があるなら、AWS Batchを利用するなどして、 +
+全てをインフラがない状態にできれば、 +
+インフラのメンテナンスは基本しなくて済むようになります！
 
-ログ出力など今回は取り上げてませんが、
-取り敢えずS3に保存しておけば Athena や ElasticSearch、Redshift Spectrum があるので、
+ログ出力などに関しては今回は取り上げてませんが、 +
+取り敢えずS3に保存しておけば Athena や ElasticSearch、Redshift Spectrum があるので、 +
 何とかなりそうです。
 
-ローカルの開発環境とプロダクション環境の差異という問題はありますが、
-先述の通り、stage名を指定してデプロイすることで、いくらでも環境は作って壊せますので、
-問題ないような気がします。
+ローカルの開発環境とプロダクション環境の差異という問題はありますが、 +
+先述の通り、Serverless Framework側でstage名を指定してデプロイすることで、 +
+いくらでも環境は作って壊せますので、問題ないと思われます。
 
-また、Lambdaに標準で組み込まれていないモジュールをAWSコンソールから上げるのは、
-とても面倒に感じていました。
+また、Lambdaに標準で組み込まれていないモジュールをAWSコンソールから上げるのは +
+とても面倒に感じていましたが、 +
 フレームワークを利用することでその辺も何も気にしなくて済むというのはすごいです。
 
-また、今回は出てきませんでしたが、もちろんtoken情報はElastiCache Redisなどにキャッシュして、
-APIのレスポンスを短くできなければ使い物になりません。
-
-次回その2ではRedisを組み込み、私も れでぃさ〜 になりたいと思います。
+最後に、 +
+今回は出てきませんでしたが、もちろんtoken情報はElastiCache Redisなどにキャッシュして、 +
+APIのレスポンスを短くできなければ使い物になりません。 +
+次回その2ではRedisを組み込み、私も れでぃさ〜 に進化したいと思います。
