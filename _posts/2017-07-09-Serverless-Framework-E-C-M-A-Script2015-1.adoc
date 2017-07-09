@@ -445,7 +445,7 @@ iniファイルとかyml形式とかで書けたりもするのでしょうか�
 $ vi app/Libraries/Utils.es6
 ++++
 <pre style="font-family: Menlo, Courier">
-export default class Utils {
+class Utils {
 
 	constructor() {
 	}
@@ -457,6 +457,8 @@ export default class Utils {
 		return token;
 	}
 }
+
+export default Utils;
 </pre>
 ++++
 
