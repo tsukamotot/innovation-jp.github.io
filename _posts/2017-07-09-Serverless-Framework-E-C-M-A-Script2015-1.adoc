@@ -158,10 +158,11 @@ node_modules というディレクトリが生成されて、そこにインス�
 
 # BABELの設定
 
+BABELの設定ファイルは生成されないのでviコマンドなどで新規作成します。
+
+$ vi .babelrc
 ++++
 <pre style="font-family: Menlo, Courier">
-$ vi .babelrc
-
 {
   "plugins": ["transform-runtime"],
   "presets": ["es2015"]
@@ -169,14 +170,16 @@ $ vi .babelrc
 </pre>
 ++++
 
-BABELの設定ファイルにプラグインは transform-runtime を使うこと。presetsは ES6 を利用することを記載します。
+BABELの設定ファイルにプラグインは transform-runtime を指定する。 +
+presetsは ES6 を利用することを記載します。
 
 # webpackの設定
 
+webpackの設定ファイルも生成されないので同じくviコマンドなどで新規作成します。
+
+$ vi webpack.config.js
 ++++
 <pre style="font-family: Menlo, Courier">
-$ vi webpack.config.js
-
 module.exports = {
   entry: './handler.js',
   target: 'node',
@@ -195,23 +198,29 @@ module.exports = {
 </pre>
 ++++
 
+entry は ドキュメントルートファイルを、loaders は BABELを指定します。
+
 # Serverless Frameworkの設定
 
+Serverless Frameworkの設定はyml形式で記載できます。
+
+$ vi serverless.yml
 ++++
 <pre style="font-family: Menlo, Courier">
-$ vi serverless.yml
-
+# プロジェクト名
 service: account-pf
 
+# プラグインにはwebpackを指定
 plugins:
   - serverless-webpack
 
 provider:
+  # AWSを使用すること、ランタイムはNode.jsを使用することを明記
   name: aws
   runtime: nodejs6.10
+  # ステージは dev としてし
   stage: dev
   region: us-east-1
-  profile: shirox
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -222,12 +231,10 @@ provider:
         - "*"
   vpc:
     securityGroupIds:
-      - sg-e279f29b
+      - sg-xxxxxxxx
     subnetIds:
-      - subnet-ca03f1bc
-      - subnet-f64ee6cb
-      - subnet-591d0900
-      - subnet-84191eaf
+      - subnet-xxxxxxxx
+      - subnet-yyyyyyyy
 
 functions:
   createToken:
@@ -237,15 +244,12 @@ functions:
           path: auth
           method: post
           cors: true
-  getToken:
-    handler: handler.getToken
-    events:
-      - http:
-          path: auth
-          method: get
-          cors: true
 </pre>
 ++++
+
+プラグインにwebpackを指定、
+プロバイダーには諸情報を指定、
+
 
 # MySQLクライアント、UUID生成プラグインをインストール
 
