@@ -251,7 +251,7 @@ functions:
 |region:           |使用するAWSのリージョンを指定
 |iamRoleStatements:|使用するAWSのIAMロール情報を記載（VPC内にLambdaをデプロイする場合）
 |vpc:              |使用するAWS VPC情報を記載
-|securityGroupIds: |AWS セキュリティグループ名を指定
+|securityGroupIds: |AWS セキュリティグループIDを指定
 |subnetIds:        |AWS サブネットIDを指定
 |functions:        |AWS Lambda関数に関する情報を記載
 |createToken:      |今回作成したLambda関数と連携する名称
