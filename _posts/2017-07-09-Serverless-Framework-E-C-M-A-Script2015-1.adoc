@@ -202,7 +202,7 @@ entry は ドキュメントルートファイルを、loaders は BABELを指�
 
 # Serverless Frameworkの設定
 
-Serverless Frameworkの設定はyml形式で記述します。
+Serverless Frameworkの設定はYAML形式で記述します。
 
 $ vi serverless.yml
 ++++
@@ -439,7 +439,7 @@ module.exports = {
 
 MySQLの設定です。
 
-iniファイルとかyml形式とかで書けたりもするのでしょうか。 +
+iniファイルとかYAML形式とかで書けたりもするのでしょうか。 +
 この辺はさらに勉強が必要です。
 
 $ vi app/Libraries/Utils.es6
