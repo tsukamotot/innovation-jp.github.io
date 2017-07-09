@@ -245,7 +245,7 @@ functions:
 |service:          |Serverless Frameworkのプロジェクト名
 |plugins:          |使用するプラグイン
 |provider:         |各種設定以下記載
-|name:             |使用するPaasサービスを指定
+|name:             |使用するPaaSサービスを指定
 |runtime:          |使用するランタイムを指定
 |stage:            |ステージ名を指定（stating production など自由に設定できる）
 |region:           |使用するAWSのリージョンを指定
