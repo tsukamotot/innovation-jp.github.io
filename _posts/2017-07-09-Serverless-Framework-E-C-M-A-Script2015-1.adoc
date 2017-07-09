@@ -13,6 +13,8 @@ SREチームの城田です。 +
 
 # 概要
 
+image:shirota/20170714/sls.png[]
+
 Serverless Framework という、 +
 API Gateway や Lambda など AWSサービスに関しての設定やコーディングをローカルで行い、 +
 デプロイができるフレームワークを利用して、 +
