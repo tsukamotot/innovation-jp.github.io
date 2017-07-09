@@ -421,7 +421,7 @@ export default Mysql;
 </pre>
 ++++
 
-JavaやPHPなどに近いかたちでクラスの記述ができます。 +
+JavaやPHPなどに近い形でクラスの記述ができます。 +
 ES6の最大のメリットかと思います。
 
 $ vi conf/db.conf.es6
