@@ -376,8 +376,8 @@ export const createToken = (event, context, callback) => {
 </pre>
 ++++
 
-MySQLクラスとUtility関連のクラスをインポートして
-トークンを生成しそれをMySQLにインサートして、
+MySQLクラスとUtility関連のクラスをインポートして +
+トークンを生成しそれをMySQLにインサートして、 +
 HTTPレスポンスを返すという流れです。
 
 Serverless Framework に app conf ディレクトリを作成しておきます。
