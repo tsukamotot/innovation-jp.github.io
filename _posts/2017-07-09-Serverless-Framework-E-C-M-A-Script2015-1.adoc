@@ -38,7 +38,7 @@ Serverless Framework の デプロイ時に BABEL という ES6からJavascript�
 * webpackの設定
 * Serverless Frameworkの設定
 * MySQLクライアント、UUID生成プラグインをインストール
-* RDS　MySQLにテーブルを作成
+* RDSにテーブルを作成
 * ES6でコーディング
 * Serverless Frameworkでデプロイ
 * 動作確認
@@ -154,7 +154,7 @@ $ ls -a
 ++++
 
 node_modules というディレクトリが生成されて、そこにインストールされたプラグインが入っています。 +
-また、package-lock.jsonにインストールされたプラグインが記載されています。
+また、package-lock.jsonにインストールされたプラグインが記載されます。
 
 # BABELの設定
 
@@ -171,7 +171,7 @@ $ vi .babelrc
 ++++
 
 BABELの設定ファイルにプラグインは transform-runtime を指定する。 +
-presetsは ES6 を利用することを記載します。
+presetsは ES6 を利用することを明記します。
 
 # webpackの設定
 
@@ -202,23 +202,17 @@ entry は ドキュメントルートファイルを、loaders は BABELを指�
 
 # Serverless Frameworkの設定
 
-Serverless Frameworkの設定はyml形式で記載できます。
+Serverless Frameworkの設定はyml形式で記述します。
 
 $ vi serverless.yml
 ++++
 <pre style="font-family: Menlo, Courier">
-# プロジェクト名
 service: account-pf
-
-# プラグインにはwebpackを指定
 plugins:
   - serverless-webpack
-
 provider:
-  # AWSを使用すること、ランタイムはNode.jsを使用することを明記
   name: aws
   runtime: nodejs6.10
-  # ステージは dev としてし
   stage: dev
   region: us-east-1
   iamRoleStatements:
@@ -235,7 +229,6 @@ provider:
     subnetIds:
       - subnet-xxxxxxxx
       - subnet-yyyyyyyy
-
 functions:
   createToken:
     handler: handler.createToken
@@ -247,20 +240,62 @@ functions:
 </pre>
 ++++
 
-プラグインにwebpackを指定、
-プロバイダーには諸情報を指定、
+|=================================
+|service:          |Serverless Frameworkのプロジェクト名
+|plugins:          |使用するプラグイン
+|provider:         |各種設定以下記載
+|name:             |使用するPaasサービスを指定
+|runtime:          |使用するランタイムを指定
+|stage:            |ステージ名を指定（stating production など自由に設定できる）
+|region:           |使用するAWSのリージョンを指定
+|iamRoleStatements:|使用するAWSのIAMロール情報を記載（VPC内にLambdaをデプロイする場合）
+|vpc:              |使用するAWS VPC情報を記載
+|securityGroupIds: |AWS セキュリティグループ名を指定
+|subnetIds:        |AWS サブネットIDを指定
+|functions:        |AWS Lambda関数に関する情報を記載
+|createToken:      |今回作成したLambda関数名
+|handler:          |Lambdaハンドラーを指定
+|events:           |API各種設定以下記載
+|http:             |ウェブAPIということを記載
+|path:             |APIエンドポイントを記載
+|method:           |HTTPメソッドを記載
+|cors:             |CORSを使用するか指定
+|=================================
 
+
+stage: の部分にステージ名を記載すれば、（サーバーレスなので）いくらでも環境を作成できてしまう！ +
+というところはサーバーレスの醍醐味かなと思います。
+
+また今回 iamRoleStatements: を指定したり、vpc: を指定しているのは、 +
+RDSを利用しているからです。 +
+DynamoDBやS3のように非VPCのサービスを利用する場合は、 +
+Lambdaは非VPCのままで問題ないので、このような指定は要りません。
+
+function: の部分、ここに http: 配下に path: method: を指定すれば +
+API Gatewayが設定されてしまうのは驚きです。
 
 # MySQLクライアント、UUID生成プラグインをインストール
 
+AWS Lambdaには標準でMySQLのクライアントやUUID生成などは組み込まれていないので、 +
+Serverless Framework側で設定する必要があります。 +
+しかし、 +
+設定と入っても以下のように npmコマンドでインストールするだけなので簡単です。
+
 ++++
 <pre style="font-family: Menlo, Courier">
+# まずはローカル端末にグローバルに mysql と uuid をインストール
+
 $ npm install -g mysql uuid
-npm install -g mysql uuid
 /usr/local/bin/uuid -> /usr/local/lib/node_modules/uuid/bin/uuid
 + mysql@2.13.0
 + uuid@3.1.0
 added 9 packages in 0.749s
+</pre>
+++++
+
+++++
+<pre style="font-family: Menlo, Courier">
+# 改めてServerless Frameworkの node_modules 配下にインストールします
 
 $ npm install --save mysql uuid
 + uuid@3.1.0
@@ -269,7 +304,9 @@ added 7 packages in 2.454s
 </pre>
 ++++
 
-# RDS　MySQLにテーブルを作成
+# RDSにテーブルを作成
+
+以下のようなテーブルを仮で作成しました。
 
 ++++
 <pre style="font-family: Menlo, Courier">
@@ -292,18 +329,21 @@ Create Table: CREATE TABLE `clients` (
 </pre>
 ++++
 
+今回使用するフィールドは client_id と token になります。
+
 # ES6でコーディング
 
+やっとコーディングです。
+まずハンドラーは以下のようになりました。
+
+$ vi handler.js
 ++++
 <pre style="font-family: Menlo, Courier">
-$ vi handler.js
-
 'use strict';
 
-import Mysql  from "./app/Libraries/Mysql.es6";
+import Mysql from "./app/Libraries/Mysql.es6";
 import Utils from "./app/Libraries/Utils.es6";
-
-import dsn from "./conf/db.conf.es6";
+import dsn   from "./conf/db.conf.es6";
 
 export const createToken = (event, context, callback) => {
 
@@ -330,13 +370,29 @@ export const createToken = (event, context, callback) => {
 
 	callback(null, response)
 }
+</pre>
+++++
 
+MySQLクラスとUtility関連のクラスをインポートして
+トークンを生成しそれをMySQLにインサートして、
+HTTPレスポンスを返すという流れです。
+
+Serverless Framework に app conf ディレクトリを作成しておきます。
+
+++++
+<pre style="font-family: Menlo, Courier">
 $ mkdir -p app/Libraries
 $ mkdir -p conf
+</pre>
+++++
+
+この辺のディレクトリ命名規則などオレオレフレームワーク化しないように +
+きちんと設計は必要でしょう。
 
 $ vi app/Libraries/Mysql.es6
-
-export default class Mysql {
+++++
+<pre style="font-family: Menlo, Courier">
+class Mysql {
 
 	constructor(dsn) {
 		this.mysql = require("mysql");
@@ -348,10 +404,18 @@ export default class Mysql {
 	connect() {
 		return this.mysql.createConnection(this.dsn);
 	}
-};
+}
+
+export default Mysql;
+</pre>
+++++
+
+JavaやPHPなどに近いかたちでクラスの記述ができます。 +
+ES6の最大のメリットかと思います。
 
 $ vi conf/db.conf.es6
-
+++++
+<pre style="font-family: Menlo, Courier">
 module.exports = {
 	host     : "****.****.us-east-1.rds.amazonaws.com",
 	user     : "****",
@@ -359,10 +423,18 @@ module.exports = {
 	port     : "3306",
 	database : "****",
 }
+</pre>
+++++
+
+MySQLの設定です。
+
+iniファイルとかyml形式とかで書けたりもするのでしょうか。 +
+この辺はさらに勉強が必要です。
 
 $ vi app/Libraries/Utils.es6
-
-export default class Utility {
+++++
+<pre style="font-family: Menlo, Courier">
+export default class Utils {
 
 	constructor() {
 	}
@@ -377,7 +449,14 @@ export default class Utility {
 </pre>
 ++++
 
+token発行はUUID v4を使用してそこからハイフンを抜くという仕様にしました。
+
 # Serverless Frameworkでデプロイ
+
+さあデプロイです。
+
+デプロイは serverless というコマンドで行うのですが、 +
+今回は初めから設定されている、そのエイリアスの sls というコマンド名で行います。
 
 ++++
 <pre style="font-family: Menlo, Courier">
@@ -440,9 +519,25 @@ Serverless: Removing old service versions...
 </pre>
 ++++
 
+sls deploy -v と打つだけで、 +
+簡単にデプロイ出来てしまいました。。
 
+-v はデプロイの詳細を表示してくれるオプションです。
+
+デプロイ処理の概要としては、 +
+webpack が BABEL を使って ES6スクリプトを JavaScript に変換して、 +
+mysql uuid などのブラグインも組み込んでビルドし、 +
+CloudFormation 形式に落とし込み、それをS3に保存して、 +
+CloudFormationで API Gateway Lambda にデプロイする。 +
+
+最後にサービス名や環境情報、APIエンドポイントの情報 を表示してくれます。
+
+もちろんシンタックスエラーなどがないか、ES6のバリデーションも行ってくれます。 +
+感動です。
 
 # 動作確認
+
+APIエンドポイントに対してcurlコマンドでPOSTリクエストを行いました。
 
 ++++
 <pre style="font-family: Menlo, Courier">
@@ -450,3 +545,20 @@ $ curl -X POST https://**********.execute-api.us-east-1.amazonaws.com/dev/auth
 {"status":"ok","token":"29a35ef42a2648cf96aad0d65fcf7656"}%
 </pre>
 ++++
+
+tokenが発行され、DBに格納されました。
+
+++++
+<pre style="font-family: Menlo, Courier">
+mysql> select client_id, token, created_at from clients;
++-----------+----------------------------------+---------------------+
+| client_id | token                            | created_at          |
++-----------+----------------------------------+---------------------+
+|         1 | 29a35ef42a2648cf96aad0d65fcf7656 | 2017-07-08 15:04:39 |
++-----------+----------------------------------+---------------------+
+1 rows in set (0.31 sec)
+</pre>
+++++
+
+# 所感
+
