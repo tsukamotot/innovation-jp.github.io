@@ -1,0 +1,222 @@
+= Pepperにぼくの顔を覚えてもらえたので、ついでに打刻をしてもらう
+:published_at: 2017-07-14
+:hp-tags: Yagasaki,Pepper,Rekognition,WebDriver,SQS,ShellScript
+
+みなさまいかがお過ごしでしょうか？ +
+そろそろあれの季節ですね。 +
+矢ヶ崎です。
+
+前回のPちゃん(うちのPepperのこと)ブログでは、Googleカレンダーの予定を定期的に読み上げてもらう、という無難なことをやってみましたが、今回は顔を認識してもらって名前を呼んでもらうという、もっと無難なことをやってみたいと思います。 +
+前回のブログで、
+```
+次回は、予定を聞くと教えてくれるようにしてみたいと思います。とうとうPちゃん復活なるか？！
+```
+と書きましたが、まずはPちゃんに覚えてもらってから予定を聞かないとあれなので、あえてスルーして行きます。
+Pepperのデフォルトで、そんな感じのことをできる機能があるのですが、結構他の人と間違えられちゃってショックでなんか微妙なので、今回は最近よくあるお話でクラウド提供されているAI関連のサービスのうち、Amazon Rekognitionを使ってPちゃんに、ぼくのことを他の人と間違えないでもらいたいと存じます。
+
+== 覚えてもらうためにすべき努力
+
+* RekognitionをS3を使う権限をもった、IAMユーザなりなんなりを作成
+* S3にBucketを作る
+* 学習用の元写真をとる
+* S3にアップロードする
+* RekognitionのCollectionを作成
+* RekognitionのIndexFacesを使って、元画像を覚えてもらう
+* Pepperに、RekognitionのSearchFacesByImageを使って顔認識する実装をする
+
+今回はこんな感じで、がんばってPちゃんに覚えてもらおうと思います。
+
+Rekognitionの基礎的な部分やCLIのコマンド等は、クラスメソッドさんのブログ、Developers.IOの +
+http://dev.classmethod.jp/cloud/aws/amazon-rekognition-searchfacesbyimage/[Amazon Rekognitionで類似顔画像検索を行う #reinvent] +
+を参考にさせていただきました！ありがとうございます！
+
+=== RekognitionとS3を使う権限をもった、IAMユーザなりなんなりを作成
+=== S3にBucketを作る
+
+これは、いくらでもある情報なので割愛しますが、注意点はRekognitionが使えるRegionにBucketを作っておくことです。 +
+今回は、us-west-2に作成しました。 +
+ここで、AWS CLIも使えるようにIAMユーザなどの設定をしておきます。
+
+=== 学習用の元写真をとる
+
+自分の写真、他の人の写真など、デジタルカメラ等で撮りまくります。 +
+とりあえず今回は、うちの社員５名を３枚づつ撮影しました。
+
+=== S3にアップロードする
+
+S3にアップロードする前に、あとでファイル名から人を特定できるように、ファイル名を変更しておきます。 +
+例： a_yagasaki-1.jpg
+
+その後、S3の特定の場所にアップロードします。
+
+例：
+[source,sh]
+----
+$ LIST=$(ls); for FILE in $LIST
+do
+  aws s3 cp $FILE s3://rektest/rekognition/trainingdata/
+done
+----
+
+=== RekognitionのCollectionを作成
+
+Rekognitionでは、画像ファイルの特徴をCollectionというものに格納します。 +
+まずは、その空のCollectionを作成します。
+
+例：
+[source,sh]
+----
+$ aws --region us-west-2 rekognition create-collection \
+      --collection-id "pchan"
+----
+
+=== RekognitionのIndexFacesを使って、元画像を覚えてもらう
+
+上で作成した、pchanという名前のコレクションに、画像の特徴を格納していきます。 +
+先ほどS3に上げたファイルを、端から全部格納しましょう。
+
+例：
+[source,sh]
+----
+$ LIST=$(aws s3 ls s3://rektest/rekognition/trainingdata/ | awk '{print $4}'); for OBJECT in $LIST
+  do
+    echo $OBJECT
+      aws --region us-west-2 rekognition index-faces \
+          --image '{"S3Object":{"Bucket":"rektest","Name":"'/rekognition/trainingdata/$OBJECT'"}}' \
+          --collection-id "pchan" \
+          --external-image-id $OBJECT
+  done
+----
+
+=== Pepperに、RekognitionのSearchFacesByImageを使って顔認識する実装をする
+
+いよいよPちゃんに、ぼくのことを判別してもらいます。
+
+今回は、
+
+* ひとの顔を認識すると、写真を撮る
+* 頭をさわると判別を開始する
+* 判別できたら名前を呼んでくれる
+
+という感じにしてみます。
+
+顔の学習や、画像と名前のマッピングは完全手動という漢らしい感じで行きます。
+
+ファイル名と名前のマッピング配列を、直接Pepperに実装します笑
+[source,python]
+----
+        cnames = {"a_yagasaki": "やがさき",
+            "n_syoga": "しょが",
+            "y_kotani": "こたに",
+            "a_yamamoto": "あみ",
+            "j_shirota": "しろた",
+        }
+----
+
+==== コレグラフで作ったやつ
+
+こんな感じです！
+
+image::/images/yagasaki/pp5/chore.png[代替テキスト]
+
+
+Pepper上でboto3を動かすために、手動でこんな感じのライブラリをいろいろ入れました。
+
+image::/images/yagasaki/pp5/libdir.png[代替テキスト]
+
+
+Pythonボックスの中身は、だいたいこんな感じ！
+
+[source,python]
+----
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #put initialization code here
+        self.framemanager = ALProxy("ALFrameManager")
+        self.tts = ALProxy("ALTextToSpeech")
+        self.folderName = None
+
+    def onUnload(self):
+        self.framemanager = None
+        self.tts = None
+        self.folderName = None
+
+    def onInput_onStart(self):
+        import sys, os
+        self.folderName = os.path.join(self.framemanager.getBehaviorPath(self.behaviorId), "../lib")
+        if self.folderName not in sys.path:
+            sys.path.append(self.folderName)
+
+        self.recordFolder = os.path.join(self.framemanager.getBehaviorPath(self.behaviorId), "../html")
+
+        import boto3
+
+        cnames = {"a_yagasaki": "やがさき",
+            "n_syoga": "しょが",
+            "y_kotani": "こたに",
+            "a_yamamoto": "あみ",
+            "j_shirota": "しろた",
+            "m_kasai": "びげん",
+            "y_oyaidu": "やいづ",
+        }
+
+        try:
+            ACCESS_KEY_ID = 'accesskey'
+            SECRET_ACCESS_KEY = 'seckey'
+
+            load_filename = 'image2.jpg'
+
+            rek = boto3.client(
+                'rekognition',
+                aws_access_key_id=ACCESS_KEY_ID,
+                aws_secret_access_key=SECRET_ACCESS_KEY,
+                region_name='us-west-2',
+            )
+
+            fh = open(self.recordFolder + '/' + load_filename, 'rb')
+            img = bytearray(fh.read())
+            fh.close()
+
+            response = rek.search_faces_by_image(
+                CollectionId='pchan',
+                Image={
+                    'Bytes': img,
+                },
+                MaxFaces=1,
+            )
+            # ExternalImageIdの"-"より前の部分と名前をマッピングするという仕様
+            fname = response["FaceMatches"][0]["Face"]["ExternalImageId"].encode("utf-8")
+            aname = fname.split("-", 1)[0]
+
+            self.logger.info(cnames[aname])
+            mes = cnames[aname] + "さん、こんにちは"
+            self.tts.say(mes)
+        except:
+            self.logger.error("Error!!!!!")
+            mes = "ごめんなさい。どなたかわかりません。"
+            self.tts.say(mes)
+            traceback.print_exc()
+
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
+        self.onStopped() #activate the output of the box
+----
+
+
+
+== その後の予定
+
+やっとPちゃんに、ぼくのことを認識してもらえたので、次回は、
+
+* Pepperに「おはよう」っていうと、出勤打刻をしてくれる
+* Pepperに「会議室どこ？」と聞くと、次の会議の会議室を教えてくれる
+
+という感じにして、Pちゃんが居ない会社が考えられなくなるくらい、Pちゃんに頼って行きたいと思います。 +
+ひとつよろしくお願いいたします。
+
+こちらからは以上です。
