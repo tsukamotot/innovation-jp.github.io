@@ -23,16 +23,15 @@ SREチームの城田です。 +
 
 image::https://raw.githubusercontent.com/innovation-jp/innovation-jp.github.io/master/images/shirota/20170714/sls.png[]
 
-Serverless Framework という、 +
+今回使用する環境は、Serverless Framework という、 +
 API Gateway や Lambda など AWSサービスに関しての設定やコーディングをローカルで行い、 +
-デプロイができるフレームワークを利用して、 +
-アカウント認証周りのアクセストークンを発行してRDSに保存する機能を作成します。
+デプロイができるフレームワークを利用します。
 
 Lambdaで使用するランタイムとしては Node.js 6.10 を採用し、 +
 ローカルでのコーディングはJavaScriptの中核仕様を抜き出して標準化した、 +
 ECMAScript2015（別名：ECMAScript6 以下ES6）で記述し、 +
 デプロイ時に BABEL というES6からJavaScriptへ変換するツールを利用し、 +
-ビルドツールは webpack を利用しました。
+ビルドツールは webpack を利用します。
 
 ローカル開発環境は webpack の ウェブサーバ機能 を使って、 +
 ローカルで API Gateway や Lambda の開発もできるようになっています。
