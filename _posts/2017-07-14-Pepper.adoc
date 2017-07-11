@@ -33,102 +33,15 @@
 
 === 前回のあれで、Pちゃんを見つめて、「Pちゃんおはよう」とか「おつかれ」とか言うと、個人判別をしてくれる
 
+こちらは、前回のPちゃんブログ +
+http://tech.innovation.co.jp/2017/06/09/Pepper-Amazon-Rekognition.html[Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編] +
+であれしてください。
 
 === SQSにjson形式で打刻リクエストを入れる
-=== EC2なりサーバなりで、SQSからリクエストを受信する
-=== 該当ユーザのアカウント情報をRedisから取得する
-=== WebDriverを使って勤怠管理システムを操作して打刻する
 
+前回のPちゃんソースをちょっと拡張して、SQSにキューイングするようにします。
 
-=== 学習用の元写真をとる
-
-自分の写真、他の人の写真など、デジタルカメラ等で撮りまくります。 +
-とりあえず今回は、うちの社員５名を３枚づつ撮影しました。
-
-=== S3にアップロードする
-
-S3にアップロードする前に、あとでファイル名から人を特定できるように、ファイル名を変更しておきます。 +
-例： a_yagasaki-1.jpg
-
-その後、S3の特定の場所にアップロードします。
-
-例：
-[source,sh]
-----
-$ LIST=$(ls); for FILE in $LIST
-do
-  aws s3 cp $FILE s3://rektest/rekognition/trainingdata/
-done
-----
-
-=== RekognitionのCollectionを作成
-
-Rekognitionでは、画像ファイルの特徴をCollectionというものに格納します。 +
-まずは、その空のCollectionを作成します。
-
-例：
-[source,sh]
-----
-$ aws --region us-west-2 rekognition create-collection \
-      --collection-id "pchan"
-----
-
-=== RekognitionのIndexFacesを使って、元画像を覚えてもらう
-
-上で作成した、pchanという名前のコレクションに、画像の特徴を格納していきます。 +
-先ほどS3に上げたファイルを、端から全部格納しましょう。
-
-例：
-[source,sh]
-----
-$ LIST=$(aws s3 ls s3://rektest/rekognition/trainingdata/ | awk '{print $4}'); for OBJECT in $LIST
-  do
-    echo $OBJECT
-      aws --region us-west-2 rekognition index-faces \
-          --image '{"S3Object":{"Bucket":"rektest","Name":"'/rekognition/trainingdata/$OBJECT'"}}' \
-          --collection-id "pchan" \
-          --external-image-id $OBJECT
-  done
-----
-
-=== Pepperに、RekognitionのSearchFacesByImageを使って顔認識する実装をする
-
-いよいよPちゃんに、ぼくのことを判別してもらいます。
-
-今回は、
-
-* ひとの顔を認識すると、写真を撮る
-* 頭をさわると判別を開始する
-* 判別できたら名前を呼んでくれる
-
-という感じにしてみます。
-
-顔の学習や、画像と名前のマッピングは完全手動という漢らしい感じで行きます。
-
-ファイル名と名前のマッピング配列を、直接Pepperに実装します笑
-[source,python]
-----
-        cnames = {"a_yagasaki": "やがさき",
-            "n_syoga": "しょが",
-            "y_kotani": "こたに",
-            "a_yamamoto": "あみ",
-            "j_shirota": "しろた",
-        }
-----
-
-==== コレグラフで作ったやつ
-
-こんな感じです！
-
-image::/images/yagasaki/pp5/chore.png[代替テキスト]
-
-
-Pepper上でboto3を動かすために、手動でこんな感じのライブラリをいろいろ入れました。
-
-image::/images/yagasaki/pp5/libdir.png[代替テキスト]
-
-
-Pythonボックスの中身は、だいたいこんな感じ！
+image::/images/yagasaki/pp6/chore.png[chore]
 
 [source,python]
 ----
@@ -147,7 +60,7 @@ class MyClass(GeneratedClass):
         self.tts = None
         self.folderName = None
 
-    def onInput_onStart(self):
+    def onInput_onStart(self, p):
         import sys, os
         self.folderName = os.path.join(self.framemanager.getBehaviorPath(self.behaviorId), "../lib")
         if self.folderName not in sys.path:
@@ -161,6 +74,7 @@ class MyClass(GeneratedClass):
             "n_syoga": "しょが",
             "y_kotani": "こたに",
             "a_yamamoto": "あみ",
+            "r_tateishi": "たていし",
             "j_shirota": "しろた",
             "m_kasai": "びげん",
             "y_oyaidu": "やいづ",
@@ -169,8 +83,10 @@ class MyClass(GeneratedClass):
         try:
             ACCESS_KEY_ID = 'accesskey'
             SECRET_ACCESS_KEY = 'seckey'
+            BUCKET_NAME = 'bucketname'
 
             load_filename = 'image2.jpg'
+            save_filename = 'rekognition/target.jpg'
 
             rek = boto3.client(
                 'rekognition',
@@ -190,18 +106,36 @@ class MyClass(GeneratedClass):
                 },
                 MaxFaces=1,
             )
-            # ExternalImageIdの"-"より前の部分と名前をマッピングするという仕様
+            self.logger.info(response)
+
+            # ExternalImageIdの"-"より前の部分と名前をマッピングする
             fname = response["FaceMatches"][0]["Face"]["ExternalImageId"].encode("utf-8")
             aname = fname.split("-", 1)[0]
 
             self.logger.info(cnames[aname])
-            mes = cnames[aname] + "さん、こんにちは"
+            mes = cnames[aname] + "さん、"
+            if p == "1":
+                mes = mes + "おはようございます。出勤のだこくしておきますね。"
+            else:
+                mes = mes + "おつかれさまでした。退勤のだこくしておきますね。"
+
+            # enqueue
+            sqs = boto3.client('sqs',
+                aws_access_key_id=ACCESS_KEY_ID,
+                aws_secret_access_key=SECRET_ACCESS_KEY,
+                region_name='ap-northeast-1',)
+            queue = 'https://sqs.ap-northeast-1.amazonaws.com/xxxxxx/pchan'
+            qmes = '{"Name": "' + aname + '", "Kind": "' + str(p) + '"}'
+            response = sqs.send_message(QueueUrl=queue, MessageBody=qmes)
+
+            self.logger.info(mes)
             self.tts.say(mes)
         except:
             self.logger.error("Error!!!!!")
-            mes = "ごめんなさい。どなたかわかりません。"
-            self.tts.say(mes)
             traceback.print_exc()
+            mes = "ごめんなさい。どなたかわかりません。"
+            self.logger.info(mes)
+            self.tts.say(mes)
 
         self.onStopped()
 
@@ -210,16 +144,116 @@ class MyClass(GeneratedClass):
         self.onStopped() #activate the output of the box
 ----
 
+=== EC2なりサーバなりで、SQSからリクエストを受信する
+=== 該当ユーザのアカウント情報をRedisから取得する
+=== WebDriverを使って勤怠管理システムを操作して打刻する
 
+ポイントは、WebDriverでXのFirefoxなどを操作するために、Xサーバが必要なので、ちょっと調べると、 +
+「xvfbとか使うといいよ！」 +
+みたいなことが出てきますが、あえて今回はVNC Serverを立ち上げて実際に見えるようにしてやってみました。
+
+[source,shell]
+----
+# yum -y install vnc-server
+# service vncserver start
+----
+
+みたいな感じでお手軽〜〜〜！
+
+こんな感じで、適当にバッチをシェルスクリプトとかで作ります！
+
+[source,shell]
+----
+#!/bin/bash
+
+export DISPLAY=:1
+
+export AWS_ACCESS_KEY_ID='accesskey'
+export AWS_SECRET_ACCESS_KEY='seckey'
+export AWS_DEFAULT_REGION=ap-northeast-1
+export AWS_DEFAULT_OUTPUT=json
+
+DAKOKUCMD="python ./dakoku.webdriver.py"
+DAKOKUJSON="./dakoku.json"
+
+SQS_QUEUE_NAME='pchan'
+SQS_QUEUE_URL=$( \
+  aws sqs get-queue-url \
+    --queue-name ${SQS_QUEUE_NAME} \
+    --output text\
+  ) 
+
+FILE_SQS_MSG="${SQS_QUEUE_NAME}-msg".json
+FILE_SQS_BODY="${SQS_QUEUE_NAME}-body-msg".json
+
+# check function
+isrunning() {
+  R=$(ps axu | grep "${DAKOKUCMD}" | grep -v grep)
+  if [[ ${R} == "" ]]
+  then
+    echo 0
+    exit
+  fi
+  echo 1
+}
+
+aws sqs receive-message \
+  --queue-url "${SQS_QUEUE_URL}" --wait-time-seconds 20 > ${FILE_SQS_MSG}
+
+cat ${FILE_SQS_MSG} | jq -r '.Messages[].Body' > ${FILE_SQS_BODY}
+
+SQS_RECEIPT_HANDLE=$( \
+  cat ${FILE_SQS_MSG} | jq -r '.Messages[].ReceiptHandle' \
+) \
+
+if [[ "${SQS_RECEIPT_HANDLE}" != "" ]]
+then
+  aws sqs delete-message \
+       --queue-url "${SQS_QUEUE_URL}" \
+       --receipt-handle ${SQS_RECEIPT_HANDLE}
+fi
+
+USERNAME=$( \
+  cat ${FILE_SQS_BODY} | jq -r '.Name' \
+) \
+
+if [[ "${USERNAME}" == "" ]]
+then
+  echo "error! for user ${USERNAME}, ${KIND} ..." >> ./dakoku_err.log
+  exit
+fi
+
+KIND=$( \
+  cat ${FILE_SQS_BODY} | jq -r '.Kind' \
+) \
+
+PASSWORD=$(redis-cli --raw get ${USERNAME})
+
+if [[ "${PASSWORD}" == "" ]]
+then
+  echo "error! for password ${USERNAME}, ${KIND} ..." >> ./dakoku_err.log
+  exit
+fi
+
+echo "{ \"name\": \"${USERNAME}\", \"password\": \"${PASSWORD}\", \"kind\": \"${KIND}\" }" > ${DAKOKUJSON}
+
+ISRUNNING=$(isrunning)
+while [ "${ISRUNNING}" == "1" ] 
+do
+  sleep 3
+  ISRUNNING=$(isrunning)
+done
+
+${DAKOKUCMD}
+----
 
 == その後の予定
 
-やっとPちゃんに、ぼくのことを認識してもらえたので、次回は、
+次回こそは、
 
-* Pepperに「おはよう」っていうと、出勤打刻をしてくれる
 * Pepperに「会議室どこ？」と聞くと、次の会議の会議室を教えてくれる
 
-という感じにして、Pちゃんが居ない会社が考えられなくなるくらい、Pちゃんに頼って行きたいと思います。 +
+という感じにして、忘れんぼう将軍でもPちゃんが居れば大丈夫！にしていきます。
 ひとつよろしくお願いいたします。
 
 こちらからは以上です。
