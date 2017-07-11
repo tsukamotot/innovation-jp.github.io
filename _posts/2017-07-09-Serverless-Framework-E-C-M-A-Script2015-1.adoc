@@ -13,6 +13,14 @@ SREチームの城田です。 +
 
 # 概要
 
+マイクロサービス設計で必要と思われる、 +
+トークン発行やユーザ情報管理をするアカウント周りのプラットフォームを作成したいと思います。 +
+今回は API Gateway から Lambda を起動してトークンを発行し、RDSにデータを保存してHTTPレスポンスを返す、 +
+という部分を作成します。 +
+また、 +
+サーバーレスアーキテクチャで行うこと、Serverless Frameworkを使うこと、ECMAScript2015に準拠したコーディングを行うこと +
+も今回の目的とします。
+
 image::https://raw.githubusercontent.com/innovation-jp/innovation-jp.github.io/master/images/shirota/20170714/sls.png[]
 
 Serverless Framework という、 +
@@ -429,7 +437,7 @@ ES6の最大のメリットかと思います。
 $ vi conf/db.conf.es6
 ++++
 <pre style="font-family: Menlo, Courier">
-module.exports = {
+export default {
 	host     : "****.****.us-east-1.rds.amazonaws.com",
 	user     : "****",
 	password : "****",
@@ -616,7 +624,7 @@ Serverless Frameworkのようなフレームワークは必須と感じました
 インフラのメンテナンスは基本しなくて済むようになります！
 
 ログ出力などに関しては今回は取り上げてませんが、 +
-取り敢えずS3に保存しておけば Athena や ElasticSearch、Redshift Spectrum があるので、 +
+取り敢えずS3に保存しておけば Athena や Elasticsearch、Redshift Spectrum があるので、 +
 何とかなりそうです。
 
 ローカルの開発環境とプロダクション環境の差異という問題はありますが、 +
