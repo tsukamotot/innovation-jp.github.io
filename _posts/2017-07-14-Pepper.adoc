@@ -16,7 +16,7 @@
 
 そして今回は、こんなアーキテクチャでやってみました！
 
-image::/images/yagasaki/pp6/arch.png[arch]
+image::/images/yagasaki/pp6/arch.jpg[arch]
 
 * 前回のあれで、Pちゃんを見つめて、「Pちゃんおはよう」とか「おつかれ」とか言うと、個人判別をしてくれる
 * SQSにjson形式で打刻リクエストを入れる
