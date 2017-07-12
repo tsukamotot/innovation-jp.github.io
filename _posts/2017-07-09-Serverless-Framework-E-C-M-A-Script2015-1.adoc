@@ -2,10 +2,6 @@
 :hp-alt-title:　Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1
 :hp-tags: Shirota, Serverless Framework, ECMAScript2015, ECMAScript6, ES6
 
-++++
-<style>*{font-family: Menlo, Courier}</style>
-++++
-
 SREチームの城田です。 +
 
 サーバーレスでマイクロサービスを作れるようになっておけば、 +
@@ -13,12 +9,13 @@ SREチームの城田です。 +
 
 # 概要
 
-マイクロサービス設計で必要と思われる、 +
-トークン発行やユーザ情報管理をするアカウント周りのプラットフォームを作成したいと思います。 +
-今回は API Gateway から Lambda を起動してトークンを発行し、RDSにデータを保存してHTTPレスポンスを返す、 +
-という部分を作成します。 +
+マイクロサービス設計でおおよその場合必要と思われる、 +
+トークン発行やユーザ情報管理をするアカウント周りのプラットフォームを作成したいと思います。
+
+今回は API Gateway から Lambda を起動してトークンを発行し、RDSにデータを保存してHTTPレスポンスを返す、という部分を作成します。
+
 また、 +
-サーバーレスアーキテクチャで行うこと、Serverless Frameworkを使うこと、ECMAScript2015に準拠したコーディングを行うことも目的としています。
+サーバーレスアーキテクチャで行うこと、サーバレスフレームワークを使うこと、ECMAScript2015に準拠したコーディングを行うことも目的としています。
 
 image::https://raw.githubusercontent.com/innovation-jp/innovation-jp.github.io/master/images/shirota/20170714/sls.png[]
 
@@ -602,9 +599,8 @@ curl -X POST http://localhost:8000/auth
 
 簡単ですね。
 
-ちなみに、このウェブサーバを立ち上げた状態で、ES6のソースコードを変更したら、反映されます。 +
-即時にES6からJavaScriptへBABELが変換しているのでしょうか。 +
-どうやっているかはわかりませんが、便利ですしすごいです。
+ちなみに、このウェブサーバを立ち上げた状態で、ES6のソースコードを変更したら、 +
+即時反映されますので、ES6に対応済みということと思います。
 
 # 所感
 
@@ -637,3 +633,7 @@ Serverless Frameworkのようなフレームワークは必須と感じました
 今回は出てきませんでしたが、もちろんtoken認証周りはElastiCache Redisなどにキャッシュして、 +
 APIのレスポンスタイムを短くできなければ使い物になりません。 +
 次回その2ではRedisを組み込み、私も れでぃさ〜 に進化したいと思います。
+
+++++
+<style>*{font-family: Menlo, Courier}</style>
+++++
