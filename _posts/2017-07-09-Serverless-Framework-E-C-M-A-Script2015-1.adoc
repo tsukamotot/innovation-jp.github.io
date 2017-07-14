@@ -318,7 +318,7 @@ added 7 packages in 2.454s
 
 ++++
 <pre style="font-family: Menlo, Courier">
-Create Table: CREATE TABLE `clients` (
+CREATE TABLE `clients` (
   `client_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `password` varchar(64) DEFAULT NULL,
   `name` varchar(128) DEFAULT NULL,
