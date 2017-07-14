@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/07/09/Serverless-Framework-E-C-M-A-Script2015-1.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1" />
+    <meta property="og:description" content="SREチームの城田です。 サーバーレスでマイクロサービスを作れるようになっておけば、 今後役に立つこともあるかなと思いまして作ってみます。 概要 マイクロサービス設計でおおよその場合必要と思われる、 トークン発行やユーザ情報管理をするアカウント周りのプラットフォームを作成したいと思います。 今回は API Gateway から Lambda を起動してトークンを発行し、RDSにデータを保存してHTTPレスポンスを返す、という部分を作成します。 また、 サーバーレスアーキテクチャで行うこと、サーバレスフレームワークを使うこと、ECMAScript2015..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/07/09/Serverless-Framework-E-C-M-A-Script2015-1.html" />
+    <meta property="article:published_time" content="2017-07-08T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-07-14T12:43:49.108Z" />
+    <meta property="article:tag" content="Shirota" />
+    <meta property="article:tag" content="Serverless Framework" />
+    <meta property="article:tag" content="ECMAScript2015" />
+    <meta property="article:tag" content="ECMAScript6" />
+    <meta property="article:tag" content="ES6" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1" />
+    <meta name="twitter:description" content="SREチームの城田です。 サーバーレスでマイクロサービスを作れるようになっておけば、 今後役に立つこともあるかなと思いまして作ってみます。 概要 マイクロサービス設計でおおよその場合必要と思われる、 トークン発行やユーザ情報管理をするアカウント周りのプラットフォームを作成したいと思います。 今回は API Gateway から Lambda を起動してトークンを発行し、RDSにデータを保存してHTTPレスポンスを返す、という部分を作成します。 また、 サーバーレスアーキテクチャで行うこと、サーバレスフレームワークを使うこと、ECMAScript2015..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/07/09/Serverless-Framework-E-C-M-A-Script2015-1.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "Junichi Shirota",
+        "image": "https://avatars5.githubusercontent.com/u/26893225?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1",
+    "url": "http://tech.innovation.co.jp/2017/07/09/Serverless-Framework-E-C-M-A-Script2015-1.html",
+    "datePublished": "2017-07-08T15:00:00.000Z",
+    "dateModified": "2017-07-14T12:43:49.108Z",
+    "keywords": "Shirota,  Serverless Framework,  ECMAScript2015,  ECMAScript6,  ES6",
+    "description": "SREチームの城田です。 サーバーレスでマイクロサービスを作れるようになっておけば、 今後役に立つこともあるかなと思いまして作ってみます。 概要 マイクロサービス設計でおおよその場合必要と思われる、 トークン発行やユーザ情報管理をするアカウント周りのプラットフォームを作成したいと思います。 今回は API Gateway から Lambda を起動してトークンを発行し、RDSにデータを保存してHTTPレスポンスを返す、という部分を作成します。 また、 サーバーレスアーキテクチャで行うこと、サーバレスフレームワークを使うこと、ECMAScript2015..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Shirota tag-Serverless-Framework tag-E-C-M-A-Script2015 tag-E-C-M-A-Script6 tag-E-S6 no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="09 Jul 2017" class="post-meta__date date">09 Jul 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Shirota">Shirota</a>, <a href="http://tech.innovation.co.jp/tag/Serverless-Framework"> Serverless Framework</a>, <a href="http://tech.innovation.co.jp/tag/E-C-M-A-Script2015"> ECMAScript2015</a>, <a href="http://tech.innovation.co.jp/tag/E-C-M-A-Script6"> ECMAScript6</a>, <a href="http://tech.innovation.co.jp/tag/E-S6"> ES6</a></span>
+        <span class="post-meta__author author"><img src="https://avatars5.githubusercontent.com/u/26893225?v=3" alt="profile image for Junichi Shirota" class="avatar post-meta__avatar" /> by Junichi Shirota</span>
+      </div>
+      <h1 class="post-title">Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1</h1>
+    </header>
+
+    <section class="post tag-Shirota tag-Serverless-Framework tag-E-C-M-A-Script2015 tag-E-C-M-A-Script6 tag-E-S6">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>SREチームの城田です。<br></p>
+</div>
+<div class="paragraph">
+<p>サーバーレスでマイクロサービスを作れるようになっておけば、<br>
+今後役に立つこともあるかなと思いまして作ってみます。</p>
+</div>
+</div>
+</div>
+<h1 id="__" class="sect0">概要</h1>
+<div class="paragraph">
+<p>マイクロサービス設計でおおよその場合必要と思われる、<br>
+トークン発行やユーザ情報管理をするアカウント周りのプラットフォームを作成したいと思います。</p>
+</div>
+<div class="paragraph">
+<p>今回は API Gateway から Lambda を起動してトークンを発行し、RDSにデータを保存してHTTPレスポンスを返す、という部分を作成します。</p>
+</div>
+<div class="paragraph">
+<p>また、<br>
+サーバーレスアーキテクチャで行うこと、サーバレスフレームワークを使うこと、ECMAScript2015に準拠したコーディングを行うことも目的としています。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://raw.githubusercontent.com/innovation-jp/innovation-jp.github.io/master/images/shirota/20170714/sls.png" alt="sls.png">
+</div>
+</div>
+<div class="paragraph">
+<p>今回使用する環境は、Serverless Framework という、<br>
+API Gateway や Lambda など AWSサービスに関しての設定やコーディングをローカルで行い、<br>
+デプロイができるフレームワークを利用します。</p>
+</div>
+<div class="paragraph">
+<p>Lambdaで使用するランタイムとしては Node.js 6.10 を採用し、<br>
+ローカルでのコーディングはJavaScriptの中核仕様を抜き出して標準化した、<br>
+ECMAScript2015（別名：ECMAScript6 以下ES6）で記述し、<br>
+デプロイ時に BABEL というES6からJavaScriptへ変換するツールを利用し、<br>
+ビルドツールは webpack を利用します。</p>
+</div>
+<div class="paragraph">
+<p>ローカル開発環境は webpack の ウェブサーバ機能 を使って、<br>
+ローカルで API Gateway や Lambda の開発もできるようになっています。</p>
+</div>
+<h1 id="___2" class="sect0">やったこと</h1>
+<div class="ulist">
+<ul>
+<li>
+<p>Serverless Framework のインストール</p>
+</li>
+<li>
+<p>AWSアカウントの設定</p>
+</li>
+<li>
+<p>Serverless Framework のプロジェクト作成</p>
+</li>
+<li>
+<p>npmコマンドで BABEL webpack プラグインをインストール</p>
+</li>
+<li>
+<p>BABELの設定</p>
+</li>
+<li>
+<p>webpackの設定</p>
+</li>
+<li>
+<p>Serverless Frameworkの設定</p>
+</li>
+<li>
+<p>MySQLクライアント、UUID生成プラグインをインストール</p>
+</li>
+<li>
+<p>RDSにテーブルを作成</p>
+</li>
+<li>
+<p>ES6でコーディング</p>
+</li>
+<li>
+<p>Serverless Frameworkでデプロイ</p>
+</li>
+<li>
+<p>動作確認</p>
+</li>
+<li>
+<p>ローカルでの開発環境確認</p>
+</li>
+</ul>
+</div>
+<h1 id="___3" class="sect0">前提</h1>
+<div class="ulist">
+<ul>
+<li>
+<p>ローカル端末はMacを使う</p>
+</li>
+<li>
+<p>npmコマンドはHomebrewなどでインストール済みである</p>
+</li>
+<li>
+<p>awscliコマンドは同じくHomebrewなどでインストール済みである</p>
+</li>
+<li>
+<p>AWSアカウントを持っている（今回は検証なので全権限許可IAMのクレデンシャルキーを使用）</p>
+</li>
+<li>
+<p>AWS RDS(MySQLエンジン)のエンドポイント作成とDB作成、接続は確認済みである</p>
+</li>
+</ul>
+</div>
+<h1 id="_serverless_framework" class="sect0">Serverless Framework のインストール</h1>
+<div class="paragraph">
+<p>npmコマンドで Serverless Framework をインストールします。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+$ sudo npm install -g serverless
+/usr/local/bin/slss -> /usr/local/lib/node_modules/serverless/bin/serverless
+/usr/local/bin/serverless -> /usr/local/lib/node_modules/serverless/bin/serverless
+/usr/local/bin/sls -> /usr/local/lib/node_modules/serverless/bin/serverless
+
+> serverless@1.17.0 postinstall /usr/local/lib/node_modules/serverless
+> node ./scripts/postinstall.js
+
++ serverless@1.17.0
+updated 3 packages in 11.982s
+</pre>
+<div class="paragraph">
+<p>sudo を使った上で -g オプションで端末に対してグローバルにインストールしています。</p>
+</div>
+<h1 id="_aws" class="sect0">AWSアカウントの設定</h1>
+<div class="paragraph">
+<p>あらかじめ用意しておいたAWSアカウントを設定します。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+$ aws configure
+AWS Access Key ID [None]: アクセスキーID
+AWS Secret Access Key [None]: シークレットアクセスキー
+Default region name [None]: us-east-1
+Default output format [None]: そのままEnterキーを押す
+</pre>
+<div class="paragraph">
+<p>aws s3 ls s3:// などでS3にアクセスできるかなどで動作確認しました。</p>
+</div>
+<h1 id="_serverless_framework_2" class="sect0">Serverless Framework のプロジェクト作成</h1>
+<div class="paragraph">
+<p>account-pf という名称で作成します。<br>
+Lambdaのランタイムは Node.js を採用したのでテンプレートには aws-nodejs を指定します。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+$ sls create --template aws-nodejs --name account-pf
+Serverless: Generating boilerplate...
+ _______                             __
+|   _   .-----.----.--.--.-----.----|  .-----.-----.-----.
+|   |___|  -__|   _|  |  |  -__|   _|  |  -__|__ --|__ --|
+|____   |_____|__|  \___/|_____|__| |__|_____|_____|_____|
+|   |   |             The Serverless Application Framework
+|       |                           serverless.com, v1.17.0
+ -------'
+
+Serverless: Successfully generated boilerplate for template: "aws-nodejs"
+</pre>
+<pre style="font-family: Menlo, Courier">
+$ ls -a
+.              ..             .gitignore     handler.js     serverless.yml
+</pre>
+<div class="paragraph">
+<p>handler.js と serverless.yml というファイルが生成されました。</p>
+</div>
+<h1 id="_npm_babel_webpack" class="sect0">npmコマンドで BABEL webpack プラグインをインストール</h1>
+<div class="paragraph">
+<p>BABELはES6などをJavaScriptに変換するプラグインで、<br>
+webpackはビルドツールです。<br>
+ローカル端末上でテストするためのウェブサーバ機能も含まれています。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+$ npm install --save-dev babel-core babel-loader babel-plugin-transform-runtime babel-preset-es2015 serverless-webpack webpack
++ babel-preset-es2015@6.24.1
++ babel-plugin-transform-runtime@6.23.0
++ serverless-webpack@2.0.0
++ babel-core@6.25.0
++ babel-loader@7.1.1
++ webpack@3.1.0
+added 489 packages in 13.767s
+
+$ npm install --save babel-runtime
++ babel-runtime@6.23.0
+updated 1 package in 2.371s
+</pre>
+<div class="paragraph">
+<p>--save-dev オプションで開発環境の為のインストールということを明示しています。<br>
+--save オプション自体はJSONファイルに設定を保存するオプションです。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+$ ls -a
+.                 ..                .gitignore        handler.js        node_modules      package-lock.json serverless.yml
+</pre>
+<div class="paragraph">
+<p>node_modules というディレクトリが生成されて、そこにインストールされたプラグインが入っています。<br>
+また、package-lock.jsonにインストールされたプラグインが記載されます。</p>
+</div>
+<h1 id="_babel" class="sect0">BABELの設定</h1>
+<div class="paragraph">
+<p>BABELの設定ファイルは生成されないのでviコマンドなどで新規作成します。</p>
+</div>
+<div class="paragraph">
+<p>$ vi .babelrc</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+{
+  "plugins": ["transform-runtime"],
+  "presets": ["es2015"]
+}
+</pre>
+<div class="paragraph">
+<p>BABELの設定ファイルにプラグインは transform-runtime を指定する。<br>
+presetsは ES6 を利用することを明記します。</p>
+</div>
+<h1 id="_webpack" class="sect0">webpackの設定</h1>
+<div class="paragraph">
+<p>webpackの設定ファイルも生成されないので同じくviコマンドなどで新規作成します。</p>
+</div>
+<div class="paragraph">
+<p>$ vi webpack.config.js</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+module.exports = {
+  entry: './handler.js',
+  target: 'node',
+  module: {
+    loaders: [{
+      test: /\.js$/,
+      loaders: ['babel-loader'],
+      include: __dirname,
+      exclude: /node_modules/,
+    }]
+  },
+  externals: {
+    'aws-sdk': 'aws-sdk'
+  }
+};
+</pre>
+<div class="paragraph">
+<p>entry は ドキュメントルートファイルを、loaders は BABELを指定します。</p>
+</div>
+<h1 id="_serverless_framework_3" class="sect0">Serverless Frameworkの設定</h1>
+<div class="paragraph">
+<p>Serverless Frameworkの設定はYAML形式で記述します。</p>
+</div>
+<div class="paragraph">
+<p>$ vi serverless.yml</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+service: account-pf
+plugins:
+  - serverless-webpack
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "ec2:CreateNetworkInterface"
+        - "ec2:DescribeNetworkInterfaces"
+        - "ec2:DeleteNetworkInterface"
+      Resource:
+        - "*"
+  vpc:
+    securityGroupIds:
+      - sg-xxxxxxxx
+    subnetIds:
+      - subnet-xxxxxxxx
+      - subnet-yyyyyyyy
+functions:
+  createToken:
+    handler: handler.createToken
+    events:
+      - http:
+          path: auth
+          method: post
+          cors: true
+</pre>
+<div class="paragraph">
+<p>各パラーメータの説明</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">service:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Serverless Frameworkのプロジェクト名</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">plugins:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">使用するプラグイン</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">provider:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">各種設定以下記載</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">name:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">使用するPaaSサービスを指定</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">runtime:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">使用するランタイムを指定</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">stage:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ステージ名を指定（stating production など自由に設定できる）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">region:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">使用するAWSのリージョンを指定</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">iamRoleStatements:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">使用するAWSのIAMロール情報を記載（VPC内にLambdaをデプロイする場合）</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">vpc:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">使用するAWS VPC情報を記載</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">securityGroupIds:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS セキュリティグループIDを指定</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">subnetIds:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS サブネットIDを指定</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">functions:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AWS Lambda関数に関する情報を記載</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">createToken:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">今回作成したLambda関数と連携する名称</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">handler:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lambdaハンドラーを指定</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">events:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API各種設定以下記載</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">http:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ウェブAPIということを記載</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">path:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">APIエンドポイントを記載</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">method:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HTTPメソッドを記載</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cors:</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CORSを使用するか指定</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>stage: の部分にステージ名を記載すれば、（別途RDSの作成等は必要ですが、サーバーレスなので）いくらでも環境を作成できてしまう！<br>
+というところはサーバーレスの醍醐味かなと思います。</p>
+</div>
+<div class="paragraph">
+<p>また今回 iamRoleStatements: を指定したり、vpc: を指定しているのは、<br>
+RDSを利用しているからです。<br>
+DynamoDBやS3のように非VPCのサービスを利用する場合は、<br>
+Lambdaは非VPCのままで問題ないので、このような指定は要りません。</p>
+</div>
+<div class="paragraph">
+<p>function: の部分、ここに http: 配下に path: method: を指定すれば<br>
+API Gatewayが設定されてしまうのは驚きです。</p>
+</div>
+<h1 id="_mysql_uuid" class="sect0">MySQLクライアント、UUID生成プラグインをインストール</h1>
+<div class="paragraph">
+<p>AWS Lambdaには標準でMySQLのクライアントやUUID生成などは組み込まれていないので、<br>
+Serverless Framework側で設定する必要があります。<br>
+しかし、<br>
+設定と入っても以下のように npmコマンドでインストールするだけなので簡単です。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+# まずはローカル端末にグローバルに mysql と uuid をインストール
+
+$ npm install -g mysql uuid
+/usr/local/bin/uuid -> /usr/local/lib/node_modules/uuid/bin/uuid
++ mysql@2.13.0
++ uuid@3.1.0
+added 9 packages in 0.749s
+</pre>
+<pre style="font-family: Menlo, Courier">
+# 改めてServerless Frameworkの node_modules 配下にインストール
+
+$ npm install --save mysql uuid
++ uuid@3.1.0
++ mysql@2.13.0
+added 7 packages in 2.454s
+</pre>
+<div class="paragraph">
+<p>こうしておくだけで、フレームワークが勝手にLambdaまで運んでくれます。</p>
+</div>
+<h1 id="_rds" class="sect0">RDSにテーブルを作成</h1>
+<div class="paragraph">
+<p>以下のようなテーブルを仮で作成しました。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+CREATE TABLE `clients` (
+  `client_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `password` varchar(64) DEFAULT NULL,
+  `name` varchar(128) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `tel` varchar(13) DEFAULT NULL,
+  `postal` varchar(8) DEFAULT NULL,
+  `address1` varchar(512) DEFAULT NULL,
+  `address2` varchar(512) DEFAULT NULL,
+  `token` varchar(64) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`client_id`)
+) ENGINE=InnoDB
+</pre>
+<div class="paragraph">
+<p>今回使用するフィールドは client_id と token になります。</p>
+</div>
+<h1 id="_es6" class="sect0">ES6でコーディング</h1>
+<div class="paragraph">
+<p>やっとコーディングです。
+まずハンドラーは以下のようになりました。</p>
+</div>
+<div class="paragraph">
+<p>$ vi handler.js</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+'use strict';
+
+import Mysql from "./app/Libraries/Mysql.es6";
+import Utils from "./app/Libraries/Utils.es6";
+import dsn   from "./conf/db.conf.es6";
+
+export const createToken = (event, context, callback) => {
+
+	let token = Utils.generateToken();
+
+	let insertData = {
+		token: token,
+	};
+
+	let db = new Mysql(dsn);
+	db.query("INSERT INTO `clients` SET ?", insertData);
+	db.end();
+
+	const response = {
+		statusCode: 200,
+		headers: {
+			"Access-Control-Allow-Origin" : "*"
+		},
+		body: JSON.stringify({
+			status: 'ok',
+			token: token,
+		}),
+	}
+
+	callback(null, response)
+}
+</pre>
+<div class="paragraph">
+<p>MySQLクラスとUtility関連のクラスをインポートして<br>
+トークンを生成しそれをMySQLにインサートして、<br>
+HTTPレスポンスを返すという流れです。</p>
+</div>
+<div class="paragraph">
+<p>Serverless Framework に app app/Libraries conf ディレクトリを作成しておきます。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+$ mkdir -p app/Libraries
+$ mkdir -p conf
+</pre>
+<pre style="font-family: Menlo, Courier">
+ls -a
+.                 .babelrc          .serverless       app               handler.js        package-lock.json webpack.config.js
+..                .gitignore        .webpack          conf              node_modules      serverless.yml
+</pre>
+<div class="paragraph">
+<p>この辺のディレクトリ命名規則などオレオレフレームワーク化しないように<br>
+きちんと設計は必要でしょう。</p>
+</div>
+<div class="paragraph">
+<p>$ vi app/Libraries/Mysql.es6</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+class Mysql {
+
+	constructor(dsn) {
+		this.mysql = require("mysql");
+		this.dsn = dsn;
+
+		return this.connect();
+	}
+
+	connect() {
+		return this.mysql.createConnection(this.dsn);
+	}
+}
+
+export default Mysql;
+</pre>
+<div class="paragraph">
+<p>JavaやPHPなどに近い形でクラスの記述ができます。<br>
+ES6の最大のメリットかと思います。</p>
+</div>
+<div class="paragraph">
+<p>$ vi conf/db.conf.es6</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+export default {
+	host     : "****.****.us-east-1.rds.amazonaws.com",
+	user     : "****",
+	password : "****",
+	port     : "3306",
+	database : "****",
+}
+</pre>
+<div class="paragraph">
+<p>MySQLの設定です。</p>
+</div>
+<div class="paragraph">
+<p>iniファイルとかYAML形式とかで書けたりもするのでしょうか。<br>
+この辺はさらに勉強が必要です。</p>
+</div>
+<div class="paragraph">
+<p>$ vi app/Libraries/Utils.es6</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+class Utils {
+
+	constructor() {
+	}
+
+	static generateToken() {
+		let uuid = require("uuid/v4");
+		let token = uuid().split('-').join('');
+
+		return token;
+	}
+}
+
+export default Utils;
+</pre>
+<div class="paragraph">
+<p>token発行はUUID v4を使用してそこからハイフンを抜くという仕様にしました。</p>
+</div>
+<h1 id="_serverless_framework_4" class="sect0">Serverless Frameworkでデプロイ</h1>
+<div class="paragraph">
+<p>さあデプロイです。</p>
+</div>
+<div class="paragraph">
+<p>デプロイは serverless というコマンドで行うのですが、<br>
+今回は初めから設定されている、そのエイリアスの sls というコマンド名で行います。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+$ sls deploy -v
+Serverless: Bundling with Webpack...
+Time: 791ms
+     Asset    Size  Chunks                    Chunk Names
+handler.js  509 kB       0  [emitted]  [big]  main
+   [8] ./node_modules/mysql/lib/Connection.js 12.4 kB {0} [built]
+  [13] ./node_modules/mysql/lib/protocol/constants/types.js 1.8 kB {0} [built]
+  [14] ./node_modules/mysql/index.js 4.29 kB {0} [built]
+  [23] ./node_modules/mysql/lib/protocol/SqlString.js 39 bytes {0} [built]
+  [25] ./node_modules/mysql/lib/PoolConfig.js 1.06 kB {0} [built]
+  [27] ./handler.js 1.12 kB {0} [built]
+  [28] ./node_modules/babel-runtime/core-js/json/stringify.js 95 bytes {0} [built]
+  [29] ./node_modules/core-js/library/fn/json/stringify.js 242 bytes {0} [built]
+  [31] ./app/Libraries/Mysql.es6 235 bytes {0} [built]
+  [79] ./node_modules/mysql/lib/PoolCluster.js 6.47 kB {0} [built]
+  [81] ./app/Libraries/Utils.es6 206 bytes {0} [built]
+  [82] ./node_modules/uuid/v4.js 679 bytes {0} [built]
+  [83] ./node_modules/uuid/lib/rng.js 239 bytes {0} [built]
+  [84] ./node_modules/uuid/lib/bytesToUuid.js 699 bytes {0} [built]
+  [85] ./conf/db.conf.es6 186 bytes {0} [built]
+    + 71 hidden modules
+Serverless: Packaging service...
+Serverless: Uploading CloudFormation file to S3...
+Serverless: Uploading artifacts...
+Serverless: Uploading service .zip file to S3 (132.1 KB)...
+Serverless: Validating template...
+Serverless: Updating Stack...
+Serverless: Checking Stack update progress...
+CloudFormation - UPDATE_IN_PROGRESS - AWS::CloudFormation::Stack - account-pf-dev
+CloudFormation - UPDATE_IN_PROGRESS - AWS::Lambda::Function - CreateTokenLambdaFunction
+CloudFormation - UPDATE_COMPLETE - AWS::Lambda::Function - CreateTokenLambdaFunction
+CloudFormation - CREATE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment0000000000000
+CloudFormation - CREATE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment0000000000000
+CloudFormation - CREATE_COMPLETE - AWS::ApiGateway::Deployment - ApiGatewayDeployment0000000000000
+CloudFormation - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS - AWS::CloudFormation::Stack - account-pf-dev
+CloudFormation - UPDATE_COMPLETE - AWS::CloudFormation::Stack - account-pf-dev
+Serverless: Stack update finished...
+Service Information
+service: account-pf
+stage: dev
+region: us-east-1
+api keys:
+  None
+endpoints:
+  POST - https://**********.execute-api.us-east-1.amazonaws.com/dev/auth
+functions:
+  createToken: account-pf-dev-createToken
+
+Stack Outputs
+CreateTokenLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:000000000000:function:account-pf-dev-createToken:2
+ServiceEndpoint: https://**********.execute-api.us-east-1.amazonaws.com/dev
+ServerlessDeploymentBucketName: account-pf-dev-serverlessdeploymentbucket-************
+
+Serverless: Removing old service versions...
+</pre>
+<div class="paragraph">
+<p>sls deploy -v と打つだけで、<br>
+簡単にデプロイ出来てしまいました。。<br>
+-v はデプロイの詳細を表示してくれるオプションです。</p>
+</div>
+<div class="paragraph">
+<p>デプロイ処理の流れとしては、<br>
+BABEL が ES6スクリプトを JavaScript に変換して、<br>
+webpack が mysql uuid などのブラグインも組み込んでビルドし、<br>
+CloudFormation 形式に落とし込み、それをS3に保存して、<br>
+CloudFormationで API Gateway Lambda にデプロイする。<br></p>
+</div>
+<div class="paragraph">
+<p>最後にサービス名や環境情報、APIエンドポイントの情報 を表示してくれます。</p>
+</div>
+<div class="paragraph">
+<p>もちろんシンタックスエラーなどがないか、ES6のバリデーションも行ってくれます。<br>
+感動です。</p>
+</div>
+<h1 id="___4" class="sect0">動作確認</h1>
+<div class="paragraph">
+<p>APIエンドポイントに対してcurlコマンドでPOSTリクエストを行いました。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+$ curl -X POST https://**********.execute-api.us-east-1.amazonaws.com/dev/auth
+{"status":"ok","token":"29a35ef42a2648cf96aad0d65fcf7656"}%
+</pre>
+<div class="paragraph">
+<p>tokenが発行され、DBに格納されました。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+mysql> select client_id, token, created_at from clients;
++-----------+----------------------------------+---------------------+
+| client_id | token                            | created_at          |
++-----------+----------------------------------+---------------------+
+|         1 | 29a35ef42a2648cf96aad0d65fcf7656 | 2017-07-08 15:04:39 |
++-----------+----------------------------------+---------------------+
+1 rows in set (0.31 sec)
+</pre>
+<h1 id="___5" class="sect0">ローカルでの開発環境確認</h1>
+<div class="paragraph">
+<p>最後に補足として開発環境に関しては、
+以下のコマンドでローカルにウェブサーバが立ち上がります。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+$ sls webpack serve
+Serverless: Serving functions...
+  POST - http://localhost:8000/auth
+</pre>
+<div class="paragraph">
+<p>あとはcurlコマンドなどで確認できます。</p>
+</div>
+<pre style="font-family: Menlo, Courier">
+curl -X POST http://localhost:8000/auth
+{"status":"ok","token":"5e8a005db09d4d49a7016fcbe2f9ecad"}%
+</pre>
+<div class="paragraph">
+<p>簡単ですね。</p>
+</div>
+<div class="paragraph">
+<p>ちなみに、このウェブサーバを立ち上げた状態で、ES6のソースコードを変更したら、<br>
+即時反映されますので、ES6に対応済みということと思います。</p>
+</div>
+<h1 id="___6" class="sect0">所感</h1>
+<div class="paragraph">
+<p>とても簡単にAPI GatewayやLambdaのコーディングやデプロイができました。<br>
+AWSのコンソールからブラウザベースで設定できることも魅力なのですが、<br>
+少し規模の大きいプロダクションサービスを構築する場合、<br>
+Serverless Frameworkのようなフレームワークは必須と感じました。</p>
+</div>
+<div class="paragraph">
+<p>また、サーバーレスでない設計の場合、例えばEC2がスケールアウトして台数が増えるなどした時、<br>
+ソースコードの管理とか大変ですが、<br>
+サーバーレスならそこら辺気にしなくて良くなります。</p>
+</div>
+<div class="paragraph">
+<p>また、重たいバッチ処理があるなら、AWS Batchを利用するなどして、<br>
+全てをインフラがない状態にできれば、<br>
+インフラのメンテナンスは基本しなくて済むようになります！</p>
+</div>
+<div class="paragraph">
+<p>ログ出力などに関しては今回は取り上げてませんが、<br>
+取り敢えずS3に保存しておけば Athena や Elasticsearch、Redshift Spectrum があるので、<br>
+何とかなりそうです。</p>
+</div>
+<div class="paragraph">
+<p>ローカルの開発環境とプロダクション環境の差異という問題はありますが、<br>
+先述の通り、Serverless Framework側でstage名を指定してデプロイすることで、<br>
+基本いくらでも環境は作って壊せますので、問題ないと思われます。</p>
+</div>
+<div class="paragraph">
+<p>また、Lambdaに標準で組み込まれていないモジュールをAWSコンソールから上げるのは<br>
+とても面倒に感じていましたが、<br>
+フレームワークを利用することでその辺も何も気にしなくて済むというのはすごいです。</p>
+</div>
+<div class="paragraph">
+<p>最後に、<br>
+今回は出てきませんでしたが、もちろんtoken認証周りはElastiCache Redisなどにキャッシュして、<br>
+APIのレスポンスタイムを短くできなければ使い物になりません。<br>
+次回その2ではRedisを組み込み、私も れでぃさ〜 に進化したいと思います。</p>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
