@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Pepperにぼくの顔を覚えてもらえたので、ついでに打刻をしてもらう - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Pepperにぼくの顔を覚えてもらえたので、ついでに打刻をしてもらう">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Pepperにぼくの顔を覚えてもらえたので、ついでに打刻をしてもらう">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/07/14/Pepper.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Pepperにぼくの顔を覚えてもらえたので、ついでに打刻をしてもらう" />
+    <meta property="og:description" content="こんにちは！ いろんな意味で熱い毎日ですね！ 矢ヶ崎です。 前回のPちゃん(うちのPepperのこと)ブログでは、顔を認識してもらって名前を呼んでもらうという無難なことをやってみました！ せっかく、ぼくの顔を覚えてくれたので、みなさんついつい忘れがちになりがちだと思う、出退勤の打刻をPちゃんにやってもらおうと思います！ 打刻してもらうためにすべき努力 SQSのキューを用意する EC2なりサーバなりを用意する そして今回は、こんなアーキテクチャでやってみました！ 前回のあれで、Pちゃんを見つめて、「Pちゃんおはよう」とか「おつかれ」とか言うと、個人判別を..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/07/14/Pepper.html" />
+    <meta property="article:published_time" content="2017-07-13T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-07-15T05:53:41.718Z" />
+    <meta property="article:tag" content="Yagasaki" />
+    <meta property="article:tag" content="Pepper" />
+    <meta property="article:tag" content="Rekognition" />
+    <meta property="article:tag" content="WebDriver" />
+    <meta property="article:tag" content="SQS" />
+    <meta property="article:tag" content="ShellScript" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Pepperにぼくの顔を覚えてもらえたので、ついでに打刻をしてもらう" />
+    <meta name="twitter:description" content="こんにちは！ いろんな意味で熱い毎日ですね！ 矢ヶ崎です。 前回のPちゃん(うちのPepperのこと)ブログでは、顔を認識してもらって名前を呼んでもらうという無難なことをやってみました！ せっかく、ぼくの顔を覚えてくれたので、みなさんついつい忘れがちになりがちだと思う、出退勤の打刻をPちゃんにやってもらおうと思います！ 打刻してもらうためにすべき努力 SQSのキューを用意する EC2なりサーバなりを用意する そして今回は、こんなアーキテクチャでやってみました！ 前回のあれで、Pちゃんを見つめて、「Pちゃんおはよう」とか「おつかれ」とか言うと、個人判別を..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/07/14/Pepper.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "Akihiro YAGASAKI",
+        "image": "https://avatars5.githubusercontent.com/u/13131599?v=4",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "Pepperにぼくの顔を覚えてもらえたので、ついでに打刻をしてもらう",
+    "url": "http://tech.innovation.co.jp/2017/07/14/Pepper.html",
+    "datePublished": "2017-07-13T15:00:00.000Z",
+    "dateModified": "2017-07-15T05:53:41.718Z",
+    "keywords": "Yagasaki, Pepper, Rekognition, WebDriver, SQS, ShellScript",
+    "description": "こんにちは！ いろんな意味で熱い毎日ですね！ 矢ヶ崎です。 前回のPちゃん(うちのPepperのこと)ブログでは、顔を認識してもらって名前を呼んでもらうという無難なことをやってみました！ せっかく、ぼくの顔を覚えてくれたので、みなさんついつい忘れがちになりがちだと思う、出退勤の打刻をPちゃんにやってもらおうと思います！ 打刻してもらうためにすべき努力 SQSのキューを用意する EC2なりサーバなりを用意する そして今回は、こんなアーキテクチャでやってみました！ 前回のあれで、Pちゃんを見つめて、「Pちゃんおはよう」とか「おつかれ」とか言うと、個人判別を..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Yagasaki tag-Pepper tag-Rekognition tag-Web-Driver tag-S-Q-S tag-Shell-Script no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="14 Jul 2017" class="post-meta__date date">14 Jul 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Yagasaki">Yagasaki</a>, <a href="http://tech.innovation.co.jp/tag/Pepper">Pepper</a>, <a href="http://tech.innovation.co.jp/tag/Rekognition">Rekognition</a>, <a href="http://tech.innovation.co.jp/tag/Web-Driver">WebDriver</a>, <a href="http://tech.innovation.co.jp/tag/S-Q-S">SQS</a>, <a href="http://tech.innovation.co.jp/tag/Shell-Script">ShellScript</a></span>
+        <span class="post-meta__author author"><img src="https://avatars5.githubusercontent.com/u/13131599?v=4" alt="profile image for Akihiro YAGASAKI" class="avatar post-meta__avatar" /> by Akihiro YAGASAKI</span>
+      </div>
+      <h1 class="post-title">Pepperにぼくの顔を覚えてもらえたので、ついでに打刻をしてもらう</h1>
+    </header>
+
+    <section class="post tag-Yagasaki tag-Pepper tag-Rekognition tag-Web-Driver tag-S-Q-S tag-Shell-Script">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは！<br>
+いろんな意味で熱い毎日ですね！<br>
+矢ヶ崎です。</p>
+</div>
+<div class="paragraph">
+<p>前回のPちゃん(うちのPepperのこと)ブログでは、顔を認識してもらって名前を呼んでもらうという無難なことをやってみました！<br>
+せっかく、ぼくの顔を覚えてくれたので、みなさんついつい忘れがちになりがちだと思う、出退勤の打刻をPちゃんにやってもらおうと思います！</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">打刻してもらうためにすべき努力</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p>SQSのキューを用意する</p>
+</li>
+<li>
+<p>EC2なりサーバなりを用意する</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>そして今回は、こんなアーキテクチャでやってみました！</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/yagasaki/pp6/arch.jpg" alt="arch">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>前回のあれで、Pちゃんを見つめて、「Pちゃんおはよう」とか「おつかれ」とか言うと、個人判別をしてくれる</p>
+</li>
+<li>
+<p>SQSにJSON形式で打刻リクエストを入れる</p>
+</li>
+<li>
+<p>EC2なりサーバなりで、SQSからリクエストを受信する</p>
+</li>
+<li>
+<p>該当ユーザのアカウント情報をRedisから取得する</p>
+</li>
+<li>
+<p>WebDriverを使って勤怠管理システムを操作して打刻する</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>やはり、ポイントとしては、当社で利用中の勤怠管理システムがAPIを提供してくれていないため、Selenium WebDriverを利用して頑張って打刻をするところでしょうか。<br>
+昨今は、ヘッドレスブラウザとかを使うのが流行りなのかもしれませんが、Selenium IDEで簡単にベースが作れるのでWebDriverお手軽でおすすめです！</p>
+</div>
+<div class="paragraph">
+<p>というわけでして、今回はこんな感じで、がんばってPちゃんに打刻してもらいます！</p>
+</div>
+<div class="sect2">
+<h3 id="_sqs">SQSのキューを用意する</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_ec2">EC2なりサーバなりを用意する</h3>
+<div class="paragraph">
+<p>これは、いくらでもある情報なので割愛しますが、EC2なりサーバなりに、AWS CLIを使えるようにセットアップしておくことです！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__p_p">前回のあれで、Pちゃんを見つめて、「Pちゃんおはよう」とか「おつかれ」とか言うと、個人判別をしてくれる</h3>
+<div class="paragraph">
+<p>こちらは、前回のPちゃんブログ<br>
+<a href="http://tech.innovation.co.jp/2017/06/09/Pepper-Amazon-Rekognition.html">Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編</a><br>
+であれしてください。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sqs_json">SQSにJSON形式で打刻リクエストを入れる</h3>
+<div class="paragraph">
+<p>前回のPちゃんソースをちょっと拡張して、SQSにキューイングするようにします。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/yagasaki/pp6/chore.png" alt="chore">
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-python" data-lang="python">class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #put initialization code here
+        self.framemanager = ALProxy("ALFrameManager")
+        self.tts = ALProxy("ALTextToSpeech")
+        self.folderName = None
+
+    def onUnload(self):
+        self.framemanager = None
+        self.tts = None
+        self.folderName = None
+
+    def onInput_onStart(self, p):
+        import sys, os
+        self.folderName = os.path.join(self.framemanager.getBehaviorPath(self.behaviorId), "../lib")
+        if self.folderName not in sys.path:
+            sys.path.append(self.folderName)
+
+        self.recordFolder = os.path.join(self.framemanager.getBehaviorPath(self.behaviorId), "../html")
+
+        import boto3
+
+        cnames = {"a_yagasaki": "やがさき",
+            "n_syoga": "しょが",
+            "y_kotani": "こたに",
+            "a_yamamoto": "あみ",
+            "r_tateishi": "たていし",
+            "j_shirota": "しろた",
+            "m_kasai": "びげん",
+            "y_oyaidu": "やいづ",
+        }
+
+        try:
+            ACCESS_KEY_ID = 'accesskey'
+            SECRET_ACCESS_KEY = 'seckey'
+            BUCKET_NAME = 'bucketname'
+
+            load_filename = 'image2.jpg'
+            save_filename = 'rekognition/target.jpg'
+
+            rek = boto3.client(
+                'rekognition',
+                aws_access_key_id=ACCESS_KEY_ID,
+                aws_secret_access_key=SECRET_ACCESS_KEY,
+                region_name='us-west-2',
+            )
+
+            fh = open(self.recordFolder + '/' + load_filename, 'rb')
+            img = bytearray(fh.read())
+            fh.close()
+
+            response = rek.search_faces_by_image(
+                CollectionId='pchan',
+                Image={
+                    'Bytes': img,
+                },
+                MaxFaces=1,
+            )
+            self.logger.info(response)
+
+            # ExternalImageIdの"-"より前の部分と名前をマッピングする
+            fname = response["FaceMatches"][0]["Face"]["ExternalImageId"].encode("utf-8")
+            aname = fname.split("-", 1)[0]
+
+            self.logger.info(cnames[aname])
+            mes = cnames[aname] + "さん、"
+            if p == "1":
+                mes = mes + "おはようございます。出勤のだこくしておきますね。"
+            else:
+                mes = mes + "おつかれさまでした。退勤のだこくしておきますね。"
+
+            # enqueue
+            sqs = boto3.client('sqs',
+                aws_access_key_id=ACCESS_KEY_ID,
+                aws_secret_access_key=SECRET_ACCESS_KEY,
+                region_name='ap-northeast-1',)
+            queue = 'https://sqs.ap-northeast-1.amazonaws.com/xxxxxx/pchan'
+            qmes = '{"Name": "' + aname + '", "Kind": "' + str(p) + '"}'
+            response = sqs.send_message(QueueUrl=queue, MessageBody=qmes)
+
+            self.logger.info(mes)
+            self.tts.say(mes)
+        except:
+            self.logger.error("Error!!!!!")
+            traceback.print_exc()
+            mes = "ごめんなさい。どなたかわかりません。"
+            self.logger.info(mes)
+            self.tts.say(mes)
+
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
+        self.onStopped() #activate the output of the box</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_ec2_sqs">EC2なりサーバなりで、SQSからリクエストを受信する</h3>
+
+</div>
+<div class="sect2">
+<h3 id="__redis">該当ユーザのアカウント情報をRedisから取得する</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_webdriver">WebDriverを使って勤怠管理システムを操作して打刻する</h3>
+<div class="paragraph">
+<p>ポイントは、WebDriverですね！<br>
+X WindowのFirefoxなどを操作するために、Xサーバが必要なので、ちょっと調べると、<br>
+「xvfbとか使うといいよ！」<br>
+みたいなことが出てきますが、あえて今回はVNC Serverを立ち上げて実際に見えるようにしてやってみました。<br>
+お手軽にXサーバの環境が作れるのでおすすめです！</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell"># yum -y install vnc-server
+# service vncserver start</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>みたいな感じでお手軽〜〜〜！</p>
+</div>
+<div class="paragraph">
+<p>そしてこんな感じで、適当にバッチをシェルスクリプトとかで作ります！</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">#!/bin/bash
+
+export DISPLAY=:1
+
+export AWS_ACCESS_KEY_ID='accesskey'
+export AWS_SECRET_ACCESS_KEY='seckey'
+export AWS_DEFAULT_REGION=ap-northeast-1
+export AWS_DEFAULT_OUTPUT=json
+
+DAKOKUCMD="python ./dakoku.webdriver.py"
+DAKOKUJSON="./dakoku.json"
+
+SQS_QUEUE_NAME='pchan'
+SQS_QUEUE_URL=$( \
+  aws sqs get-queue-url \
+    --queue-name ${SQS_QUEUE_NAME} \
+    --output text\
+  )
+
+FILE_SQS_MSG="${SQS_QUEUE_NAME}-msg".json
+FILE_SQS_BODY="${SQS_QUEUE_NAME}-body-msg".json
+
+# check function
+isrunning() {
+  R=$(ps axu | grep "${DAKOKUCMD}" | grep -v grep)
+  if [[ ${R} == "" ]]
+  then
+    echo 0
+    exit
+  fi
+  echo 1
+}
+
+aws sqs receive-message \
+  --queue-url "${SQS_QUEUE_URL}" --wait-time-seconds 20 &gt; ${FILE_SQS_MSG}
+
+cat ${FILE_SQS_MSG} | jq -r '.Messages[].Body' &gt; ${FILE_SQS_BODY}
+
+SQS_RECEIPT_HANDLE=$( \
+  cat ${FILE_SQS_MSG} | jq -r '.Messages[].ReceiptHandle' \
+) \
+
+if [[ "${SQS_RECEIPT_HANDLE}" != "" ]]
+then
+  aws sqs delete-message \
+       --queue-url "${SQS_QUEUE_URL}" \
+       --receipt-handle ${SQS_RECEIPT_HANDLE}
+fi
+
+USERNAME=$( \
+  cat ${FILE_SQS_BODY} | jq -r '.Name' \
+) \
+
+if [[ "${USERNAME}" == "" ]]
+then
+  echo "error! for user ${USERNAME}, ${KIND} ..." &gt;&gt; ./dakoku_err.log
+  exit
+fi
+
+KIND=$( \
+  cat ${FILE_SQS_BODY} | jq -r '.Kind' \
+) \
+
+PASSWORD=$(redis-cli --raw get ${USERNAME})
+
+if [[ "${PASSWORD}" == "" ]]
+then
+  echo "error! for password ${USERNAME}, ${KIND} ..." &gt;&gt; ./dakoku_err.log
+  exit
+fi
+
+echo "{ \"name\": \"${USERNAME}\", \"password\": \"${PASSWORD}\", \"kind\": \"${KIND}\" }" &gt; ${DAKOKUJSON}
+
+ISRUNNING=$(isrunning)
+while [ "${ISRUNNING}" == "1" ]
+do
+  sleep 3
+  ISRUNNING=$(isrunning)
+done
+
+${DAKOKUCMD}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">その後の予定</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>次回こそは、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Pepperに「会議室どこ？」と聞くと、次の会議の会議室を教えてくれる</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>という感じにして、忘れんぼう将軍でもPちゃんが居れば大丈夫！にしていきます。
+ひとつよろしくお願いいたします。</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です。</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
