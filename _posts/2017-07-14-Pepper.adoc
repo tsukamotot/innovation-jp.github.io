@@ -19,7 +19,7 @@
 image::/images/yagasaki/pp6/arch.jpg[arch]
 
 * 前回のあれで、Pちゃんを見つめて、「Pちゃんおはよう」とか「おつかれ」とか言うと、個人判別をしてくれる
-* SQSにjson形式で打刻リクエストを入れる
+* SQSにJSON形式で打刻リクエストを入れる
 * EC2なりサーバなりで、SQSからリクエストを受信する
 * 該当ユーザのアカウント情報をRedisから取得する
 * WebDriverを使って勤怠管理システムを操作して打刻する
@@ -40,7 +40,7 @@ image::/images/yagasaki/pp6/arch.jpg[arch]
 http://tech.innovation.co.jp/2017/06/09/Pepper-Amazon-Rekognition.html[Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編] +
 であれしてください。
 
-=== SQSにjson形式で打刻リクエストを入れる
+=== SQSにJSON形式で打刻リクエストを入れる
 
 前回のPちゃんソースをちょっと拡張して、SQSにキューイングするようにします。
 
