@@ -107,7 +107,7 @@ image::http://tech.innovation.co.jp/images/ozasa/art02_out.gif[]
 
 元画像
 
-image::http://tech.innovation.co.jp/images/ozasa/art03.png[]
+image::http://tech.innovation.co.jp/images/ozasa/art03.jpg[]
 
 結果画像
 
@@ -115,7 +115,7 @@ image::http://tech.innovation.co.jp/images/ozasa/art03_out.png[]
 
 元画像
 
-image::http://tech.innovation.co.jp/images/ozasa/art04.png[]
+image::http://tech.innovation.co.jp/images/ozasa/art04.jpg[]
 
 結果画像
 
