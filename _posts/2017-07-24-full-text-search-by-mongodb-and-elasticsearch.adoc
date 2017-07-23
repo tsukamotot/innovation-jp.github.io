@@ -7,7 +7,7 @@
 こんにちは、加藤です。
 
 
-今回は、MongoDBのドキュメントをmongo-connectorを用いてElasticsearchにリアルタイム同期を行い、 +
+今回は、MongoDBのデータをmongo-connectorを用いてElasticsearchにリアルタイム同期を行い、 +
 Elasticsearchで日本語検索してみます。
 
 大まかな流れは下記のようになります。
