@@ -95,7 +95,7 @@ image::http://tech.innovation.co.jp/images/ozasa/art02_out_1000.png[]
 
 10000回
 
-image::http://tech.innovation.co.jp/images/ozasa/art02_out_10000.png[]
+image::http://tech.innovation.co.jp/images/ozasa/art02_out.png[]
 
 gif版(1000回づつ表示)
 
