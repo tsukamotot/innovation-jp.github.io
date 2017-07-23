@@ -122,7 +122,7 @@ image::http://tech.innovation.co.jp/images/ozasa/art04.png[]
 image::http://tech.innovation.co.jp/images/ozasa/art04_out.png[]
 
 スタイル画像はなんでしょうか？ +
-クイズにしてみるのも面白いかもしれません。
+なんて、クイズにしてみるのも面白いかもしれません。
 
 
 ### 今後
