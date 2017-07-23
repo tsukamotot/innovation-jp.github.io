@@ -30,12 +30,12 @@ Amazon Web ServicesのEC2インスタンスに対してEC2 Elastic GPUという�
 EC2 Elastic GPUがまだだったため、 +
 今回はg2.2xlargeを使ってみました。
 
-g3系のインスタンスが使えるのかと思っていたのですが、 +
+また、g3系のインスタンスが使えるのかと思っていたのですが、 +
 まだ東京リージョンにきていないようでした。(2017年7月現在)
 
-Amazonマシンイメージ(AMI)は「Deep Learning AMI Amazon Linux Version 2.3_Jun2017」を選択しました。
+Amazonマシンイメージ(AMI)は「Deep Learning AMI Amazon Linux Version 2.3_Jun2017」を選択しました。 +
 このAMIはMXNet、Tensorflow、Caffe、Theano、Torch、CNTK、Kerasがインストールされているため、 +
-この後のインストール作業の一部を省略することができました。
+この後のインストール作業をかなり省略することができました。
 
 こういったAMIの存在やGPUインスタンス・サービスが増えてきているあたり、 +
 機械学習やGPUコンピューティングの需要が高まっていることを感じますね。
@@ -43,10 +43,12 @@ Amazonマシンイメージ(AMI)は「Deep Learning AMI Amazon Linux Version 2.3
 #### 2.インストール諸々
 neural-styleのGithubにやり方は書いてありますが、 +
 上記で触れたとおりすでにTorchはインストールされているため、 +
-loadcaffe、neural-styleをインストールすれば、それだけでneural-styleを実行ができるようになります。
+loadcaffeとneural-styleをインストールすれば、それだけでneural-styleを実行ができるようになります。
 
 また、CUDA(Compute Unified Device Architecture)もインストールされているため、 +
 なんと諸々の設定を抜きにいきなりGPUモードで実行できるのです。
+
+ここまで作業を省略できるとは思っておらず、びっくりました。
 
 #### 3.neural-styleの実行
 
@@ -58,7 +60,7 @@ GPUを利用することによって前回より実行速度をあげること�
 th neural_style.lua -style_image ../<stle_image> -content_image ../<content_image> -output_image <outoput_image.png> -gpu -0 -num_iterations 1000 -image_size 512 
 ----
 
-gpuオプションを0にしてGPUモードで実行します。 +
+念願のgpuオプションを0にしてGPUモードで実行します。 +
 また、num_iterationsを指定することでイテレーション数を指定可能です。
 
 ちなみに思い切って10000回イテレーションをしてみたところ、2時間程度で完了しました。 +
@@ -68,15 +70,16 @@ gpuオプションを0にしてGPUモードで実行します。 +
 
 ## 制作物
 
-元画像
+■元画像
 
 image::http://tech.innovation.co.jp/images/ozasa/art02.jpg[]
 
-スタイル画像
+■スタイル画像
 
-image::http://tech.innovation.co.jp/images/ozasa/Pollock.jpg[]
+https://www.jackson-pollock.org/convergence.jsp
 
-ジャクソンポロックですね。
+
+ジャクソンポロックのConvergenceを選んでみました。
 
 
 ### イテレーション過程
@@ -105,24 +108,32 @@ image::http://tech.innovation.co.jp/images/ozasa/art02_out.gif[]
 
 ### その他制作物
 
-元画像
+■元画像
 
 image::http://tech.innovation.co.jp/images/ozasa/art03.jpg[]
 
-結果画像
+___
+
+■結果画像
 
 image::http://tech.innovation.co.jp/images/ozasa/art03_out.png[]
 
-元画像
+___
+
+■元画像
 
 image::http://tech.innovation.co.jp/images/ozasa/art04.jpg[]
 
-結果画像
+___
+
+■結果画像
 
 image::http://tech.innovation.co.jp/images/ozasa/art04_out.png[]
 
+___
+
 スタイル画像はなんでしょうか？ +
-なんて、クイズにしてみるのも面白いかもしれません。
+なんて、クイズにしてみるのも面白いかもしれませんね。
 
 
 ### 今後
