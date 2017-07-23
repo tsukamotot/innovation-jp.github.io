@@ -305,6 +305,10 @@ Elasticsearchはスキーマが必要な点を考慮しながら設計を行う�
 
 
 
+*<参考記事>* +
+Carpe Diem - MongoDBのデータをElasticsearchにリアルタイム同期 +
+http://christina04.hatenablog.com/entry/2016/08/25/011929
+
 
 
 
