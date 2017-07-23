@@ -1,0 +1,315 @@
+= mongo-connectorで、MongoDBのデータをElasticsearchに同期して日本語検索をしてみる
+:published_at: 2017-07-24
+:hp-alt-title: full-text-search-by-mongodb-and-elasticsearch
+:hp-tags: katok,elasticsearch,mongodb
+
+
+こんにちは、加藤です。
+
+
+今回は、MongoDBのドキュメントをmongo-connectorを用いてElasticsearchにリアルタイム同期を行い、 +
+Elasticsearchで日本語検索してみます。
+
+大まかな流れは下記のようになります。
+
+
+*MongoDB(データ追加) → mongo-connector(リアルタイム同期) → Elasticsearch(ここで日本語検索)*
+
+
+
+### 作業環境
+
+作業環境は、下記で行っています。
+
+* macOS Sierra
+* Python 2.7.13 (pip 9.0.1)
+* Elasticsearch 5.5
+* MongoDB 3.4.6
+* mongo-connector 2.5.1
+
+
+### 環境について
+
+MongoDB、Elasticsearchはクラウドサービスを利用、mongo-connectorはmacOSにインストールします。
+
+
+また、MongoDB、Elasticsearchにそれぞれテスト用に「blog」という名前のコレクション、インデックスを作成し、 +
+articleをMongoDBから同期を行います。
+
+
+*MongoDB* +
+コレクション：blog +
+　└ドキュメント: article
+
+*Elasticsearch* +
+インデックス：blog +
+　└タイプ: article
+ 
+ 
+なお、articleは「_id」「title」「body」フィールドを持ち、 +
+Elasticsearch上で、articleの「title」「body」フィールドの日本語検索ができる状態を目指します。
+ 
+ 
+
+#### MongoDB 環境
+
+MongoDB Atlasの環境を利用します。
+
+2017年23日現在、一番小さいタイプ(M0)を無料で使用することができます。
+
+https://www.mongodb.com/cloud/atlas?jmp=nav
+
+
+#### Elasticsearch 環境
+
+Elastic Cloud環境を利用します。
+
+2017年23日現在、14日間トライアルができます。
+
+https://www.elastic.co/jp/cloud/as-a-service/signup
+
+
+アカウント作成後、下記プラグインを有効にした状態のクラスタを作成して下さい。
+
+* analysis-icu
+* analysis-kuromoji  
+
+
+クラスタ作成後、下記操作でElasticsearchにblogインデックスを作成します。 +
+kibanaのDev Tools等から実行すると便利です。
+
+[source]
+PUT blog
+{
+    "settings": {
+        "index": {
+            "analysis": {
+                "tokenizer": {
+                    "ja": {
+                        "type": "kuromoji_tokenizer",
+                        "mode": "search"
+                    }
+                },
+                "analyzer": {
+                    "ja": {
+                        "type": "custom",
+                        "tokenizer": "ja",
+                        "char_filter": [
+                            "icu_normalizer",
+                            "kuromoji_iteration_mark",
+                            "html_strip"
+                        ],
+                        "filter": [
+                            "kuromoji_baseform",
+                            "kuromoji_part_of_speech",
+                            "ja_stop",
+                            "kuromoji_number",
+                            "kuromoji_stemmer"
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "mappings": {
+        "article": {
+            "properties": {
+                "title": {
+                    "type": "text",
+                    "analyzer": "ja"
+                },
+                "body": {
+                    "type": "text",
+                    "analyzer": "ja"
+                },
+                "_id": {
+                    "type": "keyword"
+                }
+            }
+        }
+    }
+}
+
+
+
+### mongo-connector　の設定
+
+下記GitHubの説明の通り、mongo-connectorをmacOSにインストールします。
+
+https://github.com/mongodb-labs/mongo-connector
+
+今回はElasticsearch5.5なので、下記の2コマンドを実行します。
+
+
+[source]
+pip install mongo-connector
+pip install 'mongo-connector[elastic5]'
+
+
+また、下記の内容でJSONファイルを作成します。 +
+mainAddress、docManagers.targetURLは、自身の環境に書き換えて下さい。
+
+設定ファイルの詳細説明は下記にあります。 +
+https://github.com/mongodb-labs/mongo-connector/wiki/Configuration-Options
+
+
+comfig.json
+[source]
+{
+    "mainAddress": "mongodb://<ユーザー名>:<パスワード>@cluster0-shard-00-00-????.mongodb.net:27017/?ssl=true",
+    "oplogFile": "/<作業ディレクトリのパス>/oplog.timestamp",
+    "verbosity": 1,
+    "logging": {
+        "type": "file",
+        "filename": "//<作業ディレクトリのパス>/mongo-connector.log",
+    },
+    "__namespaces": {
+        "blog.article": true
+    },
+    "docManagers": [
+        {
+            "docManager": "elastic2_doc_manager",
+            "targetURL": "https://<ユーザー名>:<パスワード>@?????.ap-northeast-1.aws.found.io:9243"
+        }
+    ]
+}
+
+
+設定ファイルファイル作成後、下記コマンドで同期を開始します。+ 
+mongo-connector.logにエラーが出ていなければ成功です。
+
+[source]
+mongo-connector -c connector.json
+
+
+### データの同期を試してみる
+
+MongoDBシェルから、データを追加してみます。
+
+[source]
+$ mongo "mongodb://<自身のエンドポイントURL>"
+$ use blog
+$ db.article.insert({ title: "晴れの日", body: "晴れの日は暑い"  })
+$ db.article.insert({ title: "雨の日", body: "雨の日は湿度が高い"  })
+
+インサート内容を確認します。
+
+[source]
+db.article.find()
+
+2件のデータが保存されていることがわかります。
+
+[source]
+{ "_id" : ObjectId("5974e8f009600154e2298e46"), "title" : "晴れの日", "body" : "晴れの日は暑い" }
+{ "_id" : ObjectId("5974e8f409600154e2298e47"), "title" : "雨の日", "body" : "雨の日は湿度が高い" }
+
+
+
+次に、Elasticsearch上でデータの確認を行います。 +
+上手く同期できていれば、Elasticsearchにも同様のデータが現れます。 +
+Elasticsearch上で、articleのデータを取得してみます。
+
+[source]
+POST blog/article/_search
+
+下記の様な結果が帰ってくれば成功です。
+
+
+[source]
+{
+  "took": 0,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "failed": 0
+  },
+  "hits": {
+    "total": 2,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "blog",
+        "_type": "article",
+        "_id": "5974e8f009600154e2298e46",
+        "_score": 1,
+        "_source": {
+          "body": "晴れの日は暑い",
+          "title": "晴れの日"
+        }
+      },
+      {
+        "_index": "blog",
+        "_type": "article",
+        "_id": "5974e8f409600154e2298e47",
+        "_score": 1,
+        "_source": {
+          "body": "雨の日は湿度が高い",
+          "title": "雨の日"
+        }
+      }
+    ]
+  }
+}
+
+
+せっかくなので、表記ゆれがあっても検索出来ることを確認してみます。
+
+[source]
+POST blog/article/_search
+{ 
+  "query": { 
+    "match": {
+       "body" : "暑く" 
+    }
+  }
+}
+
+結果は、下記になります。 +
+本文中には、「暑い」しか無いにも関わらず、「暑く」でも検索できることがわかります。
+
+[source]
+{
+  "took": 59,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 0.6548752,
+    "hits": [
+      {
+        "_index": "blog",
+        "_type": "article",
+        "_id": "5974e8f009600154e2298e46",
+        "_score": 0.6548752,
+        "_source": {
+          "body": "晴れの日は暑い",
+          "title": "晴れの日"
+        }
+      }
+    ]
+  }
+}
+
+
+
+#### まとめ
+
+MongoDBとElasticsearchは、どちらもJSON形式のドキュメントを扱うことができ、 +
+非常に相性が良いのではないかと思います。
+
+ただし、MongoDBがスキーマレスなのに比べ、 +
+Elasticsearchはスキーマが必要な点を考慮しながら設計を行う必要がありそうです。
+
+
+
+
+
+
+
+
+
