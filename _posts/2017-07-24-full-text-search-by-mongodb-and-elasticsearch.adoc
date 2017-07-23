@@ -121,9 +121,6 @@ PUT blog
                 "body": {
                     "type": "text",
                     "analyzer": "ja"
-                },
-                "_id": {
-                    "type": "keyword"
                 }
             }
         }
