@@ -55,7 +55,7 @@ Elasticsearch上で、articleの「title」「body」フィールドの日本語
 
 MongoDB Atlasの環境を利用します。
 
-2017年7月23日現在、一番小さいタイプ(M0)を無料で使用することができます。
+2017年7月23日現在、M0を無料で使用することができます。
 
 https://www.mongodb.com/cloud/atlas?jmp=nav
 
