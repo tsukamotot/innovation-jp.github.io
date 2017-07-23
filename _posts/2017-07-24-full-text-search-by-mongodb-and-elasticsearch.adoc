@@ -129,7 +129,7 @@ PUT blog
 
 
 
-### mongo-connector　の設定
+### mongo-connectorの設定
 
 下記GitHubの説明の通り、mongo-connectorをmacOSにインストールします。
 
