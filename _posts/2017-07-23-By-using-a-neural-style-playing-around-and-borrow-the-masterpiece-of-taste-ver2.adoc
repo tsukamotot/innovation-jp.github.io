@@ -57,7 +57,7 @@ GPUを利用することによって前回より実行速度をあげること�
 
 [source, rust]
 ----
-th neural_style.lua -style_image ../<stle_image> -content_image ../<content_image> -output_image <outoput_image.png> -gpu -0 -num_iterations 1000 -image_size 512 
+th neural_style.lua -style_image ../<stle_image> -content_image ../<content_image> -output_image <outoput_image.png> -gpu 0 -num_iterations 1000 -image_size 512 
 ----
 
 念願のgpuオプションを0にしてGPUモードで実行します。 +
