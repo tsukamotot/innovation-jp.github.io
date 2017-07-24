@@ -76,7 +76,7 @@ https://www.elastic.co/jp/cloud/as-a-service/signup
 
 
 クラスタ作成後、下記操作でElasticsearchにblogインデックスを作成します。 +
-kibanaのDev Tools等から実行すると便利です。
+KibanaのDev Tools等から実行すると便利です。
 
 [source]
 PUT blog
