@@ -1,7 +1,7 @@
 # キャッシュについて深く反省してみる...
 :published_at: 2017-07-28
 :hp-alt-title: 
-:hp-tags: yaizu,Shell,git,CSS,Cache
+:hp-tags: yaizu,Shell,git,Cache
 
 こんにちは、小柳津です。 +
 突然ですが、皆様はCSSの修正をしてリリースした後に、 +
