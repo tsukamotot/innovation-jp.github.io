@@ -125,8 +125,10 @@ URLを指定 ⇒ title, description, h1 の内容を取得 ⇒ MeCabで解析
 
 以下コードになります。
 
-get_keywords_mecab.py
+
 image::/images/nakamura/mecab/01.png[]
+
+get_keywords_mecab.py
 
 
 説明はコメントに記載させていただいたので省略させていただきます。 +
