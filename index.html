@@ -210,6 +210,12 @@ var _trackingid = 'LFT-10003-1';
 
     <ol class="post-list">
       <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/31/to-reflect-on-the-cache.html" title="link to キャッシュについて深く反省してみる...">キャッシュについて深く反省してみる...</a></h2>
+        <p class="excerpt">こんにちは、小柳津です。 突然ですが、皆様はCSSの修正をしてリリースした後に、 「表示が変わらない！」 「デザインが崩れた！ヤベー！！」 なんて経験はありませんか？ 私はついこないだやらかしてしまいました&#8230;&#8203; 事象(フィクション) 下の画像は例えです。 以下の画像のようにリリース後にデザイン崩れが発生してしまいました&#8230;&#8203; 意図したようにはCSSが作用していないぞ!?!? ※画像はイメージです 原因 原因はCDNのキャッシュとブラウザのキャッシュでした。 ファイルの中身が変わったかどうかはパラメータが変更されているかで判断するように設定していました。 そして、CSSを呼び出しているところのパラメータを更新し忘れていて、 コンテンツ(ここではC&hellip;</p>
+        <div class="post-list__meta"><time datetime="31 Jul 2017" class="post-list__meta--date date">31 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/yaizu">yaizu</a>, <a href="http://tech.innovation.co.jp/tag/Shell">Shell</a>, <a href="http://tech.innovation.co.jp/tag/git">git</a>, <a href="http://tech.innovation.co.jp/tag/Cache">Cache</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/24/full-text-search-by-mongodb-and-elasticsearch.html" title="link to mongo-connectorで、MongoDBのデータをElasticsearchに同期して日本語検索をしてみる">mongo-connectorで、MongoDBのデータをElasticsearchに同期して日本語検索をしてみる</a></h2>
         <p class="excerpt">こんにちは、加藤です。 今回は、MongoDBのデータをmongo-connectorを用いてElasticsearchに同期を行い、 Elasticsearchで日本語検索してみます。 大まかな流れは下記のようになります。 MongoDB(データ追加) → mongo-connector(同期) → Elasticsearch(ここで日本語検索) 作業環境 検証環境は下記の通りです。 macOS Sierra 10.12.4 Python 2.7.13 (pip 9.0.1) Elasticsearch 5.5 MongoDB 3.4.6 mongo-connector 2.5.1 環境について MongoDB、Elasticsearchはクラウドサービスを利用、mongo-connec&hellip;</p>
         <div class="post-list__meta"><time datetime="24 Jul 2017" class="post-list__meta--date date">24 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/katok">katok</a>, <a href="http://tech.innovation.co.jp/tag/elasticsearch">elasticsearch</a>, <a href="http://tech.innovation.co.jp/tag/mongodb">mongodb</a></span></div>
@@ -261,12 +267,6 @@ var _trackingid = 'LFT-10003-1';
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/26/vimmer1.html" title="link to 本当にvimmerになりたくて~1年後~ のお話">本当にvimmerになりたくて~1年後~ のお話</a></h2>
         <p class="excerpt">こんばんはこへです。 http://tech.innovation.co.jp/2016/07/20/vim.html ↑の記事を書いてから1年が経ちました。 今ではしっかりvimmerです。 社内でエンジニアは10人程度いるのですが、唯一のvimmerになってしまいました。 ※2017/06/23 時点 最近ではInsertモードからNomalへ戻る時 esc ではなく ctrl + [ で戻るようにしました。そうしたところ、更にvimが好きになりました。 escキーは果てしなく遠すぎて、毎回押すのにストレスを感じていました。それに比べ ctrl + [ はなんと近いことか。 今ではvimナシでは生きていけません。 そんな私のお勧め＆必須コマンド。 コマンド 内容 dw 言わずと知れた&hellip;</p>
         <div class="post-list__meta"><time datetime="26 Jun 2017" class="post-list__meta--date date">26 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/kohe">kohe</a>, <a href="http://tech.innovation.co.jp/tag/vim">vim</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom-J-S.html" title="link to PhantomJS × Raspberry PiでBotを作る(前編)">PhantomJS × Raspberry PiでBotを作る(前編)</a></h2>
-        <p class="excerpt">こんにちは、最近腕の長さを測ってみたら196cmだった小柳津です。 2年前くらいに測ったときは192cmでしたが、伸びていました！ 前回のブログでは、Raspberry Pi 3 Model B(以下、Raspberry Pi)にPhantomJSをインストールしました。 http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html 今回はそのRaspberry Piを使って、 Slack上で動き、PhantomJSでスクレイピングした結果を返してくれるBotを作成したので、そちらをご紹介します！ Botの概要 今回Botを作るにあたっての用意は以下です。 Raspberry Pi側の準備 Phanto&hellip;</p>
-        <div class="post-list__meta"><time datetime="23 Jun 2017" class="post-list__meta--date date">23 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/yaizu">yaizu</a>, <a href="http://tech.innovation.co.jp/tag/Phantom-J-S">PhantomJS</a>, <a href="http://tech.innovation.co.jp/tag/scraping">scraping</a>, <a href="http://tech.innovation.co.jp/tag/Raspberry-Pi">RaspberryPi</a>, <a href="http://tech.innovation.co.jp/tag/Hubot">Hubot</a></span></div>
         <hr class="post-list__divider" />
       </li>
     </ol>
