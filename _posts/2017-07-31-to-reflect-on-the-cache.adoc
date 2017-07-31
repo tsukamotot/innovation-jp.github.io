@@ -1,6 +1,6 @@
 # キャッシュについて深く反省してみる...
-:published_at: 2017-07-28
-:hp-alt-title: 
+:published_at: 2017-07-31
+:hp-alt-title: to reflect on the cache
 :hp-tags: yaizu,Shell,git,Cache
 
 こんにちは、小柳津です。 +
@@ -59,8 +59,8 @@ _※画像はイメージです_ +
 ## 実装
 
 色々調べた結果、差分を確認する`git status`をベースにアラートを出すオリジナルのコマンドを自作することにしました。 +
-実行パスの通っているディレクトリにgit-commandnameといった感じでファイルを作成すると、 +
-git commandnameで作成したファイルの内容を実行できます。 +
+実行パスの通っているディレクトリに`git-commandname`といった感じでファイルを作成すると、 +
+`git commandname`で作成したファイルの内容を実行できます。 +
 ちなみに環境は`macOS Sierra 10.12.5`で実装を行いました。 +
 
 まずは実行パスが通っているディレクトリを調べます。 +
@@ -107,7 +107,7 @@ image::oyaizu/git-stc.png?2[]
 まあまあいい感じ！  +
 
 ここから少し一手間を加えます。 +
-`~/.gitconfig`ファイルを編集してエイリアスを設定して`git status`と`git stc`が同時に動くようにします。 +
+`~/.gitconfig`ファイルを編集し、エイリアスを設定して`git status`と`git stc`が同時に動くようにします。 +
 
 ```
 [alias]
