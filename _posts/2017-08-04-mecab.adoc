@@ -2,7 +2,8 @@
 :hp-alt-title: mecab
 :hp-tags: Kohe,TrelloApi,Slack,CoffeeScript,RaspberryPi
 
-みなさまこんばんはこへです。
+みなさまこんばんはこへです。 + 
+暑くなってきて、そろそろTrelloApiを使って何かしたい時期が来ましたので触ってみました。
 
 
 image::kohe/trello_blog2.jpg?[]
