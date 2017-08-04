@@ -44,9 +44,7 @@ function checkTrello() {
     name = name.replace(/\s+/g, "");
      postMessage(name);
   }
-  
-  Logger.log(sendData);
-}
+ }
 ```
 
 
