@@ -1,6 +1,6 @@
 # TrelloApiを使ってみたお話。
 :hp-alt-title: mecab
-:hp-tags: Kohe,TrelloApi,Slack,CoffeeScript,RaspberryPi
+:hp-tags: Kohe,TrelloApi,Slack,CoffeeScript,RaspberryPi,GAS
 
 みなさまこんばんはこへです。 + 
 暑くなってきて、そろそろTrelloApiを使って何かしたい時期が来ましたので触ってみました。
