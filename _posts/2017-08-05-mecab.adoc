@@ -70,9 +70,11 @@ image::kohe/trello_blog4.png?[]
 
 後はGASの設定で毎日18時にスクリプトが起動するように設定するだけ。 + 
 サーバも準備することなくなんと楽なことか…。
-
+ただ、GASのエディターはvimのキーバイドに対応してないことだけが惜しいところ。
 
 # Raspberry Piを使ってslackからTrelloにカードを追加や
+
+`todo あいうえお`とslackに打ったらTrelloのリストに`あいうえお`という名前のカードを追加したい。
 
 image::kohe/trello_blog2.jpg?[]
 
@@ -80,9 +82,11 @@ image::kohe/trello_blog2.jpg?[]
 
 
 Raspberry Pi　とHubotの設定などは私の同期が記事を書いていたのでそれを参考に設定。 +
-※　何故か色々うまく動かなかったりしてハマりましたが、psをkillしまくったり、色々再インストールしたら上手くできやした。 +
+※　何故か色々うまく動かなかったりしてハマりましたが、psをkillしまくったり、色々再インストールしたりしたら上手くできやした。 +
 http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom-J-S.html
 
+
+CoffeScriptはこんな感じ
 
 ```
  module.exports = (robot) ->
@@ -99,13 +103,16 @@ http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom
 
 
 ```
+自分以外のユーザが `todo ~~~`と送っても反応しないように設定。
 
-
+早速実行！ +
 
 image::kohe/trello_blog1.gif[]
 
 
 image::kohe/trello_blog3.png?[]
+
+追加されてる！うれｃ
 
 
 
