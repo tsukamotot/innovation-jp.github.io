@@ -1,0 +1,48 @@
+<!DCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            /*箱のサイズを変化させる*/
+            .box{
+                display: block;
+                width: 200px;
+                height: 100px;
+                background-color: #F0BFC1;
+                color: #ffffff;
+                text-align:inherit;
+
+                transition-property: all;
+                transition-duration: 0.5s;
+            }
+            input {
+                display: none;
+            }
+            input#sizechange:checked ~ .box{
+                width: 150px;
+                height: 200px;
+                background-color: red;
+            }
+
+
+            /*KTNさんを回転させる*/
+            input#img:checked ~ label>img{
+                transform: rotate(10deg);
+                transition-property: all;
+                transition-duration: 0.5s;
+            }
+
+
+
+        </style>
+    </head>
+    <body>
+            <!-- クリックで形が変わる -->
+            <input type="checkbox" id="sizeChange"/>
+            <label for="sizeChange" class="box">クリックして</label>
+
+            <!-- クリックで画像が回転する -->
+            <input type="checkbox" id="img" class="accordion" />
+            <label for="img" class="img"><img src="http://tech.innovation.co.jp/docs/ami/kotanisan.png"></label>
+    </body>
+</html>
