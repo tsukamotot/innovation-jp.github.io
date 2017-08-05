@@ -7,20 +7,18 @@
 
 # イメージ
 
+image::kohe/trello_blog6.png?[]
+
+# 残タスク通知をGASでやるぜ
+
+
+image::kohe/trello_blog5.png?[]
+
+↑の今日やることリストに入っているカードを毎日18時にslackに通知する。
+
+
+※事前にTrelloApiのkeyとtoken、リストのidを取得しておく。
 ```
-function postMessage(msg) {
-  var token = ###TOKEN###;
-  var channel = ###Channel名###; //投稿先チャンネル名
-  var username = "trello残タスクbot"; //BOTの名前
-  var text = msg; //メッセージ
-  var toUser = "kohe";
-  
-  //Channelにおくりたい場合はこっち
-  //   UrlFetchApp.fetch("https://slack.com/api/chat.postMessage?token=" + token + "&channel=%23" + channel + "&username=" + username + "&text=" + text);
-  UrlFetchApp.fetch("https://slack.com/api/chat.postMessage?token=" + token + "&channel=%40" + toUser + "&username=" + username + "&text=" + text);
-}
-
-
 function checkTrello() {
   
   var trelloKey   = "###TRELLOKEY###";
@@ -45,8 +43,40 @@ function checkTrello() {
      postMessage(name);
   }
  }
-```
+ 
+ 
+ 
+function postMessage(msg) {
+  var token = ###TOKEN###;
+  var channel = ###Channel名###; //投稿先チャンネル名
+  var username = "trello残タスクbot"; //BOTの名前
+  var text = msg; //メッセージ
+  var toUser = "kohe";
+  
+  //Channelにおくりたい場合はこっち
+  //   UrlFetchApp.fetch("https://slack.com/api/chat.postMessage?token=" + token + "&channel=%23" + channel + "&username=" + username + "&text=" + text);
+  UrlFetchApp.fetch("https://slack.com/api/chat.postMessage?token=" + token + "&channel=%40" + toUser + "&username=" + username + "&text=" + text);
+}
 
+```
+コードはこ～んな感じ。
+
+早速 `checkTrello`メソッドを実行
+
+image::kohe/trello_blog4.png?[]
+
+いい感じに`Trello残タスクBot`がリマインドしてくれる。
+
+
+後はGASの設定で毎日18時にスクリプトが起動するように設定するだけ。 + 
+サーバも準備することなくなんと楽なことか…。
+
+
+# Raspberry Piを使ってslackからTrelloにカードを追加や
+
+image::kohe/trello_blog2.jpg?[]
+
+↑最近買ったらずぱいちゃん。
 
 
 
@@ -66,7 +96,6 @@ function checkTrello() {
 
 ```
 
-image::kohe/trello_blog2.jpg?[]
 
 
 image::kohe/trello_blog1.gif[]
@@ -74,10 +103,8 @@ image::kohe/trello_blog1.gif[]
 
 image::kohe/trello_blog3.png?[]
 
-image::kohe/trello_blog4.png?[]
 
 
-image::kohe/trello_blog5.png?[]
 
 
 おわり
