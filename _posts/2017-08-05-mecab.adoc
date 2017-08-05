@@ -79,6 +79,10 @@ image::kohe/trello_blog2.jpg?[]
 ↑最近買ったらずぱいちゃん。
 
 
+Raspberry Pi　とHubotの設定などは私の同期が記事を書いていたのでそれを参考に設定。 +
+※　何故か色々うまく動かなかったりしてハマりましたが、psをkillしまくったり、色々再インストールしたら上手くできやした。 +
+http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom-J-S.html
+
 
 ```
  module.exports = (robot) ->
