@@ -1,0 +1,75 @@
+# TrelloApiを使ってみたお話。
+:hp-alt-title: mecab
+:hp-tags: Kohe,TrelloApi,Slack,CoffeeScript,RaspberryPi,GAS
+
+みなさまこんばんはこへです。 + 
+暑くなってきまして、そろそろTrelloApiやラズパイやGASを使って何かしたい時期が来ましたので触ってみました。
+
+
+
+```
+function postMessage(msg) {
+  var token = ###TOKEN###;
+  var channel = ###Channel名###; //投稿先チャンネル名
+  var username = "trello残タスクbot"; //BOTの名前
+  var text = msg; //メッセージ
+  var toUser = "kohe";
+  
+  //Channelにおくりたい場合はこっち
+  //   UrlFetchApp.fetch("https://slack.com/api/chat.postMessage?token=" + token + "&channel=%23" + channel + "&username=" + username + "&text=" + text);
+  UrlFetchApp.fetch("https://slack.com/api/chat.postMessage?token=" + token + "&channel=%40" + toUser + "&username=" + username + "&text=" + text);
+}
+
+
+function checkTrello() {
+  
+  var trelloKey   = "###TRELLOKEY###";
+  var trelloToken = "###TRELLOTOKEN###";
+  var listId  = "###LISTID###";
+  
+  var api = "https://trello.com/1/lists/" + listId + "/cards?key=" + trelloKey + "&token=" + trelloToken;
+  var response = UrlFetchApp.fetch(api, {'method':'get'});
+  var json = JSON.parse(response.getContentText());
+  
+
+  var date = new Date()
+  date.setDate(date.getDate())
+  var today = Utilities.formatDate(date, 'Asia/Tokyo' , 'YYYY-MM-dd');
+  
+  var sendData = [];  
+  var max = json.length;
+  for(var i = 0; i < max; ++i){
+    var due  = json[i].due;
+    var name = json[i].name;
+    name = name.replace(/\s+/g, "");
+     postMessage(name);
+  }
+ }
+```
+
+
+
+
+```
+ module.exports = (robot) ->
+   robot.hear /todo (.*)/i, (msg) ->
+     keyword = encodeURIComponent msg.match[1]
+     user    = msg.message.user.name
+     if user == "kohe"
+       @exec   = require('child_process').exec
+       command = "curl -X post 'https://trello.com/1/cards?key=###LISTKEY###&token=###SKACKTOKEN###&name=" + keyword + "'"
+       @exec command, (error, stdout, stderr) ->
+         msg.send stdout
+     else
+       msg.send "承認されているユーザではありません"
+
+
+```
+
+image::kohe/trello_blog2.jpg?[]
+
+
+image::kohe/trello_blog1.gif[]
+
+
+image::kohe/trello_blog3.png?[]
