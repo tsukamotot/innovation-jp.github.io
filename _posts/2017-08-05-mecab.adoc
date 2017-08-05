@@ -5,7 +5,7 @@
 みなさまこんばんはこへです。 + 
 暑くなってきまして、そろそろTrelloApiやラズパイやGASを使って何かしたい時期が来ましたので触ってみました。
 
-
+# イメージ
 
 ```
 function postMessage(msg) {
@@ -73,3 +73,11 @@ image::kohe/trello_blog1.gif[]
 
 
 image::kohe/trello_blog3.png?[]
+
+image::kohe/trello_blog4.png?[]
+
+
+image::kohe/trello_blog5.png?[]
+
+
+おわり
