@@ -1,4 +1,4 @@
-# TrelloApiを使ってみたお話。
+# TrelloApiとslackとGASとRaspberry　Piを使ってみたお話。
 :hp-alt-title: mecab
 :hp-tags: Kohe,TrelloApi,Slack,CoffeeScript,RaspberryPi,GAS
 
