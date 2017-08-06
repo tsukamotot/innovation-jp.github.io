@@ -86,7 +86,7 @@ Raspberry Pi　とHubotの設定などは私の同期が記事を書いていた
 http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom-J-S.html
 
 
-CoffeScriptはこんな感じ
+CoffeScriptをvimで書いていく。
 
 ```
  module.exports = (robot) ->
