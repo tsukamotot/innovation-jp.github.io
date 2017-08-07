@@ -213,6 +213,15 @@ var _trackingid = 'LFT-10003-1';
 
     <ol class="post-list">
       <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/08/05/mecab.html" title="link to Trello APIとSlackとGASとRaspberryPiを使ってみたお話。">Trello APIとSlackとGASとRaspberryPiを使ってみたお話。</a></h2>
+        <p class="excerpt">みなさまこんばんはこへです。 暑くなってきまして、そろそろTrello APIやラズパイやGASを使って何かしたい時期が来ましたので触ってみました。 イメージ 残タスク通知をGASでやるぜ ↑の今日やることリストに入っているカードを毎日18時にSlackに通知する。 ※事前にTrelloApiのkeyとtoken、リストのidを取得しておく。 function checkTrello() {   var trelloKey   = "###TRELLOKEY###";   var trelloToken = "###TRELLOTOKEN###";   var listId  = "###LISTID###";   var api = "https://trello.com/1/lists&hellip;</p>
+        <div class="post-list__meta">
+            <time datetime="05 Aug 2017" class="post-list__meta--date date">05 Aug 2017</time> &#8226;
+            <span class="post-list__meta--tags tags"><a href="#blog" title="Kohe">Kohe</a>, <a href="#blog" title="Trello API">Trello API</a>, <a href="#blog" title="Slack">Slack</a>, <a href="#blog" title="CoffeeScript">CoffeeScript</a>, <a href="#blog" title="RaspberryPi">RaspberryPi</a>, <a href="#blog" title="GAS">GAS</a></span>
+        </div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2016/11/24/G-A-S.html" title="link to 誕生日を覚えるのも、メールを送るのも忘れてしまいがちな私がGASを使って全自動化した話">誕生日を覚えるのも、メールを送るのも忘れてしまいがちな私がGASを使って全自動化した話</a></h2>
         <p class="excerpt">こんばんはこへです。 下準備 まずはスプレットシートに必要な情報を記入していく。 こ～んな感じで、 A列に日付 B列に誕生日の人の名前 C列に誕生日の人のメアド D列にメールの件名 E列にメール本文 F列にデフォルトのメールの件名 G列にデフォルトのメールの本文 を書いていく。 これで表側の準備終了！ 仕組みとしては簡単！ 誕生日の日に指定したメアドにメールを送る。 何も指定がなければ、デフォルトの件名と内容が自動的に入る。 指定すれば、指定した件名と内容が送信される！! コードを書いていこう 全部で40行もかからない。なんとお手軽。 ってことで解説。  var sh_id    =　 SpreadsheetApp.openById('ここにスプレットシートのIDが入るよ') まず、どのシ&hellip;</p>
         <div class="post-list__meta">
