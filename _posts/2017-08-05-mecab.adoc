@@ -1,9 +1,9 @@
-# TrelloApiとslackとGASとRaspberry　Piを使ってみたお話。
+# Trello APIとSlackとGASとRaspberry　Piを使ってみたお話。
 :hp-alt-title: mecab
-:hp-tags: Kohe,TrelloApi,Slack,CoffeeScript,RaspberryPi,GAS
+:hp-tags: Kohe,Trello API,Slack,CoffeeScript,RaspberryPi,GAS
 
 みなさまこんばんはこへです。 + 
-暑くなってきまして、そろそろTrelloApiやラズパイやGASを使って何かしたい時期が来ましたので触ってみました。
+暑くなってきまして、そろそろTrello APIやラズパイやGASを使って何かしたい時期が来ましたので触ってみました。
 
 # イメージ
 
@@ -14,7 +14,7 @@ image::kohe/trello_blog6.png?[]
 
 image::kohe/trello_blog5.png?[]
 
-↑の今日やることリストに入っているカードを毎日18時にslackに通知する。
+↑の今日やることリストに入っているカードを毎日18時にSlackに通知する。
 
 
 ※事前にTrelloApiのkeyとtoken、リストのidを取得しておく。
@@ -72,9 +72,9 @@ image::kohe/trello_blog4.png?[]
 サーバも準備することなくなんと楽なことか…。
 ただ、GASのエディターはvimのキーバイドに対応してないことだけが惜しいところ。
 
-# Raspberry Piを使ってslackからTrelloにカードを追加や
+# Raspberry Piを使ってSlackからTrelloにカードを追加や
 
-`todo あいうえお`とslackに打ったらTrelloのリストに`あいうえお`という名前のカードを追加したい。
+`todo あいうえお`とSlackに打ったらTrelloのリストに`あいうえお`という名前のカードを追加したい。
 
 image::kohe/trello_blog2.jpg?[]
 
@@ -86,7 +86,7 @@ Raspberry PiとHubotの設定などは私の同期が記事を書いていたの
 http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom-J-S.html
 
 
-CoffeScriptをvimで書いていく。
+CoffeeScriptをvimで書いていく。
 
 ```
  module.exports = (robot) ->
