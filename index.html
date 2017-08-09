@@ -210,63 +210,63 @@ var _trackingid = 'LFT-10003-1';
 
     <ol class="post-list">
       <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/08/05/mecab.html" title="link to Trello APIとSlackとGASとRaspberryPiを使ってみたお話。">Trello APIとSlackとGASとRaspberryPiを使ってみたお話。</a></h2>
+        <p class="excerpt">みなさまこんばんはこへです。 暑くなってきまして、そろそろTrello APIやラズパイやGASを使って何かしたい時期が来ましたので触ってみました。 イメージ 残タスク通知をGASでやるぜ ↑の今日やることリストに入っているカードを毎日18時にSlackに通知する。 ※事前にTrelloApiのkeyとtoken、リストのidを取得しておく。 function checkTrello() {   var trelloKey   = "###TRELLOKEY###";   var trelloToken = "###TRELLOTOKEN###";   var listId  = "###LISTID###";   var api = "https://trello.com/1/lists&hellip;</p>
+        <div class="post-list__meta"><time datetime="05 Aug 2017" class="post-list__meta--date date">05 Aug 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Kohe">Kohe</a>, <a href="http://tech.innovation.co.jp/tag/Trello-A-P-I">Trello API</a>, <a href="http://tech.innovation.co.jp/tag/Slack">Slack</a>, <a href="http://tech.innovation.co.jp/tag/Coffee-Script">CoffeeScript</a>, <a href="http://tech.innovation.co.jp/tag/Raspberry-Pi">RaspberryPi</a>, <a href="http://tech.innovation.co.jp/tag/G-A-S">GAS</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/08/05/accordion-menu.html" title="link to CSSでアコーディオンメニューを実装">CSSでアコーディオンメニューを実装</a></h2>
+        <p class="excerpt">こんにちは、亜美です。 一ヶ月ぶりにブログを書きます。 CSSでaccordionメニューを作りました！ 完成品 &lt;!DCTYPE html&gt; &lt;html lang="ja"&gt;     &lt;head&gt;         &lt;meta charset="UTF-8"&gt;         &lt;style&gt;             .menu {                 width: 320px;                 margin: 0 auto;             }             .menu a {                 display: block;                 paddin&hellip;</p>
+        <div class="post-list__meta"><time datetime="05 Aug 2017" class="post-list__meta--date date">05 Aug 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/A-M-I">AMI</a>, <a href="http://tech.innovation.co.jp/tag/H-T-M-L">HTML</a>, <a href="http://tech.innovation.co.jp/tag/C-S-S">CSS</a>, <a href="http://tech.innovation.co.jp/tag/accordion-Menu">accordionMenu</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/31/to-reflect-on-the-cache.html" title="link to キャッシュについて深く反省してみる...">キャッシュについて深く反省してみる...</a></h2>
+        <p class="excerpt">こんにちは、小柳津です。 突然ですが、皆様はCSSの修正をしてリリースした後に、 「表示が変わらない！」 「デザインが崩れた！ヤベー！！」 なんて経験はありませんか？ 私はついこないだやらかしてしまいました&#8230;&#8203; 事象(フィクション) 下の画像は例えです。 以下の画像のようにリリース後にデザイン崩れが発生してしまいました&#8230;&#8203; 意図したようにはCSSが作用していないぞ!?!? ※画像はイメージです 原因 原因はCDNのキャッシュとブラウザのキャッシュでした。 ファイルの中身が変わったかどうかはパラメータが変更されているかで判断するように設定していました。 そして、CSSを呼び出しているところのパラメータを更新し忘れていて、 コンテンツ(ここではC&hellip;</p>
+        <div class="post-list__meta"><time datetime="31 Jul 2017" class="post-list__meta--date date">31 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/yaizu">yaizu</a>, <a href="http://tech.innovation.co.jp/tag/Shell">Shell</a>, <a href="http://tech.innovation.co.jp/tag/git">git</a>, <a href="http://tech.innovation.co.jp/tag/Cache">Cache</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/28/mecab.html" title="link to 今更ながらPythonとMeCabで形態素解析してみた">今更ながらPythonとMeCabで形態素解析してみた</a></h2>
+        <p class="excerpt">こんにちは、夏ですね！ 先日キャンプに行ってきたのですが、買い出しの時にしれっと餃子を入れた中村です。 今回は形態素解析からキーワードを抽出してみたお話をしたいと思います。 形態素解析とは？ 形態素解析（けいたいそかいせき、Morphological Analysis）とは、文法的な情報の注記の無い自然言語のテキストデータ（文）から、対象言語の文法や、辞書と呼ばれる単語の品詞等の情報にもとづき、形態素（Morpheme, おおまかにいえば、言語で意味を持つ最小単位）の列に分割し、それぞれの形態素の品詞等を判別する作業である。 ウィキペディア参照 https://ja.wikipedia.org/wiki/%E5%BD%A2%E6%85%8B%E7%B4%A0%E8%A7%A3%E6%9E%&hellip;</p>
+        <div class="post-list__meta"><time datetime="28 Jul 2017" class="post-list__meta--date date">28 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Me-Cab">MeCab</a>, <a href="http://tech.innovation.co.jp/tag/Python3">Python3</a>, <a href="http://tech.innovation.co.jp/tag/Morphological-analysis">Morphological analysis</a>, <a href="http://tech.innovation.co.jp/tag/Gyo-za">Gyo-za</a>, <a href="http://tech.innovation.co.jp/tag/Nakamura">Nakamura</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/24/full-text-search-by-mongodb-and-elasticsearch.html" title="link to mongo-connectorで、MongoDBのデータをElasticsearchに同期して日本語検索をしてみる">mongo-connectorで、MongoDBのデータをElasticsearchに同期して日本語検索をしてみる</a></h2>
+        <p class="excerpt">こんにちは、加藤です。 今回は、MongoDBのデータをmongo-connectorを用いてElasticsearchに同期を行い、 Elasticsearchで日本語検索してみます。 大まかな流れは下記のようになります。 MongoDB(データ追加) → mongo-connector(同期) → Elasticsearch(ここで日本語検索) 作業環境 検証環境は下記の通りです。 macOS Sierra 10.12.4 Python 2.7.13 (pip 9.0.1) Elasticsearch 5.5 MongoDB 3.4.6 mongo-connector 2.5.1 環境について MongoDB、Elasticsearchはクラウドサービスを利用、mongo-connec&hellip;</p>
+        <div class="post-list__meta"><time datetime="24 Jul 2017" class="post-list__meta--date date">24 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/katok">katok</a>, <a href="http://tech.innovation.co.jp/tag/elasticsearch">elasticsearch</a>, <a href="http://tech.innovation.co.jp/tag/mongodb">mongodb</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/23/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste-ver2.html" title="link to neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜">neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜</a></h2>
+        <p class="excerpt">こんにちは。 もうすっかり夏ですね。オザサです。 今回はタイトルの通り、 以前も利用した neural-styleを使ってみたいと思います。 というのも、 前回のブログから1年(!)経ちまして、 Amazon Web ServicesのEC2インスタンスに対してEC2 Elastic GPUというサービスが発表され、 前回CPUモードで実行した時よりもサクサクと画像作成ができるのでは？と考えたからです。 が、結論から言うとEC2 Elastic GPUはまだ利用はできませんでした！！ 環境構築 今回もAmazon Web Services(以下AWS)を使います。 手順 サーバの立ち上げ インストール諸々 neural-styleの実行 1.サーバの立ち上げ EC2 Elastic GPU&hellip;</p>
+        <div class="post-list__meta"><time datetime="23 Jul 2017" class="post-list__meta--date date">23 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Oz">Oz</a>, <a href="http://tech.innovation.co.jp/tag/neural-style">neural-style</a>, <a href="http://tech.innovation.co.jp/tag/Art">Art</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/14/Pepper.html" title="link to Pepperにぼくの顔を覚えてもらえたので、ついでに打刻をしてもらう">Pepperにぼくの顔を覚えてもらえたので、ついでに打刻をしてもらう</a></h2>
+        <p class="excerpt">こんにちは！ いろんな意味で熱い毎日ですね！ 矢ヶ崎です。 前回のPちゃん(うちのPepperのこと)ブログでは、顔を認識してもらって名前を呼んでもらうという無難なことをやってみました！ せっかく、ぼくの顔を覚えてくれたので、みなさんついつい忘れがちになりがちだと思う、出退勤の打刻をPちゃんにやってもらおうと思います！ 打刻してもらうためにすべき努力 SQSのキューを用意する EC2なりサーバなりを用意する そして今回は、こんなアーキテクチャでやってみました！ 前回のあれで、Pちゃんを見つめて、「Pちゃんおはよう」とか「おつかれ」とか言うと、個人判別をしてくれる SQSにJSON形式で打刻リクエストを入れる EC2なりサーバなりで、SQSからリクエストを受信する 該当ユーザのアカウント情報&hellip;</p>
+        <div class="post-list__meta"><time datetime="14 Jul 2017" class="post-list__meta--date date">14 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Yagasaki">Yagasaki</a>, <a href="http://tech.innovation.co.jp/tag/Pepper">Pepper</a>, <a href="http://tech.innovation.co.jp/tag/Rekognition">Rekognition</a>, <a href="http://tech.innovation.co.jp/tag/Web-Driver">WebDriver</a>, <a href="http://tech.innovation.co.jp/tag/S-Q-S">SQS</a>, <a href="http://tech.innovation.co.jp/tag/Shell-Script">ShellScript</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/09/Serverless-Framework-E-C-M-A-Script2015-1.html" title="link to Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1">Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1</a></h2>
+        <p class="excerpt">SREチームの城田です。 サーバーレスでマイクロサービスを作れるようになっておけば、 今後役に立つこともあるかなと思いまして作ってみます。 概要 マイクロサービス設計でおおよその場合必要と思われる、 トークン発行やユーザ情報管理をするアカウント周りのプラットフォームを作成したいと思います。 今回は API Gateway から Lambda を起動してトークンを発行し、RDSにデータを保存してHTTPレスポンスを返す、という部分を作成します。 また、 サーバーレスアーキテクチャで行うこと、サーバレスフレームワークを使うこと、ECMAScript2015に準拠したコーディングを行うことも目的としています。 今回使用する環境は、Serverless Framework という、 API Gat&hellip;</p>
+        <div class="post-list__meta"><time datetime="09 Jul 2017" class="post-list__meta--date date">09 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Shirota">Shirota</a>, <a href="http://tech.innovation.co.jp/tag/Serverless-Framework"> Serverless Framework</a>, <a href="http://tech.innovation.co.jp/tag/E-C-M-A-Script2015"> ECMAScript2015</a>, <a href="http://tech.innovation.co.jp/tag/E-C-M-A-Script6"> ECMAScript6</a>, <a href="http://tech.innovation.co.jp/tag/E-S6"> ES6</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/07/Cloud-Spanner.html" title="link to お試し Cloud Spanner">お試し Cloud Spanner</a></h2>
+        <p class="excerpt">KTNです。 先日、Google Cloud Next '17 in Tokyoに行ってきまして、 元々Google信者だったのですが、 イベントに参加してさらに信者が加速してしまいました。 （日本語おかしいですか？） もちろんスマホもAndroidを使ってます！ Googleすげーと思ったものいっぱいあるのですが、 以下2点ご紹介したいと思います。 1. Jamboard 　GIGAZINEさんでも取り上げられていました。 　http://gigazine.net/news/20170524-jamboard-launching/ 　一言で表すと デジタルなホワイトボード なのですが、 　これの機能がすごいんです。 　１．手書きの文字を読み取ってデジタル可 　２．インターネットの検索結果&hellip;</p>
+        <div class="post-list__meta"><time datetime="07 Jul 2017" class="post-list__meta--date date">07 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Google">Google</a>, <a href="http://tech.innovation.co.jp/tag/Google-Cloud-Platform"> Google Cloud Platform</a>, <a href="http://tech.innovation.co.jp/tag/Cloud-Spanner">Cloud Spanner</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/04/C-S-S-Because-tuyu.html" title="link to 梅雨なのでCSS画像切り替え3種">梅雨なのでCSS画像切り替え3種</a></h2>
         <p class="excerpt">梅雨ですね。AMIです。 魔が差して書いてみました。よければご覧ください。 ホバーすると鋭くKTNさん HTML &lt;!DCTYPE html&gt; &lt;html lang="ja"&gt;     &lt;head&gt;         &lt;meta charset="UTF-8"&gt;         &lt;style&gt;             div.img {                 width: 394px;                 height: 425px;                 background: url(josei.png) no-repeat;             }             div.img:h&hellip;</p>
         <div class="post-list__meta"><time datetime="04 Jul 2017" class="post-list__meta--date date">04 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/H-T-M-L">HTML</a>, <a href="http://tech.innovation.co.jp/tag/C-S-S">CSS</a>, <a href="http://tech.innovation.co.jp/tag/A-M-I">AMI</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/26/vimmer1.html" title="link to 本当にvimmerになりたくて~1年後~ のお話">本当にvimmerになりたくて~1年後~ のお話</a></h2>
-        <p class="excerpt">こんばんはこへです。 http://tech.innovation.co.jp/2016/07/20/vim.html ↑の記事を書いてから1年が経ちました。 今ではしっかりvimmerです。 社内でエンジニアは10人程度いるのですが、唯一のvimmerになってしまいました。 ※2017/06/23 時点 最近ではInsertモードからNomalへ戻る時 esc ではなく ctrl + [ で戻るようにしました。そうしたところ、更にvimが好きになりました。 escキーは果てしなく遠すぎて、毎回押すのにストレスを感じていました。それに比べ ctrl + [ はなんと近いことか。 今ではvimナシでは生きていけません。 そんな私のお勧め＆必須コマンド。 コマンド 内容 dw 言わずと知れた&hellip;</p>
-        <div class="post-list__meta"><time datetime="26 Jun 2017" class="post-list__meta--date date">26 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/kohe">kohe</a>, <a href="http://tech.innovation.co.jp/tag/vim">vim</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom-J-S.html" title="link to PhantomJS × Raspberry PiでBotを作る(前編)">PhantomJS × Raspberry PiでBotを作る(前編)</a></h2>
-        <p class="excerpt">こんにちは、最近腕の長さを測ってみたら196cmだった小柳津です。 2年前くらいに測ったときは192cmでしたが、伸びていました！ 前回のブログでは、Raspberry Pi 3 Model B(以下、Raspberry Pi)にPhantomJSをインストールしました。 http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html 今回はそのRaspberry Piを使って、 Slack上で動き、PhantomJSでスクレイピングした結果を返してくれるBotを作成したので、そちらをご紹介します！ Botの概要 今回Botを作るにあたっての用意は以下です。 Raspberry Pi側の準備 Phanto&hellip;</p>
-        <div class="post-list__meta"><time datetime="23 Jun 2017" class="post-list__meta--date date">23 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/yaizu">yaizu</a>, <a href="http://tech.innovation.co.jp/tag/Phantom-J-S">PhantomJS</a>, <a href="http://tech.innovation.co.jp/tag/scraping">scraping</a>, <a href="http://tech.innovation.co.jp/tag/Raspberry-Pi">RaspberryPi</a>, <a href="http://tech.innovation.co.jp/tag/Hubot">Hubot</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/19/serposcope.html" title="link to AWS(EC2)にSERPOSCOPEを導入してみた">AWS(EC2)にSERPOSCOPEを導入してみた</a></h2>
-        <p class="excerpt">こんにちは、中村です。 6月なのに最近めちゃくちゃ暑いですね〜 私が子供の頃の梅雨は毎日雨がデフォルトでしたが、すっかり変わってしまいました。。。 ちゃんと夏バテ対策(餃子)してくださいね！ さて今回はSEO順位計測をしてくれる「SERPOSCOPE」というツールを EC2に導入した話をしたいと思います。 きっかけ SEO順位計測といえば「GRC」というツールがとても有名なようで 社内でもそちらを使っているようです。 ただこちらのツール、なんと、、、Windowsツールなんです！ そして、毎日順位計測を行うように専用のPCがあり、 24時間365日稼働しているとか。。。 ひょえ〜！！ PCがフリーズしてデータ取得できていなくても気づけないのは怖いですね。 何か別な方法が無いかとマーケチーム&hellip;</p>
-        <div class="post-list__meta"><time datetime="19 Jun 2017" class="post-list__meta--date date">19 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/S-E-R-P-O-S-C-O-P-E">SERPOSCOPE</a>, <a href="http://tech.innovation.co.jp/tag/S-E-O">SEO</a>, <a href="http://tech.innovation.co.jp/tag/A-W-S">AWS</a>, <a href="http://tech.innovation.co.jp/tag/E-C2">EC2</a>, <a href="http://tech.innovation.co.jp/tag/Gyo-za">Gyo-za</a>, <a href="http://tech.innovation.co.jp/tag/Nakamura">Nakamura</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/19/I-may-tell-me-whether-it-is-a-Deja-vu-or-easy-oblivion-Chrome-extension.html" title="link to デジャヴか単なる忘却か教えてくれたりするかもしれないChrome Extension">デジャヴか単なる忘却か教えてくれたりするかもしれないChrome Extension</a></h2>
-        <p class="excerpt">こんにちは、クロームの綴りをいつまでも間違えているオザサです。 梅雨入りも果たしてジメジメしてまいりましたが、 皆様はいかがお過ごしでしょうか。 こうも暑いとなかなか外に出るのも億劫になるというもので、 日がなネットサーフィンしちゃうなんて御仁もいらっしゃるのではないでしょうか。 そんな時にありがちなのが(?)、 「あれ、このページなんか見たことあるかも？」 という感覚ですよね？！！ 何かの前触れのデジャヴか、 はたまた単なる物忘れか、 ここは一つはっきりきっちりさせなくてはなりません。 ということで 「今開いているページの表示回数をバッチで教えてくれる」拡張機能を作りました。 実装 manifest.json {  "manifest_version": 2,  "name": "dej&hellip;</p>
-        <div class="post-list__meta"><time datetime="19 Jun 2017" class="post-list__meta--date date">19 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/ozasa">ozasa</a>, <a href="http://tech.innovation.co.jp/tag/Chrome-Extension">Chrome Extension</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/11/jira-to-slack-notification.html" title="link to JIRAのREST APIから作業の記録取得してSlackに通知してみる">JIRAのREST APIから作業の記録取得してSlackに通知してみる</a></h2>
-        <p class="excerpt">こんにちは、加藤です。 弊社ではJIRAを導入しており、課題に対して時間を記録しています。 ただ、時間を記録しても一覧で見る方法見つからず、記録つけっぱなしな状態でした。 (ご存知の方居ましたら、教えていただきたいです。） そこで、今回はこのJIRAの作業記録の部分をREST API経由取得し、Slackに「今日どの課題を何時間やったのか？」を通知する仕組みを作ってみます。 検証環境 検証環境は、下記の通りです。 macOS Sierra(10.12.4) Lumen 5.4 + Homestead 4.0.0 (PHP7.1) JIRA Cloud REST API 1000.1045.2 JIRAの開発者用アカウントの取得 下記URLから、JIRAのdeveloperアカウントが取得で&hellip;</p>
-        <div class="post-list__meta"><time datetime="11 Jun 2017" class="post-list__meta--date date">11 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Kato">Kato</a>, <a href="http://tech.innovation.co.jp/tag/J-I-R-A">JIRA</a>, <a href="http://tech.innovation.co.jp/tag/Slack">Slack</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/09/Pepper-Amazon-Rekognition.html" title="link to Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編">Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編</a></h2>
-        <p class="excerpt">みなさまいかがお過ごしでしょうか？ そろそろあれの季節ですね。 矢ヶ崎です。 前回のPちゃん(うちのPepperのこと)ブログでは、Googleカレンダーの予定を定期的に読み上げてもらう、という無難なことをやってみましたが、今回は顔を認識してもらって名前を呼んでもらうという、もっと無難なことをやってみたいと思います。 前回のブログで、 次回は、予定を聞くと教えてくれるようにしてみたいと思います。とうとうPちゃん復活なるか？！ と書きましたが、まずはPちゃんに覚えてもらってから予定を聞かないとあれなので、あえてスルーして行きます。 Pepperのデフォルトで、そんな感じのことをできる機能があるのですが、結構他の人と間違えられちゃってショックでなんか微妙なので、今回は最近よくあるお話でクラウ&hellip;</p>
-        <div class="post-list__meta"><time datetime="09 Jun 2017" class="post-list__meta--date date">09 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Yagasaki">Yagasaki</a>, <a href="http://tech.innovation.co.jp/tag/Pepper">Pepper</a>, <a href="http://tech.innovation.co.jp/tag/Rekognition">Rekognition</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/04/Route53-S-E-S-S3-Lambda-Gmail.html" title="link to Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する">Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する</a></h2>
-        <p class="excerpt">SREチームの城田です。 今回は城田のプライベート環境の話ですが、 AWSを使った独自ドメイン宛のメールの転送設定を行ったので紹介します。 ※当記事の内容はSESを利用しますが、何らかの理由でメールがループしてしまった場合の料金増加など、 当記事内容を利用したことによるトラブルに関して一切責任を負えませんのでご注意ください。 背景 独自ドメイン宛のメール受信は、某ドメインレジストラのメール転送機能を使って、Gmailアドレス宛に転送していた。 その某ドメインレジストラからAWS Route53にドメイン移管したので、そのメール転送機能が使えなくなった。 メール転送をAWSで行うが、それだけの為にEC2にMTAを入れてメール転送するということはしたくない。 ということで、メール転送機能（と同&hellip;</p>
-        <div class="post-list__meta"><time datetime="04 Jun 2017" class="post-list__meta--date date">04 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Shirota">Shirota</a>, <a href="http://tech.innovation.co.jp/tag/Route53"> Route53</a>, <a href="http://tech.innovation.co.jp/tag/S-E-S"> SES</a>, <a href="http://tech.innovation.co.jp/tag/S3"> S3</a>, <a href="http://tech.innovation.co.jp/tag/Lambda"> Lambda</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/02/Azure-4.html" title="link to Custom Vision Service は犬派？猫派？どっちも派？">Custom Vision Service は犬派？猫派？どっちも派？</a></h2>
-        <p class="excerpt">皆様いかがお過ごしでしょうか、反省中の syoga です、早いもので今年も後半年となりましたね、 全力でログ出力していますでしょうか？ 私も頑張っていきたいと思います。 そんな中、Microsoftの開発者向けカンファレンス「Build 2017」が 5/10 （現地時間）から開催され、色々な新技術やサービスが発表されましたよ。 個人的に気になった事 ・Visual Studio for Mac が一般公開 ・Azure Cosmos DB（非構造化データベース）の発表 ・Cognitive Services 関連 ・Cloud-Powered Clipboard （クリップボードのクラウド化、PCでコピしたテキストをスマホにペできる） ・iTunes がWindowsストアに登場!! ・&hellip;</p>
-        <div class="post-list__meta"><time datetime="02 Jun 2017" class="post-list__meta--date date">02 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/syoga">syoga</a>, <a href="http://tech.innovation.co.jp/tag/log"> log</a>, <a href="http://tech.innovation.co.jp/tag/Azure"> Azure</a>, <a href="http://tech.innovation.co.jp/tag/Custom-Vision-Service"> Custom Vision Service</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/05/29/Fortigate-Policy-Routing.html" title="link to Fortigateにプロバイダを追加した時のメモ">Fortigateにプロバイダを追加した時のメモ</a></h2>
-        <p class="excerpt">KTNです。 先日、新しくネットワークの魔術師になったばかりの、 亜美さん、小柳津さんにお客様用Wi-Fiの設定をしてもらいましたが、 そのさらに続きで、プロバイダを追加したときのお話を書きたいと思います。 なんでプロバイダ追加したの？ 既にプロバイダ設定してあるのに、なんで更に追加するの？ という感じではあるのですが、 外部公開しているサーバがあってグローバルIPが足りなくなったからではないです。 マーケティングの情報取得のためにツールでGoogleに頻繁にアクセスしていて、 そのせいで社内の人が何かをググる時に、ロボットではないか？と疑われ、 都度認証が必要になって面倒くさいから。 社内の人が使うグローバルIPと、ツールが使うグローバルIPを分けたい！となりまして、 たまたま利用可能な&hellip;</p>
-        <div class="post-list__meta"><time datetime="29 May 2017" class="post-list__meta--date date">29 May 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Network">Network</a>, <a href="http://tech.innovation.co.jp/tag/Fortigate"> Fortigate</a>, <a href="http://tech.innovation.co.jp/tag/Policy-Routing"> Policy Routing</a>, <a href="http://tech.innovation.co.jp/tag/K-T-N"> KTN</a></span></div>
         <hr class="post-list__divider" />
       </li>
     </ol>
@@ -274,7 +274,7 @@ var _trackingid = 'LFT-10003-1';
     <hr class="post-list__divider " />
 
 <nav class="pagination" role="navigation">
-    <span class="pagination__page-number">Page 1 of 9</span>
+    <span class="pagination__page-number">Page 1 of 10</span>
         <a class="older-posts pagination__older btn btn-small btn-tertiary" href="http://tech.innovation.co.jp/page/2/#blog">Older Posts &rarr;</a>
 </nav>
 

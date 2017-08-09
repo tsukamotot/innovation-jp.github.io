@@ -1,0 +1,199 @@
+# CSSでアコーディオンメニューを実装
+:hp-alt-title: accordion menu
+:hp-tags: AMI,HTML,CSS,accordionMenu
+
+こんにちは、亜美です。 +
+一ヶ月ぶりにブログを書きます。 +
+CSSでaccordionメニューを作りました！ +
+
+## 完成品
+
+++++
+<iframe src="http://tech.innovation.co.jp/docs/ami/Accordion.html" width="410" height="250"></iframe>
+++++
+
+```
+<!DCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            .menu {
+                width: 320px;
+                margin: 0 auto;
+            }
+
+            .menu a {
+                display: block;
+                padding: 10px;
+                text-decoration: none;
+                color: #cbcdce;
+            }
+
+            label {
+                display: block;
+                padding :12px;
+                border-bottom: solid #ffffff 2px;
+                font-size: 90%;
+                font-weight: bold;
+                color :#cbcdce;
+                background :#262627;
+            }
+
+            input {
+                display: none;
+            }
+
+            .menu ul {
+                margin: 0;
+                padding: 0;
+                background :#262627;
+                list-style: none;
+            }
+
+            .menu li {
+                max-height: 0;
+                padding-left: 40px;
+                font-size: 80%;
+                border-bottom: none;
+
+                /*はみ出た文字を非表示にする*/
+                overflow: hidden;
+
+                transition-property: all;
+                transition-duration: 0.5s;
+            }
+
+            #myMenu:checked ~ ul>li{
+                max-height: 46px;
+                opacity: 1;
+                border-bottom: solid #cbcdce 1px;
+            }
+
+            /*メニューの開閉でiconを回転させる*/
+            .icon{
+                position: relative;
+                font-size: 120%;
+                margin-left: 190px;
+            }
+            .icon span{
+                position: absolute;
+                font-weight: normal;
+            }
+            .icon .batsu{
+                color:#262627;
+                font-size: larger;
+                top:-6px;
+                left:3px;
+                transform: rotate(45deg);
+                transition-property: transform;
+                transition-duration: 0.5s;
+            }
+            #myMenu:checked ~ label .batsu{
+                transform: rotate(0deg);
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="menu">
+            <input type="checkbox" id="myMenu" class="accordion" />
+            <label for="myMenu">マイメニュー
+                <span class="icon">
+                    <span class="maru">●</span><span class="batsu">×</span>
+                </span>
+            </label>
+            <ul id="links01">
+                <li><a href="#">ログイン</a></li>
+                <li><a href="#">無料会員登録</a></li>
+                <li><a href="#">あなたの閲覧履歴</a></li>
+            </ul>
+        </div>
+    </body>
+</html>
+
+```
+
+このように、CSSで某ITトレンドモバイルサイト風のアコーディオンメニューを作ることができます！ +
+
+## 事前準備
+
+必要なことは、以下の3つくらいです。 +
+・チェックボックスにチェックが入っていたらスタイルを変化させる +
+・boxサイズを時間で変化させる +
+・要素を時間で回転させる +
+
+```
+<!DCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <style>
+            /*箱のサイズを変化させる*/
+            .box{
+                display: block;
+                width: 200px;
+                height: 100px;
+                background-color: #F0BFC1;
+                color: #ffffff;
+                text-align:inherit;
+
+                transition-property: all;
+                transition-duration: 0.5s;
+            }
+            input {
+                display: none;
+            }
+            input#sizechange:checked ~ .box{
+                width: 150px;
+                height: 200px;
+                background-color: red;
+            }
+
+
+            /*KTNさんを回転させる*/
+            input#img:checked ~ label>img{
+                transform: rotate(10deg);
+                transition-property: all;
+                transition-duration: 0.5s;
+            }
+        </style>
+    </head>
+    <body>
+            <!-- クリックで形が変わる -->
+            <input type="checkbox" id="sizeChange"/>
+            <label for="sizeChange" class="box">クリックして</label>
+
+            <!-- クリックで画像が回転する -->
+            <input type="checkbox" id="img" class="accordion" />
+            <label for="img" class="img"><img src="http://tech.innovation.co.jp/docs/ami/kotanisan.png"></label>
+    </body>
+</html>
+```
+
+++++
+<iframe src="http://tech.innovation.co.jp/docs/ami/checkBox.html" width="410" height="650"></iframe>
+++++
+
+
+### チェックボックスにチェックが入っていたらスタイルを変化させる
+
+チェックボックス要素に`:checked`をつけると、「チェックが入っているチェックボックス」 +
+という条件で要素を選択することができます。 +
+`input#sizechange:checked ~ .box`とすることで、 +
+チェックが入ったチェックボックスのあとにあるboxというクラスを選択できます。 +
+
+### boxサイズを時間で変化させる
+
+初期値のスタイルと、チェックボックスが入った状態のスタイルを2つ記載し、 +
+初期値のスタイルに`transition-property: all;`と`transition-duration: 0.5s;` +
+ を記載すると、0.5秒掛けてスタイルが動的に変化します。 +
+
+
+### 要素を時間で回転させる
+
+`transform: rotate(10deg);`を使うと、好きな角度にKTNさんを回転させることができます。 +
+
+
+以上、また何か作っていけたら良いなと思ってます！ +
+おわり +

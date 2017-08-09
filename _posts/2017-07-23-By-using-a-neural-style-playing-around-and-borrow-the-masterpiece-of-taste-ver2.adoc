@@ -1,0 +1,151 @@
+= neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜
+:published_at: 2017-07-23
+:hp-alt-title: By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste-ver2
+:hp-tags: Oz,neural-style,Art
+
+こんにちは。 +
+もうすっかり夏ですね。オザサです。
+
+今回はタイトルの通り、 +
+以前も利用した https://github.com/jcjohnson/neural-style[neural-style]を使ってみたいと思います。
+
+というのも、 +
+http://tech.innovation.co.jp/2016/06/30/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste.html[前回のブログ]から1年(!)経ちまして、 +
+Amazon Web ServicesのEC2インスタンスに対してEC2 Elastic GPUというサービスが発表され、 +
+前回CPUモードで実行した時よりもサクサクと画像作成ができるのでは？と考えたからです。
+
+が、結論から言うとEC2 Elastic GPUはまだ利用はできませんでした！！
+
+
+## 環境構築
+今回もAmazon Web Services(以下AWS)を使います。
+
+手順
+
+. サーバの立ち上げ
+. インストール諸々
+. neural-styleの実行
+
+#### 1.サーバの立ち上げ
+EC2 Elastic GPUがまだだったため、 +
+今回はg2.2xlargeを使ってみました。
+
+また、g3系のインスタンスが使えるのかと思っていたのですが、 +
+まだ東京リージョンにきていないようでした。(2017年7月現在)
+
+Amazonマシンイメージ(AMI)は「Deep Learning AMI Amazon Linux Version 2.3_Jun2017」を選択しました。 +
+このAMIはMXNet、Tensorflow、Caffe、Theano、Torch、CNTK、Kerasがインストールされているため、 +
+この後のインストール作業をかなり省略することができました。
+
+こういったAMIの存在やGPUインスタンス・サービスが増えてきているあたり、 +
+機械学習やGPUコンピューティングの需要が高まっていることを感じますね。
+
+#### 2.インストール諸々
+neural-styleのGithubにやり方は書いてありますが、 +
+上記で触れたとおりすでにTorchはインストールされているため、 +
+loadcaffeとneural-styleをインストールすれば、それだけでneural-styleを実行ができるようになります。
+
+また、CUDA(Compute Unified Device Architecture)もインストールされているため、 +
+なんと諸々の設定を抜きにいきなりGPUモードで実行できるのです。
+
+ここまで作業を省略できるとは思っておらず、びっくりました。
+
+#### 3.neural-styleの実行
+
+GPUを利用することによって前回より実行速度をあげることができましたので、
+イテレーションの回数もあげてみたりしながら実験してみたいと思います。
+
+[source, rust]
+----
+th neural_style.lua -style_image ../<stle_image> -content_image ../<content_image> -output_image <outoput_image.png> -gpu 0 -num_iterations 1000 -image_size 512 
+----
+
+念願のgpuオプションを0にしてGPUモードで実行します。 +
+また、num_iterationsを指定することでイテレーション数を指定可能です。
+
+ちなみに思い切って10000回イテレーションをしてみたところ、2時間程度で完了しました。 +
+前回c3.8xlargeを使ってイテレーション数1000回でも1時間以上かかっていたことを考えると早いように思います。
+
+ただ、イテレーションの回数をあげれば結果がその分変わるというものでもないようです。
+
+## 制作物
+
+■元画像
+
+image::http://tech.innovation.co.jp/images/ozasa/art02.jpg[]
+
+■スタイル画像
+
+https://www.jackson-pollock.org/convergence.jsp
+
+
+ジャクソンポロックのConvergenceを選んでみました。
+
+
+### イテレーション過程
+
+100回
+
+image::http://tech.innovation.co.jp/images/ozasa/art02_out_100.png[]
+
+500回
+
+image::http://tech.innovation.co.jp/images/ozasa/art02_out_500.png[]
+
+1000回
+
+image::http://tech.innovation.co.jp/images/ozasa/art02_out_1000.png[]
+
+10000回
+
+image::http://tech.innovation.co.jp/images/ozasa/art02_out.png[]
+
+gif版(1000回づつ表示)
+
+image::http://tech.innovation.co.jp/images/ozasa/art02_out.gif[]
+
+上記のように1000回あたりから特に変わっているようには見えません。
+
+### その他制作物
+
+■元画像
+
+image::http://tech.innovation.co.jp/images/ozasa/art03.jpg[]
+
+___
+
+■結果画像
+
+image::http://tech.innovation.co.jp/images/ozasa/art03_out.png[]
+
+___
+
+■元画像
+
+image::http://tech.innovation.co.jp/images/ozasa/art04.jpg[]
+
+___
+
+■結果画像
+
+image::http://tech.innovation.co.jp/images/ozasa/art04_out.png[]
+
+___
+
+スタイル画像はなんでしょうか？ +
+なんて、クイズにしてみるのも面白いかもしれませんね。
+
+
+### 今後
+GPUを用いることで実行速度はかなり改善されましたが、
+インスタンスを立ち上げている時間に対して当然コストがかかってしまいます。
+
+必要な時だけ利用し従量課金されるというのが、AWSを利用する上でのメリットにもなると思うので、
+何かしら管理画面上から画像をアップロードしたら、
+それをトリガーにGPUインスタンスが立ち上がり、
+処理が実行され、完了したら落ちてくれる、そのようなサービス及びアーキテクチャが組めないか考えてみたいと思います。
+(S3、SQSなどの勉強も兼ねて)
+
+次は1年も空けないようにしたいと思います。
+
+こちらからは以上です！

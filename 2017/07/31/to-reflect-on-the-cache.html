@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>キャッシュについて深く反省してみる... - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="キャッシュについて深く反省してみる...">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="キャッシュについて深く反省してみる...">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/07/31/to-reflect-on-the-cache.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="キャッシュについて深く反省してみる..." />
+    <meta property="og:description" content="こんにちは、小柳津です。 突然ですが、皆様はCSSの修正をしてリリースした後に、 「表示が変わらない！」 「デザインが崩れた！ヤベー！！」 なんて経験はありませんか？ 私はついこないだやらかしてしまいました&amp;#8230;&amp;#8203; 事象(フィクション) 下の画像は例えです。 以下の画像のようにリリース後にデザイン崩れが発生してしまいました&amp;#8230;&amp;#8203; 意図したようにはCSSが作用していないぞ!?!? ※画像はイメージです 原因 原因はCDNのキャッシュとブラウザのキャッシュでした。 ファイルの中身が変わったかどうかはパラメータが変更..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/07/31/to-reflect-on-the-cache.html" />
+    <meta property="article:published_time" content="2017-07-30T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-07-31T00:49:59.910Z" />
+    <meta property="article:tag" content="yaizu" />
+    <meta property="article:tag" content="Shell" />
+    <meta property="article:tag" content="git" />
+    <meta property="article:tag" content="Cache" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="キャッシュについて深く反省してみる..." />
+    <meta name="twitter:description" content="こんにちは、小柳津です。 突然ですが、皆様はCSSの修正をしてリリースした後に、 「表示が変わらない！」 「デザインが崩れた！ヤベー！！」 なんて経験はありませんか？ 私はついこないだやらかしてしまいました&amp;#8230;&amp;#8203; 事象(フィクション) 下の画像は例えです。 以下の画像のようにリリース後にデザイン崩れが発生してしまいました&amp;#8230;&amp;#8203; 意図したようにはCSSが作用していないぞ!?!? ※画像はイメージです 原因 原因はCDNのキャッシュとブラウザのキャッシュでした。 ファイルの中身が変わったかどうかはパラメータが変更..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/07/31/to-reflect-on-the-cache.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars3.githubusercontent.com/u/16201452?v=4",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "キャッシュについて深く反省してみる...",
+    "url": "http://tech.innovation.co.jp/2017/07/31/to-reflect-on-the-cache.html",
+    "datePublished": "2017-07-30T15:00:00.000Z",
+    "dateModified": "2017-07-31T00:49:59.910Z",
+    "keywords": "yaizu, Shell, git, Cache",
+    "description": "こんにちは、小柳津です。 突然ですが、皆様はCSSの修正をしてリリースした後に、 「表示が変わらない！」 「デザインが崩れた！ヤベー！！」 なんて経験はありませんか？ 私はついこないだやらかしてしまいました&amp;#8230;&amp;#8203; 事象(フィクション) 下の画像は例えです。 以下の画像のようにリリース後にデザイン崩れが発生してしまいました&amp;#8230;&amp;#8203; 意図したようにはCSSが作用していないぞ!?!? ※画像はイメージです 原因 原因はCDNのキャッシュとブラウザのキャッシュでした。 ファイルの中身が変わったかどうかはパラメータが変更..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-yaizu tag-Shell tag-git tag-Cache no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="31 Jul 2017" class="post-meta__date date">31 Jul 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/yaizu">yaizu</a>, <a href="http://tech.innovation.co.jp/tag/Shell">Shell</a>, <a href="http://tech.innovation.co.jp/tag/git">git</a>, <a href="http://tech.innovation.co.jp/tag/Cache">Cache</a></span>
+        <span class="post-meta__author author"><img src="https://avatars3.githubusercontent.com/u/16201452?v=4" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">キャッシュについて深く反省してみる...</h1>
+    </header>
+
+    <section class="post tag-yaizu tag-Shell tag-git tag-Cache">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは、小柳津です。<br>
+突然ですが、皆様はCSSの修正をしてリリースした後に、<br>
+<strong>「表示が変わらない！」</strong> <strong>「デザインが崩れた！ヤベー！！」</strong> なんて経験はありませんか？<br></p>
+</div>
+<div class="paragraph">
+<p>私はついこないだやらかしてしまいました&#8230;&#8203;<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">事象(フィクション)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>下の画像は例えです。</strong><br>
+以下の画像のようにリリース後にデザイン崩れが発生してしまいました&#8230;&#8203;<br>
+意図したようにはCSSが作用していないぞ!?!?<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/bugs.png?1" alt="bugs.png?1">
+</div>
+</div>
+<div class="paragraph">
+<p><em>※画像はイメージです</em><br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">原因</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>原因はCDNのキャッシュとブラウザのキャッシュでした。<br>
+ファイルの中身が変わったかどうかはパラメータが変更されているかで判断するように設定していました。<br>
+そして、CSSを呼び出しているところのパラメータを更新し忘れていて、<br>
+コンテンツ(ここではCSSの中身)に変更がないと判断されてしまいました。<br></p>
+</div>
+<div class="paragraph">
+<p>CSSの中身を変更した場合、以下の画像のように呼び出しているCSSのパラメータを更新しなければ、
+古いキャッシュが残ってしまい、思ったような表示がされない可能性があります。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/para.png?1" alt="para.png?1">
+</div>
+</div>
+<div class="paragraph">
+<p><em>※画像はイメージです</em><br></p>
+</div>
+<div class="paragraph">
+<p>画像ではパラメータが<code>?v1.0.0</code>となっていますがこれを<code>?v1.0.1</code>のように変更する必要があります。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___3">対策</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>じゃあ、これからJavaScriptやCSSのファイルを更新したときは、キャッシュが残るのを防ぐために、<br>
+忘れずに呼び出し先でパラメータを更新しようね！という教訓でした。<br></p>
+</div>
+<div class="sect3">
+<h4 id="___4">おしまい</h4>
+<div class="paragraph">
+<p>・<br>
+・<br>
+・<br>
+・<br>
+・<br>
+・<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___5">とはなりません。</h4>
+<div class="paragraph">
+<p>というか、分かっていてもこういった細かい対応は忘れがちですよね??<br></p>
+</div>
+<div class="paragraph">
+<p>なので私は対策を考えました。<code>git status</code>のコマンドで差分を確認するときに<code>.css</code>や<code>.js</code>のファイルの変更がある場合、<br>
+パラメータも変更してねというアラートを出せば、もれなく対応できるのではないかと。<br></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___6">実装</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>色々調べた結果、差分を確認する<code>git status</code>をベースにアラートを出すオリジナルのコマンドを自作することにしました。<br>
+実行パスの通っているディレクトリに<code>git-commandname</code>といった感じでファイルを作成すると、<br>
+<code>git commandname</code>で作成したファイルの内容を実行できます。<br>
+ちなみに環境は<code>macOS Sierra 10.12.5</code>で実装を行いました。<br></p>
+</div>
+<div class="paragraph">
+<p>まずは実行パスが通っているディレクトリを調べます。<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>$ echo $PATH</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>/usr/local/bin</code>というディレクトリに実行パスが通っているのでそこに<code>git-stc</code>というファイルを作成します。<br>
+git status check的な意味合いでこの名前にしました。<br></p>
+</div>
+<div class="paragraph">
+<p><strong>git-stcの内容</strong><br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>#!/bin/bash
+
+#差分のあったファイルのパスを配列に格納
+modified=(`git status | grep "modified" | awk '{print $2}'`)
+
+for item in ${modified[@]}; do
+    #差分のあったファイルのパスからファイル名を取得
+    file=`echo ${item} | awk -F '/' '{print $NF}'`
+
+    #差分のあったファイル名から拡張子を取得
+    ext=`echo ${file} | sed -e "s/\([^.]*\)\(\.[^.]*\)*$/\2/"`
+
+    #.jsと.cssのファイルに差分があったら、色付きでアラート出力
+    if [ "${ext}" = ".js" ]; then
+        echo -e "\033[1;42mjsファイルがあります。使用先のファイルのパラメータを更新してください\033[0;39m"
+    fi
+    if [ "${ext}" = ".css" ]; then
+        echo -e "\033[1;42mcssファイルがあります。使用先のファイルのパラメータを更新してください\033[0;39m"
+    fi
+done</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Shell Scriptで実装しました。<br>
+内容はとっても簡単。 <code>git status</code>の情報からmodifiedの(差分のある)ファイルにCSSやJavaScriptのファイルがあれば、アラートを出すといった内容になっています。<br></p>
+</div>
+<div class="paragraph">
+<p>実行結果はこんな感じ。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/git-stc.png?2" alt="git stc.png?2">
+</div>
+</div>
+<div class="paragraph">
+<p>まあまあいい感じ！ <br></p>
+</div>
+<div class="paragraph">
+<p>ここから少し一手間を加えます。<br>
+<code>~/.gitconfig</code>ファイルを編集し、エイリアスを設定して<code>git status</code>と<code>git stc</code>が同時に動くようにします。<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>[alias]
+        st = !git status &amp;&amp; git stc</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>このようにすれば、<code>git st</code>とコマンドを実行した時に<code>git status</code>と<code>git stc</code>が同時に動くようになります。<br></p>
+</div>
+<div class="paragraph">
+<p>実行結果はこんな感じ。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/oyaizu/git-st.png" alt="git st.png">
+</div>
+</div>
+<div class="paragraph">
+<p>これなら、使用先のファイルのパラメータを忘れずに更新できるはず！<br></p>
+</div>
+<div class="paragraph">
+<p>深く反省&#8230;&#8203;<br></p>
+</div>
+<div class="paragraph">
+<p>今回はここで失礼します&#8230;&#8203;<br></p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>

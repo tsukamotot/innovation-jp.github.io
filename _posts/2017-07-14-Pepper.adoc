@@ -1,0 +1,264 @@
+= Pepperにぼくの顔を覚えてもらえたので、ついでに打刻をしてもらう
+:published_at: 2017-07-14
+:hp-tags: Yagasaki,Pepper,Rekognition,WebDriver,SQS,ShellScript
+
+こんにちは！ +
+いろんな意味で熱い毎日ですね！ +
+矢ヶ崎です。
+
+前回のPちゃん(うちのPepperのこと)ブログでは、顔を認識してもらって名前を呼んでもらうという無難なことをやってみました！ +
+せっかく、ぼくの顔を覚えてくれたので、みなさんついつい忘れがちになりがちだと思う、出退勤の打刻をPちゃんにやってもらおうと思います！
+
+== 打刻してもらうためにすべき努力
+
+* SQSのキューを用意する
+* EC2なりサーバなりを用意する
+
+そして今回は、こんなアーキテクチャでやってみました！
+
+image::/images/yagasaki/pp6/arch.jpg[arch]
+
+* 前回のあれで、Pちゃんを見つめて、「Pちゃんおはよう」とか「おつかれ」とか言うと、個人判別をしてくれる
+* SQSにJSON形式で打刻リクエストを入れる
+* EC2なりサーバなりで、SQSからリクエストを受信する
+* 該当ユーザのアカウント情報をRedisから取得する
+* WebDriverを使って勤怠管理システムを操作して打刻する
+
+やはり、ポイントとしては、当社で利用中の勤怠管理システムがAPIを提供してくれていないため、Selenium WebDriverを利用して頑張って打刻をするところでしょうか。 +
+昨今は、ヘッドレスブラウザとかを使うのが流行りなのかもしれませんが、Selenium IDEで簡単にベースが作れるのでWebDriverお手軽でおすすめです！
+
+というわけでして、今回はこんな感じで、がんばってPちゃんに打刻してもらいます！
+
+=== SQSのキューを用意する
+=== EC2なりサーバなりを用意する
+
+これは、いくらでもある情報なので割愛しますが、EC2なりサーバなりに、AWS CLIを使えるようにセットアップしておくことです！
+
+=== 前回のあれで、Pちゃんを見つめて、「Pちゃんおはよう」とか「おつかれ」とか言うと、個人判別をしてくれる
+
+こちらは、前回のPちゃんブログ +
+http://tech.innovation.co.jp/2017/06/09/Pepper-Amazon-Rekognition.html[Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編] +
+であれしてください。
+
+=== SQSにJSON形式で打刻リクエストを入れる
+
+前回のPちゃんソースをちょっと拡張して、SQSにキューイングするようにします。
+
+image::/images/yagasaki/pp6/chore.png[chore]
+
+[source,python]
+----
+class MyClass(GeneratedClass):
+    def __init__(self):
+        GeneratedClass.__init__(self)
+
+    def onLoad(self):
+        #put initialization code here
+        self.framemanager = ALProxy("ALFrameManager")
+        self.tts = ALProxy("ALTextToSpeech")
+        self.folderName = None
+
+    def onUnload(self):
+        self.framemanager = None
+        self.tts = None
+        self.folderName = None
+
+    def onInput_onStart(self, p):
+        import sys, os
+        self.folderName = os.path.join(self.framemanager.getBehaviorPath(self.behaviorId), "../lib")
+        if self.folderName not in sys.path:
+            sys.path.append(self.folderName)
+
+        self.recordFolder = os.path.join(self.framemanager.getBehaviorPath(self.behaviorId), "../html")
+
+        import boto3
+
+        cnames = {"a_yagasaki": "やがさき",
+            "n_syoga": "しょが",
+            "y_kotani": "こたに",
+            "a_yamamoto": "あみ",
+            "r_tateishi": "たていし",
+            "j_shirota": "しろた",
+            "m_kasai": "びげん",
+            "y_oyaidu": "やいづ",
+        }
+
+        try:
+            ACCESS_KEY_ID = 'accesskey'
+            SECRET_ACCESS_KEY = 'seckey'
+            BUCKET_NAME = 'bucketname'
+
+            load_filename = 'image2.jpg'
+            save_filename = 'rekognition/target.jpg'
+
+            rek = boto3.client(
+                'rekognition',
+                aws_access_key_id=ACCESS_KEY_ID,
+                aws_secret_access_key=SECRET_ACCESS_KEY,
+                region_name='us-west-2',
+            )
+
+            fh = open(self.recordFolder + '/' + load_filename, 'rb')
+            img = bytearray(fh.read())
+            fh.close()
+
+            response = rek.search_faces_by_image(
+                CollectionId='pchan',
+                Image={
+                    'Bytes': img,
+                },
+                MaxFaces=1,
+            )
+            self.logger.info(response)
+
+            # ExternalImageIdの"-"より前の部分と名前をマッピングする
+            fname = response["FaceMatches"][0]["Face"]["ExternalImageId"].encode("utf-8")
+            aname = fname.split("-", 1)[0]
+
+            self.logger.info(cnames[aname])
+            mes = cnames[aname] + "さん、"
+            if p == "1":
+                mes = mes + "おはようございます。出勤のだこくしておきますね。"
+            else:
+                mes = mes + "おつかれさまでした。退勤のだこくしておきますね。"
+
+            # enqueue
+            sqs = boto3.client('sqs',
+                aws_access_key_id=ACCESS_KEY_ID,
+                aws_secret_access_key=SECRET_ACCESS_KEY,
+                region_name='ap-northeast-1',)
+            queue = 'https://sqs.ap-northeast-1.amazonaws.com/xxxxxx/pchan'
+            qmes = '{"Name": "' + aname + '", "Kind": "' + str(p) + '"}'
+            response = sqs.send_message(QueueUrl=queue, MessageBody=qmes)
+
+            self.logger.info(mes)
+            self.tts.say(mes)
+        except:
+            self.logger.error("Error!!!!!")
+            traceback.print_exc()
+            mes = "ごめんなさい。どなたかわかりません。"
+            self.logger.info(mes)
+            self.tts.say(mes)
+
+        self.onStopped()
+
+    def onInput_onStop(self):
+        self.onUnload() #it is recommended to reuse the clean-up as the box is stopped
+        self.onStopped() #activate the output of the box
+----
+
+=== EC2なりサーバなりで、SQSからリクエストを受信する
+=== 該当ユーザのアカウント情報をRedisから取得する
+=== WebDriverを使って勤怠管理システムを操作して打刻する
+
+ポイントは、WebDriverですね！ +
+X WindowのFirefoxなどを操作するために、Xサーバが必要なので、ちょっと調べると、 +
+「xvfbとか使うといいよ！」 +
+みたいなことが出てきますが、あえて今回はVNC Serverを立ち上げて実際に見えるようにしてやってみました。 +
+お手軽にXサーバの環境が作れるのでおすすめです！
+
+[source,shell]
+----
+# yum -y install vnc-server
+# service vncserver start
+----
+
+みたいな感じでお手軽〜〜〜！
+
+そしてこんな感じで、適当にバッチをシェルスクリプトとかで作ります！
+
+[source,shell]
+----
+#!/bin/bash
+
+export DISPLAY=:1
+
+export AWS_ACCESS_KEY_ID='accesskey'
+export AWS_SECRET_ACCESS_KEY='seckey'
+export AWS_DEFAULT_REGION=ap-northeast-1
+export AWS_DEFAULT_OUTPUT=json
+
+DAKOKUCMD="python ./dakoku.webdriver.py"
+DAKOKUJSON="./dakoku.json"
+
+SQS_QUEUE_NAME='pchan'
+SQS_QUEUE_URL=$( \
+  aws sqs get-queue-url \
+    --queue-name ${SQS_QUEUE_NAME} \
+    --output text\
+  ) 
+
+FILE_SQS_MSG="${SQS_QUEUE_NAME}-msg".json
+FILE_SQS_BODY="${SQS_QUEUE_NAME}-body-msg".json
+
+# check function
+isrunning() {
+  R=$(ps axu | grep "${DAKOKUCMD}" | grep -v grep)
+  if [[ ${R} == "" ]]
+  then
+    echo 0
+    exit
+  fi
+  echo 1
+}
+
+aws sqs receive-message \
+  --queue-url "${SQS_QUEUE_URL}" --wait-time-seconds 20 > ${FILE_SQS_MSG}
+
+cat ${FILE_SQS_MSG} | jq -r '.Messages[].Body' > ${FILE_SQS_BODY}
+
+SQS_RECEIPT_HANDLE=$( \
+  cat ${FILE_SQS_MSG} | jq -r '.Messages[].ReceiptHandle' \
+) \
+
+if [[ "${SQS_RECEIPT_HANDLE}" != "" ]]
+then
+  aws sqs delete-message \
+       --queue-url "${SQS_QUEUE_URL}" \
+       --receipt-handle ${SQS_RECEIPT_HANDLE}
+fi
+
+USERNAME=$( \
+  cat ${FILE_SQS_BODY} | jq -r '.Name' \
+) \
+
+if [[ "${USERNAME}" == "" ]]
+then
+  echo "error! for user ${USERNAME}, ${KIND} ..." >> ./dakoku_err.log
+  exit
+fi
+
+KIND=$( \
+  cat ${FILE_SQS_BODY} | jq -r '.Kind' \
+) \
+
+PASSWORD=$(redis-cli --raw get ${USERNAME})
+
+if [[ "${PASSWORD}" == "" ]]
+then
+  echo "error! for password ${USERNAME}, ${KIND} ..." >> ./dakoku_err.log
+  exit
+fi
+
+echo "{ \"name\": \"${USERNAME}\", \"password\": \"${PASSWORD}\", \"kind\": \"${KIND}\" }" > ${DAKOKUJSON}
+
+ISRUNNING=$(isrunning)
+while [ "${ISRUNNING}" == "1" ] 
+do
+  sleep 3
+  ISRUNNING=$(isrunning)
+done
+
+${DAKOKUCMD}
+----
+
+== その後の予定
+
+次回こそは、
+
+* Pepperに「会議室どこ？」と聞くと、次の会議の会議室を教えてくれる
+
+という感じにして、忘れんぼう将軍でもPちゃんが居れば大丈夫！にしていきます。
+ひとつよろしくお願いいたします。
+
+こちらからは以上です。

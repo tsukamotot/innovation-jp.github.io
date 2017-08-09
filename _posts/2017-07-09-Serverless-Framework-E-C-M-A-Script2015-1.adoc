@@ -1,0 +1,635 @@
+# Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1
+:hp-alt-title:　Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1
+:hp-tags: Shirota, Serverless Framework, ECMAScript2015, ECMAScript6, ES6
+
+SREチームの城田です。 +
+
+サーバーレスでマイクロサービスを作れるようになっておけば、 +
+今後役に立つこともあるかなと思いまして作ってみます。
+
+# 概要
+
+マイクロサービス設計でおおよその場合必要と思われる、 +
+トークン発行やユーザ情報管理をするアカウント周りのプラットフォームを作成したいと思います。
+
+今回は API Gateway から Lambda を起動してトークンを発行し、RDSにデータを保存してHTTPレスポンスを返す、という部分を作成します。
+
+また、 +
+サーバーレスアーキテクチャで行うこと、サーバレスフレームワークを使うこと、ECMAScript2015に準拠したコーディングを行うことも目的としています。
+
+image::https://raw.githubusercontent.com/innovation-jp/innovation-jp.github.io/master/images/shirota/20170714/sls.png[]
+
+今回使用する環境は、Serverless Framework という、 +
+API Gateway や Lambda など AWSサービスに関しての設定やコーディングをローカルで行い、 +
+デプロイができるフレームワークを利用します。
+
+Lambdaで使用するランタイムとしては Node.js 6.10 を採用し、 +
+ローカルでのコーディングはJavaScriptの中核仕様を抜き出して標準化した、 +
+ECMAScript2015（別名：ECMAScript6 以下ES6）で記述し、 +
+デプロイ時に BABEL というES6からJavaScriptへ変換するツールを利用し、 +
+ビルドツールは webpack を利用します。
+
+ローカル開発環境は webpack の ウェブサーバ機能 を使って、 +
+ローカルで API Gateway や Lambda の開発もできるようになっています。
+
+# やったこと
+
+* Serverless Framework のインストール
+* AWSアカウントの設定
+* Serverless Framework のプロジェクト作成
+* npmコマンドで BABEL webpack プラグインをインストール
+* BABELの設定
+* webpackの設定
+* Serverless Frameworkの設定
+* MySQLクライアント、UUID生成プラグインをインストール
+* RDSにテーブルを作成
+* ES6でコーディング
+* Serverless Frameworkでデプロイ
+* 動作確認
+* ローカルでの開発環境確認
+
+# 前提
+
+* ローカル端末はMacを使う
+* npmコマンドはHomebrewなどでインストール済みである
+* awscliコマンドは同じくHomebrewなどでインストール済みである
+* AWSアカウントを持っている（今回は検証なので全権限許可IAMのクレデンシャルキーを使用）
+* AWS RDS(MySQLエンジン)のエンドポイント作成とDB作成、接続は確認済みである
+
+# Serverless Framework のインストール
+
+npmコマンドで Serverless Framework をインストールします。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ sudo npm install -g serverless
+/usr/local/bin/slss -> /usr/local/lib/node_modules/serverless/bin/serverless
+/usr/local/bin/serverless -> /usr/local/lib/node_modules/serverless/bin/serverless
+/usr/local/bin/sls -> /usr/local/lib/node_modules/serverless/bin/serverless
+
+> serverless@1.17.0 postinstall /usr/local/lib/node_modules/serverless
+> node ./scripts/postinstall.js
+
++ serverless@1.17.0
+updated 3 packages in 11.982s
+</pre>
+++++
+
+sudo を使った上で -g オプションで端末に対してグローバルにインストールしています。
+
+# AWSアカウントの設定
+
+あらかじめ用意しておいたAWSアカウントを設定します。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ aws configure
+AWS Access Key ID [None]: アクセスキーID
+AWS Secret Access Key [None]: シークレットアクセスキー
+Default region name [None]: us-east-1
+Default output format [None]: そのままEnterキーを押す
+</pre>
+++++
+
+aws s3 ls s3:// などでS3にアクセスできるかなどで動作確認しました。
+
+# Serverless Framework のプロジェクト作成
+
+account-pf という名称で作成します。 +
+Lambdaのランタイムは Node.js を採用したのでテンプレートには aws-nodejs を指定します。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ sls create --template aws-nodejs --name account-pf
+Serverless: Generating boilerplate...
+ _______                             __
+|   _   .-----.----.--.--.-----.----|  .-----.-----.-----.
+|   |___|  -__|   _|  |  |  -__|   _|  |  -__|__ --|__ --|
+|____   |_____|__|  \___/|_____|__| |__|_____|_____|_____|
+|   |   |             The Serverless Application Framework
+|       |                           serverless.com, v1.17.0
+ -------'
+
+Serverless: Successfully generated boilerplate for template: "aws-nodejs"
+</pre>
+++++
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ ls -a
+.              ..             .gitignore     handler.js     serverless.yml
+</pre>
+++++
+
+
+handler.js と serverless.yml というファイルが生成されました。
+
+
+# npmコマンドで BABEL webpack プラグインをインストール
+
+BABELはES6などをJavaScriptに変換するプラグインで、 +
+webpackはビルドツールです。 +
+ローカル端末上でテストするためのウェブサーバ機能も含まれています。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ npm install --save-dev babel-core babel-loader babel-plugin-transform-runtime babel-preset-es2015 serverless-webpack webpack
++ babel-preset-es2015@6.24.1
++ babel-plugin-transform-runtime@6.23.0
++ serverless-webpack@2.0.0
++ babel-core@6.25.0
++ babel-loader@7.1.1
++ webpack@3.1.0
+added 489 packages in 13.767s
+
+$ npm install --save babel-runtime
++ babel-runtime@6.23.0
+updated 1 package in 2.371s
+</pre>
+++++
+
+--save-dev オプションで開発環境の為のインストールということを明示しています。 +
+--save オプション自体はJSONファイルに設定を保存するオプションです。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ ls -a
+.                 ..                .gitignore        handler.js        node_modules      package-lock.json serverless.yml
+</pre>
+++++
+
+node_modules というディレクトリが生成されて、そこにインストールされたプラグインが入っています。 +
+また、package-lock.jsonにインストールされたプラグインが記載されます。
+
+# BABELの設定
+
+BABELの設定ファイルは生成されないのでviコマンドなどで新規作成します。
+
+$ vi .babelrc
+++++
+<pre style="font-family: Menlo, Courier">
+{
+  "plugins": ["transform-runtime"],
+  "presets": ["es2015"]
+}
+</pre>
+++++
+
+BABELの設定ファイルにプラグインは transform-runtime を指定する。 +
+presetsは ES6 を利用することを明記します。
+
+# webpackの設定
+
+webpackの設定ファイルも生成されないので同じくviコマンドなどで新規作成します。
+
+$ vi webpack.config.js
+++++
+<pre style="font-family: Menlo, Courier">
+module.exports = {
+  entry: './handler.js',
+  target: 'node',
+  module: {
+    loaders: [{
+      test: /\.js$/,
+      loaders: ['babel-loader'],
+      include: __dirname,
+      exclude: /node_modules/,
+    }]
+  },
+  externals: {
+    'aws-sdk': 'aws-sdk'
+  }
+};
+</pre>
+++++
+
+entry は ドキュメントルートファイルを、loaders は BABELを指定します。
+
+# Serverless Frameworkの設定
+
+Serverless Frameworkの設定はYAML形式で記述します。
+
+$ vi serverless.yml
+++++
+<pre style="font-family: Menlo, Courier">
+service: account-pf
+plugins:
+  - serverless-webpack
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: dev
+  region: us-east-1
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "ec2:CreateNetworkInterface"
+        - "ec2:DescribeNetworkInterfaces"
+        - "ec2:DeleteNetworkInterface"
+      Resource:
+        - "*"
+  vpc:
+    securityGroupIds:
+      - sg-xxxxxxxx
+    subnetIds:
+      - subnet-xxxxxxxx
+      - subnet-yyyyyyyy
+functions:
+  createToken:
+    handler: handler.createToken
+    events:
+      - http:
+          path: auth
+          method: post
+          cors: true
+</pre>
+++++
+
+各パラーメータの説明
+|=================================
+|service:          |Serverless Frameworkのプロジェクト名
+|plugins:          |使用するプラグイン
+|provider:         |各種設定以下記載
+|name:             |使用するPaaSサービスを指定
+|runtime:          |使用するランタイムを指定
+|stage:            |ステージ名を指定（stating production など自由に設定できる）
+|region:           |使用するAWSのリージョンを指定
+|iamRoleStatements:|使用するAWSのIAMロール情報を記載（VPC内にLambdaをデプロイする場合）
+|vpc:              |使用するAWS VPC情報を記載
+|securityGroupIds: |AWS セキュリティグループIDを指定
+|subnetIds:        |AWS サブネットIDを指定
+|functions:        |AWS Lambda関数に関する情報を記載
+|createToken:      |今回作成したLambda関数と連携する名称
+|handler:          |Lambdaハンドラーを指定
+|events:           |API各種設定以下記載
+|http:             |ウェブAPIということを記載
+|path:             |APIエンドポイントを記載
+|method:           |HTTPメソッドを記載
+|cors:             |CORSを使用するか指定
+|=================================
+
+
+stage: の部分にステージ名を記載すれば、（別途RDSの作成等は必要ですが、サーバーレスなので）いくらでも環境を作成できてしまう！ +
+というところはサーバーレスの醍醐味かなと思います。
+
+また今回 iamRoleStatements: を指定したり、vpc: を指定しているのは、 +
+RDSを利用しているからです。 +
+DynamoDBやS3のように非VPCのサービスを利用する場合は、 +
+Lambdaは非VPCのままで問題ないので、このような指定は要りません。
+
+function: の部分、ここに http: 配下に path: method: を指定すれば +
+API Gatewayが設定されてしまうのは驚きです。
+
+# MySQLクライアント、UUID生成プラグインをインストール
+
+AWS Lambdaには標準でMySQLのクライアントやUUID生成などは組み込まれていないので、 +
+Serverless Framework側で設定する必要があります。 +
+しかし、 +
+設定と入っても以下のように npmコマンドでインストールするだけなので簡単です。
+
+++++
+<pre style="font-family: Menlo, Courier">
+# まずはローカル端末にグローバルに mysql と uuid をインストール
+
+$ npm install -g mysql uuid
+/usr/local/bin/uuid -> /usr/local/lib/node_modules/uuid/bin/uuid
++ mysql@2.13.0
++ uuid@3.1.0
+added 9 packages in 0.749s
+</pre>
+++++
+
+++++
+<pre style="font-family: Menlo, Courier">
+# 改めてServerless Frameworkの node_modules 配下にインストール
+
+$ npm install --save mysql uuid
++ uuid@3.1.0
++ mysql@2.13.0
+added 7 packages in 2.454s
+</pre>
+++++
+
+こうしておくだけで、フレームワークが勝手にLambdaまで運んでくれます。
+
+# RDSにテーブルを作成
+
+以下のようなテーブルを仮で作成しました。
+
+++++
+<pre style="font-family: Menlo, Courier">
+CREATE TABLE `clients` (
+  `client_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `password` varchar(64) DEFAULT NULL,
+  `name` varchar(128) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `tel` varchar(13) DEFAULT NULL,
+  `postal` varchar(8) DEFAULT NULL,
+  `address1` varchar(512) DEFAULT NULL,
+  `address2` varchar(512) DEFAULT NULL,
+  `token` varchar(64) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`client_id`)
+) ENGINE=InnoDB
+</pre>
+++++
+
+今回使用するフィールドは client_id と token になります。
+
+# ES6でコーディング
+
+やっとコーディングです。
+まずハンドラーは以下のようになりました。
+
+$ vi handler.js
+++++
+<pre style="font-family: Menlo, Courier">
+'use strict';
+
+import Mysql from "./app/Libraries/Mysql.es6";
+import Utils from "./app/Libraries/Utils.es6";
+import dsn   from "./conf/db.conf.es6";
+
+export const createToken = (event, context, callback) => {
+
+	let token = Utils.generateToken();
+
+	let insertData = {
+		token: token,
+	};
+
+	let db = new Mysql(dsn);
+	db.query("INSERT INTO `clients` SET ?", insertData);
+	db.end();
+
+	const response = {
+		statusCode: 200,
+		headers: {
+			"Access-Control-Allow-Origin" : "*"
+		},
+		body: JSON.stringify({
+			status: 'ok',
+			token: token,
+		}),
+	}
+
+	callback(null, response)
+}
+</pre>
+++++
+
+MySQLクラスとUtility関連のクラスをインポートして +
+トークンを生成しそれをMySQLにインサートして、 +
+HTTPレスポンスを返すという流れです。
+
+Serverless Framework に app app/Libraries conf ディレクトリを作成しておきます。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ mkdir -p app/Libraries
+$ mkdir -p conf
+</pre>
+++++
+
+++++
+<pre style="font-family: Menlo, Courier">
+ls -a
+.                 .babelrc          .serverless       app               handler.js        package-lock.json webpack.config.js
+..                .gitignore        .webpack          conf              node_modules      serverless.yml
+</pre>
+++++
+
+この辺のディレクトリ命名規則などオレオレフレームワーク化しないように +
+きちんと設計は必要でしょう。
+
+$ vi app/Libraries/Mysql.es6
+++++
+<pre style="font-family: Menlo, Courier">
+class Mysql {
+
+	constructor(dsn) {
+		this.mysql = require("mysql");
+		this.dsn = dsn;
+
+		return this.connect();
+	}
+
+	connect() {
+		return this.mysql.createConnection(this.dsn);
+	}
+}
+
+export default Mysql;
+</pre>
+++++
+
+JavaやPHPなどに近い形でクラスの記述ができます。 +
+ES6の最大のメリットかと思います。
+
+$ vi conf/db.conf.es6
+++++
+<pre style="font-family: Menlo, Courier">
+export default {
+	host     : "****.****.us-east-1.rds.amazonaws.com",
+	user     : "****",
+	password : "****",
+	port     : "3306",
+	database : "****",
+}
+</pre>
+++++
+
+MySQLの設定です。
+
+iniファイルとかYAML形式とかで書けたりもするのでしょうか。 +
+この辺はさらに勉強が必要です。
+
+$ vi app/Libraries/Utils.es6
+++++
+<pre style="font-family: Menlo, Courier">
+class Utils {
+
+	constructor() {
+	}
+
+	static generateToken() {
+		let uuid = require("uuid/v4");
+		let token = uuid().split('-').join('');
+
+		return token;
+	}
+}
+
+export default Utils;
+</pre>
+++++
+
+token発行はUUID v4を使用してそこからハイフンを抜くという仕様にしました。
+
+# Serverless Frameworkでデプロイ
+
+さあデプロイです。
+
+デプロイは serverless というコマンドで行うのですが、 +
+今回は初めから設定されている、そのエイリアスの sls というコマンド名で行います。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ sls deploy -v
+Serverless: Bundling with Webpack...
+Time: 791ms
+     Asset    Size  Chunks                    Chunk Names
+handler.js  509 kB       0  [emitted]  [big]  main
+   [8] ./node_modules/mysql/lib/Connection.js 12.4 kB {0} [built]
+  [13] ./node_modules/mysql/lib/protocol/constants/types.js 1.8 kB {0} [built]
+  [14] ./node_modules/mysql/index.js 4.29 kB {0} [built]
+  [23] ./node_modules/mysql/lib/protocol/SqlString.js 39 bytes {0} [built]
+  [25] ./node_modules/mysql/lib/PoolConfig.js 1.06 kB {0} [built]
+  [27] ./handler.js 1.12 kB {0} [built]
+  [28] ./node_modules/babel-runtime/core-js/json/stringify.js 95 bytes {0} [built]
+  [29] ./node_modules/core-js/library/fn/json/stringify.js 242 bytes {0} [built]
+  [31] ./app/Libraries/Mysql.es6 235 bytes {0} [built]
+  [79] ./node_modules/mysql/lib/PoolCluster.js 6.47 kB {0} [built]
+  [81] ./app/Libraries/Utils.es6 206 bytes {0} [built]
+  [82] ./node_modules/uuid/v4.js 679 bytes {0} [built]
+  [83] ./node_modules/uuid/lib/rng.js 239 bytes {0} [built]
+  [84] ./node_modules/uuid/lib/bytesToUuid.js 699 bytes {0} [built]
+  [85] ./conf/db.conf.es6 186 bytes {0} [built]
+    + 71 hidden modules
+Serverless: Packaging service...
+Serverless: Uploading CloudFormation file to S3...
+Serverless: Uploading artifacts...
+Serverless: Uploading service .zip file to S3 (132.1 KB)...
+Serverless: Validating template...
+Serverless: Updating Stack...
+Serverless: Checking Stack update progress...
+CloudFormation - UPDATE_IN_PROGRESS - AWS::CloudFormation::Stack - account-pf-dev
+CloudFormation - UPDATE_IN_PROGRESS - AWS::Lambda::Function - CreateTokenLambdaFunction
+CloudFormation - UPDATE_COMPLETE - AWS::Lambda::Function - CreateTokenLambdaFunction
+CloudFormation - CREATE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment0000000000000
+CloudFormation - CREATE_IN_PROGRESS - AWS::ApiGateway::Deployment - ApiGatewayDeployment0000000000000
+CloudFormation - CREATE_COMPLETE - AWS::ApiGateway::Deployment - ApiGatewayDeployment0000000000000
+CloudFormation - UPDATE_COMPLETE_CLEANUP_IN_PROGRESS - AWS::CloudFormation::Stack - account-pf-dev
+CloudFormation - UPDATE_COMPLETE - AWS::CloudFormation::Stack - account-pf-dev
+Serverless: Stack update finished...
+Service Information
+service: account-pf
+stage: dev
+region: us-east-1
+api keys:
+  None
+endpoints:
+  POST - https://**********.execute-api.us-east-1.amazonaws.com/dev/auth
+functions:
+  createToken: account-pf-dev-createToken
+
+Stack Outputs
+CreateTokenLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:000000000000:function:account-pf-dev-createToken:2
+ServiceEndpoint: https://**********.execute-api.us-east-1.amazonaws.com/dev
+ServerlessDeploymentBucketName: account-pf-dev-serverlessdeploymentbucket-************
+
+Serverless: Removing old service versions...
+</pre>
+++++
+
+sls deploy -v と打つだけで、 +
+簡単にデプロイ出来てしまいました。。 +
+-v はデプロイの詳細を表示してくれるオプションです。
+
+デプロイ処理の流れとしては、 +
+BABEL が ES6スクリプトを JavaScript に変換して、 +
+webpack が mysql uuid などのブラグインも組み込んでビルドし、 +
+CloudFormation 形式に落とし込み、それをS3に保存して、 +
+CloudFormationで API Gateway Lambda にデプロイする。 +
+
+最後にサービス名や環境情報、APIエンドポイントの情報 を表示してくれます。
+
+もちろんシンタックスエラーなどがないか、ES6のバリデーションも行ってくれます。 +
+感動です。
+
+# 動作確認
+
+APIエンドポイントに対してcurlコマンドでPOSTリクエストを行いました。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ curl -X POST https://**********.execute-api.us-east-1.amazonaws.com/dev/auth
+{"status":"ok","token":"29a35ef42a2648cf96aad0d65fcf7656"}%
+</pre>
+++++
+
+tokenが発行され、DBに格納されました。
+
+++++
+<pre style="font-family: Menlo, Courier">
+mysql> select client_id, token, created_at from clients;
++-----------+----------------------------------+---------------------+
+| client_id | token                            | created_at          |
++-----------+----------------------------------+---------------------+
+|         1 | 29a35ef42a2648cf96aad0d65fcf7656 | 2017-07-08 15:04:39 |
++-----------+----------------------------------+---------------------+
+1 rows in set (0.31 sec)
+</pre>
+++++
+
+# ローカルでの開発環境確認
+
+最後に補足として開発環境に関しては、
+以下のコマンドでローカルにウェブサーバが立ち上がります。
+
+++++
+<pre style="font-family: Menlo, Courier">
+$ sls webpack serve
+Serverless: Serving functions...
+  POST - http://localhost:8000/auth
+</pre>
+++++
+
+あとはcurlコマンドなどで確認できます。
+
+++++
+<pre style="font-family: Menlo, Courier">
+curl -X POST http://localhost:8000/auth
+{"status":"ok","token":"5e8a005db09d4d49a7016fcbe2f9ecad"}%
+</pre>
+++++
+
+簡単ですね。
+
+ちなみに、このウェブサーバを立ち上げた状態で、ES6のソースコードを変更したら、 +
+即時反映されますので、ES6に対応済みということと思います。
+
+# 所感
+
+とても簡単にAPI GatewayやLambdaのコーディングやデプロイができました。 +
+AWSのコンソールからブラウザベースで設定できることも魅力なのですが、 +
+少し規模の大きいプロダクションサービスを構築する場合、 +
+Serverless Frameworkのようなフレームワークは必須と感じました。 
+
+また、サーバーレスでない設計の場合、例えばEC2がスケールアウトして台数が増えるなどした時、 +
+ソースコードの管理とか大変ですが、 +
+サーバーレスならそこら辺気にしなくて良くなります。
+
+また、重たいバッチ処理があるなら、AWS Batchを利用するなどして、 +
+全てをインフラがない状態にできれば、 +
+インフラのメンテナンスは基本しなくて済むようになります！
+
+ログ出力などに関しては今回は取り上げてませんが、 +
+取り敢えずS3に保存しておけば Athena や Elasticsearch、Redshift Spectrum があるので、 +
+何とかなりそうです。
+
+ローカルの開発環境とプロダクション環境の差異という問題はありますが、 +
+先述の通り、Serverless Framework側でstage名を指定してデプロイすることで、 +
+基本いくらでも環境は作って壊せますので、問題ないと思われます。
+
+また、Lambdaに標準で組み込まれていないモジュールをAWSコンソールから上げるのは +
+とても面倒に感じていましたが、 +
+フレームワークを利用することでその辺も何も気にしなくて済むというのはすごいです。
+
+最後に、 +
+今回は出てきませんでしたが、もちろんtoken認証周りはElastiCache Redisなどにキャッシュして、 +
+APIのレスポンスタイムを短くできなければ使い物になりません。 +
+次回その2ではRedisを組み込み、私も れでぃさ〜 に進化したいと思います。

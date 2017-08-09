@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>お試し Cloud Spanner - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="お試し Cloud Spanner">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="お試し Cloud Spanner">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/07/07/Cloud-Spanner.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="お試し Cloud Spanner" />
+    <meta property="og:description" content="KTNです。 先日、Google Cloud Next &#x27;17 in Tokyoに行ってきまして、 元々Google信者だったのですが、 イベントに参加してさらに信者が加速してしまいました。 （日本語おかしいですか？） もちろんスマホもAndroidを使ってます！ Googleすげーと思ったものいっぱいあるのですが、 以下2点ご紹介したいと思います。 1. Jamboard 　GIGAZINEさんでも取り上げられていました。 　http://gigazine.net/news/20170524-jamboard-launching/ 　一言で表すと デ..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/07/07/Cloud-Spanner.html" />
+    <meta property="article:published_time" content="2017-07-06T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-07-13T02:51:29.097Z" />
+    <meta property="article:tag" content="Google" />
+    <meta property="article:tag" content="Google Cloud Platform" />
+    <meta property="article:tag" content="Cloud Spanner" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="お試し Cloud Spanner" />
+    <meta name="twitter:description" content="KTNです。 先日、Google Cloud Next &#x27;17 in Tokyoに行ってきまして、 元々Google信者だったのですが、 イベントに参加してさらに信者が加速してしまいました。 （日本語おかしいですか？） もちろんスマホもAndroidを使ってます！ Googleすげーと思ったものいっぱいあるのですが、 以下2点ご紹介したいと思います。 1. Jamboard 　GIGAZINEさんでも取り上げられていました。 　http://gigazine.net/news/20170524-jamboard-launching/ 　一言で表すと デ..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/07/07/Cloud-Spanner.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars3.githubusercontent.com/u/24905783?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "お試し Cloud Spanner",
+    "url": "http://tech.innovation.co.jp/2017/07/07/Cloud-Spanner.html",
+    "datePublished": "2017-07-06T15:00:00.000Z",
+    "dateModified": "2017-07-13T02:51:29.097Z",
+    "keywords": "Google,  Google Cloud Platform, Cloud Spanner",
+    "description": "KTNです。 先日、Google Cloud Next &#x27;17 in Tokyoに行ってきまして、 元々Google信者だったのですが、 イベントに参加してさらに信者が加速してしまいました。 （日本語おかしいですか？） もちろんスマホもAndroidを使ってます！ Googleすげーと思ったものいっぱいあるのですが、 以下2点ご紹介したいと思います。 1. Jamboard 　GIGAZINEさんでも取り上げられていました。 　http://gigazine.net/news/20170524-jamboard-launching/ 　一言で表すと デ..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Google tag-Google-Cloud-Platform tag-Cloud-Spanner no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="07 Jul 2017" class="post-meta__date date">07 Jul 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Google">Google</a>, <a href="http://tech.innovation.co.jp/tag/Google-Cloud-Platform"> Google Cloud Platform</a>, <a href="http://tech.innovation.co.jp/tag/Cloud-Spanner">Cloud Spanner</a></span>
+        <span class="post-meta__author author"><img src="https://avatars3.githubusercontent.com/u/24905783?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">お試し Cloud Spanner</h1>
+    </header>
+
+    <section class="post tag-Google tag-Google-Cloud-Platform tag-Cloud-Spanner">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>KTNです。<br>
+先日、Google Cloud Next '17 in Tokyoに行ってきまして、<br>
+元々Google信者だったのですが、<br>
+イベントに参加してさらに信者が加速してしまいました。<br>
+（日本語おかしいですか？）<br>
+もちろんスマホもAndroidを使ってます！<br>
+<br>
+Googleすげーと思ったものいっぱいあるのですが、<br>
+以下2点ご紹介したいと思います。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_jamboard">1. Jamboard</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>　GIGAZINEさんでも取り上げられていました。<br>
+　<a href="http://gigazine.net/news/20170524-jamboard-launching/" class="bare">http://gigazine.net/news/20170524-jamboard-launching/</a><br>
+<br>
+　一言で表すと デジタルなホワイトボード なのですが、<br>
+　これの機能がすごいんです。<br>
+<br>
+　１．手書きの文字を読み取ってデジタル可<br>
+　２．インターネットの検索結果を画像として取り込んで自由に追記が可能<br>
+　３．PC、タブレット、スマートフォンから接続して閲覧・変更可能<br>
+　　　変更はリアルタイムに全員に反映されます<br>
+　４．保存も簡単。自動的にGoogle Driveに保存されます<br>
+　　　途中まで書いた状態からいつでも再開できちゃいます<br>
+<br>
+　弊社で同じような製品の Microsoft Surface Hub を使っています。<br>
+　ホワイトボードに書くという意味では問題なく使えるのですが、<br>
+　上記１〜４にあることは出来なく、<br>
+　今後のアップデートで同じような機能が追加されないかと期待しています。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_cloud_spanner">2. Cloud Spanner</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>　一言で表すと、水平スケール可能なリレーショナル・データベース です。<br>
+　聞いた瞬間意味分からない、というかそんなの作れるわけ無いじゃん<br>
+　って思ったのですが、どうもGoogle様が本気を出すと出来るようでして、<br>
+　ベータ版のサービス提供されています。<br>
+<br>
+　デモも見せてもらったのですが、<br>
+　データベースの負荷が上がってきた想定でCloud Spannerのインスタンスを<br>
+　増やすというもので、GUI上で10から30に増やすというのをぽちぽちっとやっていて、<br>
+　全く停止することなくインスタンス数を変更していました。<br>
+　これってすごいことですよね、<br>
+　トランザクションを使うことが出来て、最大で99.999%の可用性、<br>
+　あと、今はまだサービス提供されていないのですが、<br>
+　今後はリージョンをまたいでインスタンスを作成できるようになるようです。<br>
+<br>
+　まさに無敵のCloud Spannerですが、<br>
+　実際使ってみると色々制約もあるのでは？と思いまして、<br>
+　今回ベータ版のお試しをしてみました！</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cloud_spanner">Cloud Spannerを使う準備</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>早速、Google Cloud PlatformのConsoleにログインしてみます<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/1.png" alt="1.png">
+</div>
+</div>
+<div class="paragraph">
+<p>メニューを見ると Spanner があるので選択。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/2.png" alt="2.png">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/3.png" alt="3.png">
+</div>
+</div>
+<div class="paragraph">
+<p>　インスタンスを作成しろと言われるので作ります。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/4.png" alt="4.png">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/5.png" alt="5.png">
+</div>
+</div>
+<div class="paragraph">
+<p>ドキュメントのリンクがあったのでとりあえず読んでみました。<br>
+特に気になったところを抜粋しました。（★つけてます）<br>
+<br>
+★マルチリージョン レプリケーション（複数の地域間でのレプリケーションなど）は、今後のリリースで提供する予定です。<br>
+→やっぱり、リージョン間でのレプリケーション実装するんですね。さすがGoogle。<br>
+<br>
+★Cloud Spanner は 3 つのレプリカを維持します。それぞれのレプリカは、リージョン内の異なる Google Cloud + Platform 可用性ゾーンに維持されます。　<br>
+→3つの可用性ゾーンにレプリカがあればそうそう止まることはなさそうですね。<br>
+（可用性ゾーンはAWSでいうAZだと思ってます）<br>
+<br>
+★2 TiB のストレージを提供できます。<br>
+→なかなかのデータ量ですね<br>
+<br>
+★本番環境では、3 つ以上のノードを使用してください。<br>
+→なにっ！その理由を書いてほしい！<br>
+　1インスタンス × 1時間 稼働させると100円ぐらいなので、<br>
+　3インスタンス × 24時間 × 30日 稼働させると 216,000円ぐらいですね。<br>
+　長時間使うことによる割引はあると思うのですが、スモールスタートでこれはちょっと高いかも、<br>
+　まあ、他に水平スケール出来るサービス無いということを考えると、逆に全然高くないかもですね。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_cloud_spanner_br">Cloud Spannerを使う準備（続き）<br></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>データベースを作成していきます。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/6.png" alt="6.png">
+</div>
+</div>
+<div class="paragraph">
+<p>続いてテーブル作ります。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/7.png" alt="7.png">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/8.png" alt="8.png">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/9.png" alt="9.png">
+</div>
+</div>
+<div class="paragraph">
+<p>バックグラウンドでテーブル作成処理が動いているようです。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/10.png" alt="10.png">
+</div>
+</div>
+<div class="paragraph">
+<p>20秒ぐらいでテーブル作成が終わりました。DDL確認してみます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/11.png" alt="11.png">
+</div>
+</div>
+<div class="paragraph">
+<p>DDLは普通ですね。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/12.png" alt="12.png">
+</div>
+</div>
+<div class="paragraph">
+<p>インデックスも作ってみます。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/13.png" alt="13.png">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/14.png" alt="14.png">
+</div>
+</div>
+<div class="paragraph">
+<p>これが結構長くて2分ぐらいかかりました。</p>
+</div>
+<div class="paragraph">
+<p>特に面白くなかったですが、<br>
+Webからポチポチやって簡単にテーブルまで作成できました。<br>
+今回は疲れたので一旦ここまでにして、<br>
+プログラム作ってCloud Spanner使ってみるのは次回にしようかと思います。<br></p>
+</div>
+<div class="paragraph">
+<p>実際使ってみるのは次回だとして、<br>
+Cloud Spannerを使う上で絶対欲しい！という機能となる、<br>
+・リソースのモニタリング<br>
+・バックアップ<br>
+について軽く見てみました。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/kotani/20170710/15.png" alt="15.png">
+</div>
+</div>
+<div class="paragraph">
+<p>リソースはこんな感じに見れるようでした。<br>
+次回、実際に負荷をかけてどんな感じになるのか見てみようと思います。<br>
+<br>
+あとバックアップですが、<br>
+ベータ版だからなのかどうやら無いようです。<br>
+Amazon RDSみたいにスナップショット取れないと不便ですよね。。。<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">最後になりますが</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>GoogleさんのBlog<br>
+<a href="https://cloudplatform-jp.googleblog.com/2017/02/inside-Cloud-Spanner-and-the-CAP-Theorem.html" class="bare">https://cloudplatform-jp.googleblog.com/2017/02/inside-Cloud-Spanner-and-the-CAP-Theorem.html</a>
+に気になる記載がありました。<br>
+<br>
+以下抜粋です。<br>
+-----抜粋 ここから-----<br>
+はたして Spanner は CAP で定義されているような CA システムなのだろうかと。端的に答えると、技術的には違いますが、実際のところ CA システムだと考えて構いません。
+違うというのは、ネットワークの分断が発生したときで、実際に Google で起こりました。分断が起きると Spanner は C を選択し、A を犠牲にします。つまり技術的に見ると、Spanner は CP システムなのです。<br>
+-----抜粋 ここまで-----<br>
+<br>
+CAと考えて構わないけど、実際はCPです。って、、、<br>
+ん？構わなくないだろうが？？？、<br>
+と言いたくなるような、意味不明（そう感じるのは私だけ？）なことが書いてありました。<br>
+誰か頭がいい人教えて！！助けて！！<br>
+ご連絡はこちらにいただけますと幸いでございます。<br>
+　メールアドレス：<a href="mailto:y_kotani@innovation.co.jp">y_kotani@innovation.co.jp</a><br>
+　Twitter：@y_kotani_inno<br>
+<br>
+ちなみに、CAとかCPって何？については、<br>
+CAP定理：「データベースは、3つの望まれる特性（C:一貫性・A:可用性・P:分断耐性）のうち2つまでしか持てない」<br>
+というものがあるようでして、<br>
+これのいずれを取るのか？というところで、CAとかCPと呼ぶようです。<br>
+詳細はこちらを参照ください。<br>
+<a href="https://ja.wikipedia.org/wiki/CAP%E5%AE%9A%E7%90%86" class="bare">https://ja.wikipedia.org/wiki/CAP%E5%AE%9A%E7%90%86</a><br>
+<br>
+ここらへんで終わりにしたいと思います。では〜。<br></p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜 - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/07/23/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste-ver2.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜" />
+    <meta property="og:description" content="こんにちは。 もうすっかり夏ですね。オザサです。 今回はタイトルの通り、 以前も利用した neural-styleを使ってみたいと思います。 というのも、 前回のブログから1年(!)経ちまして、 Amazon Web ServicesのEC2インスタンスに対してEC2 Elastic GPUというサービスが発表され、 前回CPUモードで実行した時よりもサクサクと画像作成ができるのでは？と考えたからです。 が、結論から言うとEC2 Elastic GPUはまだ利用はできませんでした！！ 環境構築 今回もAmazon Web Services(以下AWS)..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/07/23/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste-ver2.html" />
+    <meta property="article:published_time" content="2017-07-22T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-07-24T04:03:35.882Z" />
+    <meta property="article:tag" content="Oz" />
+    <meta property="article:tag" content="neural-style" />
+    <meta property="article:tag" content="Art" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜" />
+    <meta name="twitter:description" content="こんにちは。 もうすっかり夏ですね。オザサです。 今回はタイトルの通り、 以前も利用した neural-styleを使ってみたいと思います。 というのも、 前回のブログから1年(!)経ちまして、 Amazon Web ServicesのEC2インスタンスに対してEC2 Elastic GPUというサービスが発表され、 前回CPUモードで実行した時よりもサクサクと画像作成ができるのでは？と考えたからです。 が、結論から言うとEC2 Elastic GPUはまだ利用はできませんでした！！ 環境構築 今回もAmazon Web Services(以下AWS)..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/07/23/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste-ver2.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": "yuki ozasa",
+        "image": "https://avatars3.githubusercontent.com/u/8304640?v=4",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜",
+    "url": "http://tech.innovation.co.jp/2017/07/23/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste-ver2.html",
+    "datePublished": "2017-07-22T15:00:00.000Z",
+    "dateModified": "2017-07-24T04:03:35.882Z",
+    "keywords": "Oz, neural-style, Art",
+    "description": "こんにちは。 もうすっかり夏ですね。オザサです。 今回はタイトルの通り、 以前も利用した neural-styleを使ってみたいと思います。 というのも、 前回のブログから1年(!)経ちまして、 Amazon Web ServicesのEC2インスタンスに対してEC2 Elastic GPUというサービスが発表され、 前回CPUモードで実行した時よりもサクサクと画像作成ができるのでは？と考えたからです。 が、結論から言うとEC2 Elastic GPUはまだ利用はできませんでした！！ 環境構築 今回もAmazon Web Services(以下AWS)..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Oz tag-neural-style tag-Art no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="23 Jul 2017" class="post-meta__date date">23 Jul 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Oz">Oz</a>, <a href="http://tech.innovation.co.jp/tag/neural-style">neural-style</a>, <a href="http://tech.innovation.co.jp/tag/Art">Art</a></span>
+        <span class="post-meta__author author"><img src="https://avatars3.githubusercontent.com/u/8304640?v=4" alt="profile image for yuki ozasa" class="avatar post-meta__avatar" /> by yuki ozasa</span>
+      </div>
+      <h1 class="post-title">neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜</h1>
+    </header>
+
+    <section class="post tag-Oz tag-neural-style tag-Art">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>こんにちは。<br>
+もうすっかり夏ですね。オザサです。</p>
+</div>
+<div class="paragraph">
+<p>今回はタイトルの通り、<br>
+以前も利用した <a href="https://github.com/jcjohnson/neural-style">neural-style</a>を使ってみたいと思います。</p>
+</div>
+<div class="paragraph">
+<p>というのも、<br>
+<a href="http://tech.innovation.co.jp/2016/06/30/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste.html">前回のブログ</a>から1年(!)経ちまして、<br>
+Amazon Web ServicesのEC2インスタンスに対してEC2 Elastic GPUというサービスが発表され、<br>
+前回CPUモードで実行した時よりもサクサクと画像作成ができるのでは？と考えたからです。</p>
+</div>
+<div class="paragraph">
+<p>が、結論から言うとEC2 Elastic GPUはまだ利用はできませんでした！！</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">環境構築</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回もAmazon Web Services(以下AWS)を使います。</p>
+</div>
+<div class="paragraph">
+<p>手順</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>サーバの立ち上げ</p>
+</li>
+<li>
+<p>インストール諸々</p>
+</li>
+<li>
+<p>neural-styleの実行</p>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="_1">1.サーバの立ち上げ</h4>
+<div class="paragraph">
+<p>EC2 Elastic GPUがまだだったため、<br>
+今回はg2.2xlargeを使ってみました。</p>
+</div>
+<div class="paragraph">
+<p>また、g3系のインスタンスが使えるのかと思っていたのですが、<br>
+まだ東京リージョンにきていないようでした。(2017年7月現在)</p>
+</div>
+<div class="paragraph">
+<p>Amazonマシンイメージ(AMI)は「Deep Learning AMI Amazon Linux Version 2.3_Jun2017」を選択しました。<br>
+このAMIはMXNet、Tensorflow、Caffe、Theano、Torch、CNTK、Kerasがインストールされているため、<br>
+この後のインストール作業をかなり省略することができました。</p>
+</div>
+<div class="paragraph">
+<p>こういったAMIの存在やGPUインスタンス・サービスが増えてきているあたり、<br>
+機械学習やGPUコンピューティングの需要が高まっていることを感じますね。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_2">2.インストール諸々</h4>
+<div class="paragraph">
+<p>neural-styleのGithubにやり方は書いてありますが、<br>
+上記で触れたとおりすでにTorchはインストールされているため、<br>
+loadcaffeとneural-styleをインストールすれば、それだけでneural-styleを実行ができるようになります。</p>
+</div>
+<div class="paragraph">
+<p>また、CUDA(Compute Unified Device Architecture)もインストールされているため、<br>
+なんと諸々の設定を抜きにいきなりGPUモードで実行できるのです。</p>
+</div>
+<div class="paragraph">
+<p>ここまで作業を省略できるとは思っておらず、びっくりました。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_3_neural_style">3.neural-styleの実行</h4>
+<div class="paragraph">
+<p>GPUを利用することによって前回より実行速度をあげることができましたので、
+イテレーションの回数もあげてみたりしながら実験してみたいと思います。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-rust" data-lang="rust">th neural_style.lua -style_image ../&lt;stle_image&gt; -content_image ../&lt;content_image&gt; -output_image &lt;outoput_image.png&gt; -gpu 0 -num_iterations 1000 -image_size 512</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>念願のgpuオプションを0にしてGPUモードで実行します。<br>
+また、num_iterationsを指定することでイテレーション数を指定可能です。</p>
+</div>
+<div class="paragraph">
+<p>ちなみに思い切って10000回イテレーションをしてみたところ、2時間程度で完了しました。<br>
+前回c3.8xlargeを使ってイテレーション数1000回でも1時間以上かかっていたことを考えると早いように思います。</p>
+</div>
+<div class="paragraph">
+<p>ただ、イテレーションの回数をあげれば結果がその分変わるというものでもないようです。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">制作物</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>■元画像</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/art02.jpg" alt="art02.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>■スタイル画像</p>
+</div>
+<div class="paragraph">
+<p><a href="https://www.jackson-pollock.org/convergence.jsp" class="bare">https://www.jackson-pollock.org/convergence.jsp</a></p>
+</div>
+<div class="paragraph">
+<p>ジャクソンポロックのConvergenceを選んでみました。</p>
+</div>
+<div class="sect2">
+<h3 id="___3">イテレーション過程</h3>
+<div class="paragraph">
+<p>100回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/art02_out_100.png" alt="art02 out 100.png">
+</div>
+</div>
+<div class="paragraph">
+<p>500回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/art02_out_500.png" alt="art02 out 500.png">
+</div>
+</div>
+<div class="paragraph">
+<p>1000回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/art02_out_1000.png" alt="art02 out 1000.png">
+</div>
+</div>
+<div class="paragraph">
+<p>10000回</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/art02_out.png" alt="art02 out.png">
+</div>
+</div>
+<div class="paragraph">
+<p>gif版(1000回づつ表示)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/art02_out.gif" alt="art02 out.gif">
+</div>
+</div>
+<div class="paragraph">
+<p>上記のように1000回あたりから特に変わっているようには見えません。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___4">その他制作物</h3>
+<div class="paragraph">
+<p>■元画像</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/art03.jpg" alt="art03.jpg">
+</div>
+</div>
+<hr>
+<div class="paragraph">
+<p>■結果画像</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/art03_out.png" alt="art03 out.png">
+</div>
+</div>
+<hr>
+<div class="paragraph">
+<p>■元画像</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/art04.jpg" alt="art04.jpg">
+</div>
+</div>
+<hr>
+<div class="paragraph">
+<p>■結果画像</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="http://tech.innovation.co.jp/images/ozasa/art04_out.png" alt="art04 out.png">
+</div>
+</div>
+<hr>
+<div class="paragraph">
+<p>スタイル画像はなんでしょうか？<br>
+なんて、クイズにしてみるのも面白いかもしれませんね。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___5">今後</h3>
+<div class="paragraph">
+<p>GPUを用いることで実行速度はかなり改善されましたが、
+インスタンスを立ち上げている時間に対して当然コストがかかってしまいます。</p>
+</div>
+<div class="paragraph">
+<p>必要な時だけ利用し従量課金されるというのが、AWSを利用する上でのメリットにもなると思うので、
+何かしら管理画面上から画像をアップロードしたら、
+それをトリガーにGPUインスタンスが立ち上がり、
+処理が実行され、完了したら落ちてくれる、そのようなサービス及びアーキテクチャが組めないか考えてみたいと思います。
+(S3、SQSなどの勉強も兼ねて)</p>
+</div>
+<div class="paragraph">
+<p>次は1年も空けないようにしたいと思います。</p>
+</div>
+<div class="paragraph">
+<p>こちらからは以上です！</p>
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>LINE + Function App で AI とお話してみた - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="LINE + Function App で AI とお話してみた">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="LINE + Function App で AI とお話してみた">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/07/04/Azure-5.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="LINE + Function App で AI とお話してみた" />
+    <meta property="og:description" content="お久しぶりです、SREの人 syoga です。今年も後5ヶ月ですが、ログ出して行きましょう。 皆様すでにご存知かもしれませんが「電子レンジで魚が焼ける皿」を買いました。これが凄く便利で、皿に魚（生 or 干物）を載せてレンジでチンするだけで、焼き魚が簡単に作れます！ 個人的に感動したので、こちらで共有させていただきました！ まるで魔法のようですね…魔法と言えば我々エンジニアは、魔法のようなクラウドサービスを利用する事が多いかと思います、そう！AWSです。 もしもAWSが使えなかったら… 【ここから超展開】 『つまり！何が起こるか分からない現在（イマ）だ..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/07/04/Azure-5.html" />
+    <meta property="article:published_time" content="2017-07-03T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-07-08T12:49:31.340Z" />
+    <meta property="article:tag" content="syoga" />
+    <meta property="article:tag" content="log" />
+    <meta property="article:tag" content="Azure" />
+    <meta property="article:tag" content="Function App" />
+    <meta property="article:tag" content="Node.js" />
+    <meta property="article:tag" content="LINE" />
+    <meta property="article:tag" content="Repl-AI" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="LINE + Function App で AI とお話してみた" />
+    <meta name="twitter:description" content="お久しぶりです、SREの人 syoga です。今年も後5ヶ月ですが、ログ出して行きましょう。 皆様すでにご存知かもしれませんが「電子レンジで魚が焼ける皿」を買いました。これが凄く便利で、皿に魚（生 or 干物）を載せてレンジでチンするだけで、焼き魚が簡単に作れます！ 個人的に感動したので、こちらで共有させていただきました！ まるで魔法のようですね…魔法と言えば我々エンジニアは、魔法のようなクラウドサービスを利用する事が多いかと思います、そう！AWSです。 もしもAWSが使えなかったら… 【ここから超展開】 『つまり！何が起こるか分からない現在（イマ）だ..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/07/04/Azure-5.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars0.githubusercontent.com/u/20530620?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "LINE + Function App で AI とお話してみた",
+    "url": "http://tech.innovation.co.jp/2017/07/04/Azure-5.html",
+    "datePublished": "2017-07-03T15:00:00.000Z",
+    "dateModified": "2017-07-08T12:49:31.340Z",
+    "keywords": "syoga,  log,  Azure,  Function App,  Node.js,  LINE,  Repl-AI",
+    "description": "お久しぶりです、SREの人 syoga です。今年も後5ヶ月ですが、ログ出して行きましょう。 皆様すでにご存知かもしれませんが「電子レンジで魚が焼ける皿」を買いました。これが凄く便利で、皿に魚（生 or 干物）を載せてレンジでチンするだけで、焼き魚が簡単に作れます！ 個人的に感動したので、こちらで共有させていただきました！ まるで魔法のようですね…魔法と言えば我々エンジニアは、魔法のようなクラウドサービスを利用する事が多いかと思います、そう！AWSです。 もしもAWSが使えなかったら… 【ここから超展開】 『つまり！何が起こるか分からない現在（イマ）だ..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-syoga tag-log tag-Azure tag-Function-App tag-Nodejs tag-L-I-N-E tag-Repl-A-I no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="04 Jul 2017" class="post-meta__date date">04 Jul 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/syoga">syoga</a>, <a href="http://tech.innovation.co.jp/tag/log"> log</a>, <a href="http://tech.innovation.co.jp/tag/Azure"> Azure</a>, <a href="http://tech.innovation.co.jp/tag/Function-App"> Function App</a>, <a href="http://tech.innovation.co.jp/tag/Nodejs"> Node.js</a>, <a href="http://tech.innovation.co.jp/tag/L-I-N-E"> LINE</a>, <a href="http://tech.innovation.co.jp/tag/Repl-A-I"> Repl-AI</a></span>
+        <span class="post-meta__author author"><img src="https://avatars0.githubusercontent.com/u/20530620?v=3" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">LINE + Function App で AI とお話してみた</h1>
+    </header>
+
+    <section class="post tag-syoga tag-log tag-Azure tag-Function-App tag-Nodejs tag-L-I-N-E tag-Repl-A-I">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>お久しぶりです、SREの人 syoga です。今年も後5ヶ月ですが、ログ出して行きましょう。</p>
+</div>
+<div class="paragraph">
+<p>皆様すでにご存知かもしれませんが「電子レンジで魚が焼ける皿」を買いました。これが凄く便利で、皿に魚（生 or 干物）を載せてレンジでチンするだけで、焼き魚が簡単に作れます！</p>
+</div>
+<div class="paragraph">
+<p>個人的に感動したので、こちらで共有させていただきました！</p>
+</div>
+<div class="paragraph">
+<p>まるで魔法のようですね…魔法と言えば我々エンジニアは、魔法のようなクラウドサービスを利用する事が多いかと思います、そう！<strong>AWS</strong>です。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__aws">もしもAWSが使えなかったら…</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>【ここから超展開】<br></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>『つまり！何が起こるか分からない現在（イマ）だからこそ、
+地球外生命体が攻めてきて全世界のAWSデータセンターを、
+破壊する可能性だってあるんだ！！』
+
+ΩΩΩ &lt; な、なんだってー!?</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>【ここまで 】<br></p>
+</div>
+<div class="paragraph">
+<p>色々なクラウドサービスを利用できた方が良いかなと思い、以前の
+<a href="http://tech.innovation.co.jp/2017/04/14/Azure-3.html">記事</a>で作成した「画像解析Bot」くんを、Azureに移行するための理由を無理矢理作りました。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_aws_azure">AWS &lt; = &gt; Azure</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>AWS では <strong>Lambda + API Gateway</strong>と<strong>S3</strong>を利用していましたが、Azure では同等の機能として <strong>Function App</strong> と <strong>Storage</strong> があります。</p>
+</div>
+<div class="paragraph">
+<p>Function App でも Node.js が利用できますので、コードを改良しつつ載せ替えてみます。</p>
+</div>
+<div class="paragraph">
+<p>■ 改良したい点<br>
+・お話できるようにする<br>
+・検索ワード指定でぐるなび検索<br>
+・コールバック地獄から脱出<br></p>
+</div>
+<div class="paragraph">
+<p>それでは早速…</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">準備します</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_1_function_app">1.Function App の作成</h3>
+<div class="paragraph">
+<p>必要な物は Microsoft アカウントとクレジットカードと、後は勇気だけ。<br></p>
+</div>
+<div class="paragraph">
+<p>詳細な手順については以下の Microsoft Docs を参照下さい。<br>
+<a href="https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-create-serverless-api">Azure Functions を使用したサーバーレス API の作成</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_storage">2.Storage の作成</h3>
+<div class="paragraph">
+<p>必要な物は（略）。<br></p>
+</div>
+<div class="paragraph">
+<p>詳細な手順については以下の Microsoft Docs を参照下さい。<br>
+<a href="https://docs.microsoft.com/ja-jp/azure/storage/storage-create-storage-account">Azure ストレージ アカウントについて</a></p>
+</div>
+<div class="paragraph">
+<p>プランで変わってきますが、1GB ¥1.53〜¥5.10で利用できます（最初の50TB/月）。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_redis_cache">3.Redis Cache の作成</h3>
+<div class="paragraph">
+<p>ぐるなびでのキーワード指定検索や、下記の Repl-AI で利用するユーザ ID を保存するために、Redis でデータを格納したいと思います。</p>
+</div>
+<div class="paragraph">
+<p>詳細な手順については以下の Microsoft Docs を参照下さい。<br>
+<a href="https://docs.microsoft.com/ja-jp/azure/redis-cache/cache-dotnet-how-to-use-azure-redis-cache">Azure Redis Cache の使用方法</a></p>
+</div>
+<div class="paragraph">
+<p>れでぃさ〜。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_4_repl_ai">4.会話用に利用するRepl-AIのユーザ登録</h3>
+<div class="paragraph">
+<p>Repl-AI という対話式チャットボットの API を利用し、お話できるようにしますので、docomo Developer support アカウントを作成し、プロジェクトを作成しておきます。</p>
+</div>
+<div class="paragraph">
+<p>会話シナリオを GUI を利用しノンプログラミングで作成できます、今回はデフォルトのシナリオを利用し会話できるようにします。</p>
+</div>
+<div class="paragraph">
+<p>詳細については以下ページを参照下さい。<br>
+<a href="https://repl-ai.jp/#docs/guides/quickstart">Repl-AI ご利用までの流れ</a></p>
+</div>
+<div class="paragraph">
+<p>以上で準備完了です、今回もエラーハンドリングはしません。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___2">検索ワード指定でぐるなび検索</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>苦肉の策で「◯◯が食べたい。」というメッセージの場合は、◯◯（料理名の部分）を LINE ユーザ ID をキーに、Redis Cache に保存し位置情報をせびるようにします。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>switch(type) {
+    // テキストメッセージ受信処理
+    case('text'):
+        // テキストメッセージ取得
+        let text = lineMess.message.text;
+
+        // メッセージが「◯◯が食べたい。」の場合
+        if(text.match(/が食べたい。/)) {
+            // メッセージから料理名を取得
+            let food = text.slice(0, text.indexOf('が食'));
+            if(food) {
+                client.set('guru' + userId, food);
+                pushTexeMessage('位置情報を送ってくれないかな？', userId, context, function(result) {});
+            } else {
+                // 料理名が取得できなかった場合
+                pushTexeMessage('それは食べ物ではないんじゃないかな？', userId, context, function(result) {});
+            }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>「◯◯が食べたい。」 以外の場合は、Repl-AI とお話しますが、後ほどそちらに触れます。</p>
+</div>
+<div class="paragraph">
+<p>位置情報を受信した際に、Redis Cache に登録された料理名を取得し、次回の食べたいメッセージに備えて料理名を削除した後、ぐるなびの API に取得した料理名を投げ、検索結果を返信します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>// 位置情報受信処理
+case('location'):
+    async.waterfall([
+        // 「◯◯が食べたい。」のメッセージを送っているか
+        function(callback) {
+            client.get('guru' + userId, function(err, result) {
+                callback(null, result);
+            });
+        },
+        function(food, callback) {
+            // 料理が存在しない場合はパンケーキを設定
+            if(!food) {
+                food = 'パンケーキ';
+            }
+            // 料理名で店舗を検索
+            getGuruRest(latitude, longitude, food, context, function(result) {
+                callback(null, result, food);
+            });
+        },
+        function(restList, food, callback) {
+            // 店舗検索結果に応じてメッセージを送信
+            if(typeof restList.rest != 'undefined' || restList.rest.length &gt; 0) {
+                pushTexeMessage('近くに' + food + 'が食べられるお店があるかな。', userId, context, function(result) {
+                    callback(null, restList);
+                });
+            } else {
+                pushTexeMessage('近くに' + food + 'が食べられるお店はないかな。', userId, context, function(result) {});
+            }
+        },
+        function(restList) {
+            let rest;
+            let sendRest;
+
+            // 料理名を削除
+            client.del('guru' + userId);
+
+            // 店名、住所、URLを LINE にプッシュ
+            restList.rest.forEach(function(rest) {
+                sendRest =  '[店名] : ' + rest.name + '\n';
+                sendRest += '[住所] : ' + rest.address + '\n';
+                sendRest += '[URL] : '  + rest.url;
+                pushTexeMessage(sendRest, userId, context, function() {});
+            });
+        }
+    ]);
+break;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>食べたいメッセージがない状態で、位置情報が送られた場合は、強制的に検索ワードはパンケーキとなります。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___3">お話できるようにする</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Repl-AI 用のユーザIDを払い出し、そのIDを利用する事でユニークにお話できるという仕組みになっています、なのでキーとして LINE ユーザ ID を利用し Repl-AI のユーザ ID を管理します。</p>
+</div>
+<div class="paragraph">
+<p>その後、払い出されたユーザIDとメッセージを API に投げる事で、お返事メッセージがレスポンスされますので、お返事メッセージを LINE に プッシュします。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>async.waterfall([
+	// Repl-AI のユーザID登録確認
+	function(callback) {
+	    client.get(userId, function(err, result) {
+	        callback(null, result);
+	    });
+	},
+	// 未登録なら Repl-AI ユーザID登録
+	function(replUserId, callback) {
+	    let initFlag = false;
+	    if(!replUserId) {
+	        getReplAiUserid(replUserId, context, function(result) {
+	            let initFlag = true;
+	            client.set(userId, result);
+	            callback(null, result, initFlag);
+	        });
+	    } else {
+        　　　　// 登録済ならお話
+	        callback(null, replUserId, initFlag);
+	    }
+	},
+	// Repl-AI とお話
+	function(replUserId, initFlag, callback) {
+	    getReplAiMessage(replUserId, text, initFlag, context, function(result) {
+	        callback(null, result);
+	    });
+	},
+	function(respMess) {
+    	// お返事をLINEにプッシュ
+        pushTexeMessage(respMess, userId, context, function(result) {});
+	}
+]);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>コールバック地獄でも、メンテナンスに困らなければ良いのでは？と思ったのは内緒ですが、async モジュールを利用した事により、ネストが一定より深くならなくなりました！やったね。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___4">使ってみた</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>・ぐるなび検索を利用してみます。
+<span class="image"><img src="/images/syoga/aml5/azure5-1.png" alt="azure5-1.png"></span></p>
+</div>
+<div class="paragraph">
+<p>・位置情報を送信し、検索結果が返ってきました
+<span class="image"><img src="/images/syoga/aml5/azure5-2.png" alt="azure5-2.png"></span></p>
+</div>
+<div class="paragraph">
+<p>・お話もしてみましょう<br>
+<span class="image"><img src="/images/syoga/aml5/azure.gif" alt="azure.gif"></span><br>
+ドヤってますね。</p>
+</div>
+<div class="paragraph">
+<p>・画像解析も念のため、弊社限定フリー素材 KTN さんにお願いしました<br>
+<span class="image"><img src="/images/syoga/aml5/azure5-3.png" alt="azure5-3.png"></span>
+お！いい感じの年齢判定ですね、翻訳機能はやはりアレですが。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="___5">感想</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Function App ですが個人的には UI が Lambda よりスマートな感じがしました、Node.js のモジュールインストールは、Function を作成したサーバに対しコンソールで直接操作出来るため、 npm install で普通に出来ます、サーバレスとは…。</p>
+</div>
+<div class="paragraph">
+<p>webhook + API用の関数作成を実施すれば、API GateWay のような設定は必要なく、Function App の管理画面から利用 URL を取得できます、async を利用し作り直した部分以外（関数等）は、コピペでいけるかと思いきや、console.log が利用できずエラーとなる罠がありました、context.log じゃないとダメ！</p>
+</div>
+<div class="paragraph">
+<p>Repl-AI の会話シナリオはデフォルトのシナリオを利用しましたが、今後は手を加えて行きたいなと思います、音声解析で会話させるのも良さそうです、Node.js で作成しましたが非同期処理に振り回された感じです、C# でやれば良かったな。</p>
+</div>
+<div class="paragraph">
+<p>統括すると、サーバレスとか、クラウドサービスとか、使用言語にとらわれずに、なんでもやってみると楽しいもんだな〜と改めて思いました。あれ？作文？？</p>
+</div>
+<div class="paragraph">
+<p><strong>完</strong></p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
