@@ -1,0 +1,96 @@
+= お試し Cloud Spanner その２
+:published_at: 2017-08-14
+:hp-tags: Google, Google Cloud Platform,Cloud Spanner
+
+KTNです +
+突然ですが、みなさま「The International 2017」を楽しんだでしょうか。 +
+ほぼみんなご存知だと思いますが、ご存知じゃない人に紹介させていただくと +
+私が大好きなDOTA2の、賞金総額26億円になる大会です。 +
+http://www.dota2.com/international/announcement/ +
+
+大会はアメリカのシアトルで行われたのですが、 +
+Finalが日本時間の8/13（日） 深夜2:00からだったので、リアルタイムで見てました、いや〜盛り上がりますね〜！ +
+動画はこちらで見ることが出来ます。 +
+https://www.twitch.tv/videos/166432856 +
+深夜3時ぐらいにふと気がつくと同時視聴35万人でした。 +
+見たこと無い方はちらっと見ていただければと！思っている以上にみんな本気です。 +
+
+eスポーツの賞金ランキングもご紹介したいと思います。 +
+https://www.esportsearnings.com/players +
+ほぼDOTA2が独占してますね。 +
+ということで誰か私と一緒に賞金獲得目指しませんか！？ +
+ 
+## 2. Cloud Spannerについて調べる +
+で本題ですが、Cloud Spannerの論文を読んでみました。 +
+http://delivery.acm.org/10.1145/2500000/2491245/a8-corbett.pdf +
+でもこれ英語でして、、、 +
+英語は全く無理なので、Google翻訳を使わせて頂きました。 +
+あくまでいま時点での私の解釈で書かせてもらいますので、間違っている可能性があります。 +
+間違いが判明次第修正はしますが、その旨ご了承ください。 +
+※念のため原文の載せてあります、そちらを読んでいただくのが間違いが無いので +
+
+それでは、全部書くと量が多くなるので気になるところを載せていきます。 +
+
+原文：It is the first system to distribute data at global scale and support externally-consistent distributed transactions +
+Google翻訳：グローバル規模でデータを配信し、外部で一貫した分散トランザクションをサポートする最初のシステム +
+→この前の記事でも書きましたが、グローバル規模のトランザクションですね。世界初ということで。 +
+
+原文：Spanner is designed to scale up to millions of machines across hundreds of datacenters and trillions of database rows +
+Google翻訳：スパナは数百万台の機械にスケールアップできるように設計されています 数百のデータセンターおよび数千のデータベース行 +
+→「trillions of database rows」なので数兆（が正しい？）のデータベース行にも対応。 +
+　無限のスケールアップ（スケールアウトじゃ無い？ ）ですね。 +
+
+原文：Our initial customer was F1 [Shute et al. 2012], a rewrite of Google’s advertising backend.  +
+Google翻訳：最初の顧客はF1でした[Shute et al。 2012]、Googleの広告バックエンドの書き直し。 +
+→F1って何という感じで、これ以降をちょっと読んでみたのですが書いてないようでした。 +
+　なので、ちょっとF1について調べてみました。 +
+
+## 3. F1って何？
+Googleさんのページに説明がありました +
+https://research.google.com/pubs/pub41344.html +
+
+原文：F1 is a distributed relational database system built at Google to support the AdWords business +
+Google翻訳：F1は、GoogleでAdWordsビジネスをサポートするために構築された分散リレーショナルデータベースシステムです +
+→あれ、Spannerと若干似ているかなという印象です。 +
+
+原文：F1 is built on Spanner, which provides synchronous cross-datacenter replication and strong consistency +
+Google翻訳：F1はSpanner上に構築されており、データセンターの同期複製と強力な一貫性を提供します +
+→ここで完全に意味がわからなくなりまして、私の認識ではSpannerは「水平スケール可能なリレーショナル・データベース」なのですが、 +
+　これの上にF1を構築というのがイメージできませんでした +
+　この書き方だと、Spannerをストレージかなにかだと思って読めば違和感が無くなる感じですね +
+　恐らく何かの認識が間違っている（例えば、「Cloud Spanner」とここで書いている「Spanner」が別物！？など）気がします +
+
+と、疑問を持ちながら調べて見ると +
+こんな記事を見つけました +
+https://open-groove.net/all-things-data/spanner-f1-mesa-cockroachdb/ +
+Spanner、F1、Mesaを解説頂いているのですが、その中で以下の記述が、、、 +
+「Spannerは低レイヤーなストレージシステムで、F1はその上に作られたDB」 +
+
+Spanner：低レイヤーなストレージシステム +
+Cloud Spanner：水平スケール可能なリレーショナル・データベース +
+こういうことでいいでしょうか！？ +
+今読んでいる論文もそもそもストレージのことを書いているのではと思い見直したところ、 +
+
+原文：Spanner is Google’s scalable, multiversion, globally distributed, and synchronously replicated database +
+Google翻訳：Spannerは、Googleのスケーラブルでマルチバージョンで、グローバルに分散され、同期レプリケートされたデータベースです +
+→ということでこれはデータベースについて書いてあるようでした。 +
+　ただ論文の最後を見ると、「Publication date: August 2013」なので「Cloud Spanner」について書いてあるか若干不安は残るものの、 +
+　今は間違っているかもわかないので、このまま読み続けて行きたいと思います。 +
+
+## 4.引き続きCloud Spannerについて調べる
+
+Cloud Spannerの論文に戻りたいと思います +
+
+原文：we have also consistently received complaints from users that Bigtable can be difficult to use for some kinds of applications: those that have complex, evolving schemas, or those that want strong consistency in the presence of wide-area replication +
+Google翻訳：Bigtableは、複雑なスキーマや進化するスキーマを持つアプリケーションや、ワイドエリアレプリケーションの存在下で強力な一貫性を必要とするアプリケーションなど、ユーザーからの苦情を一貫して受け取りました。 +
+→ワイドエリアにレプリケーションしつつ、一貫性を必要とする場合にBigtableの利用は難しいということで、 +
+　Bigtableがそういう用途で作られていないので当然な感じはしますね +
+
+原文：Spanner supports general-purpose transactions, and provides an SQL-based query language +
+Google翻訳：Spannerは汎用トランザクションをサポートし、SQLベースのクエリ言語を提供します。 +
+→これがBigtableと比べてSpannerのすごいところですね、よくあるRDBと同じということですね +
+
+
+
+
+
