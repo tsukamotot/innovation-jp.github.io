@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>CAP定理とCloud Spannerについて - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="CAP定理とCloud Spannerについて">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="CAP定理とCloud Spannerについて">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/08/09/Brewers-C-A-P-Theorem-and-Cloud-Spanner.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="CAP定理とCloud Spannerについて" />
+    <meta property="og:description" content="はじめに どうも、bigenです。 以前弊社のKTNさんがCloud Spannerについてとりあげ、 「水平スケーリング可能なRDB!?なにそれすごい！！」という記事を書いていました。 （詳しくはこちら→ お試し Cloud Spanner） その最後に、Googleさんがブログで 「Google SpannerはCPシステムだけどCAと思ってくれて構わないよ」 という謎な見解を発表していたことが書かれていました。 新人エンジニアな僕はそもそもCAP定理というものも知らなかったので本当に謎でしかなかったのですが、 せっかくなので調べてみました。 せっ..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/08/09/Brewers-C-A-P-Theorem-and-Cloud-Spanner.html" />
+    <meta property="article:published_time" content="2017-08-08T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-08-14T08:49:36.305Z" />
+    <meta property="article:tag" content="bigen" />
+    <meta property="article:tag" content="CAP" />
+    <meta property="article:tag" content="Brewer&amp;#39;s" />
+    <meta property="article:tag" content="network" />
+    <meta property="article:tag" content="CloudSpanner" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="CAP定理とCloud Spannerについて" />
+    <meta name="twitter:description" content="はじめに どうも、bigenです。 以前弊社のKTNさんがCloud Spannerについてとりあげ、 「水平スケーリング可能なRDB!?なにそれすごい！！」という記事を書いていました。 （詳しくはこちら→ お試し Cloud Spanner） その最後に、Googleさんがブログで 「Google SpannerはCPシステムだけどCAと思ってくれて構わないよ」 という謎な見解を発表していたことが書かれていました。 新人エンジニアな僕はそもそもCAP定理というものも知らなかったので本当に謎でしかなかったのですが、 せっかくなので調べてみました。 せっ..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/08/09/Brewers-C-A-P-Theorem-and-Cloud-Spanner.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars1.githubusercontent.com/u/23183770?v=4",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "CAP定理とCloud Spannerについて",
+    "url": "http://tech.innovation.co.jp/2017/08/09/Brewers-C-A-P-Theorem-and-Cloud-Spanner.html",
+    "datePublished": "2017-08-08T15:00:00.000Z",
+    "dateModified": "2017-08-14T08:49:36.305Z",
+    "keywords": "bigen,  CAP,   Brewer&amp;#39;s,  network,  CloudSpanner",
+    "description": "はじめに どうも、bigenです。 以前弊社のKTNさんがCloud Spannerについてとりあげ、 「水平スケーリング可能なRDB!?なにそれすごい！！」という記事を書いていました。 （詳しくはこちら→ お試し Cloud Spanner） その最後に、Googleさんがブログで 「Google SpannerはCPシステムだけどCAと思ってくれて構わないよ」 という謎な見解を発表していたことが書かれていました。 新人エンジニアな僕はそもそもCAP定理というものも知らなかったので本当に謎でしかなかったのですが、 せっかくなので調べてみました。 せっ..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-bigen tag-C-A-P tag-Brewers tag-network tag-Cloud-Spanner no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="09 Aug 2017" class="post-meta__date date">09 Aug 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/bigen">bigen</a>, <a href="http://tech.innovation.co.jp/tag/C-A-P"> CAP</a>, <a href="http://tech.innovation.co.jp/tag/Brewers">  Brewer&#39;s</a>, <a href="http://tech.innovation.co.jp/tag/network"> network</a>, <a href="http://tech.innovation.co.jp/tag/Cloud-Spanner"> CloudSpanner</a></span>
+        <span class="post-meta__author author"><img src="https://avatars1.githubusercontent.com/u/23183770?v=4" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">CAP定理とCloud Spannerについて</h1>
+    </header>
+
+    <section class="post tag-bigen tag-C-A-P tag-Brewers tag-network tag-Cloud-Spanner">
+      <div class="sect2">
+<h3 id="__">はじめに</h3>
+<div class="paragraph">
+<p>どうも、bigenです。<br>
+<br>
+以前弊社のKTNさんがCloud Spannerについてとりあげ、<br>
+「水平スケーリング可能なRDB!?なにそれすごい！！」という記事を書いていました。<br>
+（詳しくはこちら→ <a href="http://tech.innovation.co.jp/2017/07/07/Cloud-Spanner.html">お試し Cloud Spanner</a>）<br>
+<br>
+その最後に、Googleさんがブログで<br>
+「Google SpannerはCPシステムだけどCAと思ってくれて構わないよ」<br>
+という謎な見解を発表していたことが書かれていました。<br>
+<br>
+新人エンジニアな僕はそもそもCAP定理というものも知らなかったので本当に謎でしかなかったのですが、<br>
+せっかくなので調べてみました。<br>
+せっかくついでに僕の理解を図解と共にメモしておきます。<br>
+<br>
+なお、調べるにあたって下記のサイトがめちゃくちゃ参考になりました。<br>
+<br>
+ <strong>12年後のCAP定理: "法則"はどのように変わったか</strong><br>
+<a href="https://www.infoq.com/jp/articles/cap-twelve-years-later-how-the-rules-have-changed" class="bare">https://www.infoq.com/jp/articles/cap-twelve-years-later-how-the-rules-have-changed</a><br>
+ <strong>CAP定理を見直す。“CAPの3つから2つを選ぶ”という説明はミスリーディングだった</strong><br>
+ <a href="http://www.publickey1.jp/blog/13/capcap32.html" class="bare">http://www.publickey1.jp/blog/13/capcap32.html</a><br>
+<br></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cap">CAP定理</h3>
+<div class="paragraph">
+<p>CAP定理（またはブリュワーの定理）とは、<br></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>データを保持するサーバが複数繋がったネットワークがあった時、
+Consistancy, Availability,Partition-toleranceの３つの性能(CAP)を同時に成立させることはできない</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>という定理です。<br>
+CAPはそれぞれなにかというと、</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Consistancy（一貫性） : どのサーバから読み取りを行っても、常に最新の書き込みデータorエラーが返ってくる性質（古いデータが返ってくることはない）</p>
+</li>
+<li>
+<p>Availability（可用性） : 故障していない全てのサーバは全てのサービスを提供できる性質</p>
+</li>
+<li>
+<p>Partition-tolerance（分断耐性） : ネットワークが完全に２つのグループに分かれてしまい、互いのグループが通信できないようなネットワーク障害（分断という）が発生しても、サービスが継続して利用できる性質</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>ということのようです。<br>
+<br>
+どういう意味なのか、図解していこうかと思います。<br>
+<br></p>
+</div>
+<div class="sect3">
+<h4 id="_ca">CA型</h4>
+<div class="paragraph">
+<p>まず、一貫性と可用性が成立しているようなネットワーク（CA型）を考えてみましょう。<br></p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/cap/1.jpg" alt="1.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>単純なケースとしてサーバーは２台で、サービスとして変数X（例えばある商品の在庫とか、誰かの貯金残高とか。）を管理しているとしましょう。<br>
+この時、一貫性と可用性の性質から、server1からでもserver2からでも、Xは常に書き込みも読み取りもできて、最新のデータを提供できる必要があります。<br>
+<br>
+これを実現する一番古典的なやり方.は、server1でXが更新された時、そのことをserver2に知らせ、server2で管理している変数Xも更新する（上手参照）方法です。<br>
+厳密には①と③がほぼ同時に行われるような工夫（トランザクション）が必要です。<br>
+<br>
+この時、server1とserver2の通信は必須であり、ネットワークが分断されたまま一貫性と可用性が成立するサービスを提供することは不可能となります。<br>
+つまり、分断耐性の性質は成立できません。<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cp">CP型</h4>
+<div class="paragraph">
+<p>次に、一貫性と分断耐性が成立しているようなネットワーク（CP型）を考えてみましょう。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/cap/2.jpg" alt="2.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>分断耐性の性質から、ネットワークが分断されている時でも、何らかのサービスを提供している必要があります。<br>
+この時、たとえばserver1でXが更新された時、もう片方のserver2ではそのことを知る術はないため、<br>
+一貫性を成立させるためには常にエラーを返し続けることになります。<br>
+（一貫性はエラーを返すのはOK。古い情報を誤って渡さなければよい。）<br>
+<br>
+ しかしこれは、サービスの一部の機能が利用できない状態になっており、可用性は成立できません。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ap">AP型</h4>
+<div class="paragraph">
+<p>最後に、可用性と分断耐性が成立しているようなネットワーク（AP型）を考えてみましょう。</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/images/bigen/cap/3.jpg" alt="3.jpg">
+</div>
+</div>
+<div class="paragraph">
+<p>可用性と分断耐性を成立させようとすると、ネットワークが分断されていても、<br>
+全てのデータの読み取りや書き込みができる必要があります。<br>
+<br>
+しかし、分断状態ではserver1とserver2は最新のデータを共有できませんので、<br>
+一貫性は成立できません。<br>
+<br>
+<br>
+実際にはもっと厳密な定義と証明があるようですが、定理が言いたいことは十分伝わるかと思います。<br>
+<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_cloud_spanner_ca_cp">Cloud SpannerはCA？CP？</h4>
+<div class="paragraph">
+<p>定理を提唱したブリュワー氏によると、このような100%のCPやCAが求められるケースは少なく、<br>
+CAP定理を楯に性能限界を議論するのは時代にそぐわないようです。<br>
+<br>
+つまり、例えば完全なCPシステムにしてしまわなくても、<br>
+99.9%の一貫性と99.9%の可用性を担保するといったように、少し性能をゆるめることで<br>
+擬似的に３つの性質を成立しているかのように振る舞うことは可能だということです。<br>
+<br>
+あるいは別のアプローチとして、Googleが主張する「本当はCPだけど、CAと思っていいよ」といっているのは、次のような内容です。<br>
+<br>
+分断耐性というのは、「万が一分断が起きた時、サービスできるよ」という性質なわけですが、<br>
+そもそもネットワークをとてつもなく冗長化して分断が起きないようにしておけば、<br>
+その性質がもとめられるシーンは少なくなります。<br>
+<br>
+とはいえ分断したらシステムがダウンしてしまうわけにはいかないので、<br>
+いざっていう時はCPとして振る舞うのですが、<br>
+分断が起きていない間は一貫性と可用性を常に担保でき、CAとして振る舞えるし、<br>
+それはサービス全体の99.9999%の時間をしめるよ、というのがGoogleの主張です。<br>
+<br>
+CPシステムである以上は100%の可用性は成立しないけど、99.9999%可用性があるなら、<br>
+それはもはやCAシステム（あるいはCAPシステム？）と呼んでいいだろうということです。<br>
+<br></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___2">おわりに</h4>
+<div class="paragraph">
+<p>冒頭で紹介した記事の中にかかれているのですが、<br>
+ブリュワー氏がそもそもこの定理を提唱した際には100%の性能限界について論じることより、<br>
+「 全てのネットワーク(あるいはDB)構成者は一貫性と可用性の間で常にトレードオフを意識しなければならない」<br>
+ということを言いたかったそうです。<br>
+<br>
+今後ネットワークパフォーマンスを考える際には、ちゃんと意識していこうと思いました。</p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
