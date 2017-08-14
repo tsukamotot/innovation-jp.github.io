@@ -3,8 +3,8 @@
 :hp-tags: Google, Google Cloud Platform,Cloud Spanner
 
 KTNです +
-突然ですが、みなさま「The International 2017」を楽しんだでしょうか +
-ほぼみんなご存知だと思いますが、ご存知じゃない人に紹介させていただくと +
+突然ですが、みなさま「The International 2017」最高でしたね！ +
+みまさまご存知だと思いますが、ご存知じゃない方に紹介させていただくと +
 私が大好きなDOTA2の、賞金総額26億円になる大会です +
 http://www.dota2.com/international/announcement/ +
 
@@ -30,7 +30,7 @@ http://delivery.acm.org/10.1145/2500000/2491245/a8-corbett.pdf +
 ※念のため原文の載せてあります、そちらを読んでいただくのが間違いが無いので +
 
 それでは、全部書くと量が多くなるので気になるところを載せていきます。 +
-「1. INTRODUCTION」から行きます +
+まず「1. INTRODUCTION」です +
 
 原文：It is the first system to distribute data at global scale and support externally-consistent distributed transactions +
 Google翻訳：グローバル規模でデータを配信し、外部で一貫した分散トランザクションをサポートする最初のシステム +
@@ -56,7 +56,8 @@ Google翻訳：F1は、GoogleでAdWordsビジネスをサポートするため�
 
 原文：F1 is built on Spanner, which provides synchronous cross-datacenter replication and strong consistency +
 Google翻訳：F1はSpanner上に構築されており、データセンターの同期複製と強力な一貫性を提供します +
-→ここで完全に意味がわからなくなりまして、私の認識ではCloud Spannerは「水平スケール可能なリレーショナル・データベース」なのですが、 +
+→ここで完全に意味がわからなくなりまして、 +
+　私の認識ではCloud Spannerは「水平スケール可能なリレーショナル・データベース」なのですが、 +
 　これの上にF1を構築というのがイメージできませんでした +
 　この書き方だと、Cloud Spannerをストレージかなにかだと思って読めば違和感が無くなる感じですね +
 　恐らく何かの認識が間違っている（例えば、「Cloud Spanner」とここで書いている「Spanner」が別物！？など）気がします +
@@ -64,7 +65,7 @@ Google翻訳：F1はSpanner上に構築されており、データセンター�
 と、疑問を持ちながら調べて見ると +
 Googleさんのでは無いのですが、こんな記事を見つけました +
 https://open-groove.net/all-things-data/spanner-f1-mesa-cockroachdb/ +
-Spanner、F1、Mesaを解説頂いているのですが、その中で以下の記述が、、、 +
+Spanner、F1、また新しい単語のMesaを解説頂いているのですが、その中で以下の記述が、、、 +
 「Spannerは低レイヤーなストレージシステムで、F1はその上に作られたDB」 +
 
 Spanner：低レイヤーなストレージシステム +
@@ -75,7 +76,8 @@ Cloud Spanner：水平スケール可能なリレーショナル・データベ�
 原文：Spanner is Google’s scalable, multiversion, globally distributed, and synchronously replicated database +
 Google翻訳：Spannerは、Googleのスケーラブルでマルチバージョンで、グローバルに分散され、同期レプリケートされたデータベースです +
 →ということでこれはデータベースについて書いてあるようでした。 +
-　ただ論文の最後を見ると、「Publication date: August 2013」なので「Cloud Spanner」について書いてあるか若干不安は残るものの、 +
+　ただ論文の最後を見ると、「Publication date: August 2013」とちょっと古かったので +
+ 　「Cloud Spanner」について書いてあるか若干不安は残るものの、 +
 　今は間違っているかもわかないので、このまま読み続けて行きたいと思います。 +
 
 ## 3.引き続きCloud Spannerについて調べる
@@ -106,5 +108,14 @@ Google翻訳：これらのプロパティの主要なイネーブラは、新�
 　トランザクション管理に関連してくると思うので、 +
 　「TrueTime API」についても理解する必要がありそう。 +
 　
-一旦今回はここまでにして次回も引き続き論文を見ていきたいと思います。 +
+セクション1は以上となります。 +
+この後は、 +
+　セクション2：Cloud Spannerの実装構造、機能セット、設計について +
+　セクション3：TrueTime APIと、その実装について +
+　セクション4：TrueTime APIを使用した一貫性のある分散トランザクションについて +
+　セクション5：Cloud Spannerのパフォーマンス +
+　セクション6,7,8：今後について +
+
+ 
+今回はここまでにして次回も引き続き論文を見ていきたいと思います。 +
 それでは。 +
