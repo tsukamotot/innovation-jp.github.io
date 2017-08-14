@@ -52,7 +52,7 @@ https://research.google.com/pubs/pub41344.html +
 
 原文：F1 is a distributed relational database system built at Google to support the AdWords business +
 Google翻訳：F1は、GoogleでAdWordsビジネスをサポートするために構築された分散リレーショナルデータベースシステムです +
-→あれ、Cloud Spannerと若干似ているかなという印象です +
+→Cloud Spannerと若干似ているかなという印象です +
 
 原文：F1 is built on Spanner, which provides synchronous cross-datacenter replication and strong consistency +
 Google翻訳：F1はSpanner上に構築されており、データセンターの同期複製と強力な一貫性を提供します +
