@@ -201,7 +201,7 @@ image:syoga/aml6/azure6.png[]
 タグが付与されたイメージが作成されました。
 
 #### アップロード開始！
-以下のコマンドでコンテナレジストリサーバへアップロードします。
+`docker push`で作成したイメージを、コンテナレジストリサーバへアップロードします。
 ```
 docker push <ACR LoginServer>/aci-tutorial-app:v1
 ```
