@@ -1,4 +1,0 @@
-= タイトル考え中
-:hp-alt-title: Azure 6
-:hp-tags: syoga, log, Azure, Container Instances, container
-
