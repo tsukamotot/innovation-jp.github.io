@@ -1,4 +1,4 @@
-= Docker コンテナで作ったイメージを Azure Container Instances で動かしてみた
+= Docker イメージを Azure Container Instances で動かしてみた
 :hp-alt-title: Azure 6
 :hp-tags: syoga, log, Azure, Container Instances, container, Docker
 
