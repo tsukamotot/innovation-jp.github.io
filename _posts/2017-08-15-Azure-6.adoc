@@ -1,4 +1,4 @@
-= 【書き途中だよ】
+= Docker コンテナで作ったイメージを Azure Container Instances で動かしてみた
 :hp-alt-title: Azure 6
 :hp-tags: syoga, log, Azure, Container Instances, container, Docker
 
@@ -67,7 +67,7 @@ https://docs.microsoft.com/ja-jp/azure/container-instances/[Azure Container Inst
 ・Azure CLI +
 ・Docker
 
-### コンテナイメージ作成
+### コンテナのイメージ作成
 Microsoft が公開している Azure Container Instances用の Node.js サンプルコードを GitHub から `git clone` します。
 ```
 git clone https://github.com/Azure-Samples/aci-helloworld.git
@@ -234,7 +234,7 @@ image:syoga/aml6/azure8.png[]
 
 1秒単位での課金となっていますので、作業完了後にそそくさとコンテナを Stop としようと思ったら、Azure コンソール上からは実行できず Azure CLI でコンテナを Delete する必要がありました。
 
-Azure コンソール上で UI からコンテナインスタンスを作成する事も可能で、Docker Hub からコンテナイメージを取得する事もできます。
+Azure コンソール上で UI からコンテナインスタンスを作成する事も可能で、Docker Hub からイメージを取得する事もできます。
 
 Windows コンテナは記事執筆時には選択できませんでしたが、近いうちに追加されるという事でこちらも触ってみたいと思います。
 
