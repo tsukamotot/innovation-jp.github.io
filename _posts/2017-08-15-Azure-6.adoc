@@ -22,7 +22,7 @@
 物理コンピュータのハードウェア上で実行されているOS（ホストOS）内で、仮想化ソフトウェアのアプリケーションを立上げ、その中で仮想コンピュータのOS（ゲストOS）を動作させ、アプリケーションを実行するという仕組みです。
 
 *ホストOS型の個人的イメージ図*
-
+image:syoga/aml6/azure1.png[]
 
 ホストOS、ゲストOSの両方にリソースを割かれるため、物理コンピュータのスペックによっては動作が重くなる場合がありますが、個人で利用する分にはとても手軽に別環境が作れるのが魅力かと思います。
 
@@ -32,7 +32,7 @@ VirtualBox や VMware Player 等が該当します。
 ホストOSが存在せず、物理コンピュータに仮想化用のレイヤーが作成され、その上で仮想コンピュータを動作する仕組みが、ハイパーバイザ型となります。
 
 *ハイパーバイザ型の個人的イメージ図* +
-図2
+image:syoga/aml6/azure2.png[]
 
 主にサーバで利用され、ハードウェアの BIOS から直接仮想化ソフトウェアを起動する事で、オーバヘッドをより小さくできるという事です。
 
@@ -47,7 +47,7 @@ VMware ESXi や Microsoft Hyper-V 等が該当します。
 上記を踏まえた上でコンテナを利用した仮想化ってなんだろうという事ですが、ホストOSのカーネルが物理コンピュータ上に、コンテナという隔離された仮想コンピュータの区画を作成し、その区画を利用するという仕組みになります。
 
 *コンテナ型の個人的イメージ図* +
-図3
+image:syoga/aml6/azure3.png[]
 
 あくまでも物理コンピュータ上に作成された区画の上でコンテナはプロセスとして動作しているため、前述した仮想化技術とは異なり、コンテナはホストOS と同一の OS を利用する事で、リソースの消費量が抑えられ軽量かつ可搬性の高い仮想化という事であると理解しました！
 
@@ -146,8 +146,8 @@ Successfully tagged aci-tutorial-app:latest
 docker run -d -p 8080:80 aci-tutorial-app
 
 ```
-localhost にアクセスすると… +
-図4
+localhost にアクセスすると…
+image:syoga/aml6/azure4.png[]
 
 サンプルページが表示されました。
 
@@ -166,8 +166,8 @@ az group create --name  myContainer --location eastus
 ```
 az acr create --resource-group myContainer --name <ACR Name> --sku Basic --admin-enabled true
 ```
-本当に east us リージョンに myContainer というリソースグループで、Azure Container Registry とストレージアカウントが作成されたのか、Azure のコンソールを確認してみます。+
-図5
+本当に east us リージョンに myContainer というリソースグループで、Azure Container Registry とストレージアカウントが作成されたのか、Azure のコンソールを確認してみます。
+image:syoga/aml6/azure5.png[]
 
 ちゃんと作成されていますね！
 
@@ -196,7 +196,7 @@ docker tag aci-tutorial-app <ACR LoginServer>/aci-tutorial-app:v1
 ```
 
 確認してみましょう。
-図6
+image:syoga/aml6/azure6.png[]
 
 タグが付与されたイメージが作成されました。
 
@@ -222,10 +222,10 @@ az container create --name aci-tutorial-app --image <ACR LoginServer>/aci-tutori
 ```
 
 数秒でコマンドの実行結果が返ってきました、実行結果としてパブリック IP アドレスが表示されますので、こちらにアクセスしてみます。 +
-図7
+image:syoga/aml6/azure7.png[]
 
 お、表示されました！こちらも Azure コンソール上で確認してみます。
-図8
+image:syoga/aml6/azure8.png[]
 
 作成されていますね！
 
