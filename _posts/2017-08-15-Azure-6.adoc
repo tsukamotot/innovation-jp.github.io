@@ -232,4 +232,6 @@ az container create --name aci-tutorial-app --image <ACR LoginServer>/aci-tutori
 
 Windows コンテナは記事執筆時には選択できませんでしたが、近いうちに追加されるという事でこちらも触ってみたいと思います。
 
+皆様まだまだ暑い日が続きますので、熱中症とログの出し忘れにはお気をつけ下さい。
+
 完
