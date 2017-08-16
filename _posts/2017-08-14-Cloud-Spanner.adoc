@@ -22,7 +22,7 @@ https://www.esportsearnings.com/players +
  
 ## 1. Cloud Spannerについて調べる +
 Cloud Spannerの論文を読み始めてみました +
-http://delivery.acm.org/10.1145/2500000/2491245/a8-corbett.pdf +
+https://static.googleusercontent.com/media/research.google.com/ja//archive/spanner-osdi2012.pdf +
 でもこれ英語でして、、、 +
 英語は全く無理なので、Google翻訳を使わせて頂きました +
 あくまでいま時点での私の解釈で書かせてもらいますので、間違っている可能性があります +
