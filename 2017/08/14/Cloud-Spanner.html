@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>お試し Cloud Spanner その２ - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="お試し Cloud Spanner その２">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="お試し Cloud Spanner その２">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/08/14/Cloud-Spanner.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="お試し Cloud Spanner その２" />
+    <meta property="og:description" content="KTNです 突然ですが、みなさま「The International 2017」最高でしたね！ みまさまご存知だと思いますが、ご存知じゃない方に紹介させていただくと 私が大好きなDOTA2の、賞金総額26億円になる大会です http://www.dota2.com/international/announcement/ 大会はアメリカのシアトルで行われたのですが、 Finalが日本時間の8/13（日） 深夜2:00からだったので、リアルタイムで見てました、いや〜盛り上がりますね〜！ 動画はこちらで見ることが出来ます https://www.twitch..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/08/14/Cloud-Spanner.html" />
+    <meta property="article:published_time" content="2017-08-13T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-08-16T06:56:53.461Z" />
+    <meta property="article:tag" content="Google" />
+    <meta property="article:tag" content="Google Cloud Platform" />
+    <meta property="article:tag" content="Cloud Spanner" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="お試し Cloud Spanner その２" />
+    <meta name="twitter:description" content="KTNです 突然ですが、みなさま「The International 2017」最高でしたね！ みまさまご存知だと思いますが、ご存知じゃない方に紹介させていただくと 私が大好きなDOTA2の、賞金総額26億円になる大会です http://www.dota2.com/international/announcement/ 大会はアメリカのシアトルで行われたのですが、 Finalが日本時間の8/13（日） 深夜2:00からだったので、リアルタイムで見てました、いや〜盛り上がりますね〜！ 動画はこちらで見ることが出来ます https://www.twitch..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/08/14/Cloud-Spanner.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars0.githubusercontent.com/u/24905783?v=4",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "お試し Cloud Spanner その２",
+    "url": "http://tech.innovation.co.jp/2017/08/14/Cloud-Spanner.html",
+    "datePublished": "2017-08-13T15:00:00.000Z",
+    "dateModified": "2017-08-16T06:56:53.461Z",
+    "keywords": "Google,  Google Cloud Platform, Cloud Spanner",
+    "description": "KTNです 突然ですが、みなさま「The International 2017」最高でしたね！ みまさまご存知だと思いますが、ご存知じゃない方に紹介させていただくと 私が大好きなDOTA2の、賞金総額26億円になる大会です http://www.dota2.com/international/announcement/ 大会はアメリカのシアトルで行われたのですが、 Finalが日本時間の8/13（日） 深夜2:00からだったので、リアルタイムで見てました、いや〜盛り上がりますね〜！ 動画はこちらで見ることが出来ます https://www.twitch..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-Google tag-Google-Cloud-Platform tag-Cloud-Spanner no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="14 Aug 2017" class="post-meta__date date">14 Aug 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/Google">Google</a>, <a href="http://tech.innovation.co.jp/tag/Google-Cloud-Platform"> Google Cloud Platform</a>, <a href="http://tech.innovation.co.jp/tag/Cloud-Spanner">Cloud Spanner</a></span>
+        <span class="post-meta__author author"><img src="https://avatars0.githubusercontent.com/u/24905783?v=4" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">お試し Cloud Spanner その２</h1>
+    </header>
+
+    <section class="post tag-Google tag-Google-Cloud-Platform tag-Cloud-Spanner">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>KTNです<br>
+突然ですが、みなさま「The International 2017」最高でしたね！<br>
+みまさまご存知だと思いますが、ご存知じゃない方に紹介させていただくと<br>
+私が大好きなDOTA2の、賞金総額26億円になる大会です<br>
+<a href="http://www.dota2.com/international/announcement/" class="bare">http://www.dota2.com/international/announcement/</a><br></p>
+</div>
+<div class="paragraph">
+<p>大会はアメリカのシアトルで行われたのですが、<br>
+Finalが日本時間の8/13（日） 深夜2:00からだったので、リアルタイムで見てました、いや〜盛り上がりますね〜！<br>
+動画はこちらで見ることが出来ます<br>
+<a href="https://www.twitch.tv/videos/166432856" class="bare">https://www.twitch.tv/videos/166432856</a><br>
+深夜3時ぐらいにふと気がつくと同時視聴35万人でした<br>
+見たこと無い方はちらっと見ていただければと！思っている以上にみんな本気です<br></p>
+</div>
+<div class="paragraph">
+<p>eスポーツの賞金ランキングもご紹介したいと思います<br>
+<a href="https://www.esportsearnings.com/players" class="bare">https://www.esportsearnings.com/players</a><br>
+ほぼDOTA2が独占してますね<br>
+ということで誰か私と一緒に賞金獲得目指しませんか！？<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_cloud_spanner_br">1. Cloud Spannerについて調べる<br></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Cloud Spannerの論文を読み始めてみました<br>
+<a href="https://static.googleusercontent.com/media/research.google.com/ja//archive/spanner-osdi2012.pdf" class="bare">https://static.googleusercontent.com/media/research.google.com/ja//archive/spanner-osdi2012.pdf</a><br>
+でもこれ英語でして、、、<br>
+英語は全く無理なので、Google翻訳を使わせて頂きました<br>
+あくまでいま時点での私の解釈で書かせてもらいますので、間違っている可能性があります<br>
+間違いが判明次第修正はしますが、その旨ご了承ください<br>
+※念のため原文の載せてあります、そちらを読んでいただくのが間違いが無いので<br></p>
+</div>
+<div class="paragraph">
+<p>それでは、全部書くと量が多くなるので気になるところを載せていきます<br>
+まず「1. INTRODUCTION」です<br></p>
+</div>
+<div class="paragraph">
+<p>原文：It is the first system to distribute data at global scale and support externally-consistent distributed transactions<br>
+Google翻訳：グローバル規模でデータを配信し、外部で一貫した分散トランザクションをサポートする最初のシステム<br>
+→この前の記事でも書きましたが、グローバル規模のトランザクションですね世界初ということで<br></p>
+</div>
+<div class="paragraph">
+<p>原文：Spanner is designed to scale up to millions of machines across hundreds of datacenters and trillions of database rows<br>
+Google翻訳：スパナは数百万台の機械にスケールアップできるように設計されています 数百のデータセンターおよび数千のデータベース行<br>
+→「trillions of database rows」なので数兆（が正しい？）のデータベース行にも対応<br>
+　無限のスケールアップ（スケールアウトじゃ無い？ ）ですね<br></p>
+</div>
+<div class="paragraph">
+<p>原文：Our initial customer was F1 [Shute et al. 2012], a rewrite of Google’s advertising backend. <br>
+Google翻訳：最初の顧客はF1でした[Shute et al。 2012]、Googleの広告バックエンドの書き直し<br>
+→F1って何という感じで、これ以降をちょっと読んでみたのですが書いてないようでした<br>
+　なので、ちょっとF1について調べてみました<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_f1">2. F1って何？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Googleさんのページに説明がありました<br>
+<a href="https://research.google.com/pubs/pub41344.html" class="bare">https://research.google.com/pubs/pub41344.html</a><br></p>
+</div>
+<div class="paragraph">
+<p>原文：F1 is a distributed relational database system built at Google to support the AdWords business<br>
+Google翻訳：F1は、GoogleでAdWordsビジネスをサポートするために構築された分散リレーショナルデータベースシステムです<br>
+→Cloud Spannerと若干似ているかなという印象です<br></p>
+</div>
+<div class="paragraph">
+<p>原文：F1 is built on Spanner, which provides synchronous cross-datacenter replication and strong consistency<br>
+Google翻訳：F1はSpanner上に構築されており、データセンターの同期複製と強力な一貫性を提供します<br>
+→ここで完全に意味がわからなくなりまして、<br>
+　私の認識ではCloud Spannerは「水平スケール可能なリレーショナル・データベース」なのですが、<br>
+　これの上にF1を構築というのがイメージできませんでした<br>
+　この書き方だと、Cloud Spannerをストレージかなにかだと思って読めば違和感が無くなる感じですね<br>
+　恐らく何かの認識が間違っている（例えば、「Cloud Spanner」とここで書いている「Spanner」が別物！？など）気がします<br></p>
+</div>
+<div class="paragraph">
+<p>と、疑問を持ちながら調べて見ると<br>
+Googleさんのでは無いのですが、こんな記事を見つけました<br>
+<a href="https://open-groove.net/all-things-data/spanner-f1-mesa-cockroachdb/" class="bare">https://open-groove.net/all-things-data/spanner-f1-mesa-cockroachdb/</a><br>
+Spanner、F1、また新しい単語のMesaを解説頂いているのですが、その中で以下の記述が、、、<br>
+「Spannerは低レイヤーなストレージシステムで、F1はその上に作られたDB」<br></p>
+</div>
+<div class="paragraph">
+<p>Spanner：低レイヤーなストレージシステム<br>
+Cloud Spanner：水平スケール可能なリレーショナル・データベース<br>
+こういうことでいいでしょうか！？<br>
+今読んでいる論文もそもそもストレージのことを書いているのではと思い見直したところ、<br></p>
+</div>
+<div class="paragraph">
+<p>原文：Spanner is Google’s scalable, multiversion, globally distributed, and synchronously replicated database<br>
+Google翻訳：Spannerは、Googleのスケーラブルでマルチバージョンで、グローバルに分散され、同期レプリケートされたデータベースです<br>
+→ということでこれはデータベースについて書いてあるようでした<br>
+　ただ論文の最後を見ると、「Publication date: August 2013」とちょっと古かったので<br>
+ 　「Cloud Spanner」について書いてあるか若干不安は残るものの、<br>
+　今は間違っているかもわかないので、このまま読み続けて行きたいと思います<br></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_cloud_spanner">3.引き続きCloud Spannerについて調べる</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>原文：we have also consistently received complaints from users that Bigtable can be difficult to use for some kinds of applications: those that have complex, evolving schemas, or those that want strong consistency in the presence of wide-area replication<br>
+Google翻訳：Bigtableは、複雑なスキーマや進化するスキーマを持つアプリケーションや、ワイドエリアレプリケーションの存在下で強力な一貫性を必要とするアプリケーションなど、ユーザーからの苦情を一貫して受け取りました<br>
+→ワイドエリアにレプリケーションしつつ、一貫性を必要とする場合にBigtableの利用は難しいということで、<br>
+　Bigtableがそういう用途で作られていないので当然な感じはしますね<br></p>
+</div>
+<div class="paragraph">
+<p>原文：Spanner supports general-purpose transactions, and provides an SQL-based query language<br>
+Google翻訳：Spannerは汎用トランザクションをサポートし、SQLベースのクエリ言語を提供します<br>
+→これがBigtableと比べてCloud Spannerのすごいところですね、よくあるRDBと同じということですね<br></p>
+</div>
+<div class="paragraph">
+<p>原文：Second, Spanner has two features that are difficult to implement in a distributed database: it provides externally consistent [Gifford 1982] reads and writes, and globally consistent reads across the database at a timestamp. These features enable Spanner to support consistent backups, consistent MapReduce executions [Dean and Ghemawat 2010], and atomic schema updates, all at global scale, and even in the presence of ongoing transactions<br>
+Google翻訳：第2に、スパナには難しい2つの機能があります 分散データベースに実装すること：外部的に一貫した[Gifford 1982] 読み取りと書き込み、タイムスタンプでデータベース全体の一貫性のある読み取りが可能です。 これらの機能により、Spannerは一貫したバックアップ、一貫したMapReduce[Dean and Ghemawat 2010]、アトミック・スキーマの更新はすべて世界規模で行われ、 進行中の取引があっても<br>
+→世界規模で実行中の処理があっても、一貫した読み書きのサポートと、バックアップがサポートされているとのことで、<br>
+　これは期待どおりでした<br></p>
+</div>
+<div class="paragraph">
+<p>原文：The timestamps reflect serialization order. In addition, the serialization order satisfies external consistency (or equivalently, linearizability [Herlihy and Wing 1990]): if a transaction T1 commits before another transaction T2 starts, then T1’s commit timestamp is smaller than T2’s. Spanner is the first system to provide such guarantees at global scale.<br>
+Google翻訳：タイムスタンプはシリアル化順序を反映します。 さらに、逐次化順序は外部整合性（または等価的に線形性[Herlihy and Wing 1990]）を満たします。トランザクションT1が別のトランザクションT2が開始する前にコミットすると、T1のコミットタイムスタンプはT2よりも小さくなります。 スパナは、世界規模でそのような保証を提供する最初のシステムです<br>
+→タイムスタンプを使って世界規模のトランザクション保証を実現しているようです<br>
+　この後の章でタイムスタンプをどのように使っているのか書かれていると思うので、じっくり見ていきたいと思います<br></p>
+</div>
+<div class="paragraph">
+<p>原文：The key enabler of these properties is a new TrueTime API and its implementation. The API directly exposes clock uncertainty, and the guarantees on Spanner’s timestamps depend on the bounds that the implementation provides. If the uncertainty is large, Spanner slows down to wait out that uncertainty<br>
+Google翻訳：これらのプロパティの主要なイネーブラは、新しいTrueTime APIとその実装です。 APIはクロックの不確実性を直接的に明らかにし、Spannerのタイムスタンプに対する保証は、実装が提供する境界に依存します。 不確実性が大きい場合、Spannerはその不確実性を待つために減速します<br>
+→各Cloud Spannerインスタンス間の時間のズレを計測して、<br>
+　データベースの処理を減速させてでもズレを修正するようですね<br>
+　トランザクション管理に関連してくると思うので、<br>
+　「TrueTime API」についても理解する必要がありそうです<br></p>
+</div>
+<div class="paragraph">
+<p>セクション1は以上となります<br>
+この後のセクションは以下のとおりです、<br>
+　セクション2：Cloud Spannerの実装構造、機能セット、設計について<br>
+　セクション3：TrueTime APIと、その実装について<br>
+　セクション4：TrueTime APIを使用した一貫性のある分散トランザクションについて<br>
+　セクション5：Cloud Spannerのパフォーマンス<br>
+　セクション6,7,8：今後について<br></p>
+</div>
+<div class="paragraph">
+<p>今回はここまでにして次回も引き続き論文を見ていきたいと思います<br>
+それでは<br></p>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
