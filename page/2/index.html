@@ -211,6 +211,12 @@ var _trackingid = 'LFT-10003-1';
 
     <ol class="post-list">
       <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/07/Cloud-Spanner.html" title="link to お試し Cloud Spanner">お試し Cloud Spanner</a></h2>
+        <p class="excerpt">KTNです。 先日、Google Cloud Next '17 in Tokyoに行ってきまして、 元々Google信者だったのですが、 イベントに参加してさらに信者が加速してしまいました。 （日本語おかしいですか？） もちろんスマホもAndroidを使ってます！ Googleすげーと思ったものいっぱいあるのですが、 以下2点ご紹介したいと思います。 1. Jamboard 　GIGAZINEさんでも取り上げられていました。 　http://gigazine.net/news/20170524-jamboard-launching/ 　一言で表すと デジタルなホワイトボード なのですが、 　これの機能がすごいんです。 　１．手書きの文字を読み取ってデジタル可 　２．インターネットの検索結果&hellip;</p>
+        <div class="post-list__meta"><time datetime="07 Jul 2017" class="post-list__meta--date date">07 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Google">Google</a>, <a href="http://tech.innovation.co.jp/tag/Google-Cloud-Platform"> Google Cloud Platform</a>, <a href="http://tech.innovation.co.jp/tag/Cloud-Spanner">Cloud Spanner</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/04/C-S-S-Because-tuyu.html" title="link to 梅雨なのでCSS画像切り替え3種">梅雨なのでCSS画像切り替え3種</a></h2>
         <p class="excerpt">梅雨ですね。AMIです。 魔が差して書いてみました。よければご覧ください。 ホバーすると鋭くKTNさん HTML &lt;!DCTYPE html&gt; &lt;html lang="ja"&gt;     &lt;head&gt;         &lt;meta charset="UTF-8"&gt;         &lt;style&gt;             div.img {                 width: 394px;                 height: 425px;                 background: url(josei.png) no-repeat;             }             div.img:h&hellip;</p>
         <div class="post-list__meta"><time datetime="04 Jul 2017" class="post-list__meta--date date">04 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/H-T-M-L">HTML</a>, <a href="http://tech.innovation.co.jp/tag/C-S-S">CSS</a>, <a href="http://tech.innovation.co.jp/tag/A-M-I">AMI</a></span></div>
@@ -262,12 +268,6 @@ var _trackingid = 'LFT-10003-1';
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/09/Pepper-Amazon-Rekognition.html" title="link to Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編">Pepperにぼくの顔を覚えてもらう。Amazon Rekognition編</a></h2>
         <p class="excerpt">みなさまいかがお過ごしでしょうか？ そろそろあれの季節ですね。 矢ヶ崎です。 前回のPちゃん(うちのPepperのこと)ブログでは、Googleカレンダーの予定を定期的に読み上げてもらう、という無難なことをやってみましたが、今回は顔を認識してもらって名前を呼んでもらうという、もっと無難なことをやってみたいと思います。 前回のブログで、 次回は、予定を聞くと教えてくれるようにしてみたいと思います。とうとうPちゃん復活なるか？！ と書きましたが、まずはPちゃんに覚えてもらってから予定を聞かないとあれなので、あえてスルーして行きます。 Pepperのデフォルトで、そんな感じのことをできる機能があるのですが、結構他の人と間違えられちゃってショックでなんか微妙なので、今回は最近よくあるお話でクラウ&hellip;</p>
         <div class="post-list__meta"><time datetime="09 Jun 2017" class="post-list__meta--date date">09 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Yagasaki">Yagasaki</a>, <a href="http://tech.innovation.co.jp/tag/Pepper">Pepper</a>, <a href="http://tech.innovation.co.jp/tag/Rekognition">Rekognition</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/04/Route53-S-E-S-S3-Lambda-Gmail.html" title="link to Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する">Route53 + SES + S3 + Lambda で 独自ドメイン宛のメールをGmailに転送する</a></h2>
-        <p class="excerpt">SREチームの城田です。 今回は城田のプライベート環境の話ですが、 AWSを使った独自ドメイン宛のメールの転送設定を行ったので紹介します。 ※当記事の内容はSESを利用しますが、何らかの理由でメールがループしてしまった場合の料金増加など、 当記事内容を利用したことによるトラブルに関して一切責任を負えませんのでご注意ください。 背景 独自ドメイン宛のメール受信は、某ドメインレジストラのメール転送機能を使って、Gmailアドレス宛に転送していた。 その某ドメインレジストラからAWS Route53にドメイン移管したので、そのメール転送機能が使えなくなった。 メール転送をAWSで行うが、それだけの為にEC2にMTAを入れてメール転送するということはしたくない。 ということで、メール転送機能（と同&hellip;</p>
-        <div class="post-list__meta"><time datetime="04 Jun 2017" class="post-list__meta--date date">04 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Shirota">Shirota</a>, <a href="http://tech.innovation.co.jp/tag/Route53"> Route53</a>, <a href="http://tech.innovation.co.jp/tag/S-E-S"> SES</a>, <a href="http://tech.innovation.co.jp/tag/S3"> S3</a>, <a href="http://tech.innovation.co.jp/tag/Lambda"> Lambda</a></span></div>
         <hr class="post-list__divider" />
       </li>
     </ol>
