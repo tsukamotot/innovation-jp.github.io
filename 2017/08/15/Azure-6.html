@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Docker イメージを Azure Container Instances で動かしてみた - イノベーション　エンジニアブログ</title>
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta name="description" content="">
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Docker イメージを Azure Container Instances で動かしてみた">
+    <meta name="twitter:description" content="">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Docker イメージを Azure Container Instances で動かしてみた">
+    <meta property="og:description" content="">
+
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <link href="/apple-touch-icon-precomposed.png" rel="apple-touch-icon">
+    
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//test.list-finder.jp/js/ja/track_test.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+<script type="text/javascript">
+var _trackingid = 'LFT-10003-1';
+
+(function() {
+  var lft = document.createElement('script'); lft.type = 'text/javascript'; lft.async = true;
+  lft.src = document.location.protocol + '//track.list-finder.jp/js/ja/track_prod_wao.js';
+  var snode = document.getElementsByTagName('script')[0]; snode.parentNode.insertBefore(lft, snode);
+})();
+</script>
+
+    <link rel="stylesheet" type="text/css" href="//tech.innovation.co.jp/themes/uno/assets/css/uno.css?v=1.0.0" />
+
+    <link rel="canonical" href="http://tech.innovation.co.jp/2017/08/15/Azure-6.html" />
+    
+    <meta property="og:site_name" content="イノベーション　エンジニアブログ" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Docker イメージを Azure Container Instances で動かしてみた" />
+    <meta property="og:description" content="お久しぶりです、ドラゴンクエスト11でカジノのマジスロにハマり過ぎ、全く冒険が進まない syoga です。 以前の 記事 通り、PS4版と3DS版両方購入しましたが、マジスロはPS4版にしか実装されていないため、PS4版を進めざるを得ない状況となっています。 激アツが本当にアツいっていいですね！ さて、最近弊社の某プロダクトでは空前の Docker ブーム（？）が到来しております、そんな中 Microsoft Azure で新たなコンテナサービスが発表されましたので、今回はそちらに触れてみようと思います。 そもそもコンテナって？ 皆様ご存知かとは思いま..." />
+    <meta property="og:url" content="http://tech.innovation.co.jp/2017/08/15/Azure-6.html" />
+    <meta property="article:published_time" content="2017-08-14T15:00:00.000Z" />
+    <meta property="article:modified_time" content="2017-08-18T09:02:30.649Z" />
+    <meta property="article:tag" content="syoga" />
+    <meta property="article:tag" content="log" />
+    <meta property="article:tag" content="Azure" />
+    <meta property="article:tag" content="Container Instances" />
+    <meta property="article:tag" content="container" />
+    <meta property="article:tag" content="Docker" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Docker イメージを Azure Container Instances で動かしてみた" />
+    <meta name="twitter:description" content="お久しぶりです、ドラゴンクエスト11でカジノのマジスロにハマり過ぎ、全く冒険が進まない syoga です。 以前の 記事 通り、PS4版と3DS版両方購入しましたが、マジスロはPS4版にしか実装されていないため、PS4版を進めざるを得ない状況となっています。 激アツが本当にアツいっていいですね！ さて、最近弊社の某プロダクトでは空前の Docker ブーム（？）が到来しております、そんな中 Microsoft Azure で新たなコンテナサービスが発表されましたので、今回はそちらに触れてみようと思います。 そもそもコンテナって？ 皆様ご存知かとは思いま..." />
+    <meta name="twitter:url" content="http://tech.innovation.co.jp/2017/08/15/Azure-6.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "イノベーション　エンジニアブログ",
+    "author": {
+        "@type": "Person",
+        "name": null,
+        "image": "https://avatars3.githubusercontent.com/u/20530620?v=4",
+        "url": "undefined/author/undefined",
+        "sameAs": ""
+    },
+    "headline": "Docker イメージを Azure Container Instances で動かしてみた",
+    "url": "http://tech.innovation.co.jp/2017/08/15/Azure-6.html",
+    "datePublished": "2017-08-14T15:00:00.000Z",
+    "dateModified": "2017-08-18T09:02:30.649Z",
+    "keywords": "syoga,  log,  Azure,  Container Instances,  container,  Docker",
+    "description": "お久しぶりです、ドラゴンクエスト11でカジノのマジスロにハマり過ぎ、全く冒険が進まない syoga です。 以前の 記事 通り、PS4版と3DS版両方購入しましたが、マジスロはPS4版にしか実装されていないため、PS4版を進めざるを得ない状況となっています。 激アツが本当にアツいっていいですね！ さて、最近弊社の某プロダクトでは空前の Docker ブーム（？）が到来しております、そんな中 Microsoft Azure で新たなコンテナサービスが発表されましたので、今回はそちらに触れてみようと思います。 そもそもコンテナって？ 皆様ご存知かとは思いま..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="イノベーション　エンジニアブログ" href="http://tech.innovation.co.jp/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+
+
+</head>
+<body class="post-template tag-syoga tag-log tag-Azure tag-Container-Instances tag-container tag-Docker no-js">
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    <header class="panel-cover panel-cover--collapsed " >
+      <div class="panel-main">
+    
+        <div class="panel-main__inner panel-inverted">
+        <div class="panel-main__content">
+    
+            <h1 class="panel-cover__title panel-title"><a href="http://tech.innovation.co.jp" title="link to homepage for イノベーション　エンジニアブログ">イノベーション　エンジニアブログ</a></h1>
+            <hr class="panel-cover__divider" />
+            <p class="panel-cover__description">株式会社イノベーションのエンジニアたちの技術系ブログです</p>
+            <hr class="panel-cover__divider panel-cover__divider--secondary" />
+    
+            <div class="navigation-wrapper">
+    
+              <nav class="cover-navigation cover-navigation--primary">
+                <ul class="navigation">
+                  <li class="navigation__item"><a href="http://tech.innovation.co.jp/#blog" title="link to イノベーション　エンジニアブログ blog" class="blog-button">Blog</a></li>
+                </ul>
+              </nav>
+    
+              
+              
+              <nav class="cover-navigation navigation--social">
+                <ul class="navigation">
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+                </ul>
+              </nav>
+              
+    
+            </div>
+    
+          </div>
+    
+        </div>
+    
+        <div class="panel-cover--overlay"></div>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+        
+    	<!-- ソーシャルボタンここから -->
+    	<div id="boxArea" style="display: table; padding: 0 0 0 2px;">
+    		<div style="width: 74px; height: 22px; float: left;">
+    			<a href="https://twitter.com/share" class="twitter-share-button"
+    				{count} data-lang="ja" data-dnt="true">ツイート</a>
+    			<script>
+    				!function(d, s, id) {
+    					var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/
+    							.test(d.location) ? 'http' : 'https';
+    					if (!d.getElementById(id)) {
+    						js = d.createElement(s);
+    						js.id = id;
+    						js.src = p + '://platform.twitter.com/widgets.js';
+    						fjs.parentNode.insertBefore(js, fjs);
+    					}
+    				}(document, 'script', 'twitter-wjs');
+    			</script>
+    		</div>
+    		<div style="width: 76px; height: 22px; float: left;">
+    			<div class="g-plusone" data-size="medium"></div>
+    			<script type="text/javascript">
+    				window.___gcfg = {
+    					lang : 'ja'
+    				};
+    				(function() {
+    					var po = document.createElement('script');
+    					po.type = 'text/javascript';
+    					po.async = true;
+    					po.src = 'https://apis.google.com/js/platform.js';
+    					var s = document.getElementsByTagName('script')[0];
+    					s.parentNode.insertBefore(po, s);
+    				})();
+    			</script>
+    		</div>
+    		<div style="width: 126px; height: 22px; float: left;">
+    			<a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button"
+    				data-hatena-bookmark-layout="standard-balloon"
+    				data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img
+    				src="http://b.st-hatena.com/images/entry-button/button-only@2x.png"
+    				alt="このエントリーをはてなブックマークに追加" width="20" height="20"
+    				style="border: none;" /></a>
+    			<script type="text/javascript"
+    				src="http://b.st-hatena.com/js/bookmark_button.js" charset="utf-8"
+    				async="async"></script>
+    		</div>
+    		<div style="width: 117px; height: 22px; float: left;">
+    			<a data-pocket-label="pocket" data-pocket-count="horizontal"
+    				class="pocket-btn" data-lang="en"></a>
+    		</div>
+    		<div style="width: 86px; height: 22px; float: left;">
+    			<span><script type="text/javascript"
+    					src="//media.line.me/js/line-button.js?v=20140411"></script>
+    				<script type="text/javascript">
+    					new media_line_me.LineButton({
+    						"pc" : true,
+    						"lang" : "ja",
+    						"type" : "a"
+    					});
+    				</script></span>
+    		</div>
+    		<div style="width: 114px; height: 22px; float: left;">
+    			<script src="//platform.linkedin.com/in.js" type="text/javascript">
+    				lang: ja_JP
+    			</script>
+    			<script type="IN/Share" data-counter="right"></script>
+    		</div>
+    		<div style="width: 112px; height: 22px; float: left;">
+    			<iframe
+    				scrolling="no" frameborder="0" id="fbframe"
+				width="164" height="46" style="border:none;overflow:hidden" 
+				allowTransparency="true"></iframe>
+    		</div>
+    		<script type="text/javascript">
+    			(function() {
+    				var url = encodeURIComponent(location.href);
+    				document.getElementById('fbframe').src="//www.facebook.com/plugins/like.php?href=" + url + 
+    				"&width=164&layout=button_count&action=like&show_faces=true&share=true&height=46&appId=1613776965579453"
+    			})();
+    		</script>
+    	</div>
+    	<script type="text/javascript">
+    		!function(d, i) {
+    			if (!d.getElementById(i)) {
+    				var j = d.createElement("script");
+    				j.id = i;
+    				j.src = "https://widgets.getpocket.com/v1/j/btn.js?v=1";
+    				var w = d.getElementById(i);
+    				d.body.appendChild(j);
+    			}
+    		}(document, "pocket-btn-js");
+    	</script>
+    	<!-- ソーシャルボタンここまで -->
+	
+        <div class="content-wrapper__inner">
+            
+
+  <article class="post-container post-container--single">
+
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime="15 Aug 2017" class="post-meta__date date">15 Aug 2017</time> &#8226; <span class="post-meta__tags tags">on <a href="http://tech.innovation.co.jp/tag/syoga">syoga</a>, <a href="http://tech.innovation.co.jp/tag/log"> log</a>, <a href="http://tech.innovation.co.jp/tag/Azure"> Azure</a>, <a href="http://tech.innovation.co.jp/tag/Container-Instances"> Container Instances</a>, <a href="http://tech.innovation.co.jp/tag/container"> container</a>, <a href="http://tech.innovation.co.jp/tag/Docker"> Docker</a></span>
+        <span class="post-meta__author author"><img src="https://avatars3.githubusercontent.com/u/20530620?v=4" alt="profile image for " class="avatar post-meta__avatar" /> by </span>
+      </div>
+      <h1 class="post-title">Docker イメージを Azure Container Instances で動かしてみた</h1>
+    </header>
+
+    <section class="post tag-syoga tag-log tag-Azure tag-Container-Instances tag-container tag-Docker">
+      <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>お久しぶりです、ドラゴンクエスト11でカジノのマジスロにハマり過ぎ、全く冒険が進まない syoga です。</p>
+</div>
+<div class="paragraph">
+<p>以前の <a href="http://tech.innovation.co.jp/2017/04/14/Azure-3.html">記事</a> 通り、PS4版と3DS版両方購入しましたが、マジスロはPS4版にしか実装されていないため、PS4版を進めざるを得ない状況となっています。</p>
+</div>
+<div class="paragraph">
+<p><strong>激アツ</strong>が本当に<strong>アツい</strong>っていいですね！</p>
+</div>
+<div class="paragraph">
+<p>さて、最近弊社の某プロダクトでは空前の Docker ブーム（？）が到来しております、そんな中 Microsoft Azure で新たなコンテナサービスが発表されましたので、今回はそちらに触れてみようと思います。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="__">そもそもコンテナって？</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>皆様ご存知かとは思いますが、自身の復習も兼ねてざっくり記載したいと思います。</p>
+</div>
+<div class="sect2">
+<h3 id="___2">従来の仮想化について</h3>
+<div class="paragraph">
+<p>従来の仮想化というと、物理コンピュータ上にソフトウェアで仮想的なコンピュータを構築したり、ハイパーバイザという専用ソフトウェア上に仮想的なコンピュータを構築するという、PC上に仮想PCを作るというイメージでした。</p>
+</div>
+<div class="paragraph">
+<p>どのような仮想化の方法があるのかを、確認してみます。</p>
+</div>
+<div class="sect3">
+<h4 id="__os">ホストOS型</h4>
+<div class="paragraph">
+<p>物理コンピュータのハードウェア上で実行されているOS（ホストOS）内で、仮想化ソフトウェアのアプリケーションを立上げ、その中で仮想コンピュータのOS（ゲストOS）を動作させ、アプリケーションを実行するという仕組みです。</p>
+</div>
+<div class="paragraph">
+<p><strong>ホストOS型の個人的イメージ図</strong>
+<span class="image"><img src="/images/syoga/aml6/azure1.png" alt="azure1.png"></span></p>
+</div>
+<div class="paragraph">
+<p>ホストOS、ゲストOSの両方にリソースを割かれるため、物理コンピュータのスペックによっては動作が重くなる場合がありますが、個人で利用する分にはとても手軽に別環境が作れるのが魅力かと思います。</p>
+</div>
+<div class="paragraph">
+<p>VirtualBox や VMware Player 等が該当します。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___3">ハイパーバイザ型</h4>
+<div class="paragraph">
+<p>ホストOSが存在せず、物理コンピュータに仮想化用のレイヤーが作成され、その上で仮想コンピュータを動作する仕組みが、ハイパーバイザ型となります。</p>
+</div>
+<div class="paragraph">
+<p><strong>ハイパーバイザ型の個人的イメージ図</strong><br>
+<span class="image"><img src="/images/syoga/aml6/azure2.png" alt="azure2.png"></span></p>
+</div>
+<div class="paragraph">
+<p>主にサーバで利用され、ハードウェアの BIOS から直接仮想化ソフトウェアを起動する事で、オーバヘッドをより小さくできるという事です。</p>
+</div>
+<div class="paragraph">
+<p>ホストOS型の図と比べると余裕のある構成（ギュウギュウじゃない）となっていますので、それだけ処理の手続きが少なくて済むという感じでしょうか、図ではゲストOSは1台ですが、通常は複数OSを1台の物理コンピュータ（サーバ）で動作させるケースが多いです。</p>
+</div>
+<div class="paragraph">
+<p>VMware ESXi や Microsoft Hyper-V 等が該当します。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___4">という事は…</h4>
+<div class="paragraph">
+<p>ホストOS型もハイパーバイザ型も仮想コンピュータで動作するOSには制限がなく、仮想コンピュータのハードウェアは、物理コンピュータのスペックに依存するため各種リソースの消費量が大きいが、自由度が高い仮想化という事であると理解しました！</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___5">コンテナについて</h3>
+<div class="paragraph">
+<p>上記を踏まえた上でコンテナを利用した仮想化ってなんだろうという事ですが、ホストOSのカーネルが物理コンピュータ上に、コンテナという隔離された仮想コンピュータの区画を作成し、その区画を利用するという仕組みになります。</p>
+</div>
+<div class="paragraph">
+<p><strong>コンテナ型の個人的イメージ図</strong><br>
+<span class="image"><img src="/images/syoga/aml6/azure3.png" alt="azure3.png"></span></p>
+</div>
+<div class="paragraph">
+<p>あくまでも物理コンピュータ上に作成された区画の上で、コンテナは1プロセスとして動作するため、前述した仮想化技術とは異なり、ホストOS と同一の OS を利用する事で、リソースの消費量が抑えられ軽量かつ可搬性の高い仮想化という事であると理解しました！</p>
+</div>
+<div class="paragraph">
+<p>コンテナを管理するソフトウェアとして、Docker を利用します。</p>
+</div>
+<div class="paragraph">
+<p>カーネルの機能が利用されているため別の OS を利用したいという場合は、コンテナでは実現ができないというデメリットもありますが、今回は特に気にしません。</p>
+</div>
+<div class="paragraph">
+<p>という訳で、ざっくり確認したとろで…</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_azure_container_instances">Azure Container Instances を利用してみます</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>今回は以下のチュートリアルを参考に、Azure Container Instances を利用したいと思います！<br>
+<a href="https://docs.microsoft.com/ja-jp/azure/container-instances/">Azure Container Instances のドキュメント - チュートリアル</a></p>
+</div>
+<div class="paragraph">
+<p><strong>■ 必要なもの</strong><br>
+・Azure アカウント<br>
+・Azure CLI<br>
+・Docker</p>
+</div>
+<div class="sect2">
+<h3 id="___6">コンテナのイメージ作成</h3>
+<div class="paragraph">
+<p>Microsoft が公開している Azure Container Instances用の Node.js サンプルコードを GitHub から <code>git clone</code> します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>git clone https://github.com/Azure-Samples/aci-helloworld.git</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>構成は以下のようになっています。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>▾ aci-helloworld/
+  ▾ app/
+      index.html
+      index.js
+      package.json
+    Dockerfile
+    LICENSE
+    README.md</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>サンプルコードの Dockerfile の中身です。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>FROM node:8.2.0-alpine
+RUN mkdir -p /usr/src/app
+COPY ./app/* /usr/src/app/
+WORKDIR /usr/src/app
+RUN npm install
+CMD node /usr/src/app/index.js</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alpine Linux という軽量なディストリビューションを利用してベースイメージを作成していますね、後は作業ディレクトリの設定、モジュールのインストールといった具合でした。</p>
+</div>
+<div class="paragraph">
+<p>さっそくイメージを作成するため、<code>docker build</code> コマンドを実行します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>docker build ./aci-helloworld -t aci-tutorial-app</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>実行結果</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>Sending build context to Docker daemon  119.8kB
+Step 1/6 : FROM node:8.2.0-alpine
+8.2.0-alpine: Pulling from library/node
+88286f41530e: Already exists
+84f3a4bf8410: Already exists
+d0d9b2214720: Already exists
+Digest: sha256:c73277ccc763752b42bb2400d1aaecb4e3d32e3a9dbedd0e49885c71bea07354
+Status: Downloaded newer image for node:8.2.0-alpine
+ ---&gt; 90f5ee24bee2
+Step 2/6 : RUN mkdir -p /usr/src/app
+ ---&gt; Running in fd2884ac733a
+ ---&gt; fa95a2f944df
+Removing intermediate container fd2884ac733a
+Step 3/6 : COPY ./app/* /usr/src/app/
+ ---&gt; ab5086699178
+Removing intermediate container 802725fc6fbb
+Step 4/6 : WORKDIR /usr/src/app
+ ---&gt; 9672fb073fdc
+Removing intermediate container 405e6261d157
+Step 5/6 : RUN npm install
+ ---&gt; Running in 24f54a4b1d92
+npm info it worked if it ends with ok
+npm info using npm@5.3.0
+npm info using node@v8.2.0
+npm info lifecycle aci-helloworld@1.0.0~preinstall: aci-helloworld@1.0.0
+npm http fetch GET 200 https://registry.npmjs.org/express 604ms
+〜 略 〜
+
+added 45 packages in 5.006s
+npm info ok
+ ---&gt; fc740c1f5333
+Removing intermediate container 24f54a4b1d92
+Step 6/6 : CMD node /usr/src/app/index.js
+ ---&gt; Running in 9ef0205a5e9d
+ ---&gt; 5581a6aeecdf
+Removing intermediate container 9ef0205a5e9d
+Successfully built 5581a6aeecdf
+Successfully tagged aci-tutorial-app:latest</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>完了しました。</p>
+</div>
+<div class="paragraph">
+<p>とりあえずローカルで実行してみます、<code>-d</code> でバックグラウンドで起動させ、<code>-p</code> でローカルマシンの <code>8080</code> 番ポートをコンテナの <code>80</code> 番ポートにマッピングします。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>docker run -d -p 8080:80 aci-tutorial-app</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>localhost にアクセスすると…
+<span class="image"><img src="/images/syoga/aml6/azure4.png" alt="azure4.png"></span></p>
+</div>
+<div class="paragraph">
+<p>サンプルページが表示されました。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_azure_container_registry">Azure Container Registry へイメージをアップロード</h3>
+<div class="paragraph">
+<p>Azure Container Registry とは、Azure 版 Docker Hub のような感じで、お値段はストレージに保存するイメージの転送量だけとなります。</p>
+</div>
+<div class="paragraph">
+<p>また、ここからは Azure CLI で作業を進めていきます。</p>
+</div>
+<div class="sect3">
+<h4 id="___7">リソースグループ作成</h4>
+<div class="paragraph">
+<p>まずは今回の作業用のリソースグループ（その名の通りリソースを管理するグループ）を Azure Container Instances が利用できる eastus リージョンに作成します、今回は myContainer という名前のリソースグループを作成します。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>az group create --name  myContainer --location eastus</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___8">コンテナレジストリとストレージアカウントの作成</h4>
+<div class="paragraph">
+<p>次にコンテナレジストリとイメージ保存用のストレージアカウントを作成します、 コンテナレジストリの名前は一意である必要があり、ストレージアカウントは自動で作成されます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>az acr create --resource-group myContainer --name &lt;ACR Name&gt; --sku Basic --admin-enabled true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>本当に east us リージョンに myContainer というリソースグループで、Azure Container Registry とストレージアカウントが作成されたのか、Azure のコンソールを確認してみます。
+<span class="image"><img src="/images/syoga/aml6/azure5.png" alt="azure5.png"></span></p>
+</div>
+<div class="paragraph">
+<p>ちゃんと作成されていますね！</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___9">コンテナレジストリのログインサーバ、パスワード確認</h4>
+<div class="paragraph">
+<p>次にコンテナレジストリのログインサーバを確認しメモメモ。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>az acr show --name &lt;ACR Name&gt; --query loginServer</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>確認できたら次はパスワードを確認しメモメモ。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>az acr credential show --name &lt;ACR Name&gt; --query passwords[0].value</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___10">コンテナレジストリサーバへログイン</h4>
+<div class="paragraph">
+<p>作成したイメージをアップロードする前に コンテナレジストリインスタンスにログインする必要がありますので、<code>docker login</code> を利用します、先程確認したログインサーバ、パスワードをここで使います。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>docker login --username=&lt;ACR Name&gt; --password=&lt;ACR Password&gt; &lt;ACR LoginServer&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>Login Succeeded</code> が表示されれば成功です。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___11">コンテナイメージのタグ付け</h4>
+<div class="paragraph">
+<p>ローカルのレジストリからコンテナイメージをアップロードするためには、イメージにタグを付ける必要があるという事なので、先程作成したイメージ aci-tutorial-app にタグを付与します。</p>
+</div>
+<div class="paragraph">
+<p>チュートリアルに従い、タグ名は <code>v1</code>とします。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>docker tag aci-tutorial-app &lt;ACR LoginServer&gt;/aci-tutorial-app:v1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>確認してみましょう。
+<span class="image"><img src="/images/syoga/aml6/azure6.png" alt="azure6.png"></span></p>
+</div>
+<div class="paragraph">
+<p>タグが付与されたイメージが作成されました。</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___12">アップロード開始！</h4>
+<div class="paragraph">
+<p><code>docker push</code>で作成したイメージを、コンテナレジストリサーバへアップロードします。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>docker push &lt;ACR LoginServer&gt;/aci-tutorial-app:v1</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="___13">アップロードされたコンテナレジストリの確認</h4>
+<div class="paragraph">
+<p>以下のコマンドでコンテナレジストリのリストを確認できますので、確認してみます。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>az acr repository list --name &lt;ACR Name&gt; --username &lt;ACR Name&gt; --password &lt;ACR Password&gt; --output table
+Result
+----------------
+aci-tutorial-app</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_azure_container_instances_2">Azure Container Instances へデプロイする</h3>
+<div class="paragraph">
+<p>それではコンテナレジストリにアップロードしたイメージを、コンテナインスタンスへデプロイします。</p>
+</div>
+<div class="paragraph">
+<p>1コマンドでコンテナインスタンスへデプロイできますが…長い！リソースをCPU 1コア、メモリ 1GB の要求で、コンテナレジストリからコンテナイメージをデプロイします。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code>az container create --name aci-tutorial-app --image &lt;ACR LoginServer&gt;/aci-tutorial-app:v1 --cpu 1 --memory 1 --registry-login-server &lt;ACR LoginServer&gt; --registry-username &lt;ACR Name&gt; --registry-password &lt;ACR Password&gt; --ip-address public -g myContainer</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>数秒でコマンドの実行結果が返ってきました、実行結果としてパブリック IP アドレスが表示されますので、こちらにアクセスしてみます。<br>
+<span class="image"><img src="/images/syoga/aml6/azure7.png" alt="azure7.png"></span></p>
+</div>
+<div class="paragraph">
+<p>お、表示されました！こちらも Azure コンソール上で確認してみます。
+<span class="image"><img src="/images/syoga/aml6/azure8.png" alt="azure8.png"></span></p>
+</div>
+<div class="paragraph">
+<p>作成されていますね！</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="___14">感想</h3>
+<div class="paragraph">
+<p>気になるお値段ですがCPU 1コア、メモリ 1GB の場合は1秒間に¥0.00255 + 作成要求が1コンテナにつき¥0.26となっています（1秒以下のは利用料金無料）、処理時間は短いけど頻繁に動作するバッチ処理を、こちらに乗り換える事でインスタンス料金の節約になりそうです。</p>
+</div>
+<div class="paragraph">
+<p>1秒単位での課金となっていますので、作業完了後にそそくさとコンテナを Stop としようと思ったら、Azure コンソール上からは実行できず Azure CLI でコンテナを Delete する必要がありました。</p>
+</div>
+<div class="paragraph">
+<p>Azure コンソール上で UI からコンテナインスタンスを作成する事も可能で、Docker Hub からイメージを取得する事もできます。</p>
+</div>
+<div class="paragraph">
+<p>Windows コンテナは記事執筆時には選択できませんでしたが、近いうちに追加されるという事でこちらも触ってみたいと思います。</p>
+</div>
+<div class="paragraph">
+<p>皆様まだまだ暑い日が続きますので、熱中症とログの出し忘れにはお気をつけ下さい。</p>
+</div>
+<div class="paragraph">
+<p>完</p>
+</div>
+</div>
+</div>
+</div>
+    </section>
+
+  </article>
+
+
+
+
+            <footer class="footer">
+                <span class="footer__copyright">&copy; 2017. All rights reserved.</span>
+                <span class="footer__copyright"><a href="http://uno.daleanthony.com" title="link to page for Uno Ghost theme">Uno theme</a> by <a href="http://daleanthony.com" title="link to website for Dale-Anthony">Dale-Anthony</a></span>
+                <span class="footer__copyright">Proudly published with <a href="http://hubpress.io" title="link to Hubpress website">Hubpress</a></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+    <script type="text/javascript" src="//tech.innovation.co.jp/themes/uno/assets/js/main.js?v=1.0.0"></script>
+    
+
+</body>
+</html>
