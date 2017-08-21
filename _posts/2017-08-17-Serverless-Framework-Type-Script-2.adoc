@@ -7,22 +7,21 @@ SREチームの城田です。 +
 前回 ECMAScript2015（ES6）でサーバレスマイクロサービスを作るということで +
 その第一回目の記事を書きました。
 
-> Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1 +
-> http://tech.innovation.co.jp/2017/07/09/Serverless-Framework-E-C-M-A-Script2015-1.html
+Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1 +
+http://tech.innovation.co.jp/2017/07/09/Serverless-Framework-E-C-M-A-Script2015-1.html
 
-しかし、
+しかし、 +
 ES6完全準拠の TypeScript が、Microsoft製なのにGoogleの標準言語に採用され、 +
 ES6にはない 抽象クラス や インターフェース、型宣言などにも対応していることから、 +
 内容を見直して、今回からTypeScriptを全面採用して書き直しをしました。
 
 また、 +
-今回は新たにエンドユーザがアクセスするwebviewプラットフォームの足がかりを作成しました。
+今回は新たにエンドユーザがアクセスするwebviewプラットフォームの +
+足がかりを作成しました。
 
-## ES6コードをTypeScriptでリファクタリングする
+## ES6をTypeScriptでリファクタリング
 
-### 開発環境整備
-
-#### TypeScript ts-loader をインストール
+### TypeScript ts-loader をインストール
 
 TypeScriptに対応するためモジュールを入れます。
 
@@ -35,7 +34,7 @@ added 51 packages, removed 1 package and updated 5 packages in 5.837s
 </pre>
 ++++
 
-#### webpackの設定
+### webpackの設定
 
 TypeScript用に書き換えます。
 
@@ -60,7 +59,7 @@ module.exports = {
 </pre>
 ++++
 
-#### ts-loaderの設定
+### ts-loaderの設定
 
 最終的に ES5(JavaScript) に変換する指定と、node_modules配下の除外指定です。
 
