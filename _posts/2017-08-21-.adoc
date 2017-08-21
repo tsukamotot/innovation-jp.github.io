@@ -1,5 +1,5 @@
-# コミットメッセージを間違えるから、チェックするスクリプト書いてみた
-:hp-alt-title:　コミットメッセージを間違えるから、チェックするスクリプト書いてみた
+# コミットメッセージをチェックするスクリプト書いてみた
+:hp-alt-title:　コミットメッセージをチェックするスクリプト書いてみた
 :hp-tags: Obata, ShellScript
 
 初めまして、今年新卒でエンジニアに配属されました小畑です。 +
@@ -11,7 +11,7 @@
 そう思っていい記事ないかなと見ていたら、先輩のこんな良い記事が。
 
 
-## コマンドの引数ミスを防いでみよう
+## コミットメッセージミスを防いでみよう！
 > キャッシュについて深く反省してみる... +
 > http://tech.innovation.co.jp/2017/07/31/to-reflect-on-the-cache.html
 
@@ -19,7 +19,180 @@
 
 これだ！！！ +
 
-最近コミットをする時につけるコメントを間違えてしまうんで、 +
-せっかくだからシェルスクリプトさんに頑張ってもらおうと思います！
+最近gitでcommitをする時につけるメッセージを間違えてしまうんです。+
+正しいのは下のメッセージです。
+++++
+<pre style="font-family: Menlo, Courier">
+$ git commit -m "テスト！"
+$ git commit -m "LF-22 テスト！"
+</pre>
+++++
+せっかくだからシェルスクリプトさんに頑張ってもらおうと思います！+
 
-##
+
+### Step1 メッセージの条件を確かめよう
+
+/usr/local/binにgit-cmt-cというファイルを作成します。 +
+git commit check的な意味合いでこの名前にしました！
+
+まずは条件の判断が出来るかチェック！ +
+１．引数$1をechoでgrepに投げます。 
+
+++++
+<pre style="font-family: Menlo, Courier">
+#!/bin/bash
+#引数が"LF-**[スペース]"で始まるなら引数をそのまま出力
+echo $1 | grep -e "^LF-.* "
+</pre>
+
+実行結果
+<pre style="font-family: Menlo, Courier">
+$ git-cmt-c "LF-22tes"
+$ git-cmt-c "LF-22 tes"
+LF-22 tes
+</pre>
+++++
+
+おお！なんか判断出来ている気がする！ +
+
+
+
+### Step2 if文に入れてメッセージを表示しよう
+
+ここが結構躓きました(；・∀・) +
+if文の中でスペース混じりの文字列が出るので、 +
+シェルスクリプトの都合上、別々の2つの引数がtestに投げられてしまいます。 +
+
+１．チェックするコマンドを``でくくってコマンドを実行 +
+２．""で囲むことで、出力されるスペース混じりの文字列を一つにまとめる +
+
+++++
+<pre style="font-family: Menlo, Courier">
+#!/bin/bash
+#引数が条件にあっているかチェック
+if [ "`echo $1 | grep -e "^LF-.* "`" ]; then
+  echo "ばっちり！"
+else
+  echo "先頭にkeyがついてないよ！"
+fi
+</pre>
+
+実行結果
+<pre style="font-family: Menlo, Courier">
+$ git-cmt-c "LF-22tes"
+先頭にkeyがついてないよ！
+$ git-cmt-c "LF-22 tes"
+ばっちり！
+</pre>
+++++
+おお！これであとは実行するだけ！
+
+### Step３ 正しい時はコミットしよう！
+
+1.実行したいコマンドを記述 +
+2.引数を""で囲みながらコマンドに結合 +
+3.evalで実行！ +
+
+++++
+<pre style="font-family: Menlo, Courier">
+#!/bin/bash
+command="git commit -m"
+comment='"'$1'"'
+
+#引数が条件にあっていればコマンドを実行
+if [ "`echo $1 | grep -e "^LF-.* .*$"`" ]; then
+  eval $command' '$comment
+else
+  echo "先頭にkeyがついてないよ！"
+fi
+</pre>
+
+実行結果
+<pre style="font-family: Menlo, Courier">
+$ git cmt "test"
+先頭にkeyがついてないよ！
+$ git cmt "LF-123 test"
+LF-123 test
+~~いろいろ書かれてて~~
+1 file changed, 1 insertion(+)
+</pre>
+++++
+
+動いたーヽ(=´▽`=)ﾉ+
+
+
+## まとめ
+
+このシステムのおかげで！なんと！ +
+このコマンドを打つ時にはだいたいコメント打ち忘れを思い出せるようになりました・・・ +
+ま、まあミスは減ったはずです！ +
+
+困ったなーって思ったら、だいたいプログラム書けば解決する(｀･ω･´) +
+コンソールで困ったらシェルスクリプト書こう！ +
+そして偉大なる先輩に敬礼(｀･ω･´)ゞ +
+
+
+
+--- +
+----以下内輪ネタ---- +
+--- +
+
+### Step4 自動でコメント追加して、実行許可をもらう
+
+せっかくなら自動でコメント追加してみましょう。 +
+ブランチ名の最後の番号を利用して、コメントを追加します。 +
+
+1.git rev-parseでブランチ名取得 +
+2.sedでブランチ名から数値だけを取得して、コメントに追加 +
+3.read caseでyの時だけコマンド実行 +
+
+++++
+<pre style="font-family: Menlo, Courier">
+#!/bin/bash
+command='git commit -m'
+comment='"'$1'"'
+
+#引数が条件にあっていればコマンドを実行
+#条件にあっていなければ、LF-**を追加して、コマンド実行許可をもらう
+if [ "`echo $1 | grep -e "^LF-.* .*$"`" ]; then
+  echo $command' '$comment
+  eval $command' '$comment
+else
+  number="`git rev-parse --abbrev-ref HEAD | sed -E "s/.*\/(.*)$/\1/"`"
+  comment='"'LF-$number' '$1'"'
+
+  echo $command' '$comment' OK?(y/n)'
+  read ans
+  case $ans in
+    [Yy] )
+      eval $command' '$comment ;;
+    ready )
+      echo 'sir!' ;;
+    * )
+      echo 'exit' ;;
+  esac
+fi
+</pre>
+
+実行結果
+<pre style="font-family: Menlo, Courier">
+$ git cmt "LF-54 テスト"
+git commit -m "LF-54 テスト"
+~~いろいろ書かれて~~
+1 file changed, 1 insertion(+)
+$ git cmt "テスト"
+git commit -m "LF-707 テスト" OK?(y/n)
+y
+~~いろいろ書かれて~~
+1 file changed, 1 insertion(+)
+$ git cmt "テスト"
+git commit -m "LF-707 テスト" OK?(y/n)
+n
+exit
+$ git cmt "テスト"
+git commit -m "LF-707 テスト" OK?(y/n)
+ready
+sir!
+</pre>
+++++
+
