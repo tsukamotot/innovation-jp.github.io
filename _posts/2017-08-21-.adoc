@@ -37,8 +37,8 @@ git commit check的な意味合いでこの名前にしました！ +
 その他設定は元記事を参考にしていただいて・・・ +
 
 まずは条件の判断が出来るかチェック！ +
-１．引数$1をechoでgrepに投げます。  +
-２．grepで条件を正規表現でチェック！
+１．引数$1をechoでgrepに投げます　+
+２．grepで条件を正規表現でチェック
 
 ++++
 <pre style="font-family: Menlo, Courier">
