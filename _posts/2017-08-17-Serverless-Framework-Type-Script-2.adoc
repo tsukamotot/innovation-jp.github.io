@@ -370,7 +370,7 @@ mysql> select client_id, token, created_at from clients;
 ### 開発環境整備
 
 webviewの部分を作成していきます。 +
-twig と request も入れておきます。
+Twig と Request も入れておきます。
 
 ++++
 <pre style="font-family: Menlo, Courier">
