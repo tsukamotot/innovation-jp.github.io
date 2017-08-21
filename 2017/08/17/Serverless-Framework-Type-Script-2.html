@@ -55,7 +55,7 @@ var _trackingid = 'LFT-10003-1';
     <meta property="og:description" content="SREチームの城田です。 前回 ECMAScript2015（ES6）でサーバレスマイクロサービスを作るということで その第一回目の記事を書きました。 Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1 http://tech.innovation.co.jp/2017/07/09/Serverless-Framework-E-C-M-A-Script2015-1.html しかし、 ES6完全準拠の TypeScript が、Microsoft製なのにGoogleの標準言語に採用さ..." />
     <meta property="og:url" content="http://tech.innovation.co.jp/2017/08/17/Serverless-Framework-Type-Script-2.html" />
     <meta property="article:published_time" content="2017-08-16T15:00:00.000Z" />
-    <meta property="article:modified_time" content="2017-08-21T13:00:55.111Z" />
+    <meta property="article:modified_time" content="2017-08-21T13:24:05.027Z" />
     <meta property="article:tag" content="Shirota" />
     <meta property="article:tag" content="Serverless Framework" />
     <meta property="article:tag" content="TypeScript" />
@@ -80,7 +80,7 @@ var _trackingid = 'LFT-10003-1';
     "headline": "Serverless Framework + TypeScript でサーバーレスマイクロサービスを作る その2",
     "url": "http://tech.innovation.co.jp/2017/08/17/Serverless-Framework-Type-Script-2.html",
     "datePublished": "2017-08-16T15:00:00.000Z",
-    "dateModified": "2017-08-21T13:00:55.111Z",
+    "dateModified": "2017-08-21T13:24:05.027Z",
     "keywords": "Shirota,  Serverless Framework,  TypeScript",
     "description": "SREチームの城田です。 前回 ECMAScript2015（ES6）でサーバレスマイクロサービスを作るということで その第一回目の記事を書きました。 Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1 http://tech.innovation.co.jp/2017/07/09/Serverless-Framework-E-C-M-A-Script2015-1.html しかし、 ES6完全準拠の TypeScript が、Microsoft製なのにGoogleの標準言語に採用さ..."
 }
@@ -264,33 +264,28 @@ var _trackingid = 'LFT-10003-1';
 <p>前回 ECMAScript2015（ES6）でサーバレスマイクロサービスを作るということで<br>
 その第一回目の記事を書きました。</p>
 </div>
-<div class="quoteblock">
-<blockquote>
 <div class="paragraph">
 <p>Serverless Framework + ECMAScript2015 でサーバーレスマイクロサービスを作る その1<br>
 <a href="http://tech.innovation.co.jp/2017/07/09/Serverless-Framework-E-C-M-A-Script2015-1.html" class="bare">http://tech.innovation.co.jp/2017/07/09/Serverless-Framework-E-C-M-A-Script2015-1.html</a></p>
 </div>
-</blockquote>
-</div>
 <div class="paragraph">
-<p>しかし、
+<p>しかし、<br>
 ES6完全準拠の TypeScript が、Microsoft製なのにGoogleの標準言語に採用され、<br>
 ES6にはない 抽象クラス や インターフェース、型宣言などにも対応していることから、<br>
 内容を見直して、今回からTypeScriptを全面採用して書き直しをしました。</p>
 </div>
 <div class="paragraph">
 <p>また、<br>
-今回は新たにエンドユーザがアクセスするwebviewプラットフォームの足がかりを作成しました。</p>
+今回は新たにエンドユーザがアクセスするwebviewプラットフォームの<br>
+足がかりを作成しました。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_es6_typescript">ES6コードをTypeScriptでリファクタリングする</h2>
+<h2 id="_es6_typescript">ES6をTypeScriptでリファクタリング</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="__">開発環境整備</h3>
-<div class="sect3">
-<h4 id="_typescript_ts_loader">TypeScript ts-loader をインストール</h4>
+<h3 id="_typescript_ts_loader">TypeScript ts-loader をインストール</h3>
 <div class="paragraph">
 <p>TypeScriptに対応するためモジュールを入れます。</p>
 </div>
@@ -301,8 +296,8 @@ $ npm install --save-dev typescript ts-loader
 added 51 packages, removed 1 package and updated 5 packages in 5.837s
 </pre>
 </div>
-<div class="sect3">
-<h4 id="_webpack">webpackの設定</h4>
+<div class="sect2">
+<h3 id="_webpack">webpackの設定</h3>
 <div class="paragraph">
 <p>TypeScript用に書き換えます。</p>
 </div>
@@ -327,8 +322,8 @@ module.exports = {
 };
 </pre>
 </div>
-<div class="sect3">
-<h4 id="_ts_loader">ts-loaderの設定</h4>
+<div class="sect2">
+<h3 id="_ts_loader">ts-loaderの設定</h3>
 <div class="paragraph">
 <p>最終的に ES5(JavaScript) に変換する指定と、node_modules配下の除外指定です。</p>
 </div>
@@ -346,7 +341,6 @@ module.exports = {
   ]
 }
 </pre>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_serverless_framework">Serverless Frameworkの設定</h3>
@@ -615,7 +609,7 @@ $ sls deploy -v
 </pre>
 </div>
 <div class="sect2">
-<h3 id="___2">動作確認</h3>
+<h3 id="__">動作確認</h3>
 <div class="paragraph">
 <p>APIエンドポイントに対してcurlコマンドでPOSTリクエストをしてみました。</p>
 </div>
@@ -641,7 +635,7 @@ mysql> select client_id, token, created_at from clients;
 <h2 id="_webview">webviewプラットフォームの作成</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="___3">開発環境整備</h3>
+<h3 id="___2">開発環境整備</h3>
 <div class="paragraph">
 <p>webviewの部分を作成していきます。<br>
 Twig と Request も入れておきます。</p>
@@ -743,7 +737,7 @@ HTMLを出力するようにしています。</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="___4">コーディング</h3>
+<h3 id="___3">コーディング</h3>
 <div class="paragraph">
 <p>ハンドラーはaccount-pfとほぼ変わりありませんが、<br>
 eventからpath名のpageを取得し、<br>
@@ -854,7 +848,7 @@ export default () => `&lt;!DOCTYPE html&gt;
 </pre>
 </div>
 <div class="sect2">
-<h3 id="___5">動作確認</h3>
+<h3 id="___4">動作確認</h3>
 <div class="sect3">
 <h4 id="_webview_2">webviewプラットフォームにブラウザでアクセス</h4>
 <div class="paragraph">
@@ -895,7 +889,7 @@ mysql> select client_id,token,created_at from clients order by created_at desc l
 </div>
 </div>
 <div class="sect1">
-<h2 id="___6">所感</h2>
+<h2 id="___5">所感</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>今回 Vue.js や React を採用しなかったのは（また気が変わるかもしれませんが）<br>
