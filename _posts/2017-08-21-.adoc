@@ -217,9 +217,9 @@ $1に来るのは.git/COMMIT_EDITMSGというコミットメッセージが書�
 1.ファイルの中身を比較するためにcatの出力結果を使う +
 2.新しいメッセージをCOMMIT_EDITMSGに出力することでコメント内容を上書きする +
 
-***/.git/hooks/commit-msg
 
 ++++
+***/.git/hooks/commit-msg
 <pre style="font-family: Menlo, Courier">
 #!/bin/bash
 #.git/COMMIT_EDITMSGが条件にあっていればコマンドを実行
