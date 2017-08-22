@@ -88,19 +88,29 @@ $ git-cmt-c "LF-22 tes"
 ++++
 おお！これであとは実行するだけ！
 
-### Step３ 正しい時はコミットしよう！
 
-1.gitのaliasにgit-cmt-cを追加 +
-2.実行したいコマンドを記述 +
-3.引数を""で囲みながらコマンドに結合 +
-4.evalで実行！ +
+### Step3 エイリアスを設定しよう！
+
+このコマンドは、自社サービスのプログラムを触る時にだけ使いたいので、
+対象のgitのディレクトリ内.git/configにちょっと追記。
 
 ++++
-~/.gitconfig
+***/.git/config
 <pre style="font-family: Menlo, Courier">
 [alias]
         cmt = cmt-c
 </pre>
+++++
+
+これで、自社サービスいじっている時にだけ使えるコマンドに！
+
+### Step4 正しい時はコミットしよう！
+
+1.実行したいコマンドを記述 +
+2.引数を""で囲みながらコマンドに結合 +
+3.evalで実行！ +
+
+++++
 git-cmt-c
 <pre style="font-family: Menlo, Courier">
 #!/bin/bash
@@ -174,8 +184,6 @@ else
   case $ans in
     [Yy] )
       eval $command' '$comment ;;
-    ready )
-      echo 'sir!' ;;
     * )
       echo 'exit' ;;
   esac
@@ -197,10 +205,6 @@ $ git cmt "テスト"
 git commit -m "LF-707 テスト" OK?(y/n)
 n
 exit
-$ git cmt "テスト"
-git commit -m "LF-707 テスト" OK?(y/n)
-ready
-sir!
 </pre>
 ++++
 
