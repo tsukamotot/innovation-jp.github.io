@@ -72,3 +72,12 @@ HTTP Response Code: 503
 あとは、出来上がったCloudFrontのホスト名を +
 メンテナンスにしたいサイトドメインのCNAMEに指定するか、 +
 ドメイン管理にRoute53を使っているなら、Aliasレコードを指定するだけでOKです。
+
+# 感想
+現状sorryページの最も簡単な作成方法かと思いますので、 記事にしました。
+
+Retry-Afterなどの一部のHTTPヘッダーを返却することができないので、 +
+今後CloudFrontやS3 Static website hosting の機能追加など、 +
+期待したいと思います。
+
+こちらからは以上です。
