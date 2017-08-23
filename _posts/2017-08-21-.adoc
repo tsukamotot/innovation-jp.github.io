@@ -23,8 +23,8 @@
 正しいものは下のメッセージです。
 ++++
 <pre style="font-family: Menlo, Courier">
-$ git commit -m "テスト！"
-$ git commit -m "LF-22 テスト！"
+$ git commit -m "テスト！" 　　　　#☓正しくない
+$ git commit -m "LF-22 テスト！"　#◯正しい
 </pre>
 ++++
 せっかくだからシェルスクリプトさんに頑張ってもらおうと思います！
@@ -49,6 +49,8 @@ echo $1 | grep -e "^LF-.* "
 実行結果
 <pre style="font-family: Menlo, Courier">
 $ git-cmt-c "LF-22tes"
+<font color=red>  何も出力されない </font>
+
 $ git-cmt-c "LF-22 tes"
 LF-22 tes
 </pre>
@@ -60,8 +62,10 @@ LF-22 tes
 if文の中でスペース混じりの文字列が出るので、 +
 スペースで区切られた文字は別々の文字と判断されてしまいます。 +
 
-１．チェックするコマンドを``でくくってコマンドを実行 +
-２．""で囲むことで、出力されるスペース混じりの文字列を一つにまとめる +
+1．""で囲むことで、出力されるスペース混じりの文字列を一つにまとめる +
+2．if文内ではコマンドの実行結果を判定したいので、 +
+　 ``で囲むことで文字列ではなくコマンドの実行結果を取得する +
+
 
 ++++
 <pre style="font-family: Menlo, Courier">
@@ -78,6 +82,7 @@ fi
 <pre style="font-family: Menlo, Courier">
 $ git-cmt-c "LF-22tes"
 先頭にkeyがついてないよ！
+
 $ git-cmt-c "LF-22 tes"
 ばっちり！
 </pre>
@@ -124,6 +129,7 @@ fi
 <pre style="font-family: Menlo, Courier">
 $ git cmt "test"
 先頭にkeyがついてないよ！
+
 $ git cmt "LF-123 test"
 LF-123 test
 ~~いろいろ書かれてて~~
@@ -150,8 +156,8 @@ LF-123 test
 ### Step5 自動でコメント追加して、実行許可をもらう
 
 せっかくなら自動でコメント追加してみましょう。 +
-ブランチ名◯◯◯◯/１２３の最後の番号がチケット番号なので、 +
-最後の番号だけ抜き出し、コメントを追加します。 +
+私達が行ってるプロジェクトでは、ブランチ名feature/◯◯/１２３の123部分が
+コメントに必要なので、番号だけ抜き出し、コメントに追加します。 +
 
 1.git rev-parseでブランチ名取得 +
 2.sedでブランチ名から数値だけを取得して、コメントに追加 +
@@ -185,16 +191,18 @@ fi
 
 実行結果
 <pre style="font-family: Menlo, Courier">
-$ git cmt "LF-54 テスト"
+$ git cmt "LF-54 テスト"     #正しいのでコミットする
 git commit -m "LF-54 テスト"
 ~~いろいろ書かれて~~
 1 file changed, 1 insertion(+)
-$ git cmt "テスト"
+
+$ git cmt "テスト"             #コミットする
 git commit -m "LF-707 テスト" OK?(y/n)
 y
 ~~いろいろ書かれて~~
 1 file changed, 1 insertion(+)
-$ git cmt "テスト"
+
+$ git cmt "テスト"             #コミットしない
 git commit -m "LF-707 テスト" OK?(y/n)
 n
 exit
@@ -211,12 +219,12 @@ gitには特定の処理の後に処理を追加することが出来ます。 +
 今回は.git/hooks内のcommit-msgに先程作った処理を応用して追加します。 +
 記事を探してみたけれど、どれもRubyの記事だったので自力で書いてみました。 +
 
-注意点は一つ。 +
-$1に来るのは.git/COMMIT_EDITMSGというコミットメッセージが書かれたファイルのパス +
-
 1.ファイルの中身を比較するためにcatの出力結果を使う +
 2.新しいメッセージをCOMMIT_EDITMSGに出力することでコメント内容を上書きする +
 
+注意点が一点あります。 +
+$1に来るのは.git/COMMIT_EDITMSGというコミットメッセージが書かれたファイルのパスです。 +
+catを$1に利用することで、コミットメッセージを取り出すことが出来ます。
 
 ++++
 ***/.git/hooks/commit-msg
@@ -239,13 +247,14 @@ $ git commit -m "LF-123 test test2"
 OK
 ~~いろいろ書かれて~~
 1 file changed, 1 insertion(+)
-$ 
+ 
 $ git reset --soft HEAD^
 $ git commit -m "test test2"
 change commit massage: LF-702 test test2
 ~~いろいろ書かれて~~
 1 file changed, 1 insertion(+)
-$
+
+
 $ git log
 ~~いろいろ書かれて~~
 Date:   Tue Aug 22 14:49:25 2017 +0900
