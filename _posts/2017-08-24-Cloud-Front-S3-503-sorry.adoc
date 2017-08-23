@@ -1,5 +1,5 @@
-# CloudFront + S3 で 503 を返すsorryページを簡単に作る方法
-:hp-alt-title:CloudFront + S3 で 503 を返すsorryページを簡単に作る方法
+# CloudFront + S3 で 503 を返すsorryページを 最も簡単に作る方法
+:hp-alt-title:CloudFront + S3 で 503 を返すsorryページを 最も簡単に作る方法
 :hp-tags: Shirota, CloudFront, S3
 
 SREチームの城田です。
@@ -11,7 +11,7 @@ sorryページを設定することがあるかと思います。
 CloudFront + S3 hosting で構築してみました。
 
 また、CloudFront+S3を使うやり方は既にウェブに幾つかありますが、 +
-一番シンプルだと思われる方法を今回見つけたので、書きたいと思います。
+一番簡単だと思われる方法を今回見つけたので、書きたいと思います。
 
 ## 概要
 S3にエラー用ページを置き、 +
