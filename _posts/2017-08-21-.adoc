@@ -27,7 +27,113 @@ $ git commit -m "テスト！" 　　　　#☓正しくない
 $ git commit -m "LF-22 テスト！"　#◯正しい
 </pre>
 ++++
-せっかくだからシェルスクリプトさんに頑張ってもらおうと思います！
+
+
+これを +
+1.判定するプログラムをシェルスクリプトで書く +
+2.コマンドはそのままに自動的にコミットメッセージを書き換える(hooks利用) +
+この二通りの実装を作りました！ +
+その勉強の軌跡を書きます！ +
+
+### 作ったもの
+
+++++
+***/.git/config
+<pre style="font-family: Menlo, Courier">
+[alias]
+        cmt = cmt-c
+</pre>
+
+git-cmt-c
+<pre style="font-family: Menlo, Courier">
+#!/bin/bash
+command='git commit -m'
+comment='"'$1'"'
+
+#引数が条件にあっていればコマンドを実行
+#条件にあっていなければ、LF-**を追加して、コマンド実行許可をもらう
+if [ "`echo $1 | grep -e "^LF-.* .*$"`" ]; then
+  echo $command' '$comment
+  eval $command' '$comment
+else
+  number="`git rev-parse --abbrev-ref HEAD | sed -E "s/.*\/(.*)$/\1/"`"
+  comment='"'LF-$number' '$1'"'
+
+  echo $command' '$comment' OK?(y/n)'
+  read ans
+  case $ans in
+    [Yy] )
+      eval $command' '$comment ;;
+    * )
+      echo 'exit' ;;
+  esac
+fi
+</pre>
+++++
+------------------------------------------------------ +
+1.実行結果 +
+------------------------------------------------------ +
+++++
+<pre style="font-family: Menlo, Courier">
+$ git cmt "LF-54 テスト"     #正しいのでコミットする
+git commit -m "LF-54 テスト"
+~~いろいろ書かれて~~
+1 file changed, 1 insertion(+)
+
+$ git cmt <font color=red>"テスト"</font>             #コメント付け足してコミットする
+git commit -m <font color=red>"LF-707 テスト"</font> OK?(y/n)
+y
+~~いろいろ書かれて~~
+1 file changed, 1 insertion(+)
+
+$ git cmt "テスト"             #コミットしない
+git commit -m "LF-707 テスト" OK?(y/n)
+n
+exit
+</pre>
+++++
+
+++++
+***/.git/hooks/commit-msg
+<pre style="font-family: Menlo, Courier">
+#!/bin/bash
+#.git/COMMIT_EDITMSGが条件にあっていればコマンドを実行
+#条件にあっていなければ、メッセージにLF-**を追加して、コマンドを行う
+if [ "`cat $1 | grep -e "^LF-.* .*$"`" ]; then
+  echo "OK"
+else
+  number="`git rev-parse --abbrev-ref HEAD | sed -E "s/.*\/(.*)$/\1/"`"
+  comment=LF-$number" "`cat $1`
+  echo $comment>$1
+  echo "change commit massage: "$comment
+fi
+</pre>
+++++
+------------------------------------------------------ +
+2.実行結果 +
+------------------------------------------------------ +
+++++
+
+<pre style="font-family: Menlo, Courier">
+$ git commit -m "LF-123 test test2"
+OK
+~~いろいろ書かれて~~
+1 file changed, 1 insertion(+)
+ 
+$ git reset --soft HEAD^
+$ git commit -m  <font color=red>"test test2"</font>
+change commit massage: LF-702 test test2
+~~いろいろ書かれて~~
+1 file changed, 1 insertion(+)
+
+
+$ git log
+~~いろいろ書かれて~~
+Date:   Tue Aug 22 14:49:25 2017 +0900
+
+ <font color=red>    LF-702 test test2</font>
+</pre>
+++++
 
 
 ### Step1 メッセージの条件を確かめよう
