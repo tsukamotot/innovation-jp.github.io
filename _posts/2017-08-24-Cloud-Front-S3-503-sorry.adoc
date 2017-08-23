@@ -1,0 +1,74 @@
+# CloudFront + S3 で 503 を返すsorryページを簡単に作る方法
+:hp-alt-title:CloudFront + S3 で 503 を返すsorryページを簡単に作る方法
+:hp-tags: Shirota, CloudFront, S3
+
+SREチームの城田です。
+
+サイトのメンテナンス時など、本番環境でダウンが発生する場合、 +
+sorryページを設定することがあるかと思います。
+
+その際、EC2ウェブサーバを立てるのは意外とコストがかかりますので、 +
+CloudFront + S3 hosting で構築してみました。
+
+また、CloudFront+S3を使うやり方は既にウェブに幾つかありますが、 +
+一番シンプルだと思われる方法を今回見つけたので、書きたいと思います。
+
+## 概要
+S3にエラー用ページを置き、 +
+index.htmlは置かないようにしてStatic website hostingする。
+
+CloudFrontからhostingしたS3にオリジンを向ける。（※index.htmlが無いので必ず404になる） +
+404時に、503でエラーページを返すようにCloudFrontを設定する。 
+
+## 設定手順
+
+AWSコンソールにログインしてS3に移動しておきます。
+
+### S3バケットを作成
+例） +
+s3://my-sorry-page/
+
+### エラー用ページ（sorryページ）を作成
+例） +
+s3://my-sorry-page/error.html
+
+error.htmlをpublicアクセス可能にして、 +
+バケットトップ / Properties / Static website hosting と進み、 +
+Use this bucket to host a website を選択する。
+
+この時表示されるEndpointを控えておき、
+
+++++
+<pre>
+Index document: index.html
+Error document: error.html
+</pre>
+++++
+
+を指定してsaveする。
+
+### CloudFrontを作成
+Origin Domain Name: 先ほど控えておいたEndpointのホスト名を指定 +
+残りは適宜設定する。
+
+出来上がったCloudFront設定の Error Pages タブから、 +
+Create Custom Error Response をクリックし、
+
+++++
+<pre>
+HTTP Error Code: 404
+Error Caching Minimum TTL: 任意の値
+Customize Error Response: Yes
+Response Page Path: /error.html
+HTTP Response Code: 503
+</pre>
+++++
+
+と設定した上で、Yes,Edit する。
+
+これで、 +
+503を返すsorryページの作成ができました。
+
+あとは、出来上がったCloudFrontのホスト名を +
+メンテナンスにしたいサイトドメインのCNAMEに指定するか、 +
+ドメイン管理にRoute53を使っているなら、Aliasレコードを指定するだけでOKです。
