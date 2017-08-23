@@ -1,5 +1,5 @@
-# CloudFront + S3 で 503 を返すsorryページを 最も簡単に作る方法
-:hp-alt-title:CloudFront + S3 で 503 を返すsorryページを 最も簡単に作る方法
+# CloudFront + S3 で 503 を返すsorryページを 最も簡単に作成する方法
+:hp-alt-title:CloudFront + S3 で 503 を返すsorryページを 最も簡単に作成する方法
 :hp-tags: Shirota, CloudFront, S3
 
 SREチームの城田です。
