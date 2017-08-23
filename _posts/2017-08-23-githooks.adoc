@@ -1,0 +1,143 @@
+# gitのhooksを使って、コミットメッセージを書き換える（シェルスクリプト編）
+:hp-alt-title:　gitのhooksを使って、コミットメッセージを書き換える（シェルスクリプト編）
+:hp-tags: Obata, ShellScript, git
+
+初めまして、今年新卒でエンジニアに配属されました小畑です。 +
+
+プログラミングとしては、CとかJavaとかアセンブリ言語とかを軽く勉強した程度で +
+わりと初心者に近い人です。 +
+
+
+さて、新人は業務全てが初体験です。そこで新しい習慣をつける必要があるのですが、 +
+どうしても慣れるまではミスが目立ってしまいます。 +
+
+最近では、gitでcommitをする時につけるメッセージを間違えてしまいます。 +
+正しいものは下のメッセージです。 +
+++++
+<pre style="font-family: Menlo, Courier">
+$ git commit -m "テスト！" 　　　　#☓正しくない
+$ git commit -m "LF-22 テスト！"　#◯正しい
+</pre>
+++++
+
+どうしても忘れてしまう。なら自動化してしまえと。 +
+ということで、これを判定するプログラムをシェルスクリプトで書いてみました。 +
+
+### 作ったもの
+
+++++
+***/.git/hooks/commit-msg
+<pre style="font-family: Menlo, Courier">
+#!/bin/bash
+#.git/COMMIT_EDITMSGが条件にあっていればコマンドを実行
+#条件にあっていなければ、メッセージにLF-**を追加して、コマンドを行う
+if [ "`cat $1 | grep -e "^LF-.* .*$"`" ]; then
+  echo "OK"
+else
+  number="`git rev-parse --abbrev-ref HEAD | sed -E "s/.*\/(.*)$/\1/"`"
+  comment=LF-$number" "`cat $1`
+  echo $comment>$1
+  echo "change commit massage: "$comment
+fi
+</pre>
+
+実行結果
+<pre style="font-family: Menlo, Courier">
+$ git commit -m "LF-123 test test2"
+OK
+~~いろいろ書かれて~~
+1 file changed, 1 insertion(+)
+ 
+$ git reset --soft HEAD^
+$ git commit -m <font color=red>"test test2"</font>
+change commit massage: LF-702 test test2
+~~いろいろ書かれて~~
+1 file changed, 1 insertion(+)
+
+
+$ git log
+~~いろいろ書かれて~~
+Date:   Tue Aug 22 14:49:25 2017 +0900
+
+<font color=red>    LF-702 test test2</font>
+</pre>
+++++
+
+### Step0 実装を考える
+
+gitには特定の処理の後に、さらに処理を追加することが出来ます。 +
+今回は.git/hooks内のcommit-msgに先程作った処理を応用して追加します。 +
+記事を探してみたけれど、どれもRubyの記事だったので自力で書いてみました。 +
+
+やることをまとめると
+
+1. .git/COMMIT_EDITMSGにメッセージがあるので判定する
+2. 間違っていれば、修正して.git/COMMIT_EDITMSGに出力
+
+この2つを実装すれば完成なので、簡単に作れそうです。
+
+
+### Step1 メッセージの判定
+
+$1に来るのは.git/COMMIT_EDITMSGというコミットメッセージが書かれたファイルのパスが来るので、 +
+catを$1に利用することで、コミットメッセージを取り出すことが出来ます。
+
+catとgrepを用いて判定します。grepは正規表現で判定するために、オプションに-eをつけます。
+++++
+<pre style="font-family: Menlo, Courier">
+cat $1 | grep -e "^LF-.* "
+</pre>
+++++
+
+この時に、if文にそのまま入れると +
+++++
+<pre style="font-family: Menlo, Courier">
+if [ cat $1 | grep -e "^LF-.* " ]; then
+</pre>
+++++
+出力結果を考えると +
+++++
+<pre style="font-family: Menlo, Courier">
+if [ LF-22 tes ]; then
+</pre>
+++++
+このように、スペース混じりの文字列が出力されるので、 +
+スペースで区切られた文字は別々の文字と判断されてしまいます。 +
+そこで、以下の手順を踏みました。
+
+1．""で囲むことで、出力されるスペース混じりの文字列を一つにまとめる +
+2．if文内ではコマンドの実行結果を判定したいので、 +
+　 ``で囲むことで文字列ではなくコマンドの実行結果を取得する +
+
+結果、判定は以下のコードになりました。
+++++
+<pre style="font-family: Menlo, Courier">
+if [ "`cat $1 | grep -e "^LF-.* .*$"`" ]; then
+  echo "OK"
+</pre>
+++++
+
+### Step2 ブランチ名の取得とメッセージの編集
+
+私達が行ってるプロジェクトでは、ブランチ名feature/◯◯/123の123部分が コメントに必要なので、 +
+番号だけ抜き出し、コメントに追加します。 +
+
+1.git rev-parseでブランチ名取得 +
+2.sedでブランチ名から数値だけを取得して、コメントに追加 +
+3.echoでファイルに出力
+
+++++
+<pre style="font-family: Menlo, Courier">
+  number="`git rev-parse --abbrev-ref HEAD | sed -E "s/.*\/(.*)$/\1/"`"
+  comment=LF-$number" "`cat $1`
+  echo $comment>$1
+  echo "change commit massage: "$comment
+</pre>
+++++
+
+
+## まとめ
+結構スッキリまとめられました。 +
+失敗が続くようなことがあれば、プログラムで自動化出来ないかを考えると、 +
+業務の効率化に繋がるので、ある意味チャンスなのかもしれないですね。 +
+これからも、困ったら改善を続けようと思います。 +
