@@ -8,7 +8,7 @@ SREチームの城田です。
 sorryページを設定することがあるかと思います。
 
 その際、EC2ウェブサーバを立てるのは意外とコストがかかりますので、 +
-CloudFront + S3 hosting で構築してみました。
+CloudFront + S3 Static website hosting で構築してみました。
 
 また、CloudFront+S3を使うやり方は既にウェブに幾つかありますが、 +
 一番簡単だと思われる方法を今回見つけたので、書きたいと思います。
