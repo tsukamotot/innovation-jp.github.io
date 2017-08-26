@@ -1,0 +1,99 @@
+# Kotlinでメモアプリを作る〜Kotlinの環境づくり編〜
+:hp-alt-title:　Kotlinでメモアプリを作る〜Kotlinの環境づくり編〜
+:hp-tags: Hasumin, Kotlin, Android
+
+こんにちは。 +
+新卒エンジニアのはすみんです。 +
+
+今回、初！ブログを書くにあたって最初に浮かんだのは、Kotlinでした。 +
+というのも、ぼくがエンジニアになりたいと思ったきっかけはAndroidで、 +
+せっかくのこの機会にKotlinでアプリを作ってみようと思いました。 +
+なのでこの場を借りて、Kotlinの良さが伝わればいいなと思っています。
+
+目次 +
+・Kotlinとは +
+・Kotlinの特徴 +
+・開発環境 +
+・まとめ +
+
+### Kotlinとは +
+Kotlinについてピンときてない人に簡単に説明すると、 +
+Kotlinは、JetBrainsが開発したJVM上で動く静的型付けのプログラミング言語です。 +
+http://kotlinlang.org/
+
+JetBrains社といえば、エディタの「IntelliJ IDEA」を開発していることで有名な企業です。 +
+https://ja.wikipedia.org/wiki/%E3%82%B8%E3%82%A7%E3%83%83%E3%83%88%E3%83%96%E3%83%AC%E3%82%A4%E3%83%B3%E3%82%BA +
+
+エディタだけでなくプログラミング言語も開発しているなんて、どんなGeekな人たちが働いているんでしょうか…。 +
+
+さて、Kotlinの現在のバージョンは1.1.4です。（2017/08/24 現在） +
+
+また、先日Googleの公式発表で、Androidの公式言語に選ばれました。 +
+https://blog.jetbrains.com/kotlin/2017/05/kotlin-on-android-now-official/ +
+
+Androidを提供しているGoogleが公式に認めるということは、 +
+KotlinがAndroidにおいて定番になっていく可能性は高いということかもしれませんね。 +
+
+### Kotlinの特徴 +
+次に、Kotlinの特徴をあげていきたいと思います。 +
+
+ざっと以下のことかなと思います。 +
+- 型推論ができる +
+- 静的型付け言語である +
+- Javaと違い、セミコロンが不要 +
+- Javaと混ぜて書いてもよく、移行しやすい +
+- NULL安全である +
+
+日本でKotlinを採用している企業は、ベンチャー界隈を中心に広がっている所感です。 +
+ただ、聞くところによると、まだ一部だけKotlinに置き換えて採用している企業が多いようです。 +
+今後フルKotlinで書いたアプリが出てくるのは楽しみですね〜 +
+
+### 開発環境 +
+それではKotlinの特徴を理解してもらったところで、Kotlinを動かすための環境を作っていきましょう。 +
+
+今回用いた環境です。 +
+Mac OS version : macOS Sierra v.10.12.6 +
+Kotlin version : 1.1.3 +
+IntelliJ version : 2017.2.2 +
+
+KotlinをIntelliJで動かすには、以下の公式を参考にしました。 +
+https://kotlinlang.org/docs/tutorials/kotlin-android.html +
+
+IntelliJでプロジェクトを作成していきましょう。 +
+image:syoga/aml6/azure4.png[]
+
+Androidを選択し、適当なプロジェクト名をつけ、立ち上げます。 +
+img
+※ここでエラーが表示される場合、設定のProject StructureからJVMとSDKの設定をする必要があります。 +
+
+以下のような画面が立ち上がったのが確認できましたか？ +
+img
+
+Androidプロジェクトを立ち上げただけでは、Javaのままです。 +
+Code > Convert Java File to Kotlin File を押すと、以下のようにKotlinファイルに書き換わります。 +
+Intellijすげ〜 +
+img
+
+ポップアップで表示されるConfigureやSync nowは全てOKで進んでください。 +
+完了すると、MainActivity.javaファイルがMainActivity.ktファイルに書き換わります。 +
+img
+
+最後にエミュレータを立ち上げてみましょう。 +
+再生ボタンのようなｒｕｎ（実行）ボタンを押すと、エミュレータが立ち上がり、Androidの実機に立ち上げたアプリケーションが表示されます。 +
+ｉｍｇ
+
+ここまででIntelliJにおけるKotlin環境は完了です。 +
+お疲れ様でした！
+
+
+### まとめ
+今回、KotlinをIntelliJで作ったのですが、環境構築に少しハマりました。 +
+
+というのも、Android開発ではAndroid SDKをIntelliJで読み込む必要があるのですが、 +
+Android SDKが格納されているディレクトリが参照できず、色々な記事を読み漁りました… +
+
+まだまだKotlinは英語の文献が多いため、詰まったときに大変な一面はありますが、 +
+公式ドキュメントを始めとした英語の記事を読む力は身につきます。 +
+あと耐性。英語の長文にうっ、とならなくなります。 +
+
+今回はボリュームの関係で環境づくりだけでしたが、次回はメモアプリの作成をしていきたいと思います。 +
