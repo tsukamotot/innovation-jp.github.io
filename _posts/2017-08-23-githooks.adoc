@@ -1,4 +1,4 @@
-# gitのhooksを使って、コミットメッセージを書き換える（シェルスクリプト編）
+# 【編集中】gitのhooksを使って、コミットメッセージを書き換える（シェルスクリプト編）
 :hp-alt-title:　gitのhooksを使って、コミットメッセージを書き換える（シェルスクリプト編）
 :hp-tags: Obata, ShellScript, git
 
