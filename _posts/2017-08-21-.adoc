@@ -34,59 +34,22 @@ $ git commit -m "LF-22 テスト！"　#◯正しい
 
 
 ### 作ったもの
-
-++++
-***/.git/config
-<pre style="font-family: Menlo, Courier">
-[alias]
-        cmt = cmt-c
-</pre>
-
-git-cmt-c
-<pre style="font-family: Menlo, Courier">
-#!/bin/bash
-command='git commit -m'
-comment='"'$1'"'
-
-#引数が条件にあっていればコマンドを実行
-#条件にあっていなければ、LF-**を追加して、コマンド実行許可をもらう
-if [ "`echo $1 | grep -e "^LF-.* .*$"`" ]; then
-  echo $command' '$comment
-  eval $command' '$comment
-else
-  number="`git rev-parse --abbrev-ref HEAD | sed -E "s/.*\/(.*)$/\1/"`"
-  comment='"'LF-$number' '$1'"'
-
-  echo $command' '$comment' OK?(y/n)'
-  read ans
-  case $ans in
-    [Yy] )
-      eval $command' '$comment ;;
-    * )
-      echo 'exit' ;;
-  esac
-fi
-</pre>
-++++
------------------------------------------------------- +
-実行結果 +
------------------------------------------------------- +
 ++++
 <pre style="font-family: Menlo, Courier">
-$ git cmt "LF-54 テスト"     #正しいのでコミットする
-git commit -m "LF-54 テスト"
+$ git cmt <font color=blue>"LF-54 テスト"</font>      #正しいのでコミットする
+git commit -m <font color=blue>"LF-54 テスト"</font> 
 ~~いろいろ書かれて~~
 1 file changed, 1 insertion(+)
 
-$ git cmt <font color=red>"テスト"</font>             #コメント付け足してコミットする
+$ git cmt <font color=blue>"テスト"</font>             #コメント付け足してコミットする
 git commit -m <font color=red>"LF-707 テスト"</font> OK?(y/n)
-y
+<font color=orange>y</font>
 ~~いろいろ書かれて~~
 1 file changed, 1 insertion(+)
 
-$ git cmt "テスト"             #コミットしない
-git commit -m "LF-707 テスト" OK?(y/n)
-n
+$ git cmt <font color=blue>"テスト"</font>             #コミットしない
+git commit -m <font color=red>"LF-707 テスト"</font> OK?(y/n)
+<font color=orange>n</font>
 exit
 </pre>
 ++++
