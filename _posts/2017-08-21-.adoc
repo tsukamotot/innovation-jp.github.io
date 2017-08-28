@@ -33,7 +33,7 @@ $ git commit -m "LF-22 テスト！"　#◯正しい
 その勉強の軌跡も書きますので、シェルスクリプトでそんな書き方あるんだ！って気づきになれば幸いです！ +
 
 
-### 作ったもの
+### 作ったものの動作
 ++++
 <pre style="font-family: Menlo, Courier">
 $ git cmt <font color=blue>"LF-54 テスト"</font>      #正しいのでコミットする
