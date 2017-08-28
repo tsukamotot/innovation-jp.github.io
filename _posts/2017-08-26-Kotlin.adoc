@@ -1,14 +1,14 @@
-# Kotlinでメモアプリを作る〜Kotlinの環境づくり編〜
-:hp-alt-title:　Kotlinでメモアプリを作る〜Kotlinの環境づくり編〜
+# Kotlinでメモアプリを作る〜環境づくり編〜
+:hp-alt-title:　Kotlinでメモアプリを作る〜環境づくり編〜
 :hp-tags: Hasumin, Kotlin, Android
 
 こんにちは。 +
 新卒エンジニアのはすみんです。 +
 
 今回、初！ブログを書くにあたって最初に浮かんだのは、Kotlinでした。 +
-というのも、ぼくがエンジニアになりたいと思ったきっかけはAndroidで、 +
-せっかくのこの機会にKotlinでアプリを作ってみようと思いました。 +
-なのでこの場を借りて、Kotlinの良さが伝わればいいなと思っています。
+というのも、ぼくがエンジニアになりたいと思ったきっかけはAndroidでして、 +
+せっかくのこの機会にKotlinでアプリを作ってみたい！と思いました。 +
+なのでこの場を借りて、Kotlinの良さが伝わればいいなと思います。
 
 目次 +
 ・Kotlinとは +
@@ -24,7 +24,8 @@ http://kotlinlang.org/
 JetBrains社といえば、エディタの「IntelliJ IDEA」を開発していることで有名な企業です。 +
 https://ja.wikipedia.org/wiki/%E3%82%B8%E3%82%A7%E3%83%83%E3%83%88%E3%83%96%E3%83%AC%E3%82%A4%E3%83%B3%E3%82%BA +
 
-エディタだけでなくプログラミング言語も開発しているなんて、どんなGeekな人たちが働いているんでしょうか…。 +
+エディタだけでなくプログラミング言語も開発しているなんて、 +
+どんなGeekな人たちが働いているんでしょうか… +
 
 さて、Kotlinの現在のバージョンは1.1.4です。（2017/08/24 現在） +
 
@@ -32,12 +33,12 @@ https://ja.wikipedia.org/wiki/%E3%82%B8%E3%82%A7%E3%83%83%E3%83%88%E3%83%96%E3%8
 https://blog.jetbrains.com/kotlin/2017/05/kotlin-on-android-now-official/ +
 
 Androidを提供しているGoogleが公式に認めるということは、 +
-KotlinがAndroidにおいて定番になっていく可能性は高いということかもしれませんね。 +
+KotlinがAndroidにおいて定番になっていく可能性が高いということかもしれませんね。 +
 
 ### Kotlinの特徴 +
 次に、Kotlinの特徴をあげていきたいと思います。 +
 
-ざっと以下のことかなと思います。 +
+ざっと以下かなと思います。 +
 - 型推論ができる +
 - 静的型付け言語である +
 - Javaと違い、セミコロンが不要 +
@@ -60,27 +61,31 @@ KotlinをIntelliJで動かすには、以下の公式を参考にしました。
 https://kotlinlang.org/docs/tutorials/kotlin-android.html +
 
 IntelliJでプロジェクトを作成していきましょう。 +
-image:syoga/aml6/azure4.png[]
+
+image:hasumi/kotlin/intellij_start.png[]
 
 Androidを選択し、適当なプロジェクト名をつけ、立ち上げます。 +
-img
+
+image:hasumi/kotlin/android_start.png[]
 ※ここでエラーが表示される場合、設定のProject StructureからJVMとSDKの設定をする必要があります。 +
 
 以下のような画面が立ち上がったのが確認できましたか？ +
-img
 
-Androidプロジェクトを立ち上げただけでは、Javaのままです。 +
+image:hasumi/kotlin/android_java.png[]
+
+Androidプロジェクトを立ち上げただけでは、Javaのコードのままです。 +
 Code > Convert Java File to Kotlin File を押すと、以下のようにKotlinファイルに書き換わります。 +
 Intellijすげ〜 +
-img
+
+image:hasumi/kotlin/android_kotlin.png[]
 
 ポップアップで表示されるConfigureやSync nowは全てOKで進んでください。 +
 完了すると、MainActivity.javaファイルがMainActivity.ktファイルに書き換わります。 +
-img
 
 最後にエミュレータを立ち上げてみましょう。 +
-再生ボタンのようなｒｕｎ（実行）ボタンを押すと、エミュレータが立ち上がり、Androidの実機に立ち上げたアプリケーションが表示されます。 +
-ｉｍｇ
+再生ボタンのようなrun（実行）ボタンを押すと、エミュレータが立ち上がり、 +
+Androidの実機に立ち上げたアプリケーションが表示されます。 +
+image:hasumi/kotlin/android_emulater.png[]
 
 ここまででIntelliJにおけるKotlin環境は完了です。 +
 お疲れ様でした！
@@ -94,6 +99,9 @@ Android SDKが格納されているディレクトリが参照できず、色々
 
 まだまだKotlinは英語の文献が多いため、詰まったときに大変な一面はありますが、 +
 公式ドキュメントを始めとした英語の記事を読む力は身につきます。 +
-あと耐性。英語の長文にうっ、とならなくなります。 +
+開発力だけでなく英語読解力が身につくなんて、Kotlin（新言語）開発はいいことづくしですね！ +
+とあえてポジティブに言ってみます。 +
 
-今回はボリュームの関係で環境づくりだけでしたが、次回はメモアプリの作成をしていきたいと思います。 +
+今回は記事のボリュームの関係で環境づくりだけでしたが、次回はメモアプリの記事を共有します。 +
+
+終
