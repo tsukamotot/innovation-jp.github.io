@@ -1,5 +1,5 @@
 # コミットメッセージをチェックするスクリプト書いてみた
-:hp-alt-title:　コミットメッセージをチェックするスクリプト書いてみた
+:hp-alt-title:　check_commit_message
 :hp-tags: Obata, ShellScript
 
 初めまして、今年新卒でエンジニアに配属されました小畑です。 +
