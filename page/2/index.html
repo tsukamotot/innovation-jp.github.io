@@ -211,6 +211,12 @@ var _trackingid = 'LFT-10003-1';
 
     <ol class="post-list">
       <li>
+        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/24/full-text-search-by-mongodb-and-elasticsearch.html" title="link to mongo-connectorで、MongoDBのデータをElasticsearchに同期して日本語検索をしてみる">mongo-connectorで、MongoDBのデータをElasticsearchに同期して日本語検索をしてみる</a></h2>
+        <p class="excerpt">こんにちは、加藤です。 今回は、MongoDBのデータをmongo-connectorを用いてElasticsearchに同期を行い、 Elasticsearchで日本語検索してみます。 大まかな流れは下記のようになります。 MongoDB(データ追加) → mongo-connector(同期) → Elasticsearch(ここで日本語検索) 作業環境 検証環境は下記の通りです。 macOS Sierra 10.12.4 Python 2.7.13 (pip 9.0.1) Elasticsearch 5.5 MongoDB 3.4.6 mongo-connector 2.5.1 環境について MongoDB、Elasticsearchはクラウドサービスを利用、mongo-connec&hellip;</p>
+        <div class="post-list__meta"><time datetime="24 Jul 2017" class="post-list__meta--date date">24 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/katok">katok</a>, <a href="http://tech.innovation.co.jp/tag/elasticsearch">elasticsearch</a>, <a href="http://tech.innovation.co.jp/tag/mongodb">mongodb</a></span></div>
+        <hr class="post-list__divider" />
+      </li>
+      <li>
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/07/23/By-using-a-neural-style-playing-around-and-borrow-the-masterpiece-of-taste-ver2.html" title="link to neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜">neural-styleを使い、名画のテイストを拝借して遊んでみた〜ver2〜</a></h2>
         <p class="excerpt">こんにちは。 もうすっかり夏ですね。オザサです。 今回はタイトルの通り、 以前も利用した neural-styleを使ってみたいと思います。 というのも、 前回のブログから1年(!)経ちまして、 Amazon Web ServicesのEC2インスタンスに対してEC2 Elastic GPUというサービスが発表され、 前回CPUモードで実行した時よりもサクサクと画像作成ができるのでは？と考えたからです。 が、結論から言うとEC2 Elastic GPUはまだ利用はできませんでした！！ 環境構築 今回もAmazon Web Services(以下AWS)を使います。 手順 サーバの立ち上げ インストール諸々 neural-styleの実行 1.サーバの立ち上げ EC2 Elastic GPU&hellip;</p>
         <div class="post-list__meta"><time datetime="23 Jul 2017" class="post-list__meta--date date">23 Jul 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/Oz">Oz</a>, <a href="http://tech.innovation.co.jp/tag/neural-style">neural-style</a>, <a href="http://tech.innovation.co.jp/tag/Art">Art</a></span></div>
@@ -262,12 +268,6 @@ var _trackingid = 'LFT-10003-1';
         <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/23/Making-Bot-with-Raspberry-Pi-and-Phantom-J-S.html" title="link to PhantomJS × Raspberry PiでBotを作る(前編)">PhantomJS × Raspberry PiでBotを作る(前編)</a></h2>
         <p class="excerpt">こんにちは、最近腕の長さを測ってみたら196cmだった小柳津です。 2年前くらいに測ったときは192cmでしたが、伸びていました！ 前回のブログでは、Raspberry Pi 3 Model B(以下、Raspberry Pi)にPhantomJSをインストールしました。 http://tech.innovation.co.jp/2017/05/16/Phantom-J-S-on-Raspberry-Pi-3.html 今回はそのRaspberry Piを使って、 Slack上で動き、PhantomJSでスクレイピングした結果を返してくれるBotを作成したので、そちらをご紹介します！ Botの概要 今回Botを作るにあたっての用意は以下です。 Raspberry Pi側の準備 Phanto&hellip;</p>
         <div class="post-list__meta"><time datetime="23 Jun 2017" class="post-list__meta--date date">23 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/yaizu">yaizu</a>, <a href="http://tech.innovation.co.jp/tag/Phantom-J-S">PhantomJS</a>, <a href="http://tech.innovation.co.jp/tag/scraping">scraping</a>, <a href="http://tech.innovation.co.jp/tag/Raspberry-Pi">RaspberryPi</a>, <a href="http://tech.innovation.co.jp/tag/Hubot">Hubot</a></span></div>
-        <hr class="post-list__divider" />
-      </li>
-      <li>
-        <h2 class="post-list__post-title post-title"><a href="http://tech.innovation.co.jp/2017/06/19/serposcope.html" title="link to AWS(EC2)にSERPOSCOPEを導入してみた">AWS(EC2)にSERPOSCOPEを導入してみた</a></h2>
-        <p class="excerpt">こんにちは、中村です。 6月なのに最近めちゃくちゃ暑いですね〜 私が子供の頃の梅雨は毎日雨がデフォルトでしたが、すっかり変わってしまいました。。。 ちゃんと夏バテ対策(餃子)してくださいね！ さて今回はSEO順位計測をしてくれる「SERPOSCOPE」というツールを EC2に導入した話をしたいと思います。 きっかけ SEO順位計測といえば「GRC」というツールがとても有名なようで 社内でもそちらを使っているようです。 ただこちらのツール、なんと、、、Windowsツールなんです！ そして、毎日順位計測を行うように専用のPCがあり、 24時間365日稼働しているとか。。。 ひょえ〜！！ PCがフリーズしてデータ取得できていなくても気づけないのは怖いですね。 何か別な方法が無いかとマーケチーム&hellip;</p>
-        <div class="post-list__meta"><time datetime="19 Jun 2017" class="post-list__meta--date date">19 Jun 2017</time> &#8226; <span class="post-list__meta--tags tags">on <a href="http://tech.innovation.co.jp/tag/S-E-R-P-O-S-C-O-P-E">SERPOSCOPE</a>, <a href="http://tech.innovation.co.jp/tag/S-E-O">SEO</a>, <a href="http://tech.innovation.co.jp/tag/A-W-S">AWS</a>, <a href="http://tech.innovation.co.jp/tag/E-C2">EC2</a>, <a href="http://tech.innovation.co.jp/tag/Gyo-za">Gyo-za</a>, <a href="http://tech.innovation.co.jp/tag/Nakamura">Nakamura</a></span></div>
         <hr class="post-list__divider" />
       </li>
     </ol>
